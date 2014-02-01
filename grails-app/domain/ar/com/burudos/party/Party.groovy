@@ -24,5 +24,8 @@ class Party {
 		lastUpdateDate (nullable: true);
 		lastUpdateBy (nullable: true);
 	}
-	
+
+	String toString() {
+		"$name";
+	}
 }

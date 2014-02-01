@@ -16,4 +16,8 @@ class BussinesUnit {
 		father(nullable: true);
 	}
 	
+	String toString() {
+		"$description";
+	}
+	
 }

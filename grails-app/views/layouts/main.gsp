@@ -15,13 +15,15 @@
 		<link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'apple-touch-icon-retina.png')}">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'main.css')}" type="text/css">
 		<link rel="stylesheet" href="${resource(dir: 'css', file: 'mobile.css')}" type="text/css">
+		<script type="text/javascript" src="${resource(dir: 'js', file:'jquery.js')}"></script>
+		<script type="text/javascript" src="${resource(dir: 'js', file:'nhpup_1.1.js')}"></script>
 		<g:layoutHead/>
-		<g:javascript library="application"/>		
+		<g:javascript library="jquery" plugin="jquery"/>
 		<r:layoutResources />
     </head>
 	<body>
 		<div id="burucpsLogo" role="banner">
-			<a class="home" href="/burucps/"><img width="240px" src="${resource(dir: 'images', file: 'burucps_logo.png')}" alt="BuruCPS"/></a>
+			<a class="home" href="/burudos/"><img width="240px" src="${resource(dir: 'images', file: 'burucps_logo.png')}" alt="BuruCPS"/></a>
 		</div>
 		<g:layoutBody/>
 		<div class="footer" role="contentinfo"></div>

@@ -32,6 +32,21 @@ class Employee extends Party{
 			lastUpdateBy (nullable: true);
 		}
 		
+		def beforeValidate() {
+			name = getFullName();
+		}
+	
+		public String getFullName() {
+			def list = []
+			if (names && names.trim())
+				list << names;
+			if (lastname && lastname.trim())
+				list << lastname;
+			if (list.size() > 0)
+				return list.join(' ');
+			return null;
+		}
+		
 		def beforeInsert() {
 			//createdBy = securityService.currentAuthenticatedUsername()
 			//lastUpdatedBy = securityService.currentAuthenticatedUsername()
@@ -43,4 +58,8 @@ class Employee extends Party{
 			//lastUpdatedBy = securityService.currentAuthenticatedUsername()
 			lastUpdateDate = new Date();
 		 }
+		
+		String toString() {
+			"$name";
+		}
 }

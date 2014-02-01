@@ -104,15 +104,6 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${subcontractorInstance?.employeenro}">
-				<li class="fieldcontain">
-					<span id="employeenro-label" class="property-label"><g:message code="subcontractor.employeenro.label" default="Employeenro" /></span>
-					
-						<span class="property-value" aria-labelledby="employeenro-label"><g:fieldValue bean="${subcontractorInstance}" field="employeenro"/></span>
-					
-				</li>
-				</g:if>
-			
 			</ol>
 			<g:form url="[resource:subcontractorInstance, action:'delete']" method="DELETE">
 				<fieldset class="buttons">

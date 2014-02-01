@@ -1,6 +1,7 @@
 package ar.com.burudos.party
 
 import ar.com.burudos.business.BussinesUnit
+
 import java.util.Date;
 
 class Subcontractor extends Party {
@@ -33,5 +34,9 @@ class Subcontractor extends Party {
 		//lastUpdatedBy = securityService.currentAuthenticatedUsername()
 		lastUpdateDate = new Date();
 	 }
+	
+	String toString() {
+		"$name";
+	}
 
 }

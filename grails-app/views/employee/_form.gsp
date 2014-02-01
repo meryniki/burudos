@@ -14,6 +14,7 @@
 		<g:message code="employee.employeenro.label" default="Employeenro" />
 	</label>
 	<g:textField name="employeenro" value="${employeeInstance?.employeenro}"/>
+	<a onmouseover="nhpup.popup('<g:message code="employee.employeenro.help"/>');">?</a>
 </div>
 <div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'names', 'error')} ">
 	<label for="names">
@@ -28,15 +29,6 @@
 	</label>
 	<g:textField name="lastname" value="${employeeInstance?.lastname}"/>
 </div>
-<!-- 
-<div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'name', 'error')} ">
-	<label for="name">
-		<g:message code="employee.name.label" default="Name" />
-		
-	</label>
-	<g:textField name="name" value="${employeeInstance?.name}"/>
-</div>
- -->
 <div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'email', 'error')} ">
 	<label for="email">
 		<g:message code="employee.email.label" default="Email" />
@@ -67,6 +59,7 @@
 		
 	</label>
 	<g:checkBox name="isworker" value="${employeeInstance?.isworker}" />
+	<a onmouseover="nhpup.popup('<g:message code="employee.isworker.help"/>');">?</a>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'iscoordinator', 'error')} ">
@@ -75,6 +68,7 @@
 		
 	</label>
 	<g:checkBox name="iscoordinator" value="${employeeInstance?.iscoordinator}" />
+	<a onmouseover="nhpup.popup('<g:message code="employee.iscoordinator.help"/>');">?</a>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'basic', 'error')} required">
