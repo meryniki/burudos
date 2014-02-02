@@ -1,7 +1,5 @@
 <%@ page import="ar.com.burudos.party.Employee" %>
 
-
-
 <div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'uid', 'error')} ">
 	<label for="uid">
 		<g:message code="employee.uid.label" default="Uid" />
@@ -78,6 +76,5 @@
 	</label>
 	<g:field name="basic" type="number" value="${employeeInstance.basic}" required=""/>
 </div>
-
 
 

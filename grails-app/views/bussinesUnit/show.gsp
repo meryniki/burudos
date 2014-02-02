@@ -23,15 +23,6 @@
 			</g:if>
 			<ol class="property-list bussinesUnit">
 			
-				<g:if test="${bussinesUnitInstance?.coordinator}">
-				<li class="fieldcontain">
-					<span id="coordinator-label" class="property-label"><g:message code="bussinesUnit.coordinator.label" default="Coordinator" /></span>
-					
-						<span class="property-value" aria-labelledby="coordinator-label"><g:link controller="employee" action="show" id="${bussinesUnitInstance?.coordinator?.id}">${bussinesUnitInstance?.coordinator?.encodeAsHTML()}</g:link></span>
-					
-				</li>
-				</g:if>
-			
 				<g:if test="${bussinesUnitInstance?.code}">
 				<li class="fieldcontain">
 					<span id="code-label" class="property-label"><g:message code="bussinesUnit.code.label" default="Code" /></span>
@@ -41,20 +32,29 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${bussinesUnitInstance?.father}">
-				<li class="fieldcontain">
-					<span id="father-label" class="property-label"><g:message code="bussinesUnit.father.label" default="Father" /></span>
-					
-						<span class="property-value" aria-labelledby="father-label"><g:link controller="bussinesUnit" action="show" id="${bussinesUnitInstance?.father?.id}">${bussinesUnitInstance?.father?.encodeAsHTML()}</g:link></span>
-					
-				</li>
-				</g:if>
-			
 				<g:if test="${bussinesUnitInstance?.description}">
 				<li class="fieldcontain">
 					<span id="description-label" class="property-label"><g:message code="bussinesUnit.description.label" default="Description" /></span>
 					
 						<span class="property-value" aria-labelledby="description-label"><g:fieldValue bean="${bussinesUnitInstance}" field="description"/></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${bussinesUnitInstance?.coordinator}">
+				<li class="fieldcontain">
+					<span id="coordinator-label" class="property-label"><g:message code="bussinesUnit.coordinator.label" default="Coordinator" /></span>
+					
+						<span class="property-value" aria-labelledby="coordinator-label"><g:link controller="employee" action="show" id="${bussinesUnitInstance?.coordinator?.id}">${bussinesUnitInstance?.coordinator?.encodeAsHTML()}</g:link></span>
+					
+				</li>
+				</g:if>
+			
+				<g:if test="${bussinesUnitInstance?.father}">
+				<li class="fieldcontain">
+					<span id="father-label" class="property-label"><g:message code="bussinesUnit.father.label" default="Father" /></span>
+					
+						<span class="property-value" aria-labelledby="father-label"><g:link controller="bussinesUnit" action="show" id="${bussinesUnitInstance?.father?.id}">${bussinesUnitInstance?.father?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>

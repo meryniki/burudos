@@ -11,4 +11,8 @@ class Operation {
 		meaning (nullable: false)
 		description (nullable: true);
     }
+	
+	String toString() {
+		"$code";
+	}
 }

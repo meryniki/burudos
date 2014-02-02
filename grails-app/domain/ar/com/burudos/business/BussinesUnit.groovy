@@ -5,19 +5,20 @@ import ar.com.burudos.party.Party;
 
 class BussinesUnit {
 
-	int code;
+	String code;
 	String description;
 	BussinesUnit father;
 	Employee coordinator;
 	
 	static constraints = {
-		coordinator (nullable: true);
 		code(nullable: false);
+		description(nullable: false);
+		coordinator (nullable: true);
 		father(nullable: true);
 	}
 	
 	String toString() {
-		"$description";
+		"$code-$description";
 	}
 	
 }

@@ -13,6 +13,7 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
 				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+				<li><g:link class="create" action="upload"><g:message code="default.upload.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
 		<div id="list-employee" class="content scaffold-list" role="main">
@@ -28,13 +29,13 @@
 					
 						<g:sortableColumn property="name" title="${message(code: 'employee.name.label', default: 'Name')}" />
 					
-						<g:sortableColumn property="email" title="${message(code: 'employee.email.label', default: 'Email')}" />
-					
-						<g:sortableColumn property="dofbirth" title="${message(code: 'employee.dofbirth.label', default: 'Dofbirth')}" />
+					    <g:sortableColumn property="employeenro" title="${message(code: 'employee.employeenro.label', default: 'Employee Number')}" />
 					
 						<th><g:message code="employee.bu.label" default="Bu" /></th>
 					
 						<g:sortableColumn property="isworker" title="${message(code: 'employee.isworker.label', default: 'Isworker')}" />
+						
+						<g:sortableColumn property="iscoordinator" title="${message(code: 'employee.iscoordinator.label', default: 'IsCoordinator')}" />
 					
 					</tr>
 				</thead>
@@ -46,13 +47,13 @@
 					
 						<td>${fieldValue(bean: employeeInstance, field: "name")}</td>
 					
-						<td>${fieldValue(bean: employeeInstance, field: "email")}</td>
-					
-						<td><g:formatDate date="${employeeInstance.dofbirth}" /></td>
+					    <td>${fieldValue(bean: employeeInstance, field: "employeenro")}</td>
 					
 						<td>${fieldValue(bean: employeeInstance, field: "bu")}</td>
 					
 						<td><g:formatBoolean boolean="${employeeInstance.isworker}" /></td>
+						
+						<td><g:formatBoolean boolean="${employeeInstance.iscoordinator}" /></td>
 					
 					</tr>
 				</g:each>

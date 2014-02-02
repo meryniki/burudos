@@ -6,7 +6,7 @@
 		<g:message code="bussinesUnit.code.label" default="Code" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:field name="code" type="number" value="${bussinesUnitInstance.code}" required=""/>
+	<g:textField name="code" value="${bussinesUnitInstance.code}"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: bussinesUnitInstance, field: 'coordinator', 'error')} ">
