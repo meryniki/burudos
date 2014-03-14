@@ -7,12 +7,12 @@
 	</label>
 	<g:textField name="uid" value="${employeeInstance?.uid}"/>
 </div>
-<div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'employeenro', 'error')} ">
+<div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'legajo', 'error')} ">
 	<label for="employeenro">
-		<g:message code="employee.employeenro.label" default="Employeenro" />
+		<g:message code="employee.legajo.label" default="Legajo" />
 	</label>
-	<g:textField name="employeenro" value="${employeeInstance?.employeenro}"/>
-	<a onmouseover="nhpup.popup('<g:message code="employee.employeenro.help"/>');">?</a>
+	<g:textField name="employeenro" value="${employeeInstance?.legajo}"/>
+	<a onmouseover="nhpup.popup('<g:message code="employee.legajo.help"/>');">?</a>
 </div>
 <div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'names', 'error')} ">
 	<label for="names">

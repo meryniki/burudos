@@ -1,7 +1,5 @@
 package ar.com.burudos.party
-
-
-
+import ar.com.burudos.business.BussinesUnit
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
@@ -14,7 +12,7 @@ class EmployeeController {
 	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	def index(Integer max) {
-		params.max = Math.min(max ?: 10, 100)
+		params.max = Math.min(max ?: 20, 100)
 		respond Employee.list(params), model:[employeeInstanceCount: Employee.count()]
 	}
 
@@ -63,24 +61,33 @@ class EmployeeController {
 	@Transactional
 	def uploadFile() {
 		def file = request.getFile('myFile')
-		def jfile = new java.io.File( "/home/meri/Desktop/carga_${file.name}" )
+		def jfile = new java.io.File( "carga_${file.name}" )
 
-		if(file && !file.empty && file.size < 1024) {
+		if(file && !file.empty && file.size < 10240) {
 			file.transferTo( jfile )
 		}
 
 		def code
+	
 		jfile.splitEachLine('\t') { row ->
-			code = Employee.findByUid(row[0]) ?: new Employee(
-					uid: row[0],
-					employeenro: row[1],
-					names: row[2],
-					lastname: row[3],
-					dofbirth: Date.parse("yyyy-MM-dd",row[4]),
-					//dofbirth: Date.parse("yyyy-MM-dd","2010-12-01"),
-					isworker: row[5],
-					iscoordinator: row[6]
-					).save(failOnError: true, flush: true)
+			try {
+				code = Employee.findByLegajo(row[0]) ?: new Employee(
+						legajo: row[0],
+						names: row[1],
+						dofingreso: Date.parse("dd/MM/yyyy","01/01/2001"),//row[2]),
+						uid: row[3],
+						bu: BussinesUnit.findByCode(row[5]).id,
+						isworker: true,
+						iscoordinator: false
+						).save(failOnError: true, flush: true)
+			} catch (Exception e) {
+				e.printStackTrace()
+				print row[2]
+				print row[3]
+				print row[4]
+				print row[5]
+			}
+			
 		}
 
 		redirect action:"index"

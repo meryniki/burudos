@@ -6,21 +6,26 @@ import ar.com.burudos.business.BussinesUnit
 
 class Employee extends Party{
 
-		String employeenro;
+		String legajo;
 		String names;
 		String lastname;
 		Date dofbirth;
+		Date dofingreso;
 		int  basic;
 		BussinesUnit bu;
 		boolean isworker;
 		boolean iscoordinator;
 
 		static constraints = {
-			uid (nullable: false);
+			legajo (nullable: false);
 			name (nullable: false);
+			names (nullable: true);
+			lastname (nullable: true);
+			dofingreso (max : new Date(), nullable: false);
+			uid (nullable: false);
+			bu(nullable: true);
 			email (email : true, nullable: true);
-			dofbirth (max : new Date(), nullable: false);
-			bu (nullable: true);
+			dofbirth (max : new Date(), nullable: true);
 			isworker (nullable: false);
 			iscoordinator (nullable: false);
 			basic( nullable: true);

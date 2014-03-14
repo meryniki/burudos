@@ -2,7 +2,6 @@ package ar.com.burudos.party
 
 class Party {
 
-
 	String uid;
 	String name;
 	String email;
@@ -12,7 +11,6 @@ class Party {
 	String createdBy;
 	Date lastUpdateDate;
 	String lastUpdateBy;
-
 	
 	static constraints = {
 		uid (nullable: true)

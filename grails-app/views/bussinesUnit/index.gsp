@@ -13,6 +13,7 @@
 			<ul>
 				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
 				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+			    <li><g:link class="create" action="upload"><g:message code="default.upload.label" args="[entityName]" /></g:link></li>
 			</ul>
 		</div>
 		<div id="list-bussinesUnit" class="content scaffold-list" role="main">
@@ -25,12 +26,18 @@
 					<tr>
 					
 						<g:sortableColumn property="code" title="${message(code: 'bussinesUnit.code.label', default: 'Code')}" />
+						
+						<g:sortableColumn property="nombre" title="${message(code: 'bussinesUnit.nombre.label', default: 'Nombre')}" />
+						
+						<g:sortableColumn property="father" title="${message(code: 'bussinesUnit.father.label', default: 'Depende de')}" />
 					
-						<g:sortableColumn property="description" title="${message(code: 'bussinesUnit.description.label', default: 'Description')}" />
+						<g:sortableColumn property="provincia" title="${message(code: 'bussinesUnit.provincia.label', default: 'Provincia')}" />
 					
-						<th><g:message code="bussinesUnit.coordinator.label" default="Coordinator" /></th>
+						<g:sortableColumn property="departamento" title="${message(code: 'bussinesUnit.departamento.label', default: 'Departamento')}" />
 					
-						<th><g:message code="bussinesUnit.father.label" default="Father" /></th>
+						<g:sortableColumn property="localidad" title="${message(code: 'bussinesUnit.localidad.label', default: 'Localidad')}" />
+					
+						<g:sortableColumn property="calle" title="${message(code: 'bussinesUnit.calle.label', default: 'Calle')}" />
 					
 					</tr>
 				</thead>
@@ -40,11 +47,17 @@
 					
 						<td><g:link action="show" id="${bussinesUnitInstance.id}">${fieldValue(bean: bussinesUnitInstance, field: "code")}</g:link></td>
 					
-						<td>${fieldValue(bean: bussinesUnitInstance, field: "description")}</td>
+					    <td>${fieldValue(bean: bussinesUnitInstance, field: "nombre")}</td>
 					
-						<td>${fieldValue(bean: bussinesUnitInstance, field: "coordinator")}</td>
+					    <td>${fieldValue(bean: bussinesUnitInstance, field: "father")}</td>
 					
-						<td>${fieldValue(bean: bussinesUnitInstance, field: "father")}</td>
+						<td>${fieldValue(bean: bussinesUnitInstance, field: "provincia")}</td>
+					
+						<td>${fieldValue(bean: bussinesUnitInstance, field: "departamento")}</td>
+					
+						<td>${fieldValue(bean: bussinesUnitInstance, field: "localidad")}</td>
+					
+						<td>${fieldValue(bean: bussinesUnitInstance, field: "calle")}</td>
 					
 					</tr>
 				</g:each>
