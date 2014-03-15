@@ -25,13 +25,11 @@
 			<thead>
 					<tr>
 					
-						<th><g:message code="transaction.party.label" default="Party" /></th>
-					
 						<th><g:message code="transaction.op.label" default="Op" /></th>
 					
-						<g:sortableColumn property="month" title="${message(code: 'transaction.month.label', default: 'Month')}" />
+						<g:sortableColumn property="date" title="${message(code: 'transaction.date.label', default: 'Month')}" />
 					
-						<g:sortableColumn property="quantity" title="${message(code: 'transaction.quantity.label', default: 'Quantity')}" />
+						<g:sortableColumn property="party" title="${message(code: 'transaction.party.label', default: 'Quantity')}" />
 					
 					</tr>
 				</thead>
@@ -39,13 +37,11 @@
 				<g:each in="${transactionInstanceList}" status="i" var="transactionInstance">
 					<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 					
-						<td><g:link action="show" id="${transactionInstance.id}">${fieldValue(bean: transactionInstance, field: "party")}</g:link></td>
+						<td><g:link action="show" id="${transactionInstance.id}">${fieldValue(bean: transactionInstance, field: "op")}</g:link></td>
 					
-						<td>${fieldValue(bean: transactionInstance, field: "op")}</td>
+						<td>${fieldValue(bean: transactionInstance, field: "date")}</td>
 					
-						<td>${fieldValue(bean: transactionInstance, field: "month")}</td>
-					
-						<td>${fieldValue(bean: transactionInstance, field: "quantity")}</td>
+						<td>${fieldValue(bean: transactionInstance, field: "party")}</td>
 					
 					</tr>
 				</g:each>

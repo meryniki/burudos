@@ -41,14 +41,14 @@ class Employee extends Party{
 
 	def beforeValidate() {
 		if (fullname!=null) {
-			print fullname
 			names = getMyNames();
 			lastname = getMyLastName();
 		}
-		name = getName();
+		if (name==null)
+			name = getMyName();
 	}
 
-	public String getName() {
+	public String getMyName() {
 		def list = []
 		if (lastname && lastname.trim())
 		list << lastname;

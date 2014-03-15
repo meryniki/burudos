@@ -39,11 +39,7 @@
 					    <g:sortableColumn property="legajo" title="${message(code: 'employee.legajo.label', default: 'Employee Number')}" />
 					
 						<th><g:message code="employee.bu.label" default="Bu" /></th>
-					
-						<g:sortableColumn property="isworker" title="${message(code: 'employee.isworker.label', default: 'Isworker')}" />
-						
-						<g:sortableColumn property="iscoordinator" title="${message(code: 'employee.iscoordinator.label', default: 'IsCoordinator')}" />
-					
+									
 					</tr>
 				</thead>
 				<tbody>
@@ -57,11 +53,6 @@
 					    <td>${fieldValue(bean: employeeInstance, field: "legajo")}</td>
 					
 						<td>${fieldValue(bean: employeeInstance, field: "bu")}</td>
-					
-						<td><g:formatBoolean boolean="${employeeInstance.isworker}" /></td>
-						
-						<td><g:formatBoolean boolean="${employeeInstance.iscoordinator}" /></td>
-					
 					</tr>
 				</g:each>
 				</tbody>
