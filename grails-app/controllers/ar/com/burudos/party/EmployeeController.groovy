@@ -59,7 +59,7 @@ class EmployeeController {
 	}
 
 	@Transactional
-	def uploadFile() {
+	def uploadFile(Employee employeeInstance) {
 		def file = request.getFile('myFile')
 		def jfile = new java.io.File( "carga_${file.name}" )
 
@@ -68,26 +68,27 @@ class EmployeeController {
 		}
 
 		def code
-	
+		
 		jfile.splitEachLine('\t') { row ->
 			try {
 				code = Employee.findByLegajo(row[0]) ?: new Employee(
 						legajo: row[0],
-						names: row[1],
-						dofingreso: Date.parse("dd/MM/yyyy","01/01/2001"),//row[2]),
+						fullname: row[1],
+						dofingreso: Date.parse("dd/MM/yyyy",row[2]),
 						uid: row[3],
 						bu: BussinesUnit.findByCode(row[5]).id,
 						isworker: true,
 						iscoordinator: false
 						).save(failOnError: true, flush: true)
 			} catch (Exception e) {
-				e.printStackTrace()
-				print row[2]
-				print row[3]
-				print row[4]
-				print row[5]
+				e.printStackTrace();
+				employeeInstance.errors.reject(row[0], row[0]+"\t"+row[1]+"\t"+row[3]+"\t"+row[4]+"\t"+row[5]);
 			}
-			
+		}
+		
+		if (employeeInstance.hasErrors()) {
+			respond employeeInstance.errors, view:'upload_result'
+			return
 		}
 
 		redirect action:"index"

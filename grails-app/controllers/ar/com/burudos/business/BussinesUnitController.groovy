@@ -10,8 +10,8 @@ class BussinesUnitController {
 
 	static Boolean linkMe = true
 	static String  btnName = "bussinesUnit.btnLabel"
-	
-	
+
+
 	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
 	def index(Integer max) {
@@ -62,28 +62,38 @@ class BussinesUnitController {
 	}
 
 	@Transactional
-	def uploadFile() {
+	def uploadFile(BussinesUnit bussinesUnitInstance) {
 		def file = request.getFile('filebu')
 		def jfile = new java.io.File( "carga_${file.name}" )
 
 		if(file && !file.empty && file.size < 10240) {
 			file.transferTo( jfile )
 		}
-
+		
 		def code
 		jfile.splitEachLine('\t') { row ->
-			code = BussinesUnit.findByCode(row[0]) ?: new BussinesUnit(
-					code: row[0],
-					father: BussinesUnit.findByCode(row[1]).id,
-					provincia: row[2],
-					departamento: row[3],
-					localidad: row[4],
-					calle: row[5],
-					altura: row[6],
-					nombre: row[7],
-					).save(failOnError: true, flush: true)
+			try{
+				code = BussinesUnit.findByCode(row[0]) ?: new BussinesUnit(
+						code: row[0],
+						father: BussinesUnit.findByCode(row[1]).id,
+						provincia: row[2],
+						departamento: row[3],
+						localidad: row[4],
+						calle: row[5],
+						altura: row[6],
+						nombre: row[7],
+						).save(failOnError: true, flush: true)
+			}catch (Exception e) {
+				e.printStackTrace();
+				bussinesUnitInstance.errors.reject(row[0], row[0]+"\t"+row[1]+"\t"+row[2]+"\t"+row[3]);
+			}
 		}
 
+		if (bussinesUnitInstance.hasErrors()) {
+			respond bussinesUnitInstance.errors, view:'upload_result'
+			return
+		}
+		
 		redirect action:"index"
 	}
 
