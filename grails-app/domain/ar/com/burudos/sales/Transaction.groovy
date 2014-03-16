@@ -15,10 +15,8 @@ class Transaction {
 	String sim
 	String folio
 	String partida
-	//String cat_plan
-	//String plan
-	//String promo
 	String equipo
+	String solicitud
 	BussinesUnit almacen
 	Client  cliente
 	String cancel
@@ -39,6 +37,7 @@ class Transaction {
 		folio(nullable:true)
 		partida(nullable:true)
 		equipo(nullable:true)
+		solicitud(nullable:true)
 		almacen(nullable:true)
 		cliente(nullable:true)
 		cancel(nullable:true)

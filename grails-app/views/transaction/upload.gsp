@@ -44,6 +44,17 @@
 			<fieldset class="buttons">
 				<fieldset class="form">
 					<div>
+						<label for="fileoption"> <g:message code="transaction.fileoption.label"
+								default="Option" />
+						</label>
+						<label><g:radio name="type_file" value="ALTA" checked="true"/><g:message code="transaction.alta.label"/></label>
+						<label><g:radio name="type_file" value="CATER"/><g:message code="transaction.cater.label"/></label>
+						<label><g:radio name="type_file" value="POSTVENTA"/><g:message code="transaction.postventa.label"/></label>
+					</div>
+					<div>
+						<label for="file"> <g:message code="transaction.file.label"
+								default="File" />
+						</label>
 						<input type="file" name="myFile" />
 						<g:submitButton name="uploadFile" class="uploadFile"
 							value="${message(code: 'default.button.create.label', default: 'uploadFile')}" />

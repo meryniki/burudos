@@ -20,15 +20,12 @@ class Operation {
 		op_hasta( nullable:true)
 	}
 
-
-	def beforeValidate() {
-		if (cat_plan!=null)
-			code += cat_plan ;
-		if (plan_promo!=null)
-			code += plan_promo;
-	}
-
 	String toString() {
-		"$code";
+		String complete_code = code;
+		if (cat_plan!=null)
+			complete_code += "-" + cat_plan ;
+		if (plan_promo!=null)
+			complete_code += "-" + plan_promo;
+		return "$complete_code"
 	}
 }
