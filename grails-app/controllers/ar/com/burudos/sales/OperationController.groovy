@@ -10,6 +10,7 @@ class OperationController {
 
 	static Boolean linkMe = true
 	static String btnName = "operation.btnLabel"
+	static String iconName = "operation.iconName"
 
 	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 

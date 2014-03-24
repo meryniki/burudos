@@ -8,6 +8,7 @@ class EmployeeController {
 
 	static Boolean linkMe = true
 	static String btnName = "employee.btnLabel"
+	static String iconName = "employee.iconName"
 
 	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 

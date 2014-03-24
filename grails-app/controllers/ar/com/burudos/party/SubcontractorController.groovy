@@ -10,6 +10,7 @@ class SubcontractorController {
 	
 	static Boolean linkMe = true
 	static String btnName = "subcontractor.btnLabel"
+	static String iconName = "subcontractor.iconName"
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 

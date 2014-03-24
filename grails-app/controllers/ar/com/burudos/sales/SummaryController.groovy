@@ -11,6 +11,7 @@ class SummaryController {
 	
 	static Boolean linkMe = true
 	static String btnName = "summary.btnLabel"
+	static String iconName = "summary.iconName"
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 

@@ -16,6 +16,7 @@ class TransactionController {
 
 	static Boolean linkMe = true
 	static String btnName = "transaction.btnLabel"
+	static String iconName = "transaction.iconName"
 
 	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
