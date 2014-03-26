@@ -1,117 +1,187 @@
 
-<%@ page import="ar.com.burudos.business.BussinesUnit" %>
-<!DOCTYPE html>
+<%@ page import="ar.com.burudos.business.BussinesUnit"%>
+
 <html>
-	<head>
-		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'bussinesUnit.label', default: 'BussinesUnit')}" />
-		<title><g:message code="default.show.label" args="[entityName]" /></title>
-	</head>
-	<body>
-		<a href="#show-bussinesUnit" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-			    <li><g:link class="create" action="upload"><g:message code="default.upload.label" args="[entityName]" /></g:link></li>
+<head>
+<meta name="layout" content="main">
+<g:set var="entityName"
+	value="${message(code: 'bussinesUnit.label', default: 'bussinesUnit')}" />
+<title><g:message code="default.show.label" args="[entityName]" /></title>
+</head>
+<body>
+
+	<div id="content" class="clearfix">
+		<div class="contentwrapper">
+			<div class="heading">
+
+				<h3>
+					<g:message code="bussinesUnit.btnLabel" args="[entityName]" />
+				</h3>
+
+				<div class="resBtnSearch">
+					<a href="#"><span class="icon16 icomoon-icon-search-3"></span></a>
+				</div>
+
+				<ul class="breadcrumb">
+					<li>You are here:</li>
+					<li><a href="#" class="tip" title="" data-hasqtip="true">
+							<span class="icon16 icomoon-icon-screen-2"></span>
+					</a> <span class="divider"> <span
+							class="icon16 icomoon-icon-arrow-right-3"></span>
+					</span></li>
+					<li class="active"><g:message code="bussinesUnit.show.label"
+							args="[entityName]" /></li>
+				</ul>
+
+			</div>
+
+			<ul class="bigBtnIcon">
+				<li><g:link class="create" action="create">
+						<span class="icon icomoon-icon-plus"></span>
+						<g:message code="default.new.label" args="[entityName]" />
+					</g:link></li>
+				<li><g:link class="create" action="">
+						<span class="icon icomoon-icon-menu"></span>
+						<g:message code="default.list.label" args="[entityName]" />
+					</g:link></li>
+				<li><g:link class="create" action="upload">
+						<span class="icon icomoon-icon-table"></span>
+						<g:message code="default.upload.label" args="[entityName]" />
+					</g:link></li>
 			</ul>
+
+
+
+			<div class="row">
+
+				<div class="col-lg-2"></div>
+
+				<div class="col-lg-8">
+
+					<div id="show-bussinesUnit" class="content scaffold-show"
+						role="main">
+						<h1>
+							<g:message code="bussinesUnit.show.label" args="[entityName]" />
+						</h1>
+						<g:if test="${flash.message}">
+							<div class="message" role="status">
+								${flash.message}
+							</div>
+						</g:if>
+
+						<div class="panel panel-default">
+
+							<div class="panel-heading">
+								<h4>
+									<span><g:message code="bussinesUnit.show.label"
+											args="[entityName]" /></span>
+								</h4>
+							</div>
+							<div class="panel-body">
+
+								<ul class="col-lg-12">
+
+									<g:if test="${bussinesUnitInstance?.code}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="bussinesUnit.code.label" default="Code" /> </span> <span
+											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
+											class="col-lg-6"><g:fieldValue
+													bean="${bussinesUnitInstance}" field="code" /></span></li>
+									</g:if>
+
+									<g:if test="${bussinesUnitInstance?.nombre}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="bussinesUnit.nombre.label" default="Nombre" /> </span> <span
+											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
+											class="col-lg-6"><g:fieldValue
+													bean="${bussinesUnitInstance}" field="nombre" /></span></li>
+									</g:if>
+
+									<g:if test="${bussinesUnitInstance?.father}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="bussinesUnit.father.label" default="Father" />< </span> <span
+											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
+											class="col-lg-6"><g:link controller="bussinesUnit"
+													action="show" id="${bussinesUnitInstance?.father?.id}">
+													${bussinesUnitInstance?.father?.encodeAsHTML()}
+												</g:link></span></li>
+									</g:if>
+
+									<g:if test="${bussinesUnitInstance?.provincia}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="bussinesUnit.provincia.label" default="Provincia" />
+										</span> <span class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
+											class="col-lg-6"><g:fieldValue
+													bean="${bussinesUnitInstance}" field="provincia" /></span></li>
+									</g:if>
+
+									<g:if test="${bussinesUnitInstance?.departamento}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="bussinesUnit.departamento.label"
+													default="Departamento" /> </span> <span
+											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
+											class="col-lg-6"><g:fieldValue
+													bean="${bussinesUnitInstance}" field="departamento" /></span></li>
+									</g:if>
+
+									<g:if test="${bussinesUnitInstance?.localidad}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="bussinesUnit.localidad.label" default="Localidad" />
+										</span> <span class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
+											class="col-lg-6"><g:fieldValue
+													bean="${bussinesUnitInstance}" field="localidad" /></span></li>
+									</g:if>
+
+									<g:if test="${bussinesUnitInstance?.calle}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="bussinesUnit.calle.label" default="Calle" /> </span> <span
+											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
+											class="col-lg-6"><g:fieldValue
+													bean="${bussinesUnitInstance}" field="calle" /></span></li>
+									</g:if>
+
+									<g:if test="${bussinesUnitInstance?.altura}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="bussinesUnit.altura.label" default="Altura" /> </span> <span
+											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
+											class="col-lg-6"><g:fieldValue
+													bean="${bussinesUnitInstance}" field="altura" /></span></li>
+									</g:if>
+
+									<g:if test="${bussinesUnitInstance?.coordinator}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="bussinesUnit.coordinator.label" default="Coordinator" />
+										</span> <span class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
+											class="col-lg-6"><g:link controller="employee"
+													action="show" id="${bussinesUnitInstance?.coordinator?.id}">
+													${bussinesUnitInstance?.coordinator?.encodeAsHTML()}
+												</g:link></span></li>
+									</g:if>
+								</ul>
+
+								<ul class="bigBtnIcon" style="display: -webkit-box;">
+									<li><g:link class="edit" action="edit"
+											resource="${bussinesUnitInstance}">
+											<span class="icon icomoon-icon-pencil"></span>
+											<g:message code="default.button.edit.label" default="Edit" />
+										</g:link></li>
+									<li><g:link class="delete" action="delete"
+											value="${message(code: 'default.button.delete.label', default: 'Delete')}"
+											resource="${bussinesUnitInstance}"
+											onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
+											<span class="icon icomoon-icon-backspace"></span>
+											<g:message code="default.button.delete.label"
+												default="Delete" />
+										</g:link></li>
+								</ul>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
 		</div>
-		<div id="show-bussinesUnit" class="content scaffold-show" role="main">
-			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
-			</g:if>
-			<ol class="property-list bussinesUnit">
-			
-				<g:if test="${bussinesUnitInstance?.code}">
-				<li class="fieldcontain">
-					<span id="code-label" class="property-label"><g:message code="bussinesUnit.code.label" default="Code" /></span>
-					
-						<span class="property-value" aria-labelledby="code-label"><g:fieldValue bean="${bussinesUnitInstance}" field="code"/></span>
-					
-				</li>
-				</g:if>
-				
-				<g:if test="${bussinesUnitInstance?.nombre}">
-				<li class="fieldcontain">
-					<span id="nombre-label" class="property-label"><g:message code="bussinesUnit.nombre.label" default="Nombre" /></span>
-					
-						<span class="property-value" aria-labelledby="nombre-label"><g:fieldValue bean="${bussinesUnitInstance}" field="nombre"/></span>
-					
-				</li>
-				</g:if>
-				
-				<g:if test="${bussinesUnitInstance?.father}">
-				<li class="fieldcontain">
-					<span id="father-label" class="property-label"><g:message code="bussinesUnit.father.label" default="Father" /></span>
-					
-						<span class="property-value" aria-labelledby="father-label"><g:link controller="bussinesUnit" action="show" id="${bussinesUnitInstance?.father?.id}">${bussinesUnitInstance?.father?.encodeAsHTML()}</g:link></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${bussinesUnitInstance?.provincia}">
-				<li class="fieldcontain">
-					<span id="provincia-label" class="property-label"><g:message code="bussinesUnit.provincia.label" default="Provincia" /></span>
-					
-						<span class="property-value" aria-labelledby="provincia-label"><g:fieldValue bean="${bussinesUnitInstance}" field="provincia"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${bussinesUnitInstance?.departamento}">
-				<li class="fieldcontain">
-					<span id="departamento-label" class="property-label"><g:message code="bussinesUnit.departamento.label" default="Departamento" /></span>
-					
-						<span class="property-value" aria-labelledby="departamento-label"><g:fieldValue bean="${bussinesUnitInstance}" field="departamento"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${bussinesUnitInstance?.localidad}">
-				<li class="fieldcontain">
-					<span id="localidad-label" class="property-label"><g:message code="bussinesUnit.localidad.label" default="Localidad" /></span>
-					
-						<span class="property-value" aria-labelledby="localidad-label"><g:fieldValue bean="${bussinesUnitInstance}" field="localidad"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${bussinesUnitInstance?.calle}">
-				<li class="fieldcontain">
-					<span id="calle-label" class="property-label"><g:message code="bussinesUnit.calle.label" default="Calle" /></span>
-					
-						<span class="property-value" aria-labelledby="calle-label"><g:fieldValue bean="${bussinesUnitInstance}" field="calle"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${bussinesUnitInstance?.altura}">
-				<li class="fieldcontain">
-					<span id="altura-label" class="property-label"><g:message code="bussinesUnit.altura.label" default="Altura" /></span>
-					
-						<span class="property-value" aria-labelledby="altura-label"><g:fieldValue bean="${bussinesUnitInstance}" field="altura"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${bussinesUnitInstance?.coordinator}">
-				<li class="fieldcontain">
-					<span id="coordinator-label" class="property-label"><g:message code="bussinesUnit.coordinator.label" default="Coordinator" /></span>
-					
-						<span class="property-value" aria-labelledby="coordinator-label"><g:link controller="employee" action="show" id="${bussinesUnitInstance?.coordinator?.id}">${bussinesUnitInstance?.coordinator?.encodeAsHTML()}</g:link></span>
-					
-				</li>
-				</g:if>
-			
-			</ol>
-			<g:form url="[resource:bussinesUnitInstance, action:'delete']" method="DELETE">
-				<fieldset class="buttons">
-					<g:link class="edit" action="edit" resource="${bussinesUnitInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-				</fieldset>
-			</g:form>
-		</div>
-	</body>
+	</div>
+</body>
 </html>

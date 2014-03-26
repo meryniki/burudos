@@ -1,4 +1,3 @@
-
 <%@ page import="ar.com.burudos.party.Employee"%>
 <!DOCTYPE html>
 <html>
@@ -58,8 +57,7 @@
 
 				<div class="col-lg-8">
 
-					<div id="create-employee" class="content scaffold-create"
-						role="main">
+					<div id="show-employee" class="content scaffold-show" role="main">
 						<h1>
 							<g:message code="default.show.label" args="[entityName]" />
 						</h1>
@@ -69,15 +67,6 @@
 							</div>
 						</g:if>
 
-						<g:hasErrors bean="${employeeInstance}">
-							<ul class="errors" role="alert">
-								<g:eachError bean="${employeeInstance}" var="error">
-									<li><g:if
-											test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>
-										<g:message error="${error}" /></li>
-								</g:eachError>
-							</ul>
-						</g:hasErrors>
 						<div class="panel panel-default">
 
 							<div class="panel-heading">
@@ -87,11 +76,7 @@
 								</h4>
 							</div>
 							<div class="panel-body">
-								<g:if test="${flash.message}">
-									<div class="message" role="status">
-										${flash.message}
-									</div>
-								</g:if>
+						
 								<ul class="col-lg-12">
 									<g:if test="${employeeInstance?.uid}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
@@ -233,21 +218,24 @@
 											class="col-lg-6"><g:fieldValue
 													bean="${employeeInstance}" field="basic" /></span></li>
 									</g:if>
-							</ul>
-						
-							<ul class="bigBtnIcon" style="display: -webkit-box;">
-								<li><g:link class="edit" action="edit"
-										resource="${employeeInstance}">
-										<span class="icon icomoon-icon-pencil"></span>
-										<g:message code="default.button.edit.label" default="Edit" />
-									</g:link></li>
-									 <li><g:link class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}"
-										resource="${employeeInstance}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
-										<span class="icon icomoon-icon-backspace"></span>
-										<g:message code="default.button.delete.label" default="Delete" />
-									</g:link></li>
-							</ul>
-						</div>
+								</ul>
+
+								<ul class="bigBtnIcon" style="display: -webkit-box;">
+									<li><g:link class="edit" action="edit"
+											resource="${employeeInstance}">
+											<span class="icon icomoon-icon-pencil"></span>
+											<g:message code="default.button.edit.label" default="Edit" />
+										</g:link></li>
+									<li><g:link class="delete" action="delete"
+											value="${message(code: 'default.button.delete.label', default: 'Delete')}"
+											resource="${employeeInstance}"
+											onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
+											<span class="icon icomoon-icon-backspace"></span>
+											<g:message code="default.button.delete.label"
+												default="Delete" />
+										</g:link></li>
+								</ul>
+							</div>
 						</div>
 
 					</div>

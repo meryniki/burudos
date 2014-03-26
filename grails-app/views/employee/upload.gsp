@@ -80,8 +80,9 @@
 									<div class="uploader" id="uniform-file">
 										<input type="file" class="form-control" name="myFile"
 											id="file"> <span class="filename"
-											style="-webkit-user-select: none;">Click <strong>here</strong> to Select</span><span
-											class="action" style="-webkit-user-select: none;">Choose
+											style="-webkit-user-select: none;">Click <strong>here</strong>
+											to Select
+										</span><span class="action" style="-webkit-user-select: none;">Choose
 											File</span>
 									</div>
 								</div>

@@ -73,11 +73,12 @@
 								</g:eachError>
 							</ul>
 						</g:hasErrors>
+						
 						<div class="panel panel-default">
 
 							<div class="panel-heading">
 								<h4>
-									<span>Datos del empleado</span>
+									<span><g:message code="employee.create.heading" /></span>
 								</h4>
 							</div>
 							<div class="panel-body">

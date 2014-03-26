@@ -73,10 +73,10 @@ body {
 
 /*Error pages style*/
 body.errorPage, body.loginPage {
-	background: url(../images/patterns/2.png) repeat;
+	background: url(../burudos/static/images/patterns/2.png) repeat;
 }
 .errorContainer {
-	background: url(../images/patterns/6.png) repeat;
+	background: url(../burudos/static/images/patterns/6.png) repeat;
 	border:1px solid #c4c4c4;
 	border-radius: 2px;
 	-moz-border-radius:2px;
@@ -566,7 +566,7 @@ select {width: 150px;}
 }
 
 .nav-tabs.pattern {
-	background:url(../images/patterns/2.png) repeat;
+	background:url(../burudos/static/images/patterns/2.png) repeat;
 }
 
 .nav-tabs > .active > a, .nav-tabs > .active > a:hover {
@@ -1579,7 +1579,7 @@ select {width: 150px;}
 	top:0;
 	bottom:0;
 	border-right: 1px solid #d9d9d9;
-	background: url(../images/patterns/2.png) repeat;
+	background: url(../burudos/static/images/patterns/2.png) repeat;
 	width: 211px;
 }
 	#sidebarbg.hided {margin-left: -299px;}
@@ -1699,7 +1699,7 @@ select {width: 150px;}
 	top:0;
 	bottom:0;
 	border-left: 1px solid #d9d9d9;
-	background: url(../images/patterns/2.png) repeat;
+	background: url(../burudos/static/images/patterns/2.png) repeat;
 	width: 211px;
 }
 	#sidebarbg-right.hided {margin-right: -299px;}
@@ -1910,7 +1910,7 @@ select {width: 150px;}
 .panel.plain.hover {box-shadow: none;}
 	.panel .panel-heading {
 		height:auto;
-		background: url(../images/patterns/2.png) repeat;
+		background: url(../burudos/static/images/patterns/2.png) repeat;
 		position: relative;
 		border:1px solid #c4c4c4;
 		border-top-left-radius: 2px;
