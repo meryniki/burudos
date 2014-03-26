@@ -10,7 +10,7 @@ class EmployeeController {
 	static String btnName = "employee.btnLabel"
 	static String iconName = "employee.iconName"
 
-	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+	static allowedMethods = [save: "POST", update: "PUT"]
 
 	def index(Integer max) {
 		params.max = Math.min(max ?: 20, 100)

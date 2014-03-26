@@ -1,140 +1,127 @@
-<%@ page import="ar.com.burudos.party.Employee" %>
+<%@ page import="ar.com.burudos.party.Employee"%>
 
-
-
-<div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'uid', 'error')} ">
-	<label for="uid">
-		<g:message code="employee.uid.label" default="Uid" />
-		
+<div
+	class=" form-group fieldcontain ${hasErrors(bean: employeeInstance, field: 'uid', 'error')} ">
+	<label class="col-lg-3 control-label" for="uid"> <g:message
+			code="employee.uid.label" default="Uid" />
 	</label>
-	<g:textField name="uid" value="${employeeInstance?.uid}"/>
+	<div class="col-lg-9">
+		<g:textField name="uid" value="${employeeInstance?.uid}"
+			class="form-control uniform-input text" autofocus="autofocus" />
+	</div>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'name', 'error')} ">
-	<label for="name">
-		<g:message code="employee.name.label" default="Name" />
-		
+<div
+	class=" form-group fieldcontain ${hasErrors(bean: employeeInstance, field: 'name', 'error')} ">
+	<label class="col-lg-3 control-label" for="name"> <g:message
+			code="employee.name.label" default="Name" />
 	</label>
-	<g:textField name="name" value="${employeeInstance?.name}"/>
+	<div class="col-lg-9">
+		<g:textField name="name" value="${employeeInstance?.name}"
+			class="form-control uniform-input text" />
+	</div>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'email', 'error')} ">
-	<label for="email">
-		<g:message code="employee.email.label" default="Email" />
-		
+<div
+	class=" form-group fieldcontain ${hasErrors(bean: employeeInstance, field: 'names', 'error')} ">
+	<label class="col-lg-3 control-label" for="names"> <g:message
+			code="employee.names.label" default="Names" />
 	</label>
-	<g:field type="email" name="email" value="${employeeInstance?.email}"/>
+	<div class="col-lg-9">
+		<g:textField name="names" value="${employeeInstance?.names}"
+			class="form-control uniform-input text" />
+	</div>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'creationDate', 'error')} ">
-	<label for="creationDate">
-		<g:message code="employee.creationDate.label" default="Creation Date" />
-		
+<div
+	class=" form-group fieldcontain ${hasErrors(bean: employeeInstance, field: 'lastname', 'error')} ">
+	<label class="col-lg-3 control-label" for="lastname"> <g:message
+			code="employee.lastname.label" default="Lastname" />
 	</label>
-	<g:datePicker name="creationDate" precision="day"  value="${employeeInstance?.creationDate}" default="none" noSelection="['': '']" />
+	<div class="col-lg-9">
+		<g:textField name="lastname" value="${employeeInstance?.lastname}"
+			class="form-control uniform-input text" />
+	</div>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'createdBy', 'error')} ">
-	<label for="createdBy">
-		<g:message code="employee.createdBy.label" default="Created By" />
-		
+<div
+	class=" form-group fieldcontain ${hasErrors(bean: employeeInstance, field: 'dofbirth', 'error')} ">
+	<label class="col-lg-3 control-label" for="dofbirth"> <g:message
+			code="employee.dofbirth.label" default="Dofbirth" />
 	</label>
-	<g:textField name="createdBy" value="${employeeInstance?.createdBy}"/>
+	<div class="col-lg-9">
+		<g:datePicker name="dofbirth" precision="day"
+			value="${employeeInstance?.dofbirth}" years="${1900..2010}" default="none"
+			noSelection="['': '']" />
+	</div>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'lastUpdateDate', 'error')} ">
-	<label for="lastUpdateDate">
-		<g:message code="employee.lastUpdateDate.label" default="Last Update Date" />
-		
+<div
+	class=" form-group fieldcontain ${hasErrors(bean: employeeInstance, field: 'email', 'error')} ">
+	<label class="col-lg-3 control-label" for="email"> <g:message
+			code="employee.email.label" default="Email" />
 	</label>
-	<g:datePicker name="lastUpdateDate" precision="day"  value="${employeeInstance?.lastUpdateDate}" default="none" noSelection="['': '']" />
+	<div class="col-lg-9">
+		<g:field type="email" name="email" value="${employeeInstance?.email}"
+			class="form-control uniform-input text" />
+	</div>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'lastUpdateBy', 'error')} ">
-	<label for="lastUpdateBy">
-		<g:message code="employee.lastUpdateBy.label" default="Last Update By" />
-		
+<div
+	class=" form-group fieldcontain ${hasErrors(bean: employeeInstance, field: 'legajo', 'error')} ">
+	<label class="col-lg-3 control-label" for="legajo"> <g:message
+			code="employee.legajo.label" default="Legajo" />
 	</label>
-	<g:textField name="lastUpdateBy" value="${employeeInstance?.lastUpdateBy}"/>
+	<div class="col-lg-9">
+		<g:textField name="legajo" value="${employeeInstance?.legajo}"
+			class="form-control uniform-input text" />
+	</div>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'legajo', 'error')} ">
-	<label for="legajo">
-		<g:message code="employee.legajo.label" default="Legajo" />
-		
+<div
+	class=" form-group fieldcontain ${hasErrors(bean: employeeInstance, field: 'dofingreso', 'error')} required">
+	<label class="col-lg-3 control-label" for="dofingreso"> <g:message
+			code="employee.dofingreso.label" default="Dofingreso" /> <span
+		class="required-indicator">*</span>
 	</label>
-	<g:textField name="legajo" value="${employeeInstance?.legajo}"/>
+	<div class="col-lg-9">
+		<g:datePicker name="dofingreso" precision="day"
+			value="${employeeInstance?.dofingreso}" years="${1920..2020}"/>
+	</div>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'fullname', 'error')} ">
-	<label for="fullname">
-		<g:message code="employee.fullname.label" default="Fullname" />
-		
+<div
+	class=" form-group fieldcontain ${hasErrors(bean: employeeInstance, field: 'iscoordinator', 'error')} ">
+	<label class="col-lg-3 control-label" for="iscoordinator"> <g:message
+			code="employee.iscoordinator.label" default="Iscoordinator" />
 	</label>
-	<g:textField name="fullname" value="${employeeInstance?.fullname}"/>
+	<div class="col-lg-9">
+		<g:checkBox name="iscoordinator"
+			value="${employeeInstance?.iscoordinator}" />
+	</div>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'names', 'error')} ">
-	<label for="names">
-		<g:message code="employee.names.label" default="Names" />
-		
+<div
+	class=" form-group fieldcontain ${hasErrors(bean: employeeInstance, field: 'isworker', 'error')} ">
+	<label class="col-lg-3 control-label" for="isworker"> <g:message
+			code="employee.isworker.label" default="Isworker" />
 	</label>
-	<g:textField name="names" value="${employeeInstance?.names}"/>
+	<div class="col-lg-9">
+		<g:checkBox name="isworker" value="${employeeInstance?.isworker}" />
+	</div>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'lastname', 'error')} ">
-	<label for="lastname">
-		<g:message code="employee.lastname.label" default="Lastname" />
-		
+<div
+	class=" form-group fieldcontain ${hasErrors(bean: employeeInstance, field: 'bu', 'error')} ">
+	<label class="col-lg-3 control-label" for="bu"> <g:message
+			code="employee.bu.label" default="Bu" />
 	</label>
-	<g:textField name="lastname" value="${employeeInstance?.lastname}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'dofingreso', 'error')} required">
-	<label for="dofingreso">
-		<g:message code="employee.dofingreso.label" default="Dofingreso" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:datePicker name="dofingreso" precision="day"  value="${employeeInstance?.dofingreso}"  />
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'bu', 'error')} ">
-	<label for="bu">
-		<g:message code="employee.bu.label" default="Bu" />
-		
-	</label>
-	<g:select id="bu" name="bu.id" from="${ar.com.burudos.business.BussinesUnit.list()}" optionKey="id" value="${employeeInstance?.bu?.id}" class="many-to-one" noSelection="['null': '']"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'dofbirth', 'error')} ">
-	<label for="dofbirth">
-		<g:message code="employee.dofbirth.label" default="Dofbirth" />
-		
-	</label>
-	<g:datePicker name="dofbirth" precision="day"  value="${employeeInstance?.dofbirth}" default="none" noSelection="['': '']" />
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'isworker', 'error')} ">
-	<label for="isworker">
-		<g:message code="employee.isworker.label" default="Isworker" />
-		
-	</label>
-	<g:checkBox name="isworker" value="${employeeInstance?.isworker}" />
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'iscoordinator', 'error')} ">
-	<label for="iscoordinator">
-		<g:message code="employee.iscoordinator.label" default="Iscoordinator" />
-		
-	</label>
-	<g:checkBox name="iscoordinator" value="${employeeInstance?.iscoordinator}" />
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: employeeInstance, field: 'basic', 'error')} required">
-	<label for="basic">
-		<g:message code="employee.basic.label" default="Basic" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:field name="basic" type="number" value="${employeeInstance.basic}" required=""/>
+	<div class="col-lg-9">
+		<g:select id="bu" name="bu.id"
+			from="${ar.com.burudos.business.BussinesUnit.list()}" optionKey="id"
+			value="${employeeInstance?.bu?.id}" class="many-to-one"
+			noSelection="['null': '']" />
+		<span class="help-block blue span8">Donde realiza las ventas</span>
+	</div>
 </div>
 

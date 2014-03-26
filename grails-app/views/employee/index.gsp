@@ -5,7 +5,7 @@
 <meta name="layout" content="main">
 <g:set var="entityName"
 	value="${message(code: 'employee.label', default: 'Employee')}" />
-<title><g:message code="employee.list.label" args="[entityName]" /></title>
+<title><g:message code="employee.btnLabel" args="[entityName]" /></title>
 </head>
 <body>
 	<div id="content" class="clearfix">
@@ -13,7 +13,7 @@
 			<div class="heading">
 
 				<h3>
-					<g:message code="employee.list.label" args="[entityName]" />
+					<g:message code="employee.btnLabel" args="[entityName]" />
 				</h3>
 
 				<div class="resBtnSearch">
@@ -61,7 +61,10 @@
 					</ul>
 				</g:hasErrors>
 
-
+				<g:if test="${employeeInstanceCount == 0}">
+				<h4> No hay registros </h4>
+				</g:if>
+				<g:if test="${employeeInstanceCount != 0}">
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="panel panel-default gradient">
@@ -100,19 +103,7 @@
 												<div class="DTTT_container">
 													<a class="DTTT_button DTTT_button_copy"
 														id="ToolTables_DataTables_Table_1_0"> <span>Copy</span>
-														<div
-															style="position: absolute; left: 0px; top: 0px; width: 42px; height: 27px; z-index: 99;">
-															<embed id="ZeroClipboard_TableToolsMovie_1"
-																src="plugins/tables/dataTables/swf/copy_csv_xls_pdf.swf"
-																loop="false" menu="false" quality="best"
-																bgcolor="#ffffff" width="42" height="27"
-																name="ZeroClipboard_TableToolsMovie_1" align="middle"
-																allowscriptaccess="always" allowfullscreen="false"
-																type="application/x-shockwave-flash"
-																pluginspage="http://www.macromedia.com/go/getflashplayer"
-																flashvars="id=1&amp;width=42&amp;height=27"
-																wmode="transparent">
-														</div>
+														
 													</a> <a class="DTTT_button DTTT_button_print"
 														id="ToolTables_DataTables_Table_1_1"
 														title="View print view"> <span>Print</span>
@@ -203,6 +194,12 @@
 										</div>
 									</div>
 								</div>
+								</div>
+								</div>
+								</div>
+								</div>
+								</g:if>
+								
 							</div>
 						</div>
 					</div>

@@ -93,6 +93,10 @@
 	src="${resource(dir: 'js', file:'main.js')}"></script>
 <script type="text/javascript"
 	src="${resource(dir: 'js', file:'dashboard.js')}"></script>
+	
+<!--  Mi plugins -->
+<script type="text/javascript"
+	src="${resource(dir: 'js', file:'mi.js')}"></script>
 
 <g:layoutHead />
 <g:javascript library="jquery" plugin="jquery" />

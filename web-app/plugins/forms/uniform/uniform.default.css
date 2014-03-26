@@ -301,7 +301,7 @@ div.uploader {
 }
 
 div.uploader span.action {
-  background: url(choose-file.png) no-repeat;
+  background: url(../../../images/choose-file.png) no-repeat;
   height: 30px;
   line-height: 24px;
 }
