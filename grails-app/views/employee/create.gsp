@@ -73,7 +73,7 @@
 								</g:eachError>
 							</ul>
 						</g:hasErrors>
-						
+
 						<div class="panel panel-default">
 
 							<div class="panel-heading">
@@ -100,7 +100,9 @@
 							</div>
 						</div>
 					</div>
-
 				</div>
-			</div></body>
+			</div>
+		</div>
+	</div>
+</body>
 </html>

@@ -23,6 +23,7 @@ class Summary {
 			if (mparty.bu.id == bu.id){
 				//Transaction.findAllWhere(party=mparty.id,op=op.id).each{ tx->
 				Transaction.list().each{ tx->
+					//Fecha
 					if ( tx.party.id == mparty.id && tx.op.id == op.id )
 						quantity = quantity + 1;
 				}

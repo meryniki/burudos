@@ -90,7 +90,6 @@
 									class="btn btn-info"
 									value="${message(code: 'default.button.upload.label', default: 'uploadFile')}"
 									onclick="showThinking()" />
-
 							</div>
 						</g:uploadForm>
 					</div>

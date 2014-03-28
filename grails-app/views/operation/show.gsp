@@ -1,63 +1,124 @@
 
-<%@ page import="ar.com.burudos.sales.Operation" %>
+<%@ page import="ar.com.burudos.sales.Operation"%>
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta name="layout" content="main">
-		<g:set var="entityName" value="${message(code: 'operation.label', default: 'Operation')}" />
-		<title><g:message code="default.show.label" args="[entityName]" /></title>
-	</head>
-	<body>
-		<a href="#show-operation" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-		<div class="nav" role="navigation">
-			<ul>
-				<li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-				<li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-				<li><g:link class="create" action="upload"><g:message code="default.upload.label" args="[entityName]" /></g:link></li>
+<head>
+<meta name="layout" content="main">
+<g:set var="entityName"
+	value="${message(code: 'operation.label', default: 'operation')}" />
+<title><g:message code="default.show.label" args="[entityName]" /></title>
+</head>
+<body>
+
+	<div id="content" class="clearfix">
+		<div class="contentwrapper">
+			<div class="heading">
+
+				<h3>
+					<g:message code="operation.btnLabel" args="[entityName]" />
+				</h3>
+
+				<div class="resBtnSearch">
+					<a href="#"><span class="icon16 icomoon-icon-search-3"></span></a>
+				</div>
+
+				<ul class="breadcrumb">
+					<li>You are here:</li>
+					<li><a href="#" class="tip" title="" data-hasqtip="true">
+							<span class="icon16 icomoon-icon-screen-2"></span>
+					</a> <span class="divider"> <span
+							class="icon16 icomoon-icon-arrow-right-3"></span>
+					</span></li>
+					<li class="active"><g:message code="operation.show.label"
+							args="[entityName]" /></li>
+				</ul>
+
+			</div>
+
+			<ul class="bigBtnIcon">
+				<li><g:link class="create" action="">
+						<span class="icon icomoon-icon-menu"></span>
+						<g:message code="default.list.label" args="[entityName]" />
+					</g:link></li>
 			</ul>
+
+
+
+			<div class="row">
+
+				<div class="col-lg-2"></div>
+
+				<div class="col-lg-8">
+
+					<div id="show-operation" class="content scaffold-show" role="main">
+						<h1>
+							<g:message code="default.show.label" args="[entityName]" />
+						</h1>
+						<g:if test="${flash.message}">
+							<div class="message" role="status">
+								${flash.message}
+							</div>
+						</g:if>
+
+						<div class="panel panel-default">
+
+							<div class="panel-heading">
+								<h4>
+									<span><g:message code="operation.show.label"
+											args="[entityName]" /></span>
+								</h4>
+							</div>
+							<div class="panel-body">
+
+								<ul class="col-lg-12">
+
+									<g:if test="${operationInstance?.code}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="operation.code.label" default="Code" /></span> <span
+											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
+										<g:fieldValue bean="${operationInstance}" field="code" /></span></li>
+									</g:if>
+
+									<g:if test="${operationInstance?.meaning}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="operation.meaning.label" default="Meaning" /></span> <span
+											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
+										<g:fieldValue bean="${operationInstance}" field="meaning" /></span></li>
+									</g:if>
+
+									<g:if test="${operationInstance?.description}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="operation.description.label" default="Description" /></span>
+
+											<span class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
+										<g:fieldValue bean="${operationInstance}" field="description" /></span></li>
+									</g:if>
+
+								</ul>
+
+								<ul class="bigBtnIcon" style="display: -webkit-box;">
+									<li><g:link class="edit" action="edit"
+											resource="${operationInstance}">
+											<span class="icon icomoon-icon-pencil"></span>
+											<g:message code="default.button.edit.label" default="Edit" />
+										</g:link></li>
+									<li><g:link class="delete" action="delete"
+											value="${message(code: 'default.button.delete.label', default: 'Delete')}"
+											resource="${operationInstance}"
+											onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
+											<span class="icon icomoon-icon-backspace"></span>
+											<g:message code="default.button.delete.label"
+												default="Delete" />
+										</g:link></li>
+								</ul>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
 		</div>
-		<div id="show-operation" class="content scaffold-show" role="main">
-			<h1><g:message code="default.show.label" args="[entityName]" /></h1>
-			<g:if test="${flash.message}">
-			<div class="message" role="status">${flash.message}</div>
-			</g:if>
-			<ol class="property-list operation">
-			
-				<g:if test="${operationInstance?.code}">
-				<li class="fieldcontain">
-					<span id="code-label" class="property-label"><g:message code="operation.code.label" default="Code" /></span>
-					
-						<span class="property-value" aria-labelledby="code-label"><g:fieldValue bean="${operationInstance}" field="code"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${operationInstance?.meaning}">
-				<li class="fieldcontain">
-					<span id="meaning-label" class="property-label"><g:message code="operation.meaning.label" default="Meaning" /></span>
-					
-						<span class="property-value" aria-labelledby="meaning-label"><g:fieldValue bean="${operationInstance}" field="meaning"/></span>
-					
-				</li>
-				</g:if>
-			
-				<g:if test="${operationInstance?.description}">
-				<li class="fieldcontain">
-					<span id="description-label" class="property-label"><g:message code="operation.description.label" default="Description" /></span>
-					
-						<span class="property-value" aria-labelledby="description-label"><g:fieldValue bean="${operationInstance}" field="description"/></span>
-					
-				</li>
-				</g:if>
-			
-			</ol>
-			<g:form url="[resource:operationInstance, action:'delete']" method="DELETE">
-				<fieldset class="buttons">
-					<g:link class="edit" action="edit" resource="${operationInstance}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-					<g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-				</fieldset>
-			</g:form>
-		</div>
-	</body>
+	</div>
+</body>
 </html>

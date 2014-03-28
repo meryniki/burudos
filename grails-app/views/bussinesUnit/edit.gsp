@@ -84,7 +84,7 @@
 							</div>
 							<div class="panel-body">
 								<g:form url="[resource:bussinesUnitInstance, action:'update']"
-									method="PUT">
+									class="form-horizontal"  method="PUT">
 									<g:hiddenField name="version"
 										value="${bussinesUnitInstance?.version}" />
 									<fieldset class="form">

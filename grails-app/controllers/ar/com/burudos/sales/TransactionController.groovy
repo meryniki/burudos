@@ -18,7 +18,7 @@ class TransactionController {
 	static String btnName = "transaction.btnLabel"
 	static String iconName = "transaction.iconName"
 
-	static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+	static allowedMethods = [save: "POST", update: "PUT"]
 
 	def index(Integer max) {
 		params.max = Math.min(max ?: 20, 100)

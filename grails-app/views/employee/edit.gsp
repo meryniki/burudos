@@ -79,7 +79,7 @@
 
 							<div class="panel-heading">
 								<h4>
-									<span><g:message code="employee.create.heading" /></span>
+									<span><g:message code="employee.edit.heading" /></span>
 								</h4>
 							</div>
 							<div class="panel-body">
@@ -95,7 +95,6 @@
 											<g:actionSubmit class="save" action="update"
 												value="${message(code: 'default.button.update.label', default: 'Update')}" />
 										</div>
-
 									</fieldset>
 								</g:form>
 							</div>
@@ -107,3 +106,5 @@
 	</div>
 </body>
 </html>
+
+
