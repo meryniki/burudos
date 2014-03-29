@@ -1,8 +1,11 @@
 package ar.com.burudos.party
 
 import java.util.Date;
+import ar.com.burudos.sales.Summary;
 
-import ar.com.burudos.business.BussinesUnit
+import ar.com.burudos.business.BussinesUnit;
+import ar.com.burudos.sales.Transaction;
+import ar.com.burudos.sales.Operation;
 
 class Employee extends Party{
 
@@ -51,7 +54,7 @@ class Employee extends Party{
 	public String getMyName() {
 		def list = []
 		if (lastname && lastname.trim())
-		list << lastname;
+			list << lastname;
 		if (names && names.trim())
 			list << names;
 		if (list.size() > 0)
@@ -64,7 +67,7 @@ class Employee extends Party{
 		last = fullname.split(",")
 		return last[0];
 	}
-	
+
 	public String getMyNames() {
 		def list = []
 		def last = []
@@ -87,5 +90,19 @@ class Employee extends Party{
 
 	String toString() {
 		"$name";
+	}
+
+	def getStringOfSales(){
+		String tmp;
+		int quantity;
+		Operation.list().each { op->
+			Transaction.list().each{ tx->
+				//Fecha
+				if ( tx.party.id == this.id && tx.op.id == op.id )
+					quantity = quantity + 1;
+			}
+		tmp+=op.toString()+":"+quantity.toString()+"\n";
+		}
+		return tmp;
 	}
 }

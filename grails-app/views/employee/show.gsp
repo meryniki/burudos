@@ -76,7 +76,7 @@
 								</h4>
 							</div>
 							<div class="panel-body">
-						
+
 								<ul class="col-lg-12">
 									<g:if test="${employeeInstance?.uid}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
@@ -242,7 +242,68 @@
 				</div>
 			</div>
 
+
+			<div class="row">
+
+				<div class="col-lg-2"></div>
+
+				<div class="col-lg-8">
+
+					<div id="show-employee" class="content scaffold-show" role="main">
+						<h1>
+							<g:message code="default.sales.label" args="[entityName]" />
+						</h1>
+						<g:if test="${flash.message}">
+							<div class="message" role="status">
+								${flash.message}
+							</div>
+						</g:if>
+
+						<div class="panel panel-default">
+
+							<div class="panel-heading">
+								<h4>
+									<span><g:message code="employee.totals.show.label"
+											args="[entityName]" /></span>
+								</h4>
+							</div>
+							<div class="panel-body">
+
+								<ul class="col-lg-12">
+									<g:if test="${employeeInstance?.uid}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="employee.uid.label" default="Uid" /> </span> <span
+											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
+											class="col-lg-6"><g:fieldValue
+													bean="${employeeInstance}" field="uid" /></span></li>
+									</g:if>
+								</ul>
+
+								<div class="simple-pie"
+									style="height: 230px; width: 100%; padding: 0px; position: relative;">
+
+									<img
+										src='http://chart.apis.google.com/chart?cht=p3
+&chs=500x150
+&chd=s:JMJJB
+&chl=Open+Source|J2EE|Web+Services|Ajax|Other'
+										alt='Course distribution' />
+
+									<ul class="bigBtnIcon" style="display: -webkit-box;">
+										<li><g:link class="print" action="print"
+												resource="${employeeInstance}">
+												<span class="icon icomoon-icon-print"></span>
+												<g:message code="default.button.print.label" default="Print" />
+											</g:link></li>
+									</ul>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
 		</div>
-	</div>
 </body>
 </html>
