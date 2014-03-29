@@ -49,6 +49,14 @@ grails.project.dependency.resolution = {
 	dependencies {
 		// specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
 		runtime 'mysql:mysql-connector-java:5.1.24'
+		// Drools
+		compile "org.drools:knowledge-api:5.6.0.Final"
+		compile "org.drools:drools-core:5.6.0.Final"
+		compile "org.drools:drools-compiler:5.6.0.Final"
+		compile "org.drools:drools-decisiontables:5.6.0.Final"
+		compile "org.drools:drools-templates:5.6.0.Final"
+		compile "com.thoughtworks.xstream:xstream:1.4.1"
+		compile "org.slf4j:slf4j-api:1.6.4"
 	}
 
 	plugins {
