@@ -27,7 +27,7 @@
 	src="${resource(dir: 'js', file:'jquery.js')}"></script>
 <script type="text/javascript"
 	src="${resource(dir: 'js', file:'jquery.min.js')}"></script>
-	<script type="text/javascript"
+<script type="text/javascript"
 	src="${resource(dir: 'js', file:'nhpup_1.1.js')}"></script>
 
 <!-- Important plugins put in all pages -->
@@ -93,7 +93,7 @@
 	src="${resource(dir: 'js', file:'main.js')}"></script>
 <script type="text/javascript"
 	src="${resource(dir: 'js', file:'dashboard.js')}"></script>
-	
+
 <!--  Mi plugins -->
 <script type="text/javascript"
 	src="${resource(dir: 'js', file:'mi.js')}"></script>
@@ -130,7 +130,7 @@
 <link rel="stylesheet"
 	href="${resource(dir: 'css', file: 'bootstrap/bootstrap.min.css')}"
 	type="text/css">
-	<link rel="stylesheet"
+<link rel="stylesheet"
 	href="${resource(dir: 'css', file: 'bootstrap/bootstrap-theme.css')}"
 	type="text/css">
 <link rel="stylesheet"

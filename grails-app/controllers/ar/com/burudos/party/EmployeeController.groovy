@@ -1,5 +1,9 @@
 package ar.com.burudos.party
+import grails.converters.JSON
 import ar.com.burudos.business.BussinesUnit
+import ar.com.burudos.sales.Transaction
+import ar.com.burudos.sales.Operation
+import ar.com.burudos.sales.Summary
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
@@ -21,6 +25,16 @@ class EmployeeController {
 		respond employeeInstance
 	}
 
+	def ventas(Employee employeeInstance) {
+		totalOfTransactions(employeeInstance)
+		respond employeeInstance
+	}
+	
+	def buventas(Employee employeeInstance) {
+		totalOfTransactionsBu(employeeInstance)
+		respond employeeInstance
+	}
+	
 	def create() {
 		respond new Employee(params)
 	}
@@ -156,4 +170,47 @@ class EmployeeController {
 			'*'{ render status: NOT_FOUND }
 		}
 	}
+	
+	/**
+	 * Obtener las transacciones para las liquidaciones
+	 * @return
+	 */
+	def totalOfTransactions(Employee employeeInstance){
+		def lista = [];
+		Operation.list().each{ this_op->
+			def query = Transaction.where {
+				op == this_op 
+				party == employeeInstance
+			}
+			def op_total = query.count();
+			def totals = [:];
+			totals.put("name", this_op.toString());
+			totals.put("y", op_total);
+			if (op_total!=0) 
+				lista.add(totals);
+		}
+		render (lista as JSON)
+	}
+	
+	/**
+	 * Obtener las transacciones totales para las liquidaciones
+	 * @return
+	 */
+	def totalOfTransactionsBu(Employee employeeInstance){
+		def lista = [];
+		Summary.list().each{ sum->
+			def totals = [:];
+			print sum.bu.id
+			print employeeInstance.bu.id
+			if (sum.bu.id == employeeInstance.bu.id)
+			{
+				totals.put("name", sum.op.toString());
+				totals.put("y", sum.quantity);
+				if ( sum.quantity != 0)
+					lista.add(totals);
+			}
+		}	
+		render (lista as JSON)
+	}
+	
 }
