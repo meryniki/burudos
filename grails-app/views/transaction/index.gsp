@@ -132,12 +132,11 @@
 												<!--Titulos con posibilidad de ordenar por-->
 												<thead>
 													<tr role="row">
-														<g:sortableColumn property="uid"
+														<g:sortableColumn property="op"
 															title="${message(code: 'transaction.op.label', default: 'Operacion')}" />
-														<g:sortableColumn property="name"
+														<g:sortableColumn property="date"
 															title="${message(code: 'transaction.date.label', default: 'Fecha')}" />
-
-														<g:sortableColumn property="legajo"
+														<g:sortableColumn property="party"
 															title="${message(code: 'transaction.party.label', default: 'Vendedor')}" />
 													</tr>
 												</thead>

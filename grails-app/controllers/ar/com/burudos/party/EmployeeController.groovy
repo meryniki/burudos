@@ -31,7 +31,7 @@ class EmployeeController {
 	}
 	
 	def buventas(Employee employeeInstance) {
-		totalOfTransactionsBu(employeeInstance)
+		totalOfSummary(employeeInstance)
 		respond employeeInstance
 	}
 	
@@ -196,7 +196,7 @@ class EmployeeController {
 	 * Obtener las transacciones totales para las liquidaciones
 	 * @return
 	 */
-	def totalOfTransactionsBu(Employee employeeInstance){
+	def totalOfSummary(Employee employeeInstance){
 		def lista = [];
 		Summary.list().each{ sum->
 			def totals = [:];
@@ -206,7 +206,7 @@ class EmployeeController {
 			{
 				totals.put("name", sum.op.toString());
 				totals.put("y", sum.quantity);
-				if ( sum.quantity != 0)
+				if ( sum.quantity && sum.quantity != 0)
 					lista.add(totals);
 			}
 		}	

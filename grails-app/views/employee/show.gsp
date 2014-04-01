@@ -3,12 +3,19 @@
 <html>
 <head>
 <meta name="layout" content="main">
-<script type="text/javascript"
-	src="${resource(dir: 'js', file:'jquery.min.js')}"></script>
+
+<r:require module="highcharts" />
+<r:require module="jsontable" />
+
 <g:set var="entityName"
 	value="${message(code: 'employee.label', default: 'Employee')}" />
+
 <title><g:message code="default.show.label" args="[entityName]" /></title>
-<script> 
+</head>
+<body>
+	<script type="text/javascript" src="../../static/js/jsonTable.js"></script>
+
+	<script type='text/javascript'>
 var chart; 
 var chartbu; 
 
@@ -16,7 +23,7 @@ function requestBuData()
 {
 	
     $.ajax({
-    url: 'http://localhost:8080/burudos/employee/buventas/${employeeInstance.id}',
+    url: '../buventas/${employeeInstance.id}',
     datatype: "json",
     success: function(databu) 
     {
@@ -29,7 +36,7 @@ function requestData()
 {
 	
     $.ajax({
-    url: 'http://localhost:8080/burudos/employee/ventas/${employeeInstance.id}',
+    url: '../ventas/${employeeInstance.id}',
     datatype: "json",
     success: function(data) 
     {
@@ -89,9 +96,8 @@ chartbu = new Highcharts.Chart({
   });
 }
 window.onload = makechart();
-    </script>
-</head>
-<body>
+</script>
+
 
 	<div id="content" class="clearfix">
 		<div class="contentwrapper">
@@ -363,11 +369,6 @@ window.onload = makechart();
 									</g:if>
 								</ul>
 
-
-								<script type="text/javascript"
-									src="${resource(dir: 'js', file:'highcharts.js')}"></script>
-
-
 								<div id="graph" style="width: 100%; height: 400px;"></div>
 
 								<ul class="bigBtnIcon" style="display: -webkit-box;">
@@ -377,6 +378,12 @@ window.onload = makechart();
 											<g:message code="default.button.print.label" default="Print" />
 										</g:link></li>
 								</ul>
+
+								<table id="dataTableEmp" cellpadding="0" cellspacing="0"
+									border="0"
+									class="tableTools display table table-bordered dataTable"
+									width="0%" id="DataTables_Table_1"
+									aria-describedby="DataTables_Table_1_info"></table>
 
 							</div>
 
@@ -409,9 +416,37 @@ window.onload = makechart();
 												<g:message code="default.button.print.label" default="Print" />
 											</g:link></li>
 									</ul>
-
+									<table id="dataTableBu" cellpadding="0" cellspacing="0"
+										border="0"
+										class="tableTools display table table-bordered dataTable"
+										width="0%" id="DataTables_Table_1"
+										aria-describedby="DataTables_Table_1_info"></table>
 								</div>
 
+								<script type="text/javascript">
+									    $("#dataTableBu").jsonTable({
+									        head : ['Operación','Cantidad'],
+									        json : ['name', 'y']
+									    });
+									    $("#dataTableEmp").jsonTable({
+									        head : ['Operación','Cantidad'],
+									        json : ['name', 'y']
+									    });
+
+									    var buoptions = {
+									    	    source : "../buventas/${employeeInstance.id}", // Can be a URL or a JSON object array
+									    	    rowClass : "mirowClass", //(optional) Class to be applied
+									    	}
+									    	 
+									    	$("#dataTableBu").jsonTableUpdate(buoptions);
+
+									    var options = {
+									    	    source : "../ventas/${employeeInstance.id}", // Can be a URL or a JSON object array
+									    	    rowClass : "mirowClass", //(optional) Class to be applied
+									    	}
+									    	 
+									    	$("#dataTableEmp").jsonTableUpdate(options);
+								</script>
 							</div>
 						</div>
 					</div>

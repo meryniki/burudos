@@ -85,7 +85,7 @@
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="transaction.party.label" default="Party" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
-											class="col-lg-6"> <g:link controller="party"
+											class="col-lg-6"> <g:link controller="employee"
 													action="show" id="${transactionInstance?.party?.id}">
 													${transactionInstance?.party?.encodeAsHTML()}
 												</g:link></span></li>

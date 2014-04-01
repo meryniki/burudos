@@ -77,27 +77,27 @@
 								<g:uploadForm action="createMonthly" class="form-horizontal">
 										<fieldset class="form">
 											<div
-												class=" fieldcontain ${hasErrors(bean: summaryInstance, field: 'month', 'error')} required">
-												<label for="month"> <g:message
-														code="summary.month.label" default="Month" /> <span
+												class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'month', 'error')} required">
+												<label class="col-lg-3 control-label" for="month"> <g:message
+														code="summary.month.label" default="Mes a totalizar" /> <span
 													class="required-indicator">*</span>
 												</label>
-												<g:field name="month" type="number" value="" required="" />
+												<g:datePicker name="month" value="${new Date()}" precision="month" years="${2014}"/>
 												<a
 													onmouseover="nhpup.popup('<g:message code="summary.month.help"/>');">?</a>
 											</div>
 											<div
-												class=" fieldcontain ${hasErrors(bean: summaryInstance, field: 'bu', 'error')} required">
-												<label for="bu"> <g:message code="summary.bu.label"
-														default="Bu" /> <span class="required-indicator">*</span>
+												class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'bu', 'error')} required">
+												<label class="col-lg-3 control-label" for="bu"> <g:message code="summary.bu.label"
+														default="Punto de Venta" /> <span class="required-indicator">*</span>
 												</label>
 												<g:select id="bu" name="bu"
 													from="${ar.com.burudos.business.BussinesUnit.list()}"
 													optionKey="id" required=""
 													value="${summaryInstance?.bu?.id}" class="many-to-one" />
 											</div>
-											<div class=" form-group fieldcontain">
-												<g:submitButton name="uploadFile" class="uploadFile"
+											<div class="center form-group">
+											<g:actionSubmit class="save btn btn-info" action="uploadFile" 
 													value="${message(code: 'default.button.create.label', default: 'uploadFile')}" />
 											</div>
 										</fieldset>

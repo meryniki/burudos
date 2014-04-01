@@ -135,11 +135,10 @@
 															title="${message(code: 'employee.uid.label', default: 'Uid')}" />
 														<g:sortableColumn property="name"
 															title="${message(code: 'employee.name.label', default: 'Name')}" />
-
 														<g:sortableColumn property="legajo"
 															title="${message(code: 'employee.legajo.label', default: 'Employee Number')}" />
-
-														<th><g:message code="employee.bu.label" default="Bu" /></th>
+														<g:sortableColumn property="bu"
+															title="${message(code: 'employee.bu.label', default: 'Punto de Venta')}" />
 													</tr>
 												</thead>
 												<!-- Pie con titulos-->
