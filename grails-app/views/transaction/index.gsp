@@ -10,6 +10,8 @@
 		args="[entityName]" /></title>
 </head>
 <body>
+	<script type="text/javascript" src="../static/plugins/tables/dataTables/jquery.dataTables.js"></script>
+
 	<div id="content" class="clearfix">
 		<div class="contentwrapper">
 			<div class="heading">
@@ -118,13 +120,13 @@
 													<div class="dataTables_filter"
 														id="DataTables_Table_1_filter">
 														<label> <span class="icon16 icomoon-icon-search"></span>
-															<input style="width: 75%;" type="text"
+															<input  id="search"  style="width: 75%;" type="text"
 															aria-controls="DataTables_Table_1" class="form-control">
 														</label>
 													</div>
 												</div>
 											</div>
-											<table cellpadding="0" cellspacing="0" border="0"
+											<table  id="thetable" cellpadding="0" cellspacing="0" border="0"
 												class="tableTools display table table-bordered dataTable"
 												width="100%" id="DataTables_Table_1"
 												aria-describedby="DataTables_Table_1_info">
@@ -196,5 +198,31 @@
 			</div>
 		</div>
 	</div>
+		<script type="text/javascript">
+		/* Custom filtering function which will filter data in column four between two values */
+		$.fn.dataTableExt.afnFiltering.push(function(oSettings, aData,
+				iDataIndex) {
+			var iSearch = document.getElementById('search').value ;
+			if (aData[0].indexOf(iSearch)!=-1 
+			||  aData[1].indexOf(iSearch)!=-1
+			||  aData[2].indexOf(iSearch)!=-1 ) {
+				return true;
+			}
+			
+			return false;
+		});
+
+		$(document).ready(function() {
+			/* Initialise datatables */
+			var oTable = $('#thetable').dataTable({
+		        "sDom": 'ip>'});
+
+			/* Add event listeners to the two range filtering inputs */
+			$('#search').keyup(function() {
+				oTable.fnDraw();
+			});
+		});
+		
+	</script>
 </body>
 </html>
