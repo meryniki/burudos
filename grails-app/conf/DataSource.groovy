@@ -43,7 +43,7 @@ environments {
 			dbCreate = "update"
 			//url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
 			url = "jdbc:mysql://localhost/burucps?useUnicode=yes&characterEncoding=UTF-8"
-			username = "prod"
+			username = "buru"
 			password = "prodamoaamo"
 			properties {
 			   maxActive = -1
