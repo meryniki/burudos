@@ -15,10 +15,43 @@ class EmployeeController {
 	static String iconName = "employee.iconName"
 
 	static allowedMethods = [save: "POST", update: "PUT"]
+	
+	def index(Integer max, Integer offset, String search) {
+		/*Initialize counts and params*/
+		def counting = 0;
+		def total = 0;
+		def lista = [];
+		def mapsearch = [:];
+		if (!search)
+			search = "";
+		if (!offset)
+			offset = 0;
+		if (!max)
+			max = 20;
+		
+		params.max = max;
+			
+		/*query depends on fields to filter*/
+		def query = "from Employee e where e.name like '%%" + search + 
+		                         "%%' or e.legajo like '%%" + search +
+								 "%%' or e.uid like '%%" + search +
+								 "%%' or e.bu.nombre like '%%" + search +
+								 "%%'"
 
-	def index(Integer max) {
-		params.max = Math.min(max ?: 20, 100)
-		respond Employee.list(params), model:[employeeInstanceCount: Employee.count()]
+		/* Use counting to have both values total and counting with only one query */
+		Employee.findAll(query,[offset: offset]).each{ trx->
+			if ( counting < max) {
+				lista.add(trx);
+				counting += 1;
+			}
+			total += 1;
+		}
+		/*The map will be passed as param in g:sorteable and g:paginate*/
+		mapsearch.put("search", search);
+
+		respond lista, model:[employeeInstanceCount: total,
+			mapsearch: mapsearch]
+		
 	}
 
 	def show(Employee employeeInstance) {
@@ -200,8 +233,6 @@ class EmployeeController {
 		def lista = [];
 		Summary.list().each{ sum->
 			def totals = [:];
-			print sum.bu.id
-			print employeeInstance.bu.id
 			if (sum.bu.id == employeeInstance.bu.id)
 			{
 				totals.put("name", sum.op.toString());

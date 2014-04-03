@@ -119,8 +119,9 @@
 													<div class="dataTables_filter"
 														id="DataTables_Table_1_filter">
 														<label> <span class="icon16 icomoon-icon-search"></span>
-															<input style="width: 75%;" type="text"
-															aria-controls="DataTables_Table_1" class="form-control">
+															<input id="search" style="width: 75%;" type="text"
+															aria-controls="DataTables_Table_1" class="form-control"
+															value="${mapsearch["search"]}" autofocus>
 														</label>
 													</div>
 												</div>
@@ -133,23 +134,23 @@
 
 												<thead>
 													<tr role="row">
-														<g:sortableColumn property="code"
+														<g:sortableColumn  params="${mapsearch}" property="code"
 															title="${message(code: 'bussinesUnit.uid.label', default: 'Uid')}" />
-														<g:sortableColumn property="nombre"
+														<g:sortableColumn params="${mapsearch}" property="nombre"
 															title="${message(code: 'bussinesUnit.name.label', default: 'Nombre')}" />
 														<g:sortableColumn property="father"
 															title="${message(code: 'bussinesUnit.father.label', default: 'Padre')}" />
 
-														<g:sortableColumn property="provincia"
+														<g:sortableColumn params="${mapsearch}" property="provincia"
 															title="${message(code: 'bussinesUnit.provincia.label', default: 'Provincia')}" />
 
-														<g:sortableColumn property="departamento"
+														<g:sortableColumn params="${mapsearch}" property="departamento"
 															title="${message(code: 'bussinesUnit.departamento.label', default: 'Departamento')}" />
 
-														<g:sortableColumn property="localidad"
+														<g:sortableColumn params="${mapsearch}" property="localidad"
 															title="${message(code: 'bussinesUnit.localidad.label', default: 'Localidad')}" />
 
-														<g:sortableColumn property="calle"
+														<g:sortableColumn params="${mapsearch}" property="calle"
 															title="${message(code: 'bussinesUnit.calle.label', default: 'Calle')}" />
 													</tr>
 												</thead>
@@ -219,7 +220,8 @@
 														class="dataTables_paginate paging_bootstrap pagination">
 														<ul class="pagination">
 															<li><g:paginate
-																	total="${bussinesUnitInstanceCount ?: 0}" /></li>
+																	total="${bussinesUnitInstanceCount ?: 0}" 
+																	 params="${mapsearch}"/></li>
 														</ul>
 													</div>
 												</div>
@@ -235,6 +237,24 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript" src="../static/plugins/tables/dataTables/jquery.dataTables.js"></script>
 
+	<script type="text/javascript">
+	var isearch = document.getElementById("search");
+	
+	/* Add event listeners to the two range filtering inputs */
+	isearch.addEventListener("change", function() {
+		var vmax = document.getElementById("max");
+		var voff = document.getElementById("offset");
+		var vser = document.getElementById("search");
+		var url = "./index?search=" + vser.value;
+		if (vmax)
+			url += "&max=" + vmax.value ;
+		if (voff)
+			url += "&offset=" + voff.value; 
+		
+		window.location.replace(url);
+	});
+	</script>
 </body>
 </html>

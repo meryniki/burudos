@@ -14,9 +14,41 @@ class OperationController {
 
 	static allowedMethods = [save: "POST", update: "PUT"]
 
-	def index(Integer max) {
-		params.max = Math.min(max ?: 10, 100)
-		respond Operation.list(params), model:[operationInstanceCount: Operation.count()]
+	def index(Integer max, Integer offset, String search) {
+		/*Initialize counts and params*/
+		def counting = 0;
+		def total = 0;
+		def lista = [];
+		def mapsearch = [:];
+		if (!search)
+			search = "";
+		if (!offset)
+			offset = 0;
+		if (!max)
+			max = 20;
+		
+		params.max = max;
+			
+		/*query depends on fields to filter*/
+		def query = "from Operation o where o.code like '%%" + search + 
+		                         "%%' or o.cat_plan like '%%" + search +
+								 "%%' or o.plan_promo like '%%" + search +
+								 "%%'"
+
+		/* Use counting to have both values total and counting with only one query */
+		Operation.findAll(query,[offset: offset]).each{ trx->
+			if ( counting < max) {
+				lista.add(trx);
+				counting += 1;
+			}
+			total += 1;
+		}
+		/*The map will be passed as param in g:sorteable and g:paginate*/
+		mapsearch.put("search", search);
+
+		respond lista, model:[operationInstanceCount: total,
+			mapsearch: mapsearch]
+		
 	}
 
 	def show(Operation operationInstance) {

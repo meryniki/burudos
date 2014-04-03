@@ -117,8 +117,9 @@
 													<div class="dataTables_filter"
 														id="DataTables_Table_1_filter">
 														<label> <span class="icon16 icomoon-icon-search"></span>
-															<input style="width: 75%;" type="text"
-															aria-controls="DataTables_Table_1" class="form-control">
+															<input id="search" style="width: 75%;" type="text"
+															aria-controls="DataTables_Table_1" class="form-control"
+															value="${mapsearch["search"]}" autofocus>
 														</label>
 													</div>
 												</div>
@@ -131,13 +132,13 @@
 												<!--Titulos con posibilidad de ordenar por-->
 												<thead>
 													<tr role="row">
-														<g:sortableColumn property="uid"
+														<g:sortableColumn params="${mapsearch}" property="uid"
 															title="${message(code: 'employee.uid.label', default: 'Uid')}" />
-														<g:sortableColumn property="name"
+														<g:sortableColumn params="${mapsearch}" property="name"
 															title="${message(code: 'employee.name.label', default: 'Name')}" />
-														<g:sortableColumn property="legajo"
+														<g:sortableColumn params="${mapsearch}" property="legajo"
 															title="${message(code: 'employee.legajo.label', default: 'Employee Number')}" />
-														<g:sortableColumn property="bu"
+														<g:sortableColumn params="${mapsearch}" property="bu"
 															title="${message(code: 'employee.bu.label', default: 'Punto de Venta')}" />
 													</tr>
 												</thead>
@@ -187,7 +188,8 @@
 														class="dataTables_paginate paging_bootstrap pagination">
 														<ul class="pagination">
 															<li><g:paginate
-																	total="${employeeInstanceCount ?: 0}" /></li>
+																	total="${employeeInstanceCount ?: 0}" 
+																	params="${mapsearch}"/></li>
 														</ul>
 													</div>
 												</div>
@@ -203,5 +205,24 @@
 			</div>
 		</div>
 	</div>
+		<script type="text/javascript" src="../static/plugins/tables/dataTables/jquery.dataTables.js"></script>
+
+	<script type="text/javascript">
+	var isearch = document.getElementById("search");
+	
+	/* Add event listeners to the two range filtering inputs */
+	isearch.addEventListener("change", function() {
+		var vmax = document.getElementById("max");
+		var voff = document.getElementById("offset");
+		var vser = document.getElementById("search");
+		var url = "./index?search=" + vser.value;
+		if (vmax)
+			url += "&max=" + vmax.value ;
+		if (voff)
+			url += "&offset=" + voff.value; 
+		
+		window.location.replace(url);
+	});
+	</script>
 </body>
 </html>

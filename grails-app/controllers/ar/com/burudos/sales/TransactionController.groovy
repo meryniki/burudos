@@ -34,9 +34,10 @@ class TransactionController {
 			params.max = "20";
 		int mioffset = Integer.parseInt(params.offset);
 		int mimax = Integer.parseInt(params.max);
-		
+
 		/*query depends on fields to filter*/
-		def query = "from Transaction t where t.op.code like '%%" + params.search + "%%' or t.party.name like '%%" + params.search + "%%'"
+		def query = "from Transaction t where t.op.code like '%%" + params.search +
+				"%%' or t.party.name like '%%" + params.search + "%%'"
 
 		/* Use counting to have both values total and counting with only one query */
 		Transaction.findAll(query,[offset: mioffset]).each{ trx->

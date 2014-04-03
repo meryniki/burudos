@@ -15,10 +15,43 @@ class SummaryController {
 
     static allowedMethods = [save: "POST", update: "PUT"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Summary.list(params), model:[summaryInstanceCount: Summary.count()]
-    }
+    def index(Integer max, Integer offset, String search) {
+		/*Initialize counts and params*/
+		def counting = 0;
+		def total = 0;
+		def lista = [];
+		def mapsearch = [:];
+		if (!search)
+			search = "";
+		if (!offset)
+			offset = 0;
+		if (!max)
+			max = 20;
+		
+		params.max = max;
+			
+		/*query depends on fields to filter*/
+		def query = "from Summary s where s.bu.nombre like '%%" + search + 
+		                         "%%' or s.op.cat_plan like '%%" + search +
+								 "%%' or s.op.plan_promo like '%%" + search +
+								 "%%' or s.op.code like '%%" + search +
+								 "%%'"
+
+		/* Use counting to have both values total and counting with only one query */
+		Summary.findAll(query,[offset: offset]).each{ trx->
+			if ( counting < max) {
+				lista.add(trx);
+				counting += 1;
+			}
+			total += 1;
+		}
+		/*The map will be passed as param in g:sorteable and g:paginate*/
+		mapsearch.put("search", search);
+
+		respond lista, model:[summaryInstanceCount: total,
+			mapsearch: mapsearch]
+		
+	}
 
     def show(Summary summaryInstance) {
         respond summaryInstance
