@@ -10,8 +10,7 @@ class StatementLine {
 	StatementLineGroup group
 	String description
 	Double unitAmount
-	Double salesOperationsAmount
-	Double removalOperationsAmount
+	Double operationsAmount
 	Double amount
 	Integer order
 
@@ -19,8 +18,7 @@ class StatementLine {
 		type (nullable : false, blank : false)
 		group (nullable : false, blank : false)
 		unitAmount (nullable : true)
-		salesOperationsAmount (nullable : true,, min : 0.0)
-		removalOperationsAmount (nullable : true, min : 0.0)
+		operationsAmount (nullable : true,, min : 0.0)
 		amount (nullable : false)
 		order (nullable : false)
 	}
@@ -29,8 +27,7 @@ class StatementLine {
 		type (defaultValue : StatementLineType.RULE)
 		group (defaultValue : StatementLineGroup.OTHERS)
 		unitAmount (defaultValue : 0)
-		salesOperationsAmount (defaultValue : 0)
-		removalOperationsAmount (defaultValue : 0)
+		operationsAmount (defaultValue : 0)
 		amount (defaultValue : 0)
 		order (defaultValue : 999)
 	}
