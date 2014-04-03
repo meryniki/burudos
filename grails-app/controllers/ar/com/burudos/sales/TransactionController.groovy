@@ -20,9 +20,37 @@ class TransactionController {
 
 	static allowedMethods = [save: "POST", update: "PUT"]
 
-	def index(Integer max) {
-		params.max = Math.min(max ?: 20, 100)
-		respond Transaction.list(params), model:[transactionInstanceCount: Transaction.count()]
+	def index() {
+		/*Initialize counts and params. The params are Strings*/
+		def counting = 0;
+		def total = 0;
+		def lista = [];
+		def mapsearch = [:];
+		if (!params.search)
+			params.search = "";
+		if (!params.offset)
+			params.offset = "0";
+		if (!params.max)
+			params.max = "20";
+		int mioffset = Integer.parseInt(params.offset);
+		int mimax = Integer.parseInt(params.max);
+		
+		/*query depends on fields to filter*/
+		def query = "from Transaction t where t.op.code like '%%" + params.search + "%%' or t.party.name like '%%" + params.search + "%%'"
+
+		/* Use counting to have both values total and counting with only one query */
+		Transaction.findAll(query,[offset: mioffset]).each{ trx->
+			if ( counting < mimax) {
+				lista.add(trx);
+				counting += 1;
+			}
+			total += 1;
+		}
+		/*The map will be passed as param in g:sorteable and g:paginate*/
+		mapsearch.put("search", params.search);
+
+		respond lista, model:[transactionInstanceCount: total,
+			mapsearch: mapsearch]
 	}
 
 	def show(Transaction transactionInstance) {
@@ -119,7 +147,7 @@ class TransactionController {
 	def uploadFile(Transaction transactionInstance) {
 		def code
 		def Map row_mapa = [:]
-		
+
 		def file = request.getFile('myFile')
 		def jfile = new java.io.File( "tx_${file.name}" )
 
@@ -178,18 +206,18 @@ class TransactionController {
 					row_mapa[BuruConstants.row_plan_h]    = row[8];
 					row_mapa[BuruConstants.row_plan_d]    = row[9];
 				}
-				
+
 				/*Creates the Op if not exists*/
 				if (Operation.findByCode(row_mapa[BuruConstants.row_op_code])==null) {
 					Operation.withNewSession{session->
 						try {
 							code = new Operation(code:row_mapa[BuruConstants.row_op_code],
-								                 cat_plan:row_mapa[BuruConstants.row_cat_plan],
-												 plan_promo:row_mapa[BuruConstants.row_promo]).save(failOnError: true, flush: true)
-												 //op_desde:Operation.findByCode(row_mapa[BuruConstants.row_plan_d])?.id,
-												 //op_hasta:Operation.findByCode(row_mapa[BuruConstants.row_plan_h])?.id).save(failOnError: true, flush: true)
+							cat_plan:row_mapa[BuruConstants.row_cat_plan],
+							plan_promo:row_mapa[BuruConstants.row_promo]).save(failOnError: true, flush: true)
+							//op_desde:Operation.findByCode(row_mapa[BuruConstants.row_plan_d])?.id,
+							//op_hasta:Operation.findByCode(row_mapa[BuruConstants.row_plan_h])?.id).save(failOnError: true, flush: true)
 						} catch (Exception e) {
-						    transactionInstance.errors.reject(row[9],row_mapa[BuruConstants.row_op_code]+BuruConstants.op_create_error)
+							transactionInstance.errors.reject(row[9],row_mapa[BuruConstants.row_op_code]+BuruConstants.op_create_error)
 							e.printStackTrace()
 							return
 						}
@@ -197,18 +225,18 @@ class TransactionController {
 				}
 				/*Creates the Client if not exists*/
 				if (row_mapa[BuruConstants.row_cliente_doc]!=null
-					&& Client.findByNdoc(row_mapa[BuruConstants.row_cliente_doc])==null) {
+				&& Client.findByNdoc(row_mapa[BuruConstants.row_cliente_doc])==null) {
 					Client.withNewSession{session->
 						try {
 							code = new Client(cname:row_mapa[BuruConstants.row_cliente],ndoc:row_mapa[BuruConstants.row_cliente_doc]).save(failOnError:true,flush:true)
 						} catch (Exception e) {
-						    transactionInstance.errors.reject(row[0],row_mapa[BuruConstants.row_cliente]+BuruConstants.cl_create_error)
+							transactionInstance.errors.reject(row[0],row_mapa[BuruConstants.row_cliente]+BuruConstants.cl_create_error)
 							e.printStackTrace()
 							return
 						}
 					}
 				}
-				
+
 				if (Employee.findByName(row_mapa[BuruConstants.row_emp])==null) {
 					transactionInstance.errors.reject(row[0],row_mapa[BuruConstants.row_emp]+BuruConstants.employee_exist_error)
 				}
@@ -219,18 +247,18 @@ class TransactionController {
 							date:  Date.parse("dd/MM/yyyy", row_mapa[BuruConstants.row_date]),
 							sds:   row_mapa[BuruConstants.row_sds],
 							ani:   row_mapa[BuruConstants.row_ani],
-							imei:  row_mapa[BuruConstants.row_imei], 
-							sim:   row_mapa[BuruConstants.row_sim], 
-							folio: row_mapa[BuruConstants.row_folio], 
-							partida:   row_mapa[BuruConstants.row_partida], 
-							equipo:    row_mapa[BuruConstants.row_equipo], 
+							imei:  row_mapa[BuruConstants.row_imei],
+							sim:   row_mapa[BuruConstants.row_sim],
+							folio: row_mapa[BuruConstants.row_folio],
+							partida:   row_mapa[BuruConstants.row_partida],
+							equipo:    row_mapa[BuruConstants.row_equipo],
 							//almacen:   BussinesUnit.findByCode(row_mapa[BuruConstants.row_almacen])?.id,
 							//cliente:   Client.findByNdoc(row_mapa[BuruConstants.row_cliente_doc]).id,
-							cancel:    row_mapa[BuruConstants.row_cancel], 
-							estado:    row_mapa[BuruConstants.row_estado], 
-							factura:   row_mapa[BuruConstants.row_factura], 
-							importe:   row_mapa[BuruConstants.row_importe], 
-							plan_desc: row_mapa[BuruConstants.row_plan_dec], 
+							cancel:    row_mapa[BuruConstants.row_cancel],
+							estado:    row_mapa[BuruConstants.row_estado],
+							factura:   row_mapa[BuruConstants.row_factura],
+							importe:   row_mapa[BuruConstants.row_importe],
+							plan_desc: row_mapa[BuruConstants.row_plan_dec],
 							debaut:    row_mapa[BuruConstants.row_debaut]
 							).save(failOnError: true, flush: true)
 				}

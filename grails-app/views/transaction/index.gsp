@@ -134,11 +134,11 @@
 												<!--Titulos con posibilidad de ordenar por-->
 												<thead>
 													<tr role="row">
-														<g:sortableColumn property="op"
+														<g:sortableColumn params="${mapsearch}" property="op"
 															title="${message(code: 'transaction.op.label', default: 'Operacion')}" />
-														<g:sortableColumn property="date"
+														<g:sortableColumn params="${mapsearch}" property="date"
 															title="${message(code: 'transaction.date.label', default: 'Fecha')}" />
-														<g:sortableColumn property="party"
+														<g:sortableColumn params="${mapsearch}" property="party"
 															title="${message(code: 'transaction.party.label', default: 'Vendedor')}" />
 													</tr>
 												</thead>
@@ -182,7 +182,8 @@
 														class="dataTables_paginate paging_bootstrap pagination">
 														<ul class="pagination">
 															<li><g:paginate
-																	total="${transactionInstanceCount ?: 0}" /></li>
+																	total="${transactionInstanceCount ?: 0}" 
+																	params="${mapsearch}"/></li>
 														</ul>
 													</div>
 												</div>
@@ -198,31 +199,24 @@
 			</div>
 		</div>
 	</div>
-		<script type="text/javascript">
-		/* Custom filtering function which will filter data in column four between two values */
-		$.fn.dataTableExt.afnFiltering.push(function(oSettings, aData,
-				iDataIndex) {
-			var iSearch = document.getElementById('search').value ;
-			if (aData[0].indexOf(iSearch)!=-1 
-			||  aData[1].indexOf(iSearch)!=-1
-			||  aData[2].indexOf(iSearch)!=-1 ) {
-				return true;
-			}
-			
-			return false;
-		});
+	<script type="text/javascript">
 
-		$(document).ready(function() {
-			/* Initialise datatables */
-			var oTable = $('#thetable').dataTable({
-		        "sDom": 'ip>'});
-
-			/* Add event listeners to the two range filtering inputs */
-			$('#search').keyup(function() {
-				oTable.fnDraw();
-			});
-		});
+		var isearch = document.getElementById("search");
 		
+			/* Add event listeners to the two range filtering inputs */
+			isearch.addEventListener("change", function() {
+				var vmax = document.getElementById("max");
+				var voff = document.getElementById("offset");
+				var vser = document.getElementById("search");
+				var url = "./index?search=" + vser.value;
+				if (vmax)
+					url += "&max=" + vmax.value ;
+				if (voff)
+					url += "&offset=" + voff.value; 
+				
+				window.location.replace(url);
+			});
+
 	</script>
 </body>
 </html>
