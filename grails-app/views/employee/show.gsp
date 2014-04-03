@@ -3,11 +3,101 @@
 <html>
 <head>
 <meta name="layout" content="main">
+
+<r:require module="highcharts" />
+<r:require module="jsontable" />
+
 <g:set var="entityName"
 	value="${message(code: 'employee.label', default: 'Employee')}" />
+
 <title><g:message code="default.show.label" args="[entityName]" /></title>
 </head>
 <body>
+	<script type="text/javascript" src="../../static/js/jsonTable.js"></script>
+
+	<script type='text/javascript'>
+var chart; 
+var chartbu; 
+
+function requestBuData() 
+{
+	
+    $.ajax({
+    url: '../buventas/${employeeInstance.id}',
+    datatype: "json",
+    success: function(databu) 
+    {
+           chartbu.series[0].setData(databu);
+    },      
+    });
+}
+
+function requestData() 
+{
+	
+    $.ajax({
+    url: '../ventas/${employeeInstance.id}',
+    datatype: "json",
+    success: function(data) 
+    {
+           chart.series[0].setData(data);
+    },      
+    });
+}
+
+function makechart()
+{
+$(document).ready(function() {
+    Highcharts.setOptions({
+        global: {
+            useUTC: false
+        }
+    });
+chart = new Highcharts.Chart({
+     chart: {
+        renderTo: 'graph',
+        type: 'pie',
+        events: {
+            load: requestData
+        }
+     },
+     series: [{
+         type: 'pie',
+         data: []
+     }],
+     title: {
+        text: 'Ventas'
+     }
+  });
+  });
+
+$(document).ready(function() {
+    Highcharts.setOptions({
+        global: {
+            useUTC: false
+        }
+    });
+chartbu = new Highcharts.Chart({
+     chart: {
+        renderTo: 'graphbu',
+        type: 'pie',
+        events: {
+            load: requestBuData
+        }
+     },
+     series: [{
+         type: 'pie',
+         data: []
+     }],
+     title: {
+        text: 'Totales'
+     }
+  });
+  });
+}
+window.onload = makechart();
+</script>
+
 
 	<div id="content" class="clearfix">
 		<div class="contentwrapper">
@@ -279,15 +369,45 @@
 									</g:if>
 								</ul>
 
-								<div class="simple-pie"
-									style="height: 230px; width: 100%; padding: 0px; position: relative;">
+								<div id="graph" style="width: 100%; height: 400px;"></div>
 
-									<img
-										src='http://chart.apis.google.com/chart?cht=p3
-&chs=500x150
-&chd=s:JMJJB
-&chl=Open+Source|J2EE|Web+Services|Ajax|Other'
-										alt='Course distribution' />
+								<ul class="bigBtnIcon" style="display: -webkit-box;">
+									<li><g:link class="print" action="print"
+											resource="${employeeInstance}">
+											<span class="icon icomoon-icon-print"></span>
+											<g:message code="default.button.print.label" default="Print" />
+										</g:link></li>
+								</ul>
+
+								<table id="dataTableEmp" cellpadding="0" cellspacing="0"
+									border="0"
+									class="tableTools display table table-bordered dataTable"
+									width="0%" id="DataTables_Table_1"
+									aria-describedby="DataTables_Table_1_info"></table>
+
+							</div>
+
+							<div class="panel panel-default">
+
+								<div class="panel-heading">
+									<h4>
+										<span><g:message code="employee.butotals.show.label"
+												args="[entityName]" /></span>
+									</h4>
+								</div>
+								<div class="panel-body">
+
+									<ul class="col-lg-12">
+										<g:if test="${employeeInstance?.uid}">
+											<li style="display: block;"><span class="blue col-lg-3"><g:message
+														code="employee.uid.label" default="Uid" /> </span> <span
+												class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
+												class="col-lg-6"><g:fieldValue
+														bean="${employeeInstance}" field="uid" /></span></li>
+										</g:if>
+									</ul>
+
+									<div id="graphbu" style="width: 100%; height: 400px;"></div>
 
 									<ul class="bigBtnIcon" style="display: -webkit-box;">
 										<li><g:link class="print" action="print"
@@ -296,14 +416,43 @@
 												<g:message code="default.button.print.label" default="Print" />
 											</g:link></li>
 									</ul>
+									<table id="dataTableBu" cellpadding="0" cellspacing="0"
+										border="0"
+										class="tableTools display table table-bordered dataTable"
+										width="0%" id="DataTables_Table_1"
+										aria-describedby="DataTables_Table_1_info"></table>
 								</div>
-							</div>
 
+								<script type="text/javascript">
+									    $("#dataTableBu").jsonTable({
+									        head : ['Operación','Cantidad'],
+									        json : ['name', 'y']
+									    });
+									    $("#dataTableEmp").jsonTable({
+									        head : ['Operación','Cantidad'],
+									        json : ['name', 'y']
+									    });
+
+									    var buoptions = {
+									    	    source : "../buventas/${employeeInstance.id}", // Can be a URL or a JSON object array
+									    	    rowClass : "mirowClass", //(optional) Class to be applied
+									    	}
+									    	 
+									    	$("#dataTableBu").jsonTableUpdate(buoptions);
+
+									    var options = {
+									    	    source : "../ventas/${employeeInstance.id}", // Can be a URL or a JSON object array
+									    	    rowClass : "mirowClass", //(optional) Class to be applied
+									    	}
+									    	 
+									    	$("#dataTableEmp").jsonTableUpdate(options);
+								</script>
+							</div>
 						</div>
 					</div>
 				</div>
-
 			</div>
 		</div>
+	</div>
 </body>
 </html>

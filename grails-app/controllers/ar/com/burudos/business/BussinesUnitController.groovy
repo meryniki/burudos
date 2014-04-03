@@ -14,11 +14,46 @@ class BussinesUnitController {
 
 	static allowedMethods = [save: "POST", update: "PUT"]
 
-	def index(Integer max) {
-		params.max = Math.min(max ?: 20, 100)
-		respond BussinesUnit.list(params), model:[bussinesUnitInstanceCount: BussinesUnit.count()]
-	}
+	def index(Integer max, Integer offset, String search) {
+		/*Initialize counts and params*/
+		def counting = 0;
+		def total = 0;
+		def lista = [];
+		def mapsearch = [:];
+		if (!search)
+			search = "";
+		if (!offset)
+			offset = 0;
+		if (!max)
+			max = 20;
+		
+		params.max = max;
+			
+		/*query depends on fields to filter*/
+		def query = "from BussinesUnit b where b.nombre like '%%" + search + 
+		                         "%%' or b.code like '%%" + search +
+								 "%%' or b.father.nombre like '%%" + search +
+								 "%%' or b.father.code like '%%" + search +
+								 "%%' or b.provincia like '%%" + search +
+								 "%%' or b.departamento like '%%" + search +
+								 "%%' or b.calle like '%%" + search +
+								 "%%'"
 
+		/* Use counting to have both values total and counting with only one query */
+		BussinesUnit.findAll(query,[offset: offset]).each{ trx->
+			if ( counting < max) {
+				lista.add(trx);
+				counting += 1;
+			}
+			total += 1;
+		}
+		/*The map will be passed as param in g:sorteable and g:paginate*/
+		mapsearch.put("search", search);
+
+		respond lista, model:[bussinesUnitInstanceCount: total,
+			mapsearch: mapsearch]
+	}
+	
 	def show(BussinesUnit bussinesUnitInstance) {
 		respond bussinesUnitInstance
 	}

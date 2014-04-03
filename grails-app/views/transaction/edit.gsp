@@ -95,8 +95,8 @@
 									</div>
 									<div class=" form-group fieldcontain">
 										<fieldset class="buttons">
-											<div class="form-group">
-												<g:actionSubmit class="save" action="update"
+											<div class="center form-group">
+											<g:actionSubmit class="save btn btn-info" action="update"
 													value="${message(code: 'default.button.update.label', default: 'Update')}" />
 											</div>
 										</fieldset>

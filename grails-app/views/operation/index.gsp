@@ -6,8 +6,7 @@
 <meta name="layout" content="main">
 <g:set var="entityName"
 	value="${message(code: 'operation.label', default: 'operation')}" />
-<title><g:message code="operation.btnLabel"
-		args="[entityName]" /></title>
+<title><g:message code="operation.btnLabel" args="[entityName]" /></title>
 </head>
 <body>
 	<div id="content" class="clearfix">
@@ -113,9 +112,12 @@
 												<div class="col-lg-4">
 													<div class="dataTables_filter"
 														id="DataTables_Table_1_filter">
-														<label> <span class="icon16 icomoon-icon-search"></span>
-															<input style="width: 75%;" type="text"
-															aria-controls="DataTables_Table_1" class="form-control">
+														<label> <span
+															class="icon16 icomoon-icon-search"></span> <input
+															id="search"
+															style="width: 75%;" type="text"
+															aria-controls="DataTables_Table_1" class="form-control"
+															value="${mapsearch["search"]}" autofocus>
 														</label>
 													</div>
 												</div>
@@ -128,11 +130,11 @@
 												<!--Titulos con posibilidad de ordenar por-->
 												<thead>
 													<tr role="row">
-														<g:sortableColumn property="uid"
+														<g:sortableColumn params="${mapsearch}" property="uid"
 															title="${message(code: 'operation.code.label', default: 'Codigo')}" />
-														<g:sortableColumn property="name"
+														<g:sortableColumn params="${mapsearch}" property="name"
 															title="${message(code: 'operation.meaning.label', default: 'Nombre')}" />
-														<g:sortableColumn property="legajo"
+														<g:sortableColumn params="${mapsearch}" property="legajo"
 															title="${message(code: 'operation.description.label', default: 'Descripcion')}" />
 													</tr>
 												</thead>
@@ -152,8 +154,7 @@
 													<g:each in="${operationInstanceList}" status="i"
 														var="operationInstance">
 														<tr class="gradeA ${(i % 2) == 0 ? 'even' : 'odd'}">
-															<td>
-															<g:link action="show"
+															<td><g:link action="show"
 																	id="${operationInstance.id}">
 																	${fieldValue(bean: operationInstance, field: "code")}
 																</g:link></td>
@@ -177,7 +178,8 @@
 														class="dataTables_paginate paging_bootstrap pagination">
 														<ul class="pagination">
 															<li><g:paginate
-																	total="${operationInstanceCount ?: 0}" /></li>
+																	total="${operationInstanceCount ?: 0}"
+																	params="${mapsearch}" /></li>
 														</ul>
 													</div>
 												</div>
@@ -193,6 +195,26 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript"
+		src="../static/plugins/tables/dataTables/jquery.dataTables.js"></script>
+
+	<script type="text/javascript">
+		var isearch = document.getElementById("search");
+
+		/* Add event listeners to the two range filtering inputs */
+		isearch.addEventListener("change", function() {
+			var vmax = document.getElementById("max");
+			var voff = document.getElementById("offset");
+			var vser = document.getElementById("search");
+			var url = "./index?search=" + vser.value;
+			if (vmax)
+				url += "&max=" + vmax.value;
+			if (voff)
+				url += "&offset=" + voff.value;
+
+			window.location.replace(url);
+		});
+	</script>
 </body>
 </html>
 

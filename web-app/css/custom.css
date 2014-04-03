@@ -30,3 +30,7 @@ form .control-group .controls-row .btn.special {margin-left: 10px;}
 	form .control-group .controls-row [class*="span"] {margin-left: 0 !important;}
 	form .control-group .controls-row .btn.special {margin-left: 0px;}
 }
+.mirowClass{
+	font-size: 10px;
+	width:30%;
+}

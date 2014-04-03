@@ -92,17 +92,4 @@ class Employee extends Party{
 		"$name";
 	}
 
-	def getStringOfSales(){
-		String tmp;
-		int quantity;
-		Operation.list().each { op->
-			Transaction.list().each{ tx->
-				//Fecha
-				if ( tx.party.id == this.id && tx.op.id == op.id )
-					quantity = quantity + 1;
-			}
-		tmp+=op.toString()+":"+quantity.toString()+"\n";
-		}
-		return tmp;
-	}
 }

@@ -1,5 +1,9 @@
 package ar.com.burudos.party
+import grails.converters.JSON
 import ar.com.burudos.business.BussinesUnit
+import ar.com.burudos.sales.Transaction
+import ar.com.burudos.sales.Operation
+import ar.com.burudos.sales.Summary
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
@@ -11,16 +15,59 @@ class EmployeeController {
 	static String iconName = "employee.iconName"
 
 	static allowedMethods = [save: "POST", update: "PUT"]
+	
+	def index(Integer max, Integer offset, String search) {
+		/*Initialize counts and params*/
+		def counting = 0;
+		def total = 0;
+		def lista = [];
+		def mapsearch = [:];
+		if (!search)
+			search = "";
+		if (!offset)
+			offset = 0;
+		if (!max)
+			max = 20;
+		
+		params.max = max;
+			
+		/*query depends on fields to filter*/
+		def query = "from Employee e where e.name like '%%" + search + 
+		                         "%%' or e.legajo like '%%" + search +
+								 "%%' or e.uid like '%%" + search +
+								 "%%' or e.bu.nombre like '%%" + search +
+								 "%%'"
 
-	def index(Integer max) {
-		params.max = Math.min(max ?: 20, 100)
-		respond Employee.list(params), model:[employeeInstanceCount: Employee.count()]
+		/* Use counting to have both values total and counting with only one query */
+		Employee.findAll(query,[offset: offset]).each{ trx->
+			if ( counting < max) {
+				lista.add(trx);
+				counting += 1;
+			}
+			total += 1;
+		}
+		/*The map will be passed as param in g:sorteable and g:paginate*/
+		mapsearch.put("search", search);
+
+		respond lista, model:[employeeInstanceCount: total,
+			mapsearch: mapsearch]
+		
 	}
 
 	def show(Employee employeeInstance) {
 		respond employeeInstance
 	}
 
+	def ventas(Employee employeeInstance) {
+		totalOfTransactions(employeeInstance)
+		respond employeeInstance
+	}
+	
+	def buventas(Employee employeeInstance) {
+		totalOfSummary(employeeInstance)
+		respond employeeInstance
+	}
+	
 	def create() {
 		respond new Employee(params)
 	}
@@ -156,4 +203,45 @@ class EmployeeController {
 			'*'{ render status: NOT_FOUND }
 		}
 	}
+	
+	/**
+	 * Obtener las transacciones para las liquidaciones
+	 * @return
+	 */
+	def totalOfTransactions(Employee employeeInstance){
+		def lista = [];
+		Operation.list().each{ this_op->
+			def query = Transaction.where {
+				op == this_op 
+				party == employeeInstance
+			}
+			def op_total = query.count();
+			def totals = [:];
+			totals.put("name", this_op.toString());
+			totals.put("y", op_total);
+			if (op_total!=0) 
+				lista.add(totals);
+		}
+		render (lista as JSON)
+	}
+	
+	/**
+	 * Obtener las transacciones totales para las liquidaciones
+	 * @return
+	 */
+	def totalOfSummary(Employee employeeInstance){
+		def lista = [];
+		Summary.list().each{ sum->
+			def totals = [:];
+			if (sum.bu.id == employeeInstance.bu.id)
+			{
+				totals.put("name", sum.op.toString());
+				totals.put("y", sum.quantity);
+				if ( sum.quantity && sum.quantity != 0)
+					lista.add(totals);
+			}
+		}	
+		render (lista as JSON)
+	}
+	
 }
