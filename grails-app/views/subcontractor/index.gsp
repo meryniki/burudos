@@ -6,7 +6,8 @@
 <meta name="layout" content="main">
 <g:set var="entityName"
 	value="${message(code: 'subcontractor.label', default: 'Subcontractor')}" />
-<title><g:message code="subcontractor.btnLabel" args="[entityName]" /></title>
+<title><g:message code="subcontractor.btnLabel"
+		args="[entityName]" /></title>
 </head>
 <body>
 	<div id="content" class="clearfix">
@@ -56,64 +57,159 @@
 						${flash.message}
 					</div>
 				</g:if>
-				<table>
-					<thead>
-						<tr>
+				<g:hasErrors bean="${employeeInstance}">
+					<ul class="errors" role="alert">
+						<g:eachError bean="${employeeInstance}" var="error">
+							<li
+								<g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message
+									error="${error}" /></li>
+						</g:eachError>
+					</ul>
+				</g:hasErrors>
 
-							<g:sortableColumn property="uid"
-								title="${message(code: 'subcontractor.uid.label', default: 'Uid')}" />
+				<g:if test="${employeeInstanceCount == 0}">
+					<h4>No hay registros</h4>
+				</g:if>
+				<g:if test="${employeeInstanceCount != 0}">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="panel panel-default gradient">
+								<div class="panel-heading">
+									<h4>
+										<span><g:message code="employee.list.label"
+												args="[entityName]" /></span>
+									</h4>
+								</div>
+								<div class="panel-body noPad clearfix">
+									<div class="responsive" tabindex="5001"
+										style="overflow: hidden; outline: none;">
+										<div id="DataTables_Table_1_wrapper"
+											class="dataTables_wrapper form-inline" role="grid">
+											<div class="row">
+												<div class="col-lg-12">
+													<div class="dataTables_filter"
+														id="DataTables_Table_1_filter">
+														<label> <span class="icon16 icomoon-icon-search"></span>
+															<input id="search" style="width: 75%;" type="text"
+															aria-controls="DataTables_Table_1" class="form-control"
+															value="${mapsearch["search"]}" autofocus>
+														</label>
+													</div>
+												</div>
+											</div>
+											<table cellpadding="0" cellspacing="0" border="0"
+												class="tableTools display table table-bordered dataTable"
+												width="100%" id="DataTables_Table_1"
+												aria-describedby="DataTables_Table_1_info">
 
-							<g:sortableColumn property="name"
-								title="${message(code: 'subcontractor.name.label', default: 'Name')}" />
+												<!--Titulos con posibilidad de ordenar por-->
+												<thead>
+													<tr role="row">
+														<g:sortableColumn params="${mapsearch}" property="uid"
+															title="${message(code: 'subcontractor.uid.label', default: 'Uid')}" />
 
-							<g:sortableColumn property="email"
-								title="${message(code: 'subcontractor.email.label', default: 'Email')}" />
+														<g:sortableColumn params="${mapsearch}" property="name"
+															title="${message(code: 'subcontractor.name.label', default: 'Name')}" />
 
-							<g:sortableColumn property="dofbeg"
-								title="${message(code: 'subcontractor.dofbeg.label', default: 'Dofbeg')}" />
+														<g:sortableColumn params="${mapsearch}" property="email"
+															title="${message(code: 'subcontractor.email.label', default: 'Email')}" />
 
-							<th><g:message code="subcontractor.bu.label" default="Bu" /></th>
+														<g:sortableColumn params="${mapsearch}" property="dofbeg"
+															title="${message(code: 'subcontractor.dofbeg.label', default: 'Dofbeg')}" />
 
-							<g:sortableColumn property="creationDate"
-								title="${message(code: 'subcontractor.creationDate.label', default: 'Creation Date')}" />
+														<th><g:message params="${mapsearch}"
+																code="subcontractor.bu.label" default="Bu" /></th>
 
-						</tr>
-					</thead>
-					<tbody>
-						<g:each in="${subcontractorInstanceList}" status="i"
-							var="subcontractorInstance">
-							<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
+													</tr>
+												</thead>
+												<!-- Pie con titulos-->
+												<tfoot>
+													<tr>
+														<th rowspan="1" colspan="1"><g:message
+																code="subcontractor.uid.label" default="Uid" /></th>
+														<th rowspan="1" colspan="1"><g:message
+																code="subcontractor.name.label" default="Name" /></th>
+														<th rowspan="1" colspan="1"><g:message
+																code="subcontractor.legajo.label" default="Email" /></th>
+														<th rowspan="1" colspan="1"><g:message
+																code="subcontractor.dofbeg.label" default="Dofbeg" /></th>
+														<th rowspan="1" colspan="1"><g:message
+																code="subcontractor.bu.label" default="Bu" /></th>
+													</tr>
+												</tfoot>
+												<!--Data-->
+												<tbody role="alert" aria-live="polite" aria-relevant="all">
 
-								<td><g:link action="show" id="${subcontractorInstance.id}">
-										${fieldValue(bean: subcontractorInstance, field: "uid")}
-									</g:link></td>
+													<g:each in="${subcontractorInstanceList}" status="i"
+														var="subcontractorInstance">
+														<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 
-								<td>
-									${fieldValue(bean: subcontractorInstance, field: "name")}
-								</td>
+															<td><g:link action="show"
+																	id="${subcontractorInstance.id}">
+																	${fieldValue(bean: subcontractorInstance, field: "uid")}
+																</g:link></td>
 
-								<td>
-									${fieldValue(bean: subcontractorInstance, field: "email")}
-								</td>
+															<td>
+																${fieldValue(bean: subcontractorInstance, field: "name")}
+															</td>
 
-								<td><g:formatDate date="${subcontractorInstance.dofbeg}" /></td>
+															<td>
+																${fieldValue(bean: subcontractorInstance, field: "email")}
+															</td>
 
-								<td>
-									${fieldValue(bean: subcontractorInstance, field: "bu")}
-								</td>
+															<td><g:formatDate
+																	date="${subcontractorInstance.dofbeg}" /></td>
 
-								<td><g:formatDate
-										date="${subcontractorInstance.creationDate}" /></td>
+															<td>
+																${fieldValue(bean: subcontractorInstance, field: "bu")}
+															</td>
 
-							</tr>
-						</g:each>
-					</tbody>
-				</table>
-				<div class="pagination">
-					<g:paginate total="${subcontractorInstanceCount ?: 0}" />
-				</div>
+															<td><g:formatDate
+																	date="${subcontractorInstance.creationDate}" /></td>
+
+														</tr>
+													</g:each>
+												</tbody>
+											</table>
+											<div class="row">
+												<div class="col-lg-8">
+													<div
+														class="dataTables_paginate paging_bootstrap pagination">
+														<ul class="pagination">
+															<li><g:paginate
+																	total="${subcontractorInstanceCount ?: 0}" /></li>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</g:if>
 			</div>
 		</div>
 	</div>
+<script type="text/javascript" src="../static/plugins/tables/dataTables/jquery.dataTables.js"></script>
+
+	<script type="text/javascript">
+	var isearch = document.getElementById("search");
+	
+	/* Add event listeners to the two range filtering inputs */
+	isearch.addEventListener("change", function() {
+		var vmax = document.getElementById("max");
+		var voff = document.getElementById("offset");
+		var vser = document.getElementById("search");
+		var url = "./index?search=" + vser.value;
+		if (vmax)
+			url += "&max=" + vmax.value ;
+		if (voff)
+			url += "&offset=" + voff.value; 
+		
+		window.location.replace(url);
+	});
+	</script>
 </body>
 </html>

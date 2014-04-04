@@ -7,7 +7,7 @@ class StatementLine {
 
 	static belongsTo = [statement : Statement]
 	StatementLineType type
-	StatementLineGroup group
+	StatementLineGroup paramGroup
 	String description
 	Double unitAmount
 	Double operationsAmount
@@ -16,7 +16,7 @@ class StatementLine {
 
 	static constraints = {
 		type (nullable : false, blank : false)
-		group (nullable : false, blank : false)
+		paramGroup (nullable : false, blank : false)
 		unitAmount (nullable : true)
 		operationsAmount (nullable : true, min : 0D)
 		amount (nullable : false)
@@ -25,15 +25,15 @@ class StatementLine {
 
 	static mapping = {
 		type (defaultValue : StatementLineType.RULE)
-		group (defaultValue : StatementLineGroup.OTHERS)
+		paramGroup (defaultValue : StatementLineGroup.OTHERS)
 		unitAmount (defaultValue : 0D)
 		operationsAmount (defaultValue : 0D)
 		amount (defaultValue : 0D)
 		order (defaultValue : 999)
 	}
 
-	static String getGroupDescription(StatementLineGroup group) {
-		switch (group) {
+	static String getGroupDescription(StatementLineGroup paramGroup) {
+		switch (paramGroup) {
 			case StatementLineGroup.SALES:
 				return "statement.line.sales"
 				break

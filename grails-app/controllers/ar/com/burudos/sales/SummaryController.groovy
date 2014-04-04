@@ -1,21 +1,21 @@
 package ar.com.burudos.sales
 
-
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import ar.com.burudos.business.BussinesUnit
+import ar.com.burudos.party.Employee
+import static java.util.Calendar.MONTH
 
 @Transactional(readOnly = true)
 class SummaryController {
-	
+
 	static Boolean linkMe = true
 	static String btnName = "summary.btnLabel"
 	static String iconName = "summary.iconName"
 
-    static allowedMethods = [save: "POST", update: "PUT"]
+	static allowedMethods = [save: "POST", update: "PUT"]
 
-    def index(Integer max, Integer offset, String search) {
+	def index(Integer max, Integer offset, String search) {
 		/*Initialize counts and params*/
 		def counting = 0;
 		def total = 0;
@@ -27,15 +27,15 @@ class SummaryController {
 			offset = 0;
 		if (!max)
 			max = 20;
-		
+
 		params.max = max;
-			
+
 		/*query depends on fields to filter*/
-		def query = "from Summary s where s.bu.nombre like '%%" + search + 
-		                         "%%' or s.op.cat_plan like '%%" + search +
-								 "%%' or s.op.plan_promo like '%%" + search +
-								 "%%' or s.op.code like '%%" + search +
-								 "%%'"
+		def query = "from Summary s where s.bu.nombre like '%%" + search +
+				"%%' or s.op.cat_plan like '%%" + search +
+				"%%' or s.op.plan_promo like '%%" + search +
+				"%%' or s.op.code like '%%" + search +
+				"%%'"
 
 		/* Use counting to have both values total and counting with only one query */
 		Summary.findAll(query,[offset: offset]).each{ trx->
@@ -50,111 +50,135 @@ class SummaryController {
 
 		respond lista, model:[summaryInstanceCount: total,
 			mapsearch: mapsearch]
-		
 	}
 
-    def show(Summary summaryInstance) {
-        respond summaryInstance
-    }
+	def show(Summary summaryInstance) {
+		respond summaryInstance
+	}
 
-    def create() {
-        respond new Summary(params)
-    }
+	def create() {
+		respond new Summary(params)
+	}
 
-    @Transactional
-    def save(Summary summaryInstance) {
-        if (summaryInstance == null) {
-            notFound()
-            return
-        }
+	@Transactional
+	def save(Summary summaryInstance) {
+		if (summaryInstance == null) {
+			notFound()
+			return
+		}
 
-        if (summaryInstance.hasErrors()) {
-            respond summaryInstance.errors, view:'create'
-            return
-        }
+		if (summaryInstance.hasErrors()) {
+			respond summaryInstance.errors, view:'create'
+			return
+		}
 
-        summaryInstance.save flush:true
+		summaryInstance.save flush:true
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'summaryInstance.label', default: 'Summary'), summaryInstance.id])
-                redirect summaryInstance
-            }
-            '*' { respond summaryInstance, [status: CREATED] }
-        }
-    }
+		request.withFormat {
+			form {
+				flash.message = message(code: 'default.created.message', args: [
+					message(code: 'summaryInstance.label', default: 'Summary'),
+					summaryInstance.id
+				])
+				redirect summaryInstance
+			}
+			'*' { respond summaryInstance, [status: CREATED] }
+		}
+	}
 
-    def edit(Summary summaryInstance) {
-        respond summaryInstance
-    }
+	def edit(Summary summaryInstance) {
+		respond summaryInstance
+	}
 
-    @Transactional
-    def update(Summary summaryInstance) {
-        if (summaryInstance == null) {
-            notFound()
-            return
-        }
+	@Transactional
+	def update(Summary summaryInstance) {
+		if (summaryInstance == null) {
+			notFound()
+			return
+		}
 
-        if (summaryInstance.hasErrors()) {
-            respond summaryInstance.errors, view:'edit'
-            return
-        }
+		if (summaryInstance.hasErrors()) {
+			respond summaryInstance.errors, view:'edit'
+			return
+		}
 
-        summaryInstance.create
+		summaryInstance.create
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'Summary.label', default: 'Summary'), summaryInstance.id])
-                redirect summaryInstance
-            }
-            '*'{ respond summaryInstance, [status: OK] }
-        }
-    }
-	
+		request.withFormat {
+			form {
+				flash.message = message(code: 'default.updated.message', args: [
+					message(code: 'Summary.label', default: 'Summary'),
+					summaryInstance.id
+				])
+				redirect summaryInstance
+			}
+			'*'{ respond summaryInstance, [status: OK] }
+		}
+	}
+
 	def domonthly = {
 	}
 
-@Transactional
-def createMonthly() {
-	def code
-	Operation.getAll().each() { op ->
-		code = new Summary(
-				op: op,
-				bu: BussinesUnit.findById(params.bu).id,
-				month: params.month
-				).save(failOnError: true, flush: true)
+	@Transactional
+	def createMonthly() {
+		def code
+		int counting = 0
+		Operation.getAll().each() { op->
+			
+			Employee.findAllWhere(bu:BussinesUnit.findById(params.bu)).each(){	mparty ->
+				def query = "from Transaction t where t.party.id = " + mparty.id  +
+				" and t.op.id = " + op.id  +
+				" and month(t.date) = " + params.month_month + 
+				" and year(t.date) = " + params.month_year 
+				Transaction.findAll(query).each() { trx->
+					counting += 1;
+				}
+			}
+			
+			code = new Summary(
+			op: op,
+			bu: BussinesUnit.findById(params.bu),
+			month: Date.parse("dd/MM/yyyy", "01/01/2014"),
+			quantity: counting
+			).save(failOnError: true, flush: true)
+		}
+
+		redirect action:"index"
 	}
 
-	redirect action:"index"
-}
 
+	@Transactional
+	def delete(Summary summaryInstance) {
 
-    @Transactional
-    def delete(Summary summaryInstance) {
+		if (summaryInstance == null) {
+			notFound()
+			return
+		}
 
-        if (summaryInstance == null) {
-            notFound()
-            return
-        }
+		summaryInstance.delete flush:true
 
-        summaryInstance.delete flush:true
+		request.withFormat {
+			form {
+				flash.message = message(code: 'default.deleted.message', args: [
+					message(code: 'Summary.label', default: 'Summary'),
+					summaryInstance.id
+				])
+				redirect action:"index", method:"GET"
+			}
+			'*'{ render status: NO_CONTENT }
+		}
+	}
 
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'Summary.label', default: 'Summary'), summaryInstance.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
-
-    protected void notFound() {
-        request.withFormat {
-            form {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'summaryInstance.label', default: 'Summary'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
+	protected void notFound() {
+		request.withFormat {
+			form {
+				flash.message = message(code: 'default.not.found.message', args: [
+					message(code: 'summaryInstance.label', default: 'Summary'),
+					params.id
+				])
+				redirect action: "index", method: "GET"
+			}
+			'*'{ render status: NOT_FOUND }
+		}
+	}
 }

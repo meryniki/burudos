@@ -14,10 +14,42 @@ class ParameterController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Parameter.list(params), model:[parameterInstanceCount: Parameter.count()]
-    }
+    def index(Integer max, Integer offset, String search) {
+		/*Initialize counts and params*/
+		def counting = 0;
+		def total = 0;
+		def lista = [];
+		def mapsearch = [:];
+		if (!search)
+			search = "";
+		if (!offset)
+			offset = 0;
+		if (!max)
+			max = 20;
+
+		params.max = max;
+
+		/*query depends on fields to filter*/
+		def query = "from Parameter p where p.paramCode like '%%" + search +
+				"%%' or p.paramCategory like '%%" + search +
+				"%%' or p.paramGroup like '%%" + search +
+				"%%' or p.paramDescription like '%%" + search +
+				"%%'"
+
+		/* Use counting to have both values total and counting with only one query */
+		Parameter.findAll(query,[offset: offset]).each{ trx->
+			if ( counting < max) {
+				lista.add(trx);
+				counting += 1;
+			}
+			total += 1;
+		}
+		/*The map will be passed as param in g:sorteable and g:paginate*/
+		mapsearch.put("search", search);
+
+		respond lista, model:[parameterInstanceCount: total,
+			mapsearch: mapsearch]
+	}
 
     def show(Parameter parameterInstance) {
         respond parameterInstance

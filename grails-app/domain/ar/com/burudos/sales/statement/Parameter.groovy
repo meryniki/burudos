@@ -32,7 +32,7 @@ class Parameter {
 		minValue (nullable : true)
 		bussinesUnit (nullable : false, validator: { val, obj ->
 			def paramForSameBU = Parameter.findByParamCodeAndBussinesUnit(obj.paramCode, obj.bussinesUnit)
-			return (!paramForSameBU) && (paramForSameBU.id != obj.id)
+			return (!paramForSameBU) && (paramForSameBU.id != obj.bussinesUnit.id)
 		})
 		// Auditoria
 		creationDate (nullable: true)
