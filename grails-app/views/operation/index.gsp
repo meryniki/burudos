@@ -76,40 +76,7 @@
 										<div id="DataTables_Table_1_wrapper"
 											class="dataTables_wrapper form-inline" role="grid">
 											<div class="row">
-												<div class="col-lg-4">
-													<div id="DataTables_Table_1_length"
-														class="dataTables_length">
-														<label> Lineas por pagina<span>
-																<div class="selector" style="width: 25% !important;">
-																	<span style="-webkit-user-select: none;">20</span> <select
-																		size="1" name="max" aria-controls="DataTables_Table_1">
-																		<option value="10">10</option>
-																		<option value="20" selected="selected">20</option>
-																		<option value="25">25</option>
-																		<option value="50">50</option>
-																		<option value="100">100</option>
-																	</select>
-																</div>
-														</span>
-														</label>
-													</div>
-												</div>
-												<div class="col-lg-4">
-													<div class="DTTT_container">
-														<a class="DTTT_button DTTT_button_copy"
-															id="ToolTables_DataTables_Table_1_0"> <span>Copy</span>
-
-														</a> <a class="DTTT_button DTTT_button_print"
-															id="ToolTables_DataTables_Table_1_1"
-															title="View print view"> <span>Print</span>
-														</a> <a class="DTTT_button DTTT_button_collection"
-															id="ToolTables_DataTables_Table_1_2"> <span>Save
-																<span class="caret"> </span>
-														</span>
-														</a>
-													</div>
-												</div>
-												<div class="col-lg-4">
+												<div class="col-lg-12">
 													<div class="dataTables_filter"
 														id="DataTables_Table_1_filter">
 														<label> <span

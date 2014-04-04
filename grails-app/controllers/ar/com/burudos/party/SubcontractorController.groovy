@@ -8,7 +8,7 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class SubcontractorController {
 	
-	static Boolean linkMe = true
+	static Boolean linkMe = false
 	static String btnName = "subcontractor.btnLabel"
 	static String iconName = "subcontractor.iconName"
 

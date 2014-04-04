@@ -82,7 +82,7 @@
 														code="summary.month.label" default="Mes a totalizar" /> <span
 													class="required-indicator">*</span>
 												</label>
-												<g:datePicker name="month" value="${new Date()}" precision="month" years="${2014}"/>
+												<g:datePicker name="month" precision="month" />
 												<a
 													onmouseover="nhpup.popup('<g:message code="summary.month.help"/>');">?</a>
 											</div>
@@ -97,7 +97,7 @@
 													value="${summaryInstance?.bu?.id}" class="many-to-one" />
 											</div>
 											<div class="center form-group">
-											<g:actionSubmit class="save btn btn-info" action="uploadFile" 
+											<g:actionSubmit class="save btn btn-info" action="createMonthly" 
 													value="${message(code: 'default.button.create.label', default: 'uploadFile')}" />
 											</div>
 										</fieldset>
