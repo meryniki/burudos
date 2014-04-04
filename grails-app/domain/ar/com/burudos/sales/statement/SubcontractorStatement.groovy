@@ -4,7 +4,7 @@ import ar.com.burudos.party.Subcontractor;
 
 class SubcontractorStatement {
 	
-	static hasOne = [subcontractor : Subcontractor]
+	static belongsTo = [subcontractor : Subcontractor]
 
     static constraints = {
     }

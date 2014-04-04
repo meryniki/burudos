@@ -4,7 +4,7 @@ import ar.com.burudos.party.Employee;
 
 class EmployeeStatement extends Statement {
 	
-	static hasOne = [employee : Employee]
+	static belongsTo = [employee : Employee]
 
     static constraints = {
     }

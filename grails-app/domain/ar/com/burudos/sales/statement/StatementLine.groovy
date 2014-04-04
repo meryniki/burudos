@@ -18,7 +18,7 @@ class StatementLine {
 		type (nullable : false, blank : false)
 		group (nullable : false, blank : false)
 		unitAmount (nullable : true)
-		operationsAmount (nullable : true,, min : 0.0)
+		operationsAmount (nullable : true, min : 0D)
 		amount (nullable : false)
 		order (nullable : false)
 	}
@@ -26,13 +26,13 @@ class StatementLine {
 	static mapping = {
 		type (defaultValue : StatementLineType.RULE)
 		group (defaultValue : StatementLineGroup.OTHERS)
-		unitAmount (defaultValue : 0)
-		operationsAmount (defaultValue : 0)
-		amount (defaultValue : 0)
+		unitAmount (defaultValue : 0D)
+		operationsAmount (defaultValue : 0D)
+		amount (defaultValue : 0D)
 		order (defaultValue : 999)
 	}
 
-	def getGroupDescription(StatementLineGroup group) {
+	static String getGroupDescription(StatementLineGroup group) {
 		switch (group) {
 			case StatementLineGroup.SALES:
 				return "statement.line.sales"

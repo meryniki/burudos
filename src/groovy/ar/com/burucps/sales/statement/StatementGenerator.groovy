@@ -17,7 +17,7 @@ import ar.com.burudos.business.BussinesUnit;
 import ar.com.burudos.party.Employee;
 import ar.com.burudos.sales.Summary;
 import ar.com.burudos.sales.Transaction;
-import ar.com.burudos.sales.statement.Parameters;
+import ar.com.burudos.sales.statement.Parameter;
 import ar.com.burudos.sales.statement.Statement;
 
 public class StatementGenerator {
