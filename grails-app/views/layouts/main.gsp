@@ -38,7 +38,7 @@
 			<div class="navbar-header">
 
 				<div id="burucpsLogo" role="banner">
-					<a class="home" href="/burudos/"><img width="180px"
+					<a class="home" href="/burucps/"><img width="180px"
 						src="${resource(dir: 'images', file: 'burucps_logo.png')}"
 						alt="BuruCPS" /></a>
 				</div>
@@ -46,7 +46,7 @@
 			</div>
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="/burudos/"><span
+					<li class="active"><a href="/burucps/"><span
 							class="icon16 icomoon-icon-home"></span> <span class="txt">Principal</span></a>
 					</li>
 				</ul>
@@ -54,7 +54,7 @@
 				<ul class="nav navbar-right usernav">
 					<li class="dropdown"><a href="#"
 						class="dropdown-toggle avatar" data-toggle="dropdown"> <img
-							src="images/avatar.jpg" alt="" class="image"> <span
+							src="${resource(dir: 'images', file: 'avatar.jpg')}" alt="" class="image"> <span
 							class="txt">unico@usuario.com</span> <b class="caret"></b>
 					</a>
 						<ul class="dropdown-menu">
