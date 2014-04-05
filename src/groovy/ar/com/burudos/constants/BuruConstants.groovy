@@ -7,6 +7,8 @@ import ar.com.burudos.party.Client;
 
 class BuruConstants {
 	static final MAX_FILE = 10*1024*1024 //10MB
+	static final NO_VALID_FILE = "Invalid file"
+	
 	static final String file_altas = "ALTA";
 	static final String file_cater = "CATER";
 	static final String file_post = "POSTVENTA";
@@ -41,5 +43,12 @@ class BuruConstants {
 	static final String row_plan_d="Plan desde"
 	static final String row_plan_h="Plan hasta"
 	static final String row_debaut="Debaut"
+	
+	static final String uploadFileEmployee="myFile"
+	static final String saveFileEmployee="carga_" + uploadFileEmployee
+	static final String uploadFileTransaction="myFile"
+	static final String saveFileTransaction="tx_" + uploadFileEmployee
+	static final String dateformatEmployee="MM/dd/yyyy"
+	
 
 }
