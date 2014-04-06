@@ -146,14 +146,24 @@ class TransactionController {
 
 	@Transactional
 	def uploadFile(Transaction transactionInstance) {
+
+		/*Analize each line of the file*/
+		def reportOfErrors = [:]
+		def mapreport = [:]
+		int linea = 0
 		def code
 		def Map row_mapa = [:]
 
-		def file = request.getFile('myFile')
-		def jfile = new java.io.File( "tx_${file.name}" )
-
+		/*File management*/
+		def file = request.getFile(BuruConstants.uploadFileTransaction)
+		def jfile = new java.io.File( BuruConstants.saveFileTransaction )
 		if(file && !file.empty && file.size < BuruConstants.MAX_FILE) {
 			file.transferTo( jfile )
+		}
+		else{
+			transactionInstance.errors.reject(BuruConstants.NO_VALID_FILE);
+			respond transactionInstance.errors, view:'upload_result', model:[report:mapreport]
+			return
 		}
 
 		jfile.splitEachLine('\t') { row ->
@@ -219,8 +229,11 @@ class TransactionController {
 							//op_hasta:Operation.findByCode(row_mapa[BuruConstants.row_plan_h])?.id).save(failOnError: true, flush: true)
 						} catch (Exception e) {
 							transactionInstance.errors.reject(row[9],row_mapa[BuruConstants.row_op_code]+BuruConstants.op_create_error)
-							e.printStackTrace()
-							return
+							linea = linea + 1
+							String sline = String.valueOf(linea);
+							reportOfErrors.put(sline, BuruConstants.op_create_error+row)
+
+							e.printStackTrace();
 						}
 					}
 				}
@@ -232,6 +245,10 @@ class TransactionController {
 							code = new Client(cname:row_mapa[BuruConstants.row_cliente],ndoc:row_mapa[BuruConstants.row_cliente_doc]).save(failOnError:true,flush:true)
 						} catch (Exception e) {
 							transactionInstance.errors.reject(row[0],row_mapa[BuruConstants.row_cliente]+BuruConstants.cl_create_error)
+							linea = linea + 1
+							String sline = String.valueOf(linea);
+							reportOfErrors.put(sline, BuruConstants.cl_create_error+row)
+
 							e.printStackTrace()
 							return
 						}
@@ -240,6 +257,9 @@ class TransactionController {
 
 				if (Employee.findByName(row_mapa[BuruConstants.row_emp])==null) {
 					transactionInstance.errors.reject(row[0],row_mapa[BuruConstants.row_emp]+BuruConstants.employee_exist_error)
+					linea = linea + 1
+					String sline = String.valueOf(linea);
+					reportOfErrors.put(sline, BuruConstants.employee_exist_error+row)
 				}
 				else{
 					code = new Transaction(
@@ -264,13 +284,20 @@ class TransactionController {
 							).save(failOnError: true, flush: true)
 				}
 			}catch (Exception e) {
-				e.printStackTrace();
 				transactionInstance.errors.reject(row[0], row_mapa[BuruConstants.row_emp]+BuruConstants.trx_create_error);
+
+				linea = linea + 1
+				String sline = String.valueOf(linea);
+				reportOfErrors.put(sline, BuruConstants.trx_create_error+row)
+				
+				e.printStackTrace();
 			}
 		}
-
+		
+		mapreport.put("report", reportOfErrors)
+		
 		if (transactionInstance.hasErrors()) {
-			respond transactionInstance.errors, view:'upload_result'
+			respond transactionInstance.errors, view:'upload_result', model:[report:mapreport]
 			return
 		}
 

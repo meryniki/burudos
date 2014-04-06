@@ -121,6 +121,7 @@ class EmployeeController {
 		}
 		else{
 			employeeInstance.errors.reject(BuruConstants.NO_VALID_FILE);
+			respond employeeInstance.errors, view:'upload_result', model:[report:mapreport]
 			return
 		}
 

@@ -1,7 +1,5 @@
 package ar.com.burudos.business
 
-
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
