@@ -1,0 +1,15 @@
+package ar.com.burucps.sales.statement
+
+global ar.com.burucps.sales.statement.ParameterResolver parameterResolver 
+global ar.com.burucps.business.BusinessUnitTree businessUnitsTree
+
+dialect "mvel"
+
+rule "Test1"
+	when
+		
+	then
+		//System.out.println( "Agregando items de recepción: contenedores de 20'" )
+		System.out.println( "Agregando items de recepción: contenedores de 20'" );
+		
+end

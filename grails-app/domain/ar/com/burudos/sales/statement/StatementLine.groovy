@@ -32,29 +32,4 @@ class StatementLine {
 		order (defaultValue : 999)
 	}
 
-	static String getGroupDescription(StatementLineGroup paramGroup) {
-		switch (paramGroup) {
-			case StatementLineGroup.SALES:
-				return "statement.line.sales"
-				break
-			case StatementLineGroup.INDIVIDUAL_INCENTIVE:
-				return "statement.line.individualIncentives"
-				break
-			case StatementLineGroup.POS_INCENTIVE:
-				return "statement.line.posIncentive"
-				break
-			case StatementLineGroup.DEDUCTIONS:
-				return "statement.line.deductions"
-				break
-			case StatementLineGroup.POINTS:
-				return "statement.line.points"
-				break
-			case StatementLineGroup.FIXED:
-				return "statement.line.fixed"
-				break
-			default:
-				return "statement.line.others"
-				break
-		}
-	}
 }

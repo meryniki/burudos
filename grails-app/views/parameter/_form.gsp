@@ -3,10 +3,13 @@
 <div
 	class="form-group fieldcontain ${hasErrors(bean: parameterInstance, field: 'paramCode', 'error')} ">
 	<label class="col-lg-3 control-label" for="paramCode"> <g:message
-			code="parameter.paramCode.label" default="Parameter Code" />
+			code="parameter.paramCode.label" default="Parameter Code" /> <span
+		class="required-indicator">*</span>
 	</label>
 	<div class="col-lg-9">
-		<g:textField name="paramCode" value="${parameterInstance?.paramCode}" />
+		<g:field type="text" class="form-control" name="paramCode"
+			value="${parameterInstance?.paramCode}" autofocus="autofocus"
+			required="required" />
 	</div>
 </div>
 
@@ -17,7 +20,8 @@
 		<span class="required-indicator">*</span>
 	</label>
 	<div class="col-lg-9">
-		<g:select name="paramCategory"
+		<g:select class="form-control many-to-one" name="paramCategory"
+			optionValue="${ {name->g.message(code: name) } }"
 			from="${ar.com.burucps.sales.statement.StatementLineGroup?.values()}"
 			keys="${ar.com.burucps.sales.statement.StatementLineGroup.values()*.name()}"
 			required="" value="${parameterInstance?.paramCategory?.name()}" />
@@ -30,7 +34,7 @@
 			code="parameter.paramGroup.label" default="Parameter Group" />
 	</label>
 	<div class="col-lg-9">
-		<g:textField name="paramGroup"
+		<g:textField class="form-control" name="paramGroup"
 			value="${parameterInstance?.paramGroup}" />
 	</div>
 </div>
@@ -42,7 +46,7 @@
 			default="Parameter Description" />
 	</label>
 	<div class="col-lg-9">
-		<g:textField name="paramDescription"
+		<g:textField class="form-control" name="paramDescription"
 			value="${parameterInstance?.paramDescription}" />
 	</div>
 </div>
@@ -54,7 +58,7 @@
 		class="required-indicator">*</span>
 	</label>
 	<div class="col-lg-9">
-		<g:field name="maxValue"
+		<g:field class="form-control" name="maxValue" type="text"
 			value="${fieldValue(bean: parameterInstance, field: 'maxValue')}"
 			required="" />
 	</div>
@@ -66,7 +70,7 @@
 			code="parameter.minValue.label" default="Min Value" />
 	</label>
 	<div class="col-lg-9">
-		<g:field name="minValue"
+		<g:field class="form-control" name="minValue" type="text"
 			value="${fieldValue(bean: parameterInstance, field: 'minValue')}" />
 	</div>
 </div>
@@ -81,9 +85,9 @@
 		<g:select id="bussinesUnit" name="bussinesUnit.id"
 			from="${ar.com.burudos.business.BussinesUnit.list()}" optionKey="id"
 			required="" value="${parameterInstance?.bussinesUnit?.id}"
-			class="many-to-one" />
+			class="form-control many-to-one" />
 	</div>
 </div>
 
-<g:hiddenField name="active" value="true"/>
+<g:hiddenField name="active" value="true" />
 

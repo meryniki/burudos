@@ -75,8 +75,8 @@
 
 									<g:if test="${parameterInstance?.paramCode}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
-													code="parameter.paramCode.label" default="Parameter Code" /></span> <span
-											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
+													code="parameter.paramCode.label" default="Parameter Code" /></span>
+											<span class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
 											class="col-lg-6"><g:fieldValue
 													bean="${parameterInstance}" field="paramCode" /></span></li>
 									</g:if>
@@ -100,8 +100,9 @@
 
 									<g:if test="${parameterInstance?.paramDescription}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
-													code="parameter.paramDescription.label" default="Parameter Description" /></span>
-											<span class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
+													code="parameter.paramDescription.label"
+													default="Parameter Description" /></span> <span
+											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
 											class="col-lg-6"><g:fieldValue
 													bean="${parameterInstance}" field="paramDescription" /></span></li>
 									</g:if>
@@ -133,33 +134,35 @@
 									</g:if>
 
 								</ul>
-								<g:if test="${parameterInstance?.active}">
-									<g:form url="[resource:parameterInstance, action:'deactivate']"
-										method="PUT">
-										<fieldset class="buttons">
-											<g:link class="edit" action="edit"
+
+								<fieldset class="buttons">
+									<ul class="bigBtnIcon" style="display: -webkit-box;">
+										<li><g:link class="edit" action="edit"
 												resource="${parameterInstance}">
+												<span class="icon icomoon-icon-pencil"></span>
 												<g:message code="default.button.edit.label" default="Edit" />
-											</g:link>
-											<g:actionSubmit class="delete" action="deactivate"
-												value="${message(code: 'default.button.deactivate.label', default: 'Deactivate')}"
-												onclick="return confirm('${message(code: 'default.button.deactivate.confirm.message', default: 'Are you sure?')}');" />
-										</fieldset>
-									</g:form>
-								</g:if>
-								<g:else>
-									<g:form url="[resource:parameterInstance, action:'activate']"
-										method="PUT">
-										<fieldset class="buttons">
-											<g:link class="edit" action="edit"
-												resource="${parameterInstance}">
-												<g:message code="default.button.edit.label" default="Edit" />
-											</g:link>
-											<g:actionSubmit class="save" action="activate"
-												value="${message(code: 'default.button.deactivate.label', default: 'Activate')}" />
-										</fieldset>
-									</g:form>
-								</g:else>
+											</g:link></li>
+										<!--li><g:if test="${parameterInstance?.active}">
+												<g:link class="delete" action="deactivate"
+													value="${message(code: 'default.button.deactivate.label', default: 'Deactivate')}"
+													resource="${parameterInstance}"
+													onclick="return confirm('${message(code: 'default.button.deactivate.confirm.message', default: 'Are you sure?')}');">
+													<span class="icon icomoon-icon-backspace"></span>
+													<g:message code="default.button.deactivate.label"
+														default="Deactivate" />
+												</g:link>
+											</g:if> <g:else>
+												<g:link class="save" action="activate"
+													value="${message(code: 'default.button.activate.label', default: 'Activate')}"
+													resource="${parameterInstance}"
+													onclick="return confirm('${message(code: 'default.button.activate.confirm.message', default: 'Are you sure?')}');">
+													<span class="icon icomoon-icon-backspace"></span>
+													<g:message code="default.button.deactivate.label"
+														default="Deactivate" />
+												</g:link>
+											</g:else></li-->
+									</ul>
+								</fieldset>
 							</div>
 						</div>
 					</div>
