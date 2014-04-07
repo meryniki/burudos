@@ -12,7 +12,7 @@ class StatementLine {
 	Double unitAmount
 	Double operationsAmount
 	Double amount
-	Integer order
+	Integer lineOrder
 
 	static constraints = {
 		type (nullable : false, blank : false)
@@ -20,7 +20,7 @@ class StatementLine {
 		unitAmount (nullable : true)
 		operationsAmount (nullable : true, min : 0D)
 		amount (nullable : false)
-		order (nullable : false)
+		lineOrder (nullable : false)
 	}
 
 	static mapping = {
@@ -29,7 +29,7 @@ class StatementLine {
 		unitAmount (defaultValue : 0D)
 		operationsAmount (defaultValue : 0D)
 		amount (defaultValue : 0D)
-		order (defaultValue : 999)
+		lineOrder (defaultValue : 999)
 	}
 
 }

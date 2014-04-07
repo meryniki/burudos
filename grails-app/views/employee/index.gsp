@@ -64,101 +64,98 @@
 				<g:if test="${employeeInstanceCount == 0}">
 					<h4>No hay registros</h4>
 				</g:if>
-				<g:if test="${employeeInstanceCount != 0}">
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="panel panel-default gradient">
-								<div class="panel-heading">
-									<h4>
-										<span><g:message code="employee.list.label"
-												args="[entityName]" /></span>
-									</h4>
-								</div>
-								<div class="panel-body noPad clearfix">
-									<div class="responsive" tabindex="5001"
-										style="overflow: hidden; outline: none;">
-										<div id="DataTables_Table_1_wrapper"
-											class="dataTables_wrapper form-inline" role="grid">
-											<div class="row">
-												<div class="col-lg-12">
-													<div class="dataTables_filter"
-														id="DataTables_Table_1_filter">
-														<label> <span class="icon16 icomoon-icon-search"></span>
-															<input id="search" style="width: 75%;" type="text"
-															aria-controls="DataTables_Table_1" class="form-control"
-															value="${mapsearch["search"]}" autofocus>
-														</label>
-													</div>
+
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="panel panel-default gradient">
+							<div class="panel-heading">
+								<h4>
+									<span><g:message code="employee.list.label"
+											args="[entityName]" /></span>
+								</h4>
+							</div>
+							<div class="panel-body noPad clearfix">
+								<div class="responsive" tabindex="5001"
+									style="overflow: hidden; outline: none;">
+									<div id="DataTables_Table_1_wrapper"
+										class="dataTables_wrapper form-inline" role="grid">
+										<div class="row">
+											<div class="col-lg-12">
+												<div class="dataTables_filter"
+													id="DataTables_Table_1_filter">
+													<label> <span class="icon16 icomoon-icon-search"></span>
+														<input id="search" style="width: 75%;" type="text"
+														aria-controls="DataTables_Table_1" class="form-control"
+														value="${mapsearch["search"]}" autofocus>
+													</label>
 												</div>
 											</div>
-											<table cellpadding="0" cellspacing="0" border="0"
-												class="tableTools display table table-bordered dataTable"
-												width="100%" id="DataTables_Table_1"
-												aria-describedby="DataTables_Table_1_info">
+										</div>
+										<table cellpadding="0" cellspacing="0" border="0"
+											class="tableTools display table table-bordered dataTable"
+											width="100%" id="DataTables_Table_1"
+											aria-describedby="DataTables_Table_1_info">
 
-												<!--Titulos con posibilidad de ordenar por-->
-												<thead>
-													<tr role="row">
-														<g:sortableColumn params="${mapsearch}" property="uid"
-															title="${message(code: 'employee.uid.label', default: 'Uid')}" />
-														<g:sortableColumn params="${mapsearch}" property="name"
-															title="${message(code: 'employee.name.label', default: 'Name')}" />
-														<g:sortableColumn params="${mapsearch}" property="legajo"
-															title="${message(code: 'employee.legajo.label', default: 'Employee Number')}" />
-														<g:sortableColumn params="${mapsearch}" property="bu"
-															title="${message(code: 'employee.bu.label', default: 'Punto de Venta')}" />
+											<!--Titulos con posibilidad de ordenar por-->
+											<thead>
+												<tr role="row">
+													<g:sortableColumn params="${mapsearch}" property="uid"
+														title="${message(code: 'employee.uid.label', default: 'Uid')}" />
+													<g:sortableColumn params="${mapsearch}" property="name"
+														title="${message(code: 'employee.name.label', default: 'Name')}" />
+													<g:sortableColumn params="${mapsearch}" property="legajo"
+														title="${message(code: 'employee.legajo.label', default: 'Employee Number')}" />
+													<g:sortableColumn params="${mapsearch}" property="bu"
+														title="${message(code: 'employee.bu.label', default: 'Punto de Venta')}" />
+												</tr>
+											</thead>
+											<!-- Pie con titulos-->
+											<tfoot>
+												<tr>
+													<th rowspan="1" colspan="1"><g:message
+															code="employee.uid.label" default="Uid" /></th>
+													<th rowspan="1" colspan="1"><g:message
+															code="employee.name.label" default="Nombre" /></th>
+													<th rowspan="1" colspan="1"><g:message
+															code="employee.legajo.label" default="Legajo" /></th>
+													<th rowspan="1" colspan="1"><g:message
+															code="employee.bu.label" default="Bu" /></th>
+												</tr>
+											</tfoot>
+											<!--Data-->
+											<tbody role="alert" aria-live="polite" aria-relevant="all">
+												<g:each in="${employeeInstanceList}" status="i"
+													var="employeeInstance">
+													<tr class="gradeA ${(i % 2) == 0 ? 'even' : 'odd'}">
+
+														<td class=" "><g:link action="show"
+																id="${employeeInstance.id}">
+																${fieldValue(bean: employeeInstance, field: "uid")}
+															</g:link></td>
+
+														<td class=" ">
+															${fieldValue(bean: employeeInstance, field: "name")}
+														</td>
+
+														<td class=" ">
+															${fieldValue(bean: employeeInstance, field: "legajo")}
+														</td>
+
+														<td class=" ">
+															${fieldValue(bean: employeeInstance, field: "bu")}
+														</td>
 													</tr>
-												</thead>
-												<!-- Pie con titulos-->
-												<tfoot>
-													<tr>
-														<th rowspan="1" colspan="1"><g:message
-																code="employee.uid.label" default="Uid" /></th>
-														<th rowspan="1" colspan="1"><g:message
-																code="employee.name.label" default="Nombre" /></th>
-														<th rowspan="1" colspan="1"><g:message
-																code="employee.legajo.label" default="Legajo" /></th>
-														<th rowspan="1" colspan="1"><g:message
-																code="employee.bu.label" default="Bu" /></th>
-													</tr>
-												</tfoot>
-												<!--Data-->
-												<tbody role="alert" aria-live="polite" aria-relevant="all">
-													<g:each in="${employeeInstanceList}" status="i"
-														var="employeeInstance">
-														<tr class="gradeA ${(i % 2) == 0 ? 'even' : 'odd'}">
+												</g:each>
+											</tbody>
 
-															<td class=" "><g:link action="show"
-																	id="${employeeInstance.id}">
-																	${fieldValue(bean: employeeInstance, field: "uid")}
-																</g:link></td>
-
-															<td class=" ">
-																${fieldValue(bean: employeeInstance, field: "name")}
-															</td>
-
-															<td class=" ">
-																${fieldValue(bean: employeeInstance, field: "legajo")}
-															</td>
-
-															<td class=" ">
-																${fieldValue(bean: employeeInstance, field: "bu")}
-															</td>
-														</tr>
-													</g:each>
-												</tbody>
-
-											</table>
-											<div class="row">
-												<div class="col-lg-8">
-													<div
-														class="dataTables_paginate paging_bootstrap pagination">
-														<ul class="pagination">
-															<li><g:paginate
-																	total="${employeeInstanceCount ?: 0}" 
-																	params="${mapsearch}"/></li>
-														</ul>
-													</div>
+										</table>
+										<div class="row">
+											<div class="col-lg-8">
+												<div class="dataTables_paginate paging_bootstrap pagination">
+													<ul class="pagination">
+														<li><g:paginate total="${employeeInstanceCount ?: 0}"
+																params="${mapsearch}" /></li>
+													</ul>
 												</div>
 											</div>
 										</div>
@@ -167,29 +164,29 @@
 							</div>
 						</div>
 					</div>
-				</g:if>
-
+				</div>
 			</div>
 		</div>
 	</div>
-		<script type="text/javascript" src="../static/plugins/tables/dataTables/jquery.dataTables.js"></script>
+	<script type="text/javascript"
+		src="../static/plugins/tables/dataTables/jquery.dataTables.js"></script>
 
 	<script type="text/javascript">
-	var isearch = document.getElementById("search");
-	
-	/* Add event listeners to the two range filtering inputs */
-	isearch.addEventListener("change", function() {
-		var vmax = document.getElementById("max");
-		var voff = document.getElementById("offset");
-		var vser = document.getElementById("search");
-		var url = "./index?search=" + vser.value;
-		if (vmax)
-			url += "&max=" + vmax.value ;
-		if (voff)
-			url += "&offset=" + voff.value; 
-		
-		window.location.replace(url);
-	});
+		var isearch = document.getElementById("search");
+
+		/* Add event listeners to the two range filtering inputs */
+		isearch.addEventListener("change", function() {
+			var vmax = document.getElementById("max");
+			var voff = document.getElementById("offset");
+			var vser = document.getElementById("search");
+			var url = "./index?search=" + vser.value;
+			if (vmax)
+				url += "&max=" + vmax.value;
+			if (voff)
+				url += "&offset=" + voff.value;
+
+			window.location.replace(url);
+		});
 	</script>
 </body>
 </html>

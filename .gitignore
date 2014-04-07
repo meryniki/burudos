@@ -3,3 +3,7 @@ target
 bin
 .settings
 .classpath
+WebContent
+bu.sql
+party.sql
+tx_myFile

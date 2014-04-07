@@ -60,95 +60,90 @@
 				<g:if test="${operationInstanceCount == 0}">
 					<h4>No hay registros</h4>
 				</g:if>
-				<g:if test="${operationInstanceCount != 0}">
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="panel panel-default gradient">
-								<div class="panel-heading">
-									<h4>
-										<span><g:message code="operation.list.label"
-												args="[entityName]" /></span>
-									</h4>
-								</div>
-								<div class="panel-body noPad clearfix">
-									<div class="responsive" tabindex="5001"
-										style="overflow: hidden; outline: none;">
-										<div id="DataTables_Table_1_wrapper"
-											class="dataTables_wrapper form-inline" role="grid">
-											<div class="row">
-												<div class="col-lg-12">
-													<div class="dataTables_filter"
-														id="DataTables_Table_1_filter">
-														<label> <span
-															class="icon16 icomoon-icon-search"></span> <input
-															id="search"
-															style="width: 75%;" type="text"
-															aria-controls="DataTables_Table_1" class="form-control"
-															value="${mapsearch["search"]}" autofocus>
-														</label>
-													</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="panel panel-default gradient">
+							<div class="panel-heading">
+								<h4>
+									<span><g:message code="operation.list.label"
+											args="[entityName]" /></span>
+								</h4>
+							</div>
+							<div class="panel-body noPad clearfix">
+								<div class="responsive" tabindex="5001"
+									style="overflow: hidden; outline: none;">
+									<div id="DataTables_Table_1_wrapper"
+										class="dataTables_wrapper form-inline" role="grid">
+										<div class="row">
+											<div class="col-lg-12">
+												<div class="dataTables_filter"
+													id="DataTables_Table_1_filter">
+													<label> <span class="icon16 icomoon-icon-search"></span>
+														<input id="search" style="width: 75%;" type="text"
+														aria-controls="DataTables_Table_1" class="form-control"
+														value="${mapsearch["search"]}" autofocus>
+													</label>
 												</div>
 											</div>
-											<table cellpadding="0" cellspacing="0" border="0"
-												class="tableTools display table table-bordered dataTable"
-												width="100%" id="DataTables_Table_1"
-												aria-describedby="DataTables_Table_1_info">
+										</div>
+										<table cellpadding="0" cellspacing="0" border="0"
+											class="tableTools display table table-bordered dataTable"
+											width="100%" id="DataTables_Table_1"
+											aria-describedby="DataTables_Table_1_info">
 
-												<!--Titulos con posibilidad de ordenar por-->
-												<thead>
-													<tr role="row">
-														<g:sortableColumn params="${mapsearch}" property="uid"
-															title="${message(code: 'operation.code.label', default: 'Codigo')}" />
-														<g:sortableColumn params="${mapsearch}" property="name"
-															title="${message(code: 'operation.meaning.label', default: 'Nombre')}" />
-														<g:sortableColumn params="${mapsearch}" property="legajo"
-															title="${message(code: 'operation.description.label', default: 'Descripcion')}" />
+											<!--Titulos con posibilidad de ordenar por-->
+											<thead>
+												<tr role="row">
+													<g:sortableColumn params="${mapsearch}" property="uid"
+														title="${message(code: 'operation.code.label', default: 'Codigo')}" />
+													<g:sortableColumn params="${mapsearch}" property="name"
+														title="${message(code: 'operation.meaning.label', default: 'Nombre')}" />
+													<g:sortableColumn params="${mapsearch}" property="legajo"
+														title="${message(code: 'operation.description.label', default: 'Descripcion')}" />
+												</tr>
+											</thead>
+											<!-- Pie con titulos-->
+											<tfoot>
+												<tr>
+													<th rowspan="1" colspan="1"><g:message
+															code="operation.code.label" default="Codigo" /></th>
+													<th rowspan="1" colspan="1"><g:message
+															code="operation.meaning.label" default="Nombre" /></th>
+													<th rowspan="1" colspan="1"><g:message
+															code="operation.description.label" default="Descripcion" /></th>
+												</tr>
+											</tfoot>
+											<!--Data-->
+											<tbody role="alert" aria-live="polite" aria-relevant="all">
+												<g:each in="${operationInstanceList}" status="i"
+													var="operationInstance">
+													<tr class="gradeA ${(i % 2) == 0 ? 'even' : 'odd'}">
+														<td><g:link action="show"
+																id="${operationInstance.id}">
+																${fieldValue(bean: operationInstance, field: "code")}
+															</g:link></td>
+														</td>
+
+														<td class=" ">
+															${fieldValue(bean: operationInstance, field: "meaning")}
+														</td>
+
+														<td class=" ">
+															${fieldValue(bean: operationInstance, field: "description")}
+														</td>
 													</tr>
-												</thead>
-												<!-- Pie con titulos-->
-												<tfoot>
-													<tr>
-														<th rowspan="1" colspan="1"><g:message
-																code="operation.code.label" default="Codigo" /></th>
-														<th rowspan="1" colspan="1"><g:message
-																code="operation.meaning.label" default="Nombre" /></th>
-														<th rowspan="1" colspan="1"><g:message
-																code="operation.description.label" default="Descripcion" /></th>
-													</tr>
-												</tfoot>
-												<!--Data-->
-												<tbody role="alert" aria-live="polite" aria-relevant="all">
-													<g:each in="${operationInstanceList}" status="i"
-														var="operationInstance">
-														<tr class="gradeA ${(i % 2) == 0 ? 'even' : 'odd'}">
-															<td><g:link action="show"
-																	id="${operationInstance.id}">
-																	${fieldValue(bean: operationInstance, field: "code")}
-																</g:link></td>
-															</td>
+												</g:each>
+											</tbody>
 
-															<td class=" ">
-																${fieldValue(bean: operationInstance, field: "meaning")}
-															</td>
-
-															<td class=" ">
-																${fieldValue(bean: operationInstance, field: "description")}
-															</td>
-														</tr>
-													</g:each>
-												</tbody>
-
-											</table>
-											<div class="row">
-												<div class="col-lg-8">
-													<div
-														class="dataTables_paginate paging_bootstrap pagination">
-														<ul class="pagination">
-															<li><g:paginate
-																	total="${operationInstanceCount ?: 0}"
-																	params="${mapsearch}" /></li>
-														</ul>
-													</div>
+										</table>
+										<div class="row">
+											<div class="col-lg-8">
+												<div class="dataTables_paginate paging_bootstrap pagination">
+													<ul class="pagination">
+														<li><g:paginate
+																total="${operationInstanceCount ?: 0}"
+																params="${mapsearch}" /></li>
+													</ul>
 												</div>
 											</div>
 										</div>
@@ -157,7 +152,7 @@
 							</div>
 						</div>
 					</div>
-				</g:if>
+				</div>
 
 			</div>
 		</div>
