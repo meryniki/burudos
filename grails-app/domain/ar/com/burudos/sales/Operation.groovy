@@ -20,6 +20,10 @@ class Operation {
 		op_hasta( nullable:true)
 	}
 
+	static mapping = {
+		code index:'OpCode_Idx'
+	}
+	
 	String toString() {
 		String complete_code = code;
 		if (cat_plan!=null)

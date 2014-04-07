@@ -130,7 +130,7 @@ class EmployeeController {
 				code = Employee.findByLegajo(row[0]) ?: new Employee(
 						legajo: row[0],
 						fullname: row[1],
-						dofingreso: Date.parse("dd/MM/yyyy",row[2]),
+						dofingreso: Date.parse(BuruConstants.dateFormatEmployee,row[2]),
 						uid: row[3],
 						bu: BussinesUnit.findByCode(row[5]).id,
 						isworker: true,

@@ -228,8 +228,8 @@ class TransactionController {
 							//op_desde:Operation.findByCode(row_mapa[BuruConstants.row_plan_d])?.id,
 							//op_hasta:Operation.findByCode(row_mapa[BuruConstants.row_plan_h])?.id).save(failOnError: true, flush: true)
 						} catch (Exception e) {
-							transactionInstance.errors.reject(row[9],row_mapa[BuruConstants.row_op_code]+BuruConstants.op_create_error)
 							linea = linea + 1
+							if (linea<200) transactionInstance.errors.reject(row[9],row_mapa[BuruConstants.row_op_code]+BuruConstants.op_create_error)
 							String sline = String.valueOf(linea);
 							reportOfErrors.put(sline, BuruConstants.op_create_error+row)
 
@@ -244,8 +244,8 @@ class TransactionController {
 						try {
 							code = new Client(cname:row_mapa[BuruConstants.row_cliente],ndoc:row_mapa[BuruConstants.row_cliente_doc]).save(failOnError:true,flush:true)
 						} catch (Exception e) {
-							transactionInstance.errors.reject(row[0],row_mapa[BuruConstants.row_cliente]+BuruConstants.cl_create_error)
 							linea = linea + 1
+							if (linea<200) transactionInstance.errors.reject(row[0],row_mapa[BuruConstants.row_cliente]+BuruConstants.cl_create_error)
 							String sline = String.valueOf(linea);
 							reportOfErrors.put(sline, BuruConstants.cl_create_error+row)
 
@@ -256,10 +256,10 @@ class TransactionController {
 				}
 
 				if (Employee.findByName(row_mapa[BuruConstants.row_emp])==null) {
-					transactionInstance.errors.reject(row[0],row_mapa[BuruConstants.row_emp]+BuruConstants.employee_exist_error)
 					linea = linea + 1
+					if (linea<200) transactionInstance.errors.reject(row[0],row_mapa[BuruConstants.row_emp]+BuruConstants.employee_exist_error)
 					String sline = String.valueOf(linea);
-					reportOfErrors.put(sline, BuruConstants.employee_exist_error+row)
+					reportOfErrors.put(sline, row)
 				}
 				else{
 					code = new Transaction(
@@ -284,18 +284,20 @@ class TransactionController {
 							).save(failOnError: true, flush: true)
 				}
 			}catch (Exception e) {
-				transactionInstance.errors.reject(row[0], row_mapa[BuruConstants.row_emp]+BuruConstants.trx_create_error);
-
 				linea = linea + 1
+
+				if (linea<200)
+					transactionInstance.errors.reject(row[0], row_mapa[BuruConstants.row_emp]+BuruConstants.trx_create_error);
+
 				String sline = String.valueOf(linea);
 				reportOfErrors.put(sline, BuruConstants.trx_create_error+row)
-				
+
 				e.printStackTrace();
 			}
 		}
-		
+
 		mapreport.put("report", reportOfErrors)
-		
+
 		if (transactionInstance.hasErrors()) {
 			respond transactionInstance.errors, view:'upload_result', model:[report:mapreport]
 			return

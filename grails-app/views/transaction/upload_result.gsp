@@ -49,11 +49,16 @@
 					</g:link></li>
 			</ul>
 
-			<div id="upload-transaction" class="content scaffold-create" role="main">
+			<div id="upload-transaction" class="content scaffold-create"
+				role="main">
 				<h1>
 					<g:message code="default.errors.label" args="[entityName]" />
 				</h1>
-				<g:link params="${report["report"]}" controller="Excel" action="downloadExcel">Download Excel</g:link>
+				<g:uploadForm controller="Excel" method="POST"
+					action="downloadExcel">
+					<input type="hidden" name="report" value="${report["report"]}" />
+					<input  class="btn btn-info" type="submit" value="Descargar excel" />
+				</g:uploadForm>
 				<g:hasErrors bean="${transactionInstance}">
 					<g:eachError bean="${transactionInstance}" var="error">
 						<div class="alert alert-danger">
