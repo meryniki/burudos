@@ -53,6 +53,7 @@
 				<h1>
 					<g:message code="default.errors.label" args="[entityName]" />
 				</h1>
+				<g:link params="${report["report"]}" controller="Excel" action="downloadExcel">Download Excel</g:link>
 				<g:hasErrors bean="${employeeInstance}">
 					<g:eachError bean="${employeeInstance}" var="error">
 						<div class="alert alert-danger">

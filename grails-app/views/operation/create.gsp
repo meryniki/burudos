@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html>
 <head>
 <meta name="layout" content="main">
@@ -8,44 +8,83 @@
 		args="[entityName]" /></title>
 </head>
 <body>
-	<a href="#create-operation" class="skip" tabindex="-1"><g:message
-			code="default.link.skip.label" default="Skip to content&hellip;" /></a>
-	<div class="nav" role="navigation">
-		<ul>
-			<li><a class="home" href="${createLink(uri: '/')}"><g:message
-						code="default.home.label" /></a></li>
-			<li><g:link class="list" action="index">
-					<g:message code="default.list.label" args="[entityName]" />
-				</g:link></li>
-		</ul>
-	</div>
-	<div id="create-operation" class="content scaffold-create" role="main">
-		<h1>
-			<g:message code="default.create.label" args="[entityName]" />
-		</h1>
-		<g:if test="${flash.message}">
-			<div class="message" role="status">
-				${flash.message}
+
+	<div id="content" class="clearfix">
+		<div class="contentwrapper">
+			<div class="heading">
+
+				<h3>
+					<g:message code="operation.btnLabel" args="[entityName]" />
+				</h3>
+
+				<div class="resBtnSearch">
+					<a href="#"><span class="icon16 icomoon-icon-search-3"></span></a>
+				</div>
+
+				<ul class="breadcrumb">
+					<li>You are here:</li>
+					<li><a href="#" class="tip" title="" data-hasqtip="true">
+							<span class="icon16 icomoon-icon-screen-2"></span>
+					</a> <span class="divider"> <span
+							class="icon16 icomoon-icon-arrow-right-3"></span>
+					</span></li>
+					<li class="active"><g:message code="operation.list.label"
+							args="[entityName]" /></li>
+				</ul>
+
 			</div>
-		</g:if>
-		<g:hasErrors bean="${operationInstance}">
-			<ul class="errors" role="alert">
-				<g:eachError bean="${operationInstance}" var="error">
-					<li
-						<g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message
-							error="${error}" /></li>
-				</g:eachError>
+
+			<ul class="bigBtnIcon">
+				<li><g:link class="create" action="">
+						<span class="icon icomoon-icon-menu"></span>
+						<g:message code="default.list.label" args="[entityName]" />
+					</g:link></li>
+				<li><g:link class="create" action="upload">
+						<span class="icon icomoon-icon-table"></span>
+						<g:message code="default.upload.label" args="[entityName]" />
+					</g:link></li>
 			</ul>
-		</g:hasErrors>
-		<g:form url="[resource:operationInstance, action:'save']">
-			<fieldset class="form">
-				<g:render template="form" />
-			</fieldset>
-			<fieldset class="buttons">
-				<g:submitButton name="create" class="save"
-					value="${message(code: 'default.button.create.label', default: 'Create')}" />
-			</fieldset>
-		</g:form>
+
+
+
+			<div class="row">
+
+				<div class="col-lg-2"></div>
+
+				<div class="col-lg-8">
+
+					<div id="create-operation" class="content scaffold-create"
+						role="main">
+						<h1>
+							<g:message code="default.create.label" args="[entityName]" />
+						</h1>
+						<g:if test="${flash.message}">
+							<div class="message" role="status">
+								${flash.message}
+							</div>
+						</g:if>
+						<g:hasErrors bean="${operationInstance}">
+							<ul class="errors" role="alert">
+								<g:eachError bean="${operationInstance}" var="error">
+									<li
+										<g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message
+											error="${error}" /></li>
+								</g:eachError>
+							</ul>
+						</g:hasErrors>
+						<g:form url="[resource:operationInstance, action:'save']">
+							<fieldset class="form">
+								<g:render template="form" />
+							</fieldset>
+							<fieldset class="buttons">
+								<g:submitButton name="create" class="save"
+									value="${message(code: 'default.button.create.label', default: 'Create')}" />
+							</fieldset>
+						</g:form>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>
