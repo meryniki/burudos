@@ -7,5 +7,14 @@ class EmployeeStatement extends Statement {
 	static belongsTo = [employee : Employee]
 
     static constraints = {
+		employee (nullable : true)
     }
+	
+	String getStatementOwner() {
+		return employee?.name
+	};
+
+	String getStatementCui() {
+		return employee?.uid
+	};
 }

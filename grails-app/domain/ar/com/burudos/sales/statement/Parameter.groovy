@@ -21,7 +21,7 @@ class Parameter {
 	String createdBy
 	Date lastUpdateDate
 	String lastUpdateBy
-	
+
 
 	static constraints = {
 		paramCode (nullable : false)
@@ -32,7 +32,15 @@ class Parameter {
 		minValue (nullable : true)
 		bussinesUnit (nullable : false, validator: { val, obj ->
 			def paramForSameBU = Parameter.findByParamCodeAndBussinesUnit(obj.paramCode, obj.bussinesUnit)
-			return (!paramForSameBU) && (paramForSameBU.id != obj.bussinesUnit.id)
+			// No data found
+			if (!paramForSameBU)
+				return
+			// Data found and creating a new one
+			if (!paramForSameBU.id)
+				return false
+			// Data found and editing with same values
+			if (paramForSameBU.id != obj.id)
+				return false
 		})
 		// Auditoria
 		creationDate (nullable: true)
@@ -40,7 +48,7 @@ class Parameter {
 		lastUpdateDate (nullable: true)
 		lastUpdateBy (nullable: true)
 	}
-	
+
 	def beforeInsert() {
 		active = true;
 		//createdBy = securityService.currentAuthenticatedUsername();
@@ -52,10 +60,6 @@ class Parameter {
 	def beforeUpdate() {
 		//lastUpdatedBy = securityService.currentAuthenticatedUsername();
 		lastUpdateDate = new Date();
-	}
-	
-	def getParamCategoryDescription () {
-		return StatementLine.getGroupDescription(paramCategory)
 	}
 
 }

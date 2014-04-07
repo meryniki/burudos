@@ -25,9 +25,9 @@ class ParameterController {
 		if (!offset)
 			offset = 0;
 		if (!max)
-			max = 20;
+			max = Math.min(max ?: 10, 100)
 
-		params.max = max;
+		params.max = max
 
 		/*query depends on fields to filter*/
 		def query = "from Parameter p where p.paramCode like '%%" + search +

@@ -57,6 +57,7 @@ grails.project.dependency.resolution = {
 		compile "org.drools:drools-templates:5.6.0.Final"
 		compile "com.thoughtworks.xstream:xstream:1.4.1"
 		compile "org.slf4j:slf4j-api:1.6.4"
+		compile "com.sun.xml.bind:jaxb-xjc:2.2.4-1"
 		compile "net.sourceforge.jexcelapi:jxl:2.6.12"
 	}
 
