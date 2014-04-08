@@ -98,7 +98,7 @@ class EmployeeController {
 	}
 
 	def upload = {
-		// do something with the file
+		// shows info 
 	}
 
 	@Transactional

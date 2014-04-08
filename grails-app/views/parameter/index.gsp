@@ -27,6 +27,7 @@
 					</a> <span class="divider"> <span
 							class="icon16 icomoon-icon-arrow-right-3"></span>
 					</span></li>
+
 					<li class="active"><g:message code="parameter.list.label"
 							args="[entityName]" /></li>
 				</ul>
@@ -35,6 +36,10 @@
 				<li><g:link class="create" action="create">
 						<span class="icon icomoon-icon-plus"></span>
 						<g:message code="default.new.label" args="[entityName]" />
+					</g:link></li>
+				<li><g:link class="create" action="upload">
+						<span class="icon icomoon-icon-table"></span>
+						<g:message code="default.upload.label" args="[entityName]" />
 					</g:link></li>
 			</ul>
 			<g:if test="${flash.message}">

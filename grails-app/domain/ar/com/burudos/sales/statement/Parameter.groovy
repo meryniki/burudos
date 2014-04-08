@@ -14,6 +14,7 @@ class Parameter {
 	String paramDescription
 	Double maxValue
 	Double minValue
+	Double value
 	BussinesUnit bussinesUnit
 	Boolean active
 	// Auiditoria

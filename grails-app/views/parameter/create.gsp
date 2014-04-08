@@ -34,6 +34,10 @@
 						<span class="icon icomoon-icon-menu"></span>
 						<g:message code="default.list.label" args="[entityName]" />
 					</g:link></li>
+				<li><g:link class="create" action="upload">
+						<span class="icon icomoon-icon-table"></span>
+						<g:message code="default.upload.label" args="[entityName]" />
+					</g:link></li>
 			</ul>
 			<div class="row">
 				<div class="col-lg-2"></div>
