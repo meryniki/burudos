@@ -53,12 +53,13 @@
 				role="main">
 				<h1>
 					<g:message code="default.errors.label" args="[entityName]" />
+
+					<g:uploadForm controller="Excel" method="POST"
+						action="downloadExcel">
+						<input type="hidden" name="report" value="${report["report"]}" />
+						<input class="btn btn-info" type="submit" value="Descargar excel" />
+					</g:uploadForm>
 				</h1>
-				<g:uploadForm controller="Excel" method="POST"
-					action="downloadExcel">
-					<input type="hidden" name="report" value="${report["report"]}" />
-					<input  class="btn btn-info" type="submit" value="Descargar excel" />
-				</g:uploadForm>
 				<g:hasErrors bean="${transactionInstance}">
 					<g:eachError bean="${transactionInstance}" var="error">
 						<div class="alert alert-danger">

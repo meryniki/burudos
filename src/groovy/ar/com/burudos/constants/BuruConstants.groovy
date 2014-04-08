@@ -45,9 +45,9 @@ class BuruConstants {
 	static final String row_debaut="Debaut"
 	
 	static final String uploadFileEmployee="myFile"
-	static final String saveFileEmployee="carga_" + uploadFileEmployee
+	static final String saveFileEmployee="/tmp/carga_" + uploadFileEmployee
 	static final String uploadFileTransaction="myFile"
-	static final String saveFileTransaction="tx_" + uploadFileEmployee
+	static final String saveFileTransaction="/tmp/tx_" + uploadFileEmployee
 	static final String dateFormatEmployee="MM/dd/yyyy"	
 
 }

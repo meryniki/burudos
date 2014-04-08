@@ -31,22 +31,17 @@ class EmployeeController {
 			max = 20;
 
 		params.max = max;
-
-		/*query depends on fields to filter*/
-		def query = "from Employee e where e.name like '%%" + search +
-				"%%' or e.legajo like '%%" + search +
-				"%%' or e.uid like '%%" + search +
-				"%%' or e.bu.nombre like '%%" + search +
-				"%%'"
-
-		/* Use counting to have both values total and counting with only one query */
-		Employee.findAll(query,[offset: offset]).each{ trx->
-			if ( counting < max) {
-				lista.add(trx);
-				counting += 1;
-			}
-			total += 1;
+		
+		def query = Employee.where{
+			name ==~  "%${search}%" ||
+			legajo ==~  "%${search}%" ||
+			uid ==~  "%${search}%" ||
+			bu.nombre ==~  "%${search}%"
 		}
+		
+		lista = query.list(params)
+		total = query.count()
+		
 		/*The map will be passed as param in g:sorteable and g:paginate*/
 		mapsearch.put("search", search);
 

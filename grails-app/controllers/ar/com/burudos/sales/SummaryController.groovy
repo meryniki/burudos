@@ -29,22 +29,17 @@ class SummaryController {
 			max = 20;
 
 		params.max = max;
-
-		/*query depends on fields to filter*/
-		def query = "from Summary s where s.bu.nombre like '%%" + search +
-				"%%' or s.op.cat_plan like '%%" + search +
-				"%%' or s.op.plan_promo like '%%" + search +
-				"%%' or s.op.code like '%%" + search +
-				"%%'"
-
-		/* Use counting to have both values total and counting with only one query */
-		Summary.findAll(query,[offset: offset]).each{ trx->
-			if ( counting < max) {
-				lista.add(trx);
-				counting += 1;
-			}
-			total += 1;
+		
+		def query = Summary.where{
+			bu.nombre ==~  "%${search}%" ||
+			op.cat_plan ==~  "%${search}%" ||
+			op.plan_promo ==~  "%${search}%" ||
+			op.code ==~  "%${search}%" 
 		}
+		
+		lista = query.list(params)
+		total = query.count()
+		
 		/*The map will be passed as param in g:sorteable and g:paginate*/
 		mapsearch.put("search", search);
 
@@ -129,6 +124,7 @@ class SummaryController {
 
 			def bu_to_summarize = BussinesUnit.findAllByFather(BussinesUnit.findById(params.bu))
 
+			//ITERO BUSCANDO LOS HIJOS
 			def otherlist = []
 			bu_to_summarize.each(){ butmp->
 				def more_bus = BussinesUnit.findAllByFather(butmp)
@@ -136,12 +132,10 @@ class SummaryController {
 					otherlist.add(newbu)
 				}
 			}
-
-
 			otherlist.each() { other->
 				bu_to_summarize.add(other)
 			}
-
+			//ITERO BUSCANDO LOS HIJOS
 			def aotherlist = []
 			bu_to_summarize.each(){ butmp->
 				def more_bus = BussinesUnit.findAllByFather(butmp)
@@ -149,8 +143,6 @@ class SummaryController {
 					aotherlist.add(newbu)
 				}
 			}
-
-
 			aotherlist.each() { other->
 				bu_to_summarize.add(other)
 			}

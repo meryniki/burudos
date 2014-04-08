@@ -20,34 +20,27 @@ class TransactionController {
 
 	static allowedMethods = [save: "POST", update: "PUT"]
 
-	def index() {
-		/*Initialize counts and params. The params are Strings*/
+	def index(Integer max, Integer offset, String search) {
+
 		def counting = 0;
 		def total = 0;
 		def lista = [];
 		def mapsearch = [:];
-		if (!params.search)
-			params.search = "";
-		if (!params.offset)
-			params.offset = "0";
-		if (!params.max)
-			params.max = "20";
-		int mioffset = Integer.parseInt(params.offset);
-		int mimax = Integer.parseInt(params.max);
-
-		/*query depends on fields to filter*/
-		def query = "from Transaction t where t.op.code like '%%" + params.search +
-				"%%' or t.party.name like '%%" + params.search + "%%'"
-
-		/* Use counting to have both values total and counting with only one query */
-		Transaction.findAll(query,[offset: mioffset]).each{ trx->
-			if ( counting < mimax) {
-				lista.add(trx);
-				counting += 1;
-			}
-			total += 1;
+		if (!search)
+			search = "";
+		if (!offset)
+			offset = 0;
+		if (!max)
+			max = 20;
+			
+		def query = Transaction.where{
+			op.code ==~  "%${search}%" ||
+			party.name ==~  "%${search}%"
 		}
-		/*The map will be passed as param in g:sorteable and g:paginate*/
+		
+		lista = query.list(params)
+		total = query.count()
+		
 		mapsearch.put("search", params.search);
 
 		respond lista, model:[transactionInstanceCount: total,

@@ -26,25 +26,20 @@ class BussinesUnitController {
 			max = 20;
 		
 		params.max = max;
-			
-		/*query depends on fields to filter*/
-		def query = "from BussinesUnit b where b.nombre like '%%" + search + 
-		                         "%%' or b.code like '%%" + search +
-								 "%%' or b.father.nombre like '%%" + search +
-								 "%%' or b.father.code like '%%" + search +
-								 "%%' or b.provincia like '%%" + search +
-								 "%%' or b.departamento like '%%" + search +
-								 "%%' or b.calle like '%%" + search +
-								 "%%'"
 
-		/* Use counting to have both values total and counting with only one query */
-		BussinesUnit.findAll(query,[offset: offset]).each{ trx->
-			if ( counting < max) {
-				lista.add(trx);
-				counting += 1;
-			}
-			total += 1;
+		def query = BussinesUnit.where{
+			nombre ==~  "%${search}%" ||
+			code ==~  "%${search}%" ||
+			father.nombre ==~  "%${search}%" ||
+			father.code ==~  "%${search}%" ||
+			departamento ==~  "%${search}%" ||
+			provincia ==~  "%${search}%" ||
+			calle ==~  "%${search}%"
 		}
+		
+		lista = query.list(params)
+		total = query.count()
+		
 		/*The map will be passed as param in g:sorteable and g:paginate*/
 		mapsearch.put("search", search);
 

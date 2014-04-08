@@ -55,9 +55,11 @@
 					<g:message code="default.errors.label" args="[entityName]" />
 				</h1>
 				<g:hasErrors bean="${bussinesUnitInstance}">
-						<g:eachError bean="${bussinesUnitInstance}" var="error">
-							<div class="alert alert-danger"><g:message error="${error}" /></div>
-						</g:eachError>
+					<g:eachError bean="${bussinesUnitInstance}" var="error">
+						<div class="alert alert-danger">
+							<g:message error="${error}" />
+						</div>
+					</g:eachError>
 				</g:hasErrors>
 			</div>
 		</div>

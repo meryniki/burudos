@@ -52,12 +52,14 @@
 			<div id="upload-employee" class="content scaffold-create" role="main">
 				<h1>
 					<g:message code="default.errors.label" args="[entityName]" />
+
+					<g:uploadForm controller="Excel" method="POST"
+						action="downloadExcel">
+						<input type="hidden" name="report" value="${report["report"]}" />
+						<input class="btn btn-info" type="submit" value="Descargar excel" />
+					</g:uploadForm>
 				</h1>
-				<g:uploadForm controller="Excel" method="POST"
-					action="downloadExcel">
-					<input type="hidden" name="report" value="${report["report"]}" />
-					<input  class="btn btn-info" type="submit" value="Descargar excel" />
-				</g:uploadForm><g:hasErrors bean="${employeeInstance}">
+				<g:hasErrors bean="${employeeInstance}">
 					<g:eachError bean="${employeeInstance}" var="error">
 						<div class="alert alert-danger">
 							<g:message error="${error}" />

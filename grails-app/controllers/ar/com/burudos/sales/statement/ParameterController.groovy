@@ -29,21 +29,15 @@ class ParameterController {
 
 		params.max = max
 
-		/*query depends on fields to filter*/
-		def query = "from Parameter p where p.paramCode like '%%" + search +
-				"%%' or p.paramCategory like '%%" + search +
-				"%%' or p.paramGroup like '%%" + search +
-				"%%' or p.paramDescription like '%%" + search +
-				"%%'"
-
-		/* Use counting to have both values total and counting with only one query */
-		Parameter.findAll(query,[offset: offset]).each{ trx->
-			if ( counting < max) {
-				lista.add(trx);
-				counting += 1;
-			}
-			total += 1;
+		def query = Parameter.where{
+			paramCategory ==~  "%${search}%" ||
+			paramGroup ==~  "%${search}%" ||
+			paramDescription ==~  "%${search}%" 
 		}
+		
+		lista = query.list(params)
+		total = query.count()
+		
 		/*The map will be passed as param in g:sorteable and g:paginate*/
 		mapsearch.put("search", search);
 

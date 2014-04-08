@@ -29,21 +29,15 @@ class StatementController {
 
 		params.max = max
 
-		/*query depends on fields to filter*/
-		def query = "from Statement s where s.businessUnit.nombre like '%%" + search +
-				"%%' or s.employee.name like '%%" + search +
-				"%%' or s.employee.uid like '%%" + search +
-				"%%' "
-
-		/* Use counting to have both values total and counting with only one query */
-		Statement.findAll(query,[offset: offset]).each{ trx->
-			if ( counting < max) {
-				lista.add(trx);
-				counting += 1;
-			}
-			total += 1;
+		def query = EmployeeStatement.where{
+			businessUnit.nombre==~  "%${search}%" ||
+			employee.name ==~  "%${search}%" ||
+			employee.uid ==~  "%${search}%" 
 		}
-
+		
+		lista = query.list(params)
+		total = query.count()
+		
 		/*The map will be passed as param in g:sorteable and g:paginate*/
 		mapsearch.put("search", search);
 

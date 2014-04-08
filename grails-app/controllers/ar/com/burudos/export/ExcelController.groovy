@@ -18,11 +18,15 @@ class ExcelController {
 		response.setContentType('application/vnd.ms-excel')
 		response.setHeader('Content-Disposition', 'Attachment;Filename="errors.xls"')
 
+		log.debug(response)
+		
 		WritableWorkbook workbook = Workbook.createWorkbook(response.outputStream)
 		WritableSheet sheet1 = workbook.createSheet("Errors", 0)
-
+		
 		//La tabla tiene la lista numerada del 1 al x
 		def data = params.report
+		
+		log.debug("La data es: " + data)
 
 		def lit = []
 		def ma = [:]
@@ -36,6 +40,8 @@ class ExcelController {
 		data = data.replace("[","")
 		milista = data.split(',')
 
+		log.debug("La lista es: " + milista)
+		
 		def cell = 1
 		def col = 0
 
@@ -56,8 +62,11 @@ class ExcelController {
 			cell += 1
 		}
 
+		log.debug("Todavia no hizo write")
+		
 		workbook.write();
 		workbook.close();
+		
 		return
 	}
 }
