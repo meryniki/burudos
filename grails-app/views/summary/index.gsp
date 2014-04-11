@@ -75,7 +75,7 @@
 									<div id="DataTables_Table_1_wrapper"
 										class="dataTables_wrapper form-inline" role="grid">
 										<div class="row">
-											<div class="col-lg-12">
+											<div class="col-lg-5">
 												<div class="dataTables_filter"
 													id="DataTables_Table_1_filter">
 													<label> <span class="icon16 icomoon-icon-search"></span>
@@ -85,6 +85,19 @@
 													</label>
 												</div>
 											</div>
+											<div class="col-lg-7">
+												<g:form>
+													<div class="form-group">
+														<g:datePicker id="month" name="month" precision="month"
+															default="${defaultmonth}" value="${month}"/>
+													</div>
+													<div class="form-group">
+														<g:actionSubmit class="save btn btn-info" action="index"
+															value="${message(code: 'default.button.search.label', default: 'Buscar')}" />
+													</div>
+												</g:form>
+											</div>
+
 										</div>
 										<table cellpadding="0" cellspacing="0" border="0"
 											class="tableTools display table table-bordered dataTable"

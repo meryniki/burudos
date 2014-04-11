@@ -21,30 +21,50 @@ class SummaryController {
 		def total = 0;
 		def lista = [];
 		def mapsearch = [:];
+		
+		/*Initialization*/
 		if (!search)
 			search = "";
 		if (!offset)
 			offset = 0;
 		if (!max)
 			max = 20;
-
-		params.max = max;
-		
-		def query = Summary.where{
-			bu.nombre ==~  "%${search}%" ||
-			op.cat_plan ==~  "%${search}%" ||
-			op.plan_promo ==~  "%${search}%" ||
-			op.code ==~  "%${search}%" 
+			params.max = max;
+			
+		/*Date to get index list*/
+		def datemonth
+		def dateyear
+		if (!params.month_month) {
+			String hql = "select month(max(month)) as maxMonth, year(max(month)) as maxYear  from Summary"
+			def result = Summary.executeQuery(hql)
+			if (!result.isEmpty()){
+				datemonth = String.valueOf(result[0][0])
+				dateyear = String.valueOf(result[0][1])
+				params.month_month = String.valueOf(result[0][0])
+				params.month_year = dateyear
+			}
+		}else{
+			datemonth = params.month_month
+			dateyear = params.month_year
 		}
-		
+
+		def query = Summary.where{
+			(bu.nombre ==~  "%${search}%" ||
+					op.cat_plan ==~  "%${search}%" ||
+					op.plan_promo ==~  "%${search}%" ||
+					op.code ==~  "%${search}%") && (
+					month(month) == params.month_month &&
+					year(month) == params.month_year)
+		}
+
 		lista = query.list(params)
 		total = query.count()
-		
+
 		/*The map will be passed as param in g:sorteable and g:paginate*/
 		mapsearch.put("search", search);
 
 		respond lista, model:[summaryInstanceCount: total,
-			mapsearch: mapsearch]
+			mapsearch: mapsearch, defaultmonth:Date.parse("yyyyMM", dateyear+datemonth)]
 	}
 
 	def show(Summary summaryInstance) {
@@ -146,7 +166,7 @@ class SummaryController {
 			aotherlist.each() { other->
 				bu_to_summarize.add(other)
 			}
-			
+
 			bu_to_summarize.each(){ butmp->
 				counting = 0
 				employes = 0

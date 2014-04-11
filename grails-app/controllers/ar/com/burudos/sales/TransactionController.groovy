@@ -32,19 +32,39 @@ class TransactionController {
 			offset = 0;
 		if (!max)
 			max = 20;
-			
-		def query = Transaction.where{
-			op.code ==~  "%${search}%" ||
-			party.name ==~  "%${search}%"
+
+		/*Date to get index list*/
+		def datemonth
+		def dateyear
+		if (!params.month_month) {
+			String hql = "select month(max(month)) as maxMonth, year(max(month)) as maxYear  from Summary"
+			def result = Summary.executeQuery(hql)
+			if (!result.isEmpty()){
+				datemonth = String.valueOf(result[0][0])
+				dateyear = String.valueOf(result[0][1])
+				params.month_month = String.valueOf(result[0][0])
+				params.month_year = dateyear
+			}
+		}else{
+			datemonth = params.month_month
+			dateyear = params.month_year
 		}
-		
+
+		def query = Transaction.where{
+			( op.code ==~  "%${search}%" ||
+					party.name ==~  "%${search}%" ) &&(
+					month(date) == params.month_month &&
+					year(date) == params.month_year)
+			
+		}
+
 		lista = query.list(params)
 		total = query.count()
-		
+
 		mapsearch.put("search", params.search);
 
 		respond lista, model:[transactionInstanceCount: total,
-			mapsearch: mapsearch]
+			mapsearch: mapsearch, defaultmonth:Date.parse("yyyyMM", dateyear+datemonth)]
 	}
 
 	def show(Transaction transactionInstance) {
