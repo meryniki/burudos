@@ -21,7 +21,7 @@ class SummaryController {
 		def total = 0;
 		def lista = [];
 		def mapsearch = [:];
-		
+
 		/*Initialization*/
 		if (!search)
 			search = "";
@@ -29,8 +29,8 @@ class SummaryController {
 			offset = 0;
 		if (!max)
 			max = 20;
-			params.max = max;
-			
+		params.max = max;
+
 		/*Date to get index list*/
 		def datemonth
 		def dateyear
@@ -41,6 +41,12 @@ class SummaryController {
 				datemonth = String.valueOf(result[0][0])
 				dateyear = String.valueOf(result[0][1])
 				params.month_month = String.valueOf(result[0][0])
+				params.month_year = dateyear
+			}else {
+				def today= new Date()
+				datemonth = String.valueOf(today[Calendar.MONTH])
+				dateyear = String.valueOf(today[Calendar.YEAR])
+				params.month_month = datemonth
 				params.month_year = dateyear
 			}
 		}else{

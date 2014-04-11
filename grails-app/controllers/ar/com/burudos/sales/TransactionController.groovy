@@ -37,12 +37,19 @@ class TransactionController {
 		def datemonth
 		def dateyear
 		if (!params.month_month) {
-			String hql = "select month(max(month)) as maxMonth, year(max(month)) as maxYear  from Summary"
-			def result = Summary.executeQuery(hql)
+			String hql = "select month(max(date)) as maxMonth, year(max(date)) as maxYear  from Transaction"
+			def result = Transaction.executeQuery(hql)
 			if (!result.isEmpty()){
 				datemonth = String.valueOf(result[0][0])
 				dateyear = String.valueOf(result[0][1])
 				params.month_month = String.valueOf(result[0][0])
+				params.month_year = dateyear
+			}
+			else {
+				def today= new Date()
+				datemonth = String.valueOf(today[Calendar.MONTH])
+				dateyear = String.valueOf(today[Calendar.YEAR])
+				params.month_month = datemonth
 				params.month_year = dateyear
 			}
 		}else{
@@ -55,7 +62,6 @@ class TransactionController {
 					party.name ==~  "%${search}%" ) &&(
 					month(date) == params.month_month &&
 					year(date) == params.month_year)
-			
 		}
 
 		lista = query.list(params)
@@ -183,6 +189,7 @@ class TransactionController {
 			try {
 				//print params.type_file.equals(BuruConstants.file_altas)
 				if ( params.type_file.equals(BuruConstants.file_altas) ) {
+					row_mapa[BuruConstants.row_buname]      = row[1];
 					row_mapa[BuruConstants.row_emp]     = row[2];
 					row_mapa[BuruConstants.row_date]    = row[3];
 					row_mapa[BuruConstants.row_op_code] = row[10];
@@ -205,6 +212,7 @@ class TransactionController {
 					row_mapa[BuruConstants.row_plan_dec]= row[20];
 					row_mapa[BuruConstants.row_debaut]  = row[21];
 				}else if ( params.type_file.equals(BuruConstants.file_cater)){
+					row_mapa[BuruConstants.row_buname]      = row[2];
 					row_mapa[BuruConstants.row_emp]     = row[3];
 					row_mapa[BuruConstants.row_date]    = row[4];
 					row_mapa[BuruConstants.row_op_code] = row[1];
@@ -221,6 +229,7 @@ class TransactionController {
 					row_mapa[BuruConstants.row_cliente] = row[14];
 					row_mapa[BuruConstants.row_cliente_doc]  = row[15];
 				}else if ( params.type_file.equals(BuruConstants.file_post)){
+					row_mapa[BuruConstants.row_buname]        = row[1];
 					row_mapa[BuruConstants.row_emp]       = row[2];
 					row_mapa[BuruConstants.row_date]      = row[3];
 					row_mapa[BuruConstants.row_op_code]   = row[0]+row[7];
@@ -268,15 +277,26 @@ class TransactionController {
 					}
 				}
 
-				if (Employee.findByName(row_mapa[BuruConstants.row_emp])==null) {
+				/*Finally Search for the employee to match*/
+				def results = Employee.findAllByName(row_mapa[BuruConstants.row_emp])
+				Employee tmpemployee
+				if (results.size()>1) {
+					results.each() { e->
+						if (e.bu.id == BussinesUnit.findByNombre(row_mapa[BuruConstants.row_buname])?.id)
+							tmpemployee = e
+					}
+				}
+
+				if (!results || !tmpemployee) {
 					linea = linea + 1
 					if (linea<200) transactionInstance.errors.reject(row[0],row_mapa[BuruConstants.row_emp]+BuruConstants.employee_exist_error)
 					String sline = String.valueOf(linea);
 					reportOfErrors.put(sline, row)
 				}
+
 				else{
 					code = new Transaction(
-							party: Employee.findByName(row_mapa[BuruConstants.row_emp]).id,
+							party: tmpemployee.id,
 							op:    Operation.findByCode(row_mapa[BuruConstants.row_op_code]).id,
 							date:  Date.parse("dd/MM/yyyy", row_mapa[BuruConstants.row_date]),
 							sds:   row_mapa[BuruConstants.row_sds],

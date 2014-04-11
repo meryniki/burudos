@@ -29,35 +29,63 @@ class StatementController {
 
 		params.max = max
 
-		def query = EmployeeStatement.where{
-			businessUnit.nombre==~  "%${search}%" ||
-			employee.name ==~  "%${search}%" ||
-			employee.uid ==~  "%${search}%" 
+		/*Date to get index list*/
+		def datemonth
+		def dateyear
+		if (!params.month_month) {
+			String hql = "select month(max(statementPeriod)) as maxMonth, year(max(statementPeriod)) as maxYear  from EmployeeStatement"
+			def result = EmployeeStatement.executeQuery(hql)
+			print "result " + result
+			if (!String.valueOf(result[0][0]) == "null"){
+				datemonth = String.valueOf(result[0][0])
+				dateyear = String.valueOf(result[0][1])
+				params.month_month = String.valueOf(result[0][0])
+				params.month_year = dateyear
+			}
+			else
+			{
+				def today= new Date()
+				datemonth = String.valueOf(today[Calendar.MONTH])
+				dateyear = String.valueOf(today[Calendar.YEAR])
+				params.month_month = datemonth
+				params.month_year = dateyear
+			}
+		}else{
+			datemonth = params.month_month
+			dateyear = params.month_year
 		}
 		
+		def query = EmployeeStatement.where{
+			(
+					businessUnit.nombre==~  "%${search}%" ||
+					employee.name ==~  "%${search}%" ||
+					employee.uid ==~  "%${search}%" ) && (
+					month(statementPeriod) == params.month_month &&
+					year(statementPeriod) == params.month_year)
+		}
+
 		lista = query.list(params)
 		total = query.count()
-		
+
 		/*The map will be passed as param in g:sorteable and g:paginate*/
 		mapsearch.put("search", search);
 
 		respond lista, model:[statementInstanceCount: Statement.count(),
-			mapsearch: mapsearch]
+			mapsearch: mapsearch, defaultmonth:Date.parse("yyyyMM", dateyear+datemonth)]
 	}
 
 	def show(Statement statementInstance) {
 		respond statementInstance
 	}
-	
+
 	def process() {
-		
 	}
 
 	@Transactional
 	def doProcess() {
 		StatementGenerator generator = new StatementGenerator();
 		generator.generateStatement(Integer.parseInt(params.month_month), Integer.parseInt(params.month_year))
-		
+
 		redirect action:"index"
 	}
 
