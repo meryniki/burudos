@@ -35,17 +35,13 @@
 			</div>
 
 			<ul class="bigBtnIcon">
-				<li><g:link class="create" action="create">
+								<li><g:link class="create" action="create">
 						<span class="icon icomoon-icon-plus"></span>
 						<g:message code="default.new.label" args="[entityName]" />
 					</g:link></li>
-				<li><g:link class="create" action="">
-						<span class="icon icomoon-icon-menu"></span>
-						<g:message code="default.list.label" args="[entityName]" />
-					</g:link></li>
-				<li><g:link class="create" action="upload">
-						<span class="icon icomoon-icon-table"></span>
-						<g:message code="default.upload.label" args="[entityName]" />
+				<li><g:link class="domonthly" action="domonthly">
+						<span class="icon icomoon-icon-calculate-2"></span>
+						<g:message code="summary.domonthly.label" args="[entityName]" />
 					</g:link></li>
 			</ul>
 

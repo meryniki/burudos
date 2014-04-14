@@ -1,5 +1,6 @@
 
 <%@ page import="ar.com.burudos.sales.Summary"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,6 +37,14 @@
 			</div>
 
 			<ul class="bigBtnIcon">
+				<li><g:link controller="filter" class="create" action="create">
+						<span class="icon icomoon-icon-plus"></span>
+						<g:message code="filter.new.label" args="[entityName]" />
+					</g:link></li>
+					<li><g:link controller="filter" class="index" action="index">
+						<span class="icon icomoon-icon-list"></span>
+						<g:message code="filter.list.label" args="[entityName]" />
+					</g:link></li>
 				<li><g:link class="domonthly" action="domonthly">
 						<span class="icon icomoon-icon-calculate-2"></span>
 						<g:message code="summary.domonthly.label" args="[entityName]" />
@@ -108,7 +117,7 @@
 											<thead>
 												<tr role="row">
 													<g:sortableColumn params="${mapsearch}" property="uid"
-														title="${message(code: 'summary.op.label', default: 'Operacion')}" />
+														title="${message(code: 'summary.filter.label', default: 'Filtro')}" />
 													<g:sortableColumn params="${mapsearch}" property="name"
 														title="${message(code: 'summary.date.label', default: 'Fecha')}" />
 													<g:sortableColumn params="${mapsearch}" property="bu"
@@ -121,7 +130,7 @@
 											<tfoot>
 												<tr>
 													<th rowspan="1" colspan="1"><g:message
-															code="summary.op.label" default="Operacion" /></th>
+															code="summary.filter.label" default="Filter" /></th>
 													<th rowspan="1" colspan="1"><g:message
 															code="summary.date.label" default="Fecha" /></th>
 													<th rowspan="1" colspan="1"><g:message
@@ -135,10 +144,11 @@
 												<g:each in="${summaryInstanceList}" status="i"
 													var="summaryInstance">
 													<tr class="gradeA ${(i % 2) == 0 ? 'even' : 'odd'}">
+														
 														<td><g:link action="show" id="${summaryInstance.id}">
-																${fieldValue(bean: summaryInstance, field: "op")}
+																${fieldValue(bean: summaryInstance, field: "filter")}
 															</g:link></td>
-														</td>
+														
 														<td class=" ">
 															${fieldValue(bean: summaryInstance, field: "month")}
 														</td>

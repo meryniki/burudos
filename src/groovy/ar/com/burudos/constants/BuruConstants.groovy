@@ -17,6 +17,7 @@ class BuruConstants {
 	static final String trx_create_error = " No se puede crear Transaccion";
 	static final String cl_create_error = " No se puede crear el Cliente asociado";
 	
+	static final String row_type="Tipo"
 	static final String row_buname="Punto de Venta"
 	static final String row_emp="Empleado";
 	static final String row_op_code="Operacion";

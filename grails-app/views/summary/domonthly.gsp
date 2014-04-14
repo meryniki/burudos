@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta name="layout" content="main">
+
 <g:set var="entityName"
 	value="${message(code: 'summary.label', default: 'summary')}" />
 <title><g:message code="summary.btnLabel" args="[entityName]" /></title>
@@ -34,17 +35,20 @@
 			</div>
 
 			<ul class="bigBtnIcon">
-				<li><g:link class="list" action="index">
-						<span class="icon icomoon-icon-menu"></span>
-						<g:message code="default.list.label" args="[entityName]" />
+				<li><g:link class="create" action="create">
+						<span class="icon icomoon-icon-plus"></span>
+						<g:message code="default.new.label" args="[entityName]" />
+					</g:link></li>
+				<li><g:link class="domonthly" action="domonthly">
+						<span class="icon icomoon-icon-calculate-2"></span>
+						<g:message code="summary.domonthly.label" args="[entityName]" />
 					</g:link></li>
 			</ul>
 
 			<div class="row">
-
 				<div class="col-lg-2"></div>
-
 				<div class="col-lg-8">
+
 					<div id="edit-transaction" class="content scaffold-edit"
 						role="main">
 						<h1>
@@ -75,33 +79,34 @@
 							</div>
 							<div class="panel-body">
 								<g:uploadForm action="createMonthly" class="form-horizontal">
-										<fieldset class="form">
-											<div
-												class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'month', 'error')} required">
-												<label class="col-lg-3 control-label" for="month"> <g:message
-														code="summary.month.label" default="Mes a totalizar" /> <span
-													class="required-indicator">*</span>
-												</label>
-												<g:datePicker name="month" precision="month" />
-												<a
-													onmouseover="nhpup.popup('<g:message code="summary.month.help"/>');">?</a>
-											</div>
-											<div
-												class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'bu', 'error')} required">
-												<label class="col-lg-3 control-label" for="bu"> <g:message code="summary.bu.label"
-														default="Punto de Venta" /> <span class="required-indicator">*</span>
-												</label>
-												<g:select id="bu" name="bu"
-													from="${ar.com.burudos.business.BussinesUnit.list()}"
-													optionKey="id" required=""
-													value="${summaryInstance?.bu?.id}" class="many-to-one" />
-											</div>
-											<div class="center form-group">
-											<g:actionSubmit class="save btn btn-info" action="createMonthly" 
-													value="${message(code: 'default.button.create.label', default: 'uploadFile')}" />
-											</div>
-										</fieldset>
-									
+									<fieldset class="form">
+										<div
+											class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'month', 'error')} required">
+											<label class="col-lg-3 control-label" for="month"> <g:message
+													code="summary.month.label" default="Mes a totalizar" /> <span
+												class="required-indicator">*</span>
+											</label>
+											<g:datePicker name="month" precision="month" />
+											<a
+												onmouseover="nhpup.popup('<g:message code="summary.month.help"/>');">?</a>
+										</div>
+										<div
+											class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'bu', 'error')} required">
+											<label class="col-lg-3 control-label" for="bu"> <g:message
+													code="summary.bu.label" default="Punto de Venta" /> <span
+												class="required-indicator">*</span>
+											</label>
+											<g:select id="bu" name="bu" onchange="reloadFilters()"
+												from="${ar.com.burudos.business.BussinesUnit.list()}"
+												optionKey="id" required=""
+												value="${summaryInstance?.bu?.id}" class="many-to-one" />
+										</div>
+										<div class="center form-group">
+											<g:actionSubmit class="save btn btn-info"
+												action="createMonthly"
+												value="${message(code: 'default.button.create.label', default: 'uploadFile')}" />
+										</div>
+									</fieldset>
 								</g:uploadForm>
 							</div>
 						</div>

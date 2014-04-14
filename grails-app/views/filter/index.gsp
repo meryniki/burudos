@@ -1,12 +1,12 @@
+<%@ page import="ar.com.burudos.sales.Filter"%>
 
-<%@ page import="ar.com.burudos.sales.Operation"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta name="layout" content="main">
 <g:set var="entityName"
-	value="${message(code: 'operation.label', default: 'operation')}" />
-<title><g:message code="operation.btnLabel" args="[entityName]" /></title>
+	value="${message(code: 'filter.label', default: 'filter')}" />
+<title><g:message code="filter.btnLabel" args="[entityName]" /></title>
 </head>
 <body>
 	<div id="content" class="clearfix">
@@ -14,7 +14,7 @@
 			<div class="heading">
 
 				<h3>
-					<g:message code="operation.btnLabel" args="[entityName]" />
+					<g:message code="filter.btnLabel" args="[entityName]" />
 				</h3>
 
 				<div class="resBtnSearch">
@@ -29,7 +29,7 @@
 					</a> <span class="divider"> <span
 							class="icon16 icomoon-icon-arrow-right-3"></span>
 					</span></li>
-					<li class="active"><g:message code="operation.list.label"
+					<li class="active"><g:message code="filter.list.label"
 							args="[entityName]" /></li>
 				</ul>
 
@@ -40,32 +40,38 @@
 						<span class="icon icomoon-icon-plus"></span>
 						<g:message code="default.new.label" args="[entityName]" />
 					</g:link></li>
+				<li><g:link class="create" action="upload">
+						<span class="icon icomoon-icon-table"></span>
+						<g:message code="default.upload.label" args="[entityName]" />
+					</g:link></li>
 			</ul>
-			<g:if test="${flash.message}">
-				<div class="message" role="status">
-					${flash.message}
-				</div>
-			</g:if>
-			<g:hasErrors bean="${operationInstance}">
-				<ul class="errors" role="alert">
-					<g:eachError bean="${operationInstance}" var="error">
-						<li
-							<g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message
-								error="${error}" /></li>
-					</g:eachError>
-				</ul>
-			</g:hasErrors>
 
-			<div id="list-operation" class="content scaffold-list" role="main">
-				<g:if test="${operationInstanceCount == 0}">
+			<div id="list-filter" class="content scaffold-list" role="main">
+				<g:if test="${flash.message}">
+					<div class="message" role="status">
+						${flash.message}
+					</div>
+				</g:if>
+				<g:hasErrors bean="${filterInstance}">
+					<ul class="errors" role="alert">
+						<g:eachError bean="${filterInstance}" var="error">
+							<li
+								<g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message
+									error="${error}" /></li>
+						</g:eachError>
+					</ul>
+				</g:hasErrors>
+
+				<g:if test="${filterInstanceCount == 0}">
 					<h4>No hay registros</h4>
 				</g:if>
+
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="panel panel-default gradient">
 							<div class="panel-heading">
 								<h4>
-									<span><g:message code="operation.list.label"
+									<span><g:message code="filter.list.label"
 											args="[entityName]" /></span>
 								</h4>
 							</div>
@@ -75,7 +81,7 @@
 									<div id="DataTables_Table_1_wrapper"
 										class="dataTables_wrapper form-inline" role="grid">
 										<div class="row">
-											<div class="col-lg-12">
+											<div class="col-lg-5">
 												<div class="dataTables_filter"
 													id="DataTables_Table_1_filter">
 													<label> <span class="icon16 icomoon-icon-search"></span>
@@ -84,6 +90,18 @@
 														value="${mapsearch["search"]}" autofocus>
 													</label>
 												</div>
+											</div>
+											<div class="col-lg-7">
+												<g:form>
+													<div class="form-group">
+														<g:datePicker id="month" name="month" precision="month"
+															default="${defaultmonth}" value="${month}"/>
+													</div>
+													<div class="form-group">
+														<g:actionSubmit class="save btn btn-info" action="index"
+															value="${message(code: 'default.button.search.label', default: 'Buscar')}" />
+													</div>
+												</g:form>
 											</div>
 										</div>
 										<table cellpadding="0" cellspacing="0" border="0"
@@ -94,33 +112,41 @@
 											<!--Titulos con posibilidad de ordenar por-->
 											<thead>
 												<tr role="row">
-													<g:sortableColumn params="${mapsearch}" property="uid"
-														title="${message(code: 'operation.code.label', default: 'Codigo')}" />
+													<g:sortableColumn params="${mapsearch}" property="name"
+														title="${message(code: 'filter.name.label', default: 'Name')}" />
 													<g:sortableColumn params="${mapsearch}" property="legajo"
-														title="${message(code: 'operation.description.label', default: 'Descripcion')}" />
+														title="${message(code: 'filter.description.label', default: 'Description')}" />
+													<g:sortableColumn params="${mapsearch}" property="bu"
+														title="${message(code: 'filter.bu.label', default: 'Punto de Venta')}" />
 												</tr>
 											</thead>
 											<!-- Pie con titulos-->
 											<tfoot>
 												<tr>
 													<th rowspan="1" colspan="1"><g:message
-															code="operation.code.label" default="Codigo" /></th>
+															code="filter.name.label" default="Nombre" /></th>
 													<th rowspan="1" colspan="1"><g:message
-															code="operation.meaning.label" default="Nombre" /></th>
-											</tr>
+															code="filter.description.label" default="Descripcion" /></th>
+													<th rowspan="1" colspan="1"><g:message
+															code="filter.bu.label" default="Bu" /></th>
+												</tr>
 											</tfoot>
 											<!--Data-->
 											<tbody role="alert" aria-live="polite" aria-relevant="all">
-												<g:each in="${operationInstanceList}" status="i"
-													var="operationInstance">
+												<g:each in="${filterInstanceList}" status="i"
+													var="filterInstance">
 													<tr class="gradeA ${(i % 2) == 0 ? 'even' : 'odd'}">
-														<td><g:link action="show"
-																id="${operationInstance.id}">
-																${fieldValue(bean: operationInstance, field: "code")}
-															</g:link></td>
 
 														<td class=" ">
-															${fieldValue(bean: operationInstance, field: "description")}
+															${fieldValue(bean: filterInstance, field: "name")}
+														</td>
+
+														<td class=" ">
+															${fieldValue(bean: filterInstance, field: "description")}
+														</td>
+
+														<td class=" ">
+															${fieldValue(bean: filterInstance, field: "bu")}
 														</td>
 													</tr>
 												</g:each>
@@ -131,8 +157,7 @@
 											<div class="col-lg-8">
 												<div class="dataTables_paginate paging_bootstrap pagination">
 													<ul class="pagination">
-														<li><g:paginate
-																total="${operationInstanceCount ?: 0}"
+														<li><g:paginate total="${filterInstanceCount ?: 0}"
 																params="${mapsearch}" /></li>
 													</ul>
 												</div>
@@ -144,7 +169,6 @@
 						</div>
 					</div>
 				</div>
-
 			</div>
 		</div>
 	</div>
@@ -170,4 +194,3 @@
 	</script>
 </body>
 </html>
-
