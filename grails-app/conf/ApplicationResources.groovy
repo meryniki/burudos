@@ -25,6 +25,7 @@ modules = {
 		resource url:'/css/main.css'
 		resource url:'/css/custom.css'
 		resource url:'/css/begin.css'
+		resource url:'/css/burucps.css'
 		resource url:'/js/mi.js'
 		resource url:'/js/dashboard.js'
 		resource url:'/js/nhpup_1.1.js'
