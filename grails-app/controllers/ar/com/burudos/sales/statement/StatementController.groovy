@@ -14,6 +14,10 @@ class StatementController {
 
 	static allowedMethods = [save: "POST", update: "PUT"]
 
+	def example() {
+
+	}
+
 	def index(Integer max, Integer offset, String search) {
 		/*Initialize counts and params*/
 		def counting = 0;
@@ -42,8 +46,7 @@ class StatementController {
 				params.month_month = String.valueOf(result[0][0])
 				params.month_year = dateyear
 			}
-			else
-			{
+			else {
 				def today= new Date()
 				datemonth = String.valueOf(today[Calendar.MONTH])
 				dateyear = String.valueOf(today[Calendar.YEAR])
@@ -54,7 +57,7 @@ class StatementController {
 			datemonth = params.month_month
 			dateyear = params.month_year
 		}
-		
+
 		def query = EmployeeStatement.where{
 			(
 					businessUnit.nombre==~  "%${search}%" ||
