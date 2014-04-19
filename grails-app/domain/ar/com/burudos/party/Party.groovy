@@ -12,6 +12,11 @@ class Party {
 	Date lastUpdateDate;
 	String lastUpdateBy;
 	
+	static mapping = {
+		name index:'NameParty_Idx'
+	}
+	
+	
 	static constraints = {
 		uid (nullable: true)
 		name (nullable: false)

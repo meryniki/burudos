@@ -28,10 +28,8 @@ class Filter {
 	String importe
 	String plan_desc
 	String debaut
-	
 	String cat_plan
 	String plan_promo
-	
 	Operation op_desde
 	Operation op_hasta
 

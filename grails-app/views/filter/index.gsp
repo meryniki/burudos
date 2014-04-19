@@ -138,7 +138,10 @@
 													<tr class="gradeA ${(i % 2) == 0 ? 'even' : 'odd'}">
 
 														<td class=" ">
+														<g:link action="show"
+																id="${filterInstance.id}">
 															${fieldValue(bean: filterInstance, field: "name")}
+														</g:link>
 														</td>
 
 														<td class=" ">

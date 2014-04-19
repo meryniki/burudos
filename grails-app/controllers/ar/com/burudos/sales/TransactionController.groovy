@@ -260,7 +260,8 @@ class TransactionController {
 						}
 					}
 				}
-				/*Creates the Client if not exists*/
+				
+				/*Creates the Client if not exists*
 				if (row_mapa[BuruConstants.row_cliente_doc]!=null
 				&& Client.findByNdoc(row_mapa[BuruConstants.row_cliente_doc])==null) {
 					Client.withNewSession{session->
@@ -279,7 +280,11 @@ class TransactionController {
 				}
 
 				/*Finally Search for the employee to match*/
-				Employee tmpemployee = Employee.findByNameAndBu(row_mapa[BuruConstants.row_emp],BussinesUnit.findByNombre(row_mapa[BuruConstants.row_buname]) )
+				BussinesUnit butmp = BussinesUnit.findByNombre(row_mapa[BuruConstants.row_buname])
+				println butmp.id
+				println butmp.nombre
+				println row_mapa[BuruConstants.row_emp]
+				Employee tmpemployee = Employee.findByNameAndBu(row_mapa[BuruConstants.row_emp], butmp )
 				if (! tmpemployee ){
 					linea = linea + 1
 					if (linea<200) transactionInstance.errors.reject(row[0],row_mapa[BuruConstants.row_emp]+BuruConstants.employee_exist_error)
@@ -306,7 +311,7 @@ class TransactionController {
 							importe:   row_mapa[BuruConstants.row_importe],
 							plan_desc: row_mapa[BuruConstants.row_plan_dec],
 							debaut:    row_mapa[BuruConstants.row_debaut],
-							cat_plan:row_mapa[BuruConstants.row_cat_plan],
+							cat_plan:  row_mapa[BuruConstants.row_cat_plan],
 							plan_promo:row_mapa[BuruConstants.row_promo]
 							).save(failOnError: true, flush: true)
 				}

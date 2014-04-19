@@ -15,6 +15,11 @@ class BussinesUnit {
 	BussinesUnit father;
 	Employee coordinator;
 
+	
+	static mapping = {
+		nombre index:'NombreBu_Idx'
+	}
+
 	static constraints = {
 		code(nullable: false);
 		provincia(nullable: true);
@@ -28,7 +33,7 @@ class BussinesUnit {
 	}
 
 	String toString() {
-		"$code-$nombre";
+		"$nombre";
 	}
 
 	def getFamily(){

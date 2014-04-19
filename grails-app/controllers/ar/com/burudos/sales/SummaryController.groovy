@@ -149,9 +149,42 @@ class SummaryController {
 			bu_to_summarize.each(){ butmp->
 				counting = 0
 				employes = 0
+				def where_filter = ""
+				
+				if (filter.op)
+				    where_filter += " and  t.op.id = " + filter.op.id
+				if (filter.ani)
+					where_filter += " and t.ani = '" + filter.ani  + "'"
+				if (filter.sds)
+					where_filter += " and t.sds = '" + filter.sds + "'"
+				if (filter.imei)
+					where_filter += " and t.imei = '" + filter.imei  + "'"
+				if (filter.sim)
+					where_filter += " and t.sim = '" + filter.sim  + "'"
+				if (filter.folio)
+					where_filter += " and t.folio = '" + filter.folio  + "'"
+				if (filter.partida)
+					where_filter += " and t.partida = '" + filter.partida  + "'"
+				if (filter.equipo)
+					where_filter += " and t.equipo = '" + filter.equipo  + "'"
+				if (filter.solicitud)
+					where_filter += " and t.solicitud = '" + filter.solicitud  + "'"
+				if (filter.cancel)
+					where_filter += " and t.cancel = '" + filter.cancel  + "'"
+				if (filter.estado)
+					where_filter += " and t.estado = '" + filter.estado  + "'"
+				if (filter.factura)
+					where_filter += " and t.factura = '" + filter.factura  + "'"
+				if (filter.importe)
+					where_filter += " and t.importe = '" + filter.importe + "'"
+				if (filter.cat_plan)
+					where_filter += " and t.cat_plan = '" + filter.cat_plan  + "'"
+				if (filter.plan_promo)
+					where_filter += " and t.plan_promo = '" + filter.plan_promo + "'"
+					
 				Employee.findAllWhere(bu:butmp).each(){	mparty ->
 					def query = "from Transaction t where t.party.id = " + mparty.id  +
-							" and t.op.id = " + filter.op.id  +
+							where_filter +
 							" and month(t.date) = " + params.month_month +
 							" and year(t.date) = " + params.month_year
 					Transaction.findAll(query).each() { trx->

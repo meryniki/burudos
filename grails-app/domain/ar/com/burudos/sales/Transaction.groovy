@@ -25,7 +25,6 @@ class Transaction {
 	String importe
 	String plan_desc
 	String debaut
-	
 	String cat_plan
 	String plan_promo
 	
