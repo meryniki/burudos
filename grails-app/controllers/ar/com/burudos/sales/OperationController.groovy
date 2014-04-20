@@ -31,8 +31,7 @@ class OperationController {
 		
 		def query = Operation.where{
 			code ==~  "%${search}%" ||
-			cat_plan ==~  "%${search}%" ||
-			plan_promo ==~  "%${search}%" 
+			description ==~  "%${search}%" 
 		}
 		
 		lista = query.list(params)

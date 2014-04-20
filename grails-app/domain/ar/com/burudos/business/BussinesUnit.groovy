@@ -14,7 +14,12 @@ class BussinesUnit {
 	String nombre;
 	BussinesUnit father;
 	Employee coordinator;
+
 	
+	static mapping = {
+		nombre index:'NombreBu_Idx'
+	}
+
 	static constraints = {
 		code(nullable: false);
 		provincia(nullable: true);
@@ -26,9 +31,36 @@ class BussinesUnit {
 		coordinator (nullable: true);
 		father(nullable: true);
 	}
-	
+
 	String toString() {
-		"$code-$nombre";
+		"$nombre";
 	}
-	
+
+	def getFamily(){
+		def family = []
+		BussinesUnit thisone
+		thisone = this
+		family.add(thisone)
+		while(thisone.father!=null)
+		{
+			thisone = thisone.father
+			family.add(thisone)
+		}
+		return family
+	}
+
+	def getSons(){
+		def sons=[]
+		sons.add(this)
+		BussinesUnit.findAllByFather(this).each() { btu->
+			sons.add(btu)
+			BussinesUnit.findAllByFather(btu).each { abtu->
+				sons.add(abtu)
+				BussinesUnit.findAllByFather(abtu).each { bbtu->
+					sons.add(bbtu)
+				}
+			}
+		}
+		return sons
+	}
 }

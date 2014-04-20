@@ -37,7 +37,7 @@ class SummaryController {
 		if (!params.month_month) {
 			String hql = "select month(max(month)) as maxMonth, year(max(month)) as maxYear  from Summary"
 			def result = Summary.executeQuery(hql)
-			if (!result.isEmpty()){
+			if (!result.isEmpty() && result[0][0]!=null){
 				datemonth = String.valueOf(result[0][0])
 				dateyear = String.valueOf(result[0][1])
 				params.month_month = String.valueOf(result[0][0])
@@ -55,10 +55,7 @@ class SummaryController {
 		}
 
 		def query = Summary.where{
-			(bu.nombre ==~  "%${search}%" ||
-					op.cat_plan ==~  "%${search}%" ||
-					op.plan_promo ==~  "%${search}%" ||
-					op.code ==~  "%${search}%") && (
+			(bu.nombre ==~  "%${search}%" ) && (
 					month(month) == params.month_month &&
 					year(month) == params.month_year)
 		}
@@ -145,40 +142,49 @@ class SummaryController {
 		def code
 		int counting = 0
 		int employes = 0
+		def bu_to_summarize = BussinesUnit.findById(params.bu)?.getSons()
 
-		Operation.getAll().each() { op->
-
-			def bu_to_summarize = BussinesUnit.findAllByFather(BussinesUnit.findById(params.bu))
-
-			//ITERO BUSCANDO LOS HIJOS
-			def otherlist = []
-			bu_to_summarize.each(){ butmp->
-				def more_bus = BussinesUnit.findAllByFather(butmp)
-				if (!more_bus.isEmpty()) more_bus.each(){ newbu ->
-					otherlist.add(newbu)
-				}
-			}
-			otherlist.each() { other->
-				bu_to_summarize.add(other)
-			}
-			//ITERO BUSCANDO LOS HIJOS
-			def aotherlist = []
-			bu_to_summarize.each(){ butmp->
-				def more_bus = BussinesUnit.findAllByFather(butmp)
-				if (!more_bus.isEmpty()) more_bus.each(){ newbu ->
-					aotherlist.add(newbu)
-				}
-			}
-			aotherlist.each() { other->
-				bu_to_summarize.add(other)
-			}
-
+		Filter.findAllByBuInListAndMonth(bu_to_summarize,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year)).each() { filter->
+			
 			bu_to_summarize.each(){ butmp->
 				counting = 0
 				employes = 0
+				def where_filter = ""
+				
+				if (filter.op)
+				    where_filter += " and  t.op.id = " + filter.op.id
+				if (filter.ani)
+					where_filter += " and t.ani = '" + filter.ani  + "'"
+				if (filter.sds)
+					where_filter += " and t.sds = '" + filter.sds + "'"
+				if (filter.imei)
+					where_filter += " and t.imei = '" + filter.imei  + "'"
+				if (filter.sim)
+					where_filter += " and t.sim = '" + filter.sim  + "'"
+				if (filter.folio)
+					where_filter += " and t.folio = '" + filter.folio  + "'"
+				if (filter.partida)
+					where_filter += " and t.partida = '" + filter.partida  + "'"
+				if (filter.equipo)
+					where_filter += " and t.equipo = '" + filter.equipo  + "'"
+				if (filter.solicitud)
+					where_filter += " and t.solicitud = '" + filter.solicitud  + "'"
+				if (filter.cancel)
+					where_filter += " and t.cancel = '" + filter.cancel  + "'"
+				if (filter.estado)
+					where_filter += " and t.estado = '" + filter.estado  + "'"
+				if (filter.factura)
+					where_filter += " and t.factura = '" + filter.factura  + "'"
+				if (filter.importe)
+					where_filter += " and t.importe = '" + filter.importe + "'"
+				if (filter.cat_plan)
+					where_filter += " and t.cat_plan = '" + filter.cat_plan  + "'"
+				if (filter.plan_promo)
+					where_filter += " and t.plan_promo = '" + filter.plan_promo + "'"
+					
 				Employee.findAllWhere(bu:butmp).each(){	mparty ->
 					def query = "from Transaction t where t.party.id = " + mparty.id  +
-							" and t.op.id = " + op.id  +
+							where_filter +
 							" and month(t.date) = " + params.month_month +
 							" and year(t.date) = " + params.month_year
 					Transaction.findAll(query).each() { trx->
@@ -189,35 +195,13 @@ class SummaryController {
 
 				if ( employes>0 )
 					code = new Summary(
-							op: op,
+							filter: filter,
 							bu: butmp,
 							month: Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),
 							quantity: counting
 							).save(failOnError: true, flush: true)
 			}
-			/*El que se busco*/
-			counting = 0
-			employes = 0
-			Employee.findAllWhere(bu:BussinesUnit.findById(params.bu)).each(){	mparty ->
-				def query = "from Transaction t where t.party.id = " + mparty.id  +
-						" and t.op.id = " + op.id  +
-						" and month(t.date) = " + params.month_month +
-						" and year(t.date) = " + params.month_year
-				Transaction.findAll(query).each() { trx->
-					counting += 1;
-					employes += 1
-				}
-			}
-
-			if ( employes>0 )
-				code = new Summary(
-						op: op,
-						bu: BussinesUnit.findById(params.bu),
-						month: Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),
-						quantity: counting
-						).save(failOnError: true, flush: true)
 		}
-
 		redirect action:"index"
 	}
 

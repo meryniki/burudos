@@ -13,15 +13,6 @@
 	</div>
 </div>
 
-<div class=" form-group fieldcontain ${hasErrors(bean: operationInstance, field: 'meaning', 'error')} ">
-	<label class="col-lg-3 control-label" for="meaning">
-		<g:message code="operation.meaning.label" default="Meaning" />
-		
-	</label>
-	<div class="col-lg-9">
-	<g:textField name="meaning" value="${operationInstance?.meaning}"/>
-	</div>
-</div>
 
 <div class=" form-group fieldcontain ${hasErrors(bean: operationInstance, field: 'description', 'error')} ">
 	<label class="col-lg-3 control-label" for="description">

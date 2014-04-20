@@ -39,7 +39,7 @@ class TransactionController {
 		if (!params.month_month) {
 			String hql = "select month(max(date)) as maxMonth, year(max(date)) as maxYear  from Transaction"
 			def result = Transaction.executeQuery(hql)
-			if (!result.isEmpty()){
+			if (!result.isEmpty() && result[0][0]!=null){
 				datemonth = String.valueOf(result[0][0])
 				dateyear = String.valueOf(result[0][1])
 				params.month_month = String.valueOf(result[0][0])
@@ -187,13 +187,14 @@ class TransactionController {
 
 		jfile.splitEachLine('\t') { row ->
 			try {
+				row_mapa[BuruConstants.row_type]        = "params.type_file";
 				//print params.type_file.equals(BuruConstants.file_altas)
 				if ( params.type_file.equals(BuruConstants.file_altas) ) {
 					row_mapa[BuruConstants.row_buname]      = row[1];
 					row_mapa[BuruConstants.row_emp]     = row[2];
 					row_mapa[BuruConstants.row_date]    = row[3];
 					row_mapa[BuruConstants.row_op_code] = row[10];
-					row_mapa[BuruConstants.row_plan]    = "";
+					row_mapa[BuruConstants.row_plan]    = row[10];
 					row_mapa[BuruConstants.row_sds]     = row[4];
 					row_mapa[BuruConstants.row_ani]     = row[5];
 					row_mapa[BuruConstants.row_cliente] = row[6];
@@ -212,7 +213,7 @@ class TransactionController {
 					row_mapa[BuruConstants.row_plan_dec]= row[20];
 					row_mapa[BuruConstants.row_debaut]  = row[21];
 				}else if ( params.type_file.equals(BuruConstants.file_cater)){
-					row_mapa[BuruConstants.row_buname]      = row[2];
+					row_mapa[BuruConstants.row_buname]  = row[2];
 					row_mapa[BuruConstants.row_emp]     = row[3];
 					row_mapa[BuruConstants.row_date]    = row[4];
 					row_mapa[BuruConstants.row_op_code] = row[1];
@@ -244,9 +245,9 @@ class TransactionController {
 				if (Operation.findByCode(row_mapa[BuruConstants.row_op_code])==null) {
 					Operation.withNewSession{session->
 						try {
-							code = new Operation(code:row_mapa[BuruConstants.row_op_code],
-							cat_plan:row_mapa[BuruConstants.row_cat_plan],
-							plan_promo:row_mapa[BuruConstants.row_promo]).save(failOnError: true, flush: true)
+							code = new Operation(type:row_mapa[BuruConstants.row_type] ,
+							code:row_mapa[BuruConstants.row_op_code],
+							description:row_mapa[BuruConstants.row_plan_dec]).save(failOnError: true, flush: true)
 							//op_desde:Operation.findByCode(row_mapa[BuruConstants.row_plan_d])?.id,
 							//op_hasta:Operation.findByCode(row_mapa[BuruConstants.row_plan_h])?.id).save(failOnError: true, flush: true)
 						} catch (Exception e) {
@@ -259,7 +260,8 @@ class TransactionController {
 						}
 					}
 				}
-				/*Creates the Client if not exists*/
+				
+				/*Creates the Client if not exists*
 				if (row_mapa[BuruConstants.row_cliente_doc]!=null
 				&& Client.findByNdoc(row_mapa[BuruConstants.row_cliente_doc])==null) {
 					Client.withNewSession{session->
@@ -278,22 +280,17 @@ class TransactionController {
 				}
 
 				/*Finally Search for the employee to match*/
-				def results = Employee.findAllByName(row_mapa[BuruConstants.row_emp])
-				Employee tmpemployee
-				if (results.size()>1) {
-					results.each() { e->
-						if (e.bu.id == BussinesUnit.findByNombre(row_mapa[BuruConstants.row_buname])?.id)
-							tmpemployee = e
-					}
-				}
-
-				if (!results || !tmpemployee) {
+				BussinesUnit butmp = BussinesUnit.findByNombre(row_mapa[BuruConstants.row_buname])
+				println butmp.id
+				println butmp.nombre
+				println row_mapa[BuruConstants.row_emp]
+				Employee tmpemployee = Employee.findByNameAndBu(row_mapa[BuruConstants.row_emp], butmp )
+				if (! tmpemployee ){
 					linea = linea + 1
 					if (linea<200) transactionInstance.errors.reject(row[0],row_mapa[BuruConstants.row_emp]+BuruConstants.employee_exist_error)
 					String sline = String.valueOf(linea);
 					reportOfErrors.put(sline, row)
 				}
-
 				else{
 					code = new Transaction(
 							party: tmpemployee.id,
@@ -313,7 +310,9 @@ class TransactionController {
 							factura:   row_mapa[BuruConstants.row_factura],
 							importe:   row_mapa[BuruConstants.row_importe],
 							plan_desc: row_mapa[BuruConstants.row_plan_dec],
-							debaut:    row_mapa[BuruConstants.row_debaut]
+							debaut:    row_mapa[BuruConstants.row_debaut],
+							cat_plan:  row_mapa[BuruConstants.row_cat_plan],
+							plan_promo:row_mapa[BuruConstants.row_promo]
 							).save(failOnError: true, flush: true)
 				}
 			}catch (Exception e) {

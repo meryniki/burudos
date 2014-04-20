@@ -36,9 +36,13 @@
 			</div>
 
 			<ul class="bigBtnIcon">
-				<li><g:link class="create" action="">
-						<span class="icon icomoon-icon-menu"></span>
-						<g:message code="default.list.label" args="[entityName]" />
+				<li><g:link class="create" action="create">
+						<span class="icon icomoon-icon-plus"></span>
+						<g:message code="default.new.label" args="[entityName]" />
+					</g:link></li>
+				<li><g:link class="domonthly" action="domonthly">
+						<span class="icon icomoon-icon-calculate-2"></span>
+						<g:message code="summary.domonthly.label" args="[entityName]" />
 					</g:link></li>
 			</ul>
 
@@ -58,7 +62,7 @@
 								${flash.message}
 							</div>
 						</g:if>
-							<div class="panel panel-default">
+						<div class="panel panel-default">
 
 							<div class="panel-heading">
 								<h4>
@@ -67,47 +71,35 @@
 								</h4>
 							</div>
 							<div class="panel-body">
-						
+
 								<ul class="col-lg-12">
-							<g:if test="${summaryInstance?.bu}">
-								<li style="display: block;"><span class="blue col-lg-3"><g:message
-											code="summary.bu.label" default="Bu" /></span> <span
+									<g:if test="${summaryInstance?.bu}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="summary.bu.label" default="Bu" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
-											class="col-lg-6"><g:link
-											controller="bussinesUnit" action="show"
-											id="${summaryInstance?.bu?.id}">
-											${summaryInstance?.bu?.encodeAsHTML()}
-										</g:link></span></li>
-							</g:if>
+											class="col-lg-6"><g:link controller="bussinesUnit"
+													action="show" id="${summaryInstance?.bu?.id}">
+													${summaryInstance?.bu?.encodeAsHTML()}
+												</g:link></span></li>
+									</g:if>
 
-							<g:if test="${summaryInstance?.op}">
-								<li style="display: block;"><span class="blue col-lg-3"><g:message
-											code="summary.op.label" default="Op" /></span> <span
-											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
-											class="col-lg-6"><g:link
-											controller="operation" action="show"
-											id="${summaryInstance?.op?.id}">
-											${summaryInstance?.op?.encodeAsHTML()}
-										</g:link></span></li>
-							</g:if>
-
-							<g:if test="${summaryInstance?.month}">
-								<li style="display: block;"><span class="blue col-lg-3"><g:message
-											code="summary.month.label" default="Month" /></span> <span
+									<g:if test="${summaryInstance?.month}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="summary.month.label" default="Month" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
 											class="col-lg-6"><g:fieldValue
-											bean="${summaryInstance}" field="month" /></span></li>
-							</g:if>
+													bean="${summaryInstance}" field="month" /></span></li>
+									</g:if>
 
-							<g:if test="${summaryInstance?.quantity}">
-								<li style="display: block;"><span class="blue col-lg-3"><g:message
-											code="summary.quantity.label" default="Quantity" /></span> <span
+									<g:if test="${summaryInstance?.quantity}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="summary.quantity.label" default="Quantity" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
 											class="col-lg-6"><g:fieldValue
-											bean="${summaryInstance}" field="quantity" /></span></li>
-							</g:if>
+													bean="${summaryInstance}" field="quantity" /></span></li>
+									</g:if>
 
-						</ul>
+								</ul>
 
 								<ul class="bigBtnIcon" style="display: -webkit-box;">
 									<li><g:link class="edit" action="edit"

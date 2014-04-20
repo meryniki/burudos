@@ -225,6 +225,25 @@
 													bean="${transactionInstance}" field="plan_desc" /></span></li>
 									</g:if>
 
+									<g:if test="${transactionInstance?.cat_plan}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="transaction.cat_plan.label"
+													default="Categoria del Plan" /></span> <span
+											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
+											class="col-lg-6"> <g:fieldValue
+													bean="${transactionInstance}" field="cat_plan" /></span></li>
+									</g:if>
+
+									<g:if test="${transactionInstance?.plan_promo}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="transaction.plan_promo.label"
+													default="Categoria del Plan" /></span> <span
+											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
+											class="col-lg-6"> <g:fieldValue
+													bean="${transactionInstance}" field="plan_promo" /></span></li>
+									</g:if>
+
+
 									<g:if test="${transactionInstance?.debaut}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="transaction.debaut.label" default="Debaut" /></span> <span

@@ -54,9 +54,9 @@ class Employee extends Party{
 	public String getMyName() {
 		def list = []
 		if (lastname && lastname.trim())
-			list << lastname;
+			list << lastname.trim();
 		if (names && names.trim())
-			list << names;
+			list << names.trim();
 		if (list.size() > 0)
 			return list.join(' ');
 		return null;

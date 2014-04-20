@@ -20,10 +20,10 @@
 		class="required-indicator">*</span>
 	</label>
 	<div class="col-lg-9">
-		<g:select id="op" name="op.id"
-			from="${ar.com.burudos.sales.Operation.list()}" optionKey="id"
-			required="" value="${summaryInstance?.op?.id}" class="many-to-one" />
-		<a onmouseover="nhpup.popup('<g:message code="summary.op.help"/>');">?</a>
+		<g:select id="filter" name="filter.id"
+			from="${ar.com.burudos.sales.Filter.list()}" optionKey="id"
+			required="" value="${summaryInstance?.filter?.id}" class="many-to-one" />
+		<a onmouseover="nhpup.popup('<g:message code="summary.filter.help"/>');">?</a>
 	</div>
 </div>
 

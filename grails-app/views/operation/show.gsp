@@ -76,22 +76,16 @@
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="operation.code.label" default="Code" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
-										<g:fieldValue bean="${operationInstance}" field="code" /></span></li>
+										<g:fieldValue bean="${operationInstance}" field="code" /></li>
 									</g:if>
 
-									<g:if test="${operationInstance?.meaning}">
-										<li style="display: block;"><span class="blue col-lg-3"><g:message
-													code="operation.meaning.label" default="Meaning" /></span> <span
-											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
-										<g:fieldValue bean="${operationInstance}" field="meaning" /></span></li>
-									</g:if>
-
+		
 									<g:if test="${operationInstance?.description}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="operation.description.label" default="Description" /></span>
 
 											<span class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
-										<g:fieldValue bean="${operationInstance}" field="description" /></span></li>
+										<g:fieldValue bean="${operationInstance}" field="description" /></li>
 									</g:if>
 
 								</ul>

@@ -1,11 +1,11 @@
+<%@ page import="ar.com.burudos.sales.Filter"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta name="layout" content="main">
 <g:set var="entityName"
-	value="${message(code: 'transaction.label', default: 'Transaction')}" />
-<title><g:message code="default.create.label"
-		args="[entityName]" /></title>
+	value="${message(code: 'operation.label', default: 'operation')}" />
+<title><g:message code="default.edit.label" args="[entityName]" /></title>
 </head>
 <body>
 
@@ -14,7 +14,7 @@
 			<div class="heading">
 
 				<h3>
-					<g:message code="transaction.btnLabel" args="[entityName]" />
+					<g:message code="operation.btnLabel" args="[entityName]" />
 				</h3>
 
 				<div class="resBtnSearch">
@@ -28,13 +28,17 @@
 					</a> <span class="divider"> <span
 							class="icon16 icomoon-icon-arrow-right-3"></span>
 					</span></li>
-					<li class="active"><g:message code="transaction.list.label"
+					<li class="active"><g:message code="operation.list.label"
 							args="[entityName]" /></li>
 				</ul>
 
 			</div>
 
 			<ul class="bigBtnIcon">
+				<li><g:link class="create" action="create">
+						<span class="icon icomoon-icon-plus"></span>
+						<g:message code="default.new.label" args="[entityName]" />
+					</g:link></li>
 				<li><g:link class="create" action="">
 						<span class="icon icomoon-icon-menu"></span>
 						<g:message code="default.list.label" args="[entityName]" />
@@ -46,58 +50,41 @@
 			</ul>
 
 
-
 			<div class="row">
 
 				<div class="col-lg-2"></div>
 
 				<div class="col-lg-8">
 
-
-					<div id="create-transaction" class="content scaffold-create"
-						role="main">
+					<div id="edit-filter" class="content scaffold-edit" role="main">
 						<h1>
-							<g:message code="default.create.label" args="[entityName]" />
+							<g:message code="default.edit.label" args="[entityName]" />
 						</h1>
 						<g:if test="${flash.message}">
 							<div class="message" role="status">
 								${flash.message}
 							</div>
 						</g:if>
-						<g:hasErrors bean="${transactionInstance}">
+						<g:hasErrors bean="${filterInstance}">
 							<ul class="errors" role="alert">
-								<g:eachError bean="${transactionInstance}" var="error">
+								<g:eachError bean="${filterInstance}" var="error">
 									<li
 										<g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message
 											error="${error}" /></li>
 								</g:eachError>
 							</ul>
 						</g:hasErrors>
-						<div class="panel panel-default">
-
-							<div class="panel-heading">
-								<h4>
-									<span><g:message code="transaction.create.heading" /></span>
-								</h4>
-							</div>
-							<div class="panel-body">
-
-								<g:form class="form-horizontal"
-									url="[resource:transactionInstance, action:'save']">
-									<fieldset class="form">
-										<g:render template="form" />
-									</fieldset>
-									<fieldset>
-										<div class="form-group">
-											<div class="col-lg-offset-3 col-lg-9">
-												<g:submitButton name="create" class="save"
-													value="${message(code: 'default.button.create.label', default: 'Create')}" />
-											</div>
-										</div>
-									</fieldset>
-								</g:form>
-							</div>
-						</div>
+						<g:form url="[resource:filterInstance, action:'update']"
+							method="PUT">
+							<g:hiddenField name="version" value="${filterInstance?.version}" />
+							<fieldset class="form">
+								<g:render template="form" />
+							</fieldset>
+							<fieldset class="buttons">
+								<g:actionSubmit class="save" action="update"
+									value="${message(code: 'default.button.update.label', default: 'Update')}" />
+							</fieldset>
+						</g:form>
 					</div>
 				</div>
 			</div>

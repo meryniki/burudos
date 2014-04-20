@@ -3,7 +3,7 @@
 <head>
 <meta name="layout" content="main">
 <g:set var="entityName"
-	value="${message(code: 'transaction.label', default: 'Transaction')}" />
+	value="${message(code: 'filter.label', default: 'Filter')}" />
 <title><g:message code="default.create.label"
 		args="[entityName]" /></title>
 </head>
@@ -14,7 +14,7 @@
 			<div class="heading">
 
 				<h3>
-					<g:message code="transaction.btnLabel" args="[entityName]" />
+					<g:message code="filter.btnLabel" args="[entityName]" />
 				</h3>
 
 				<div class="resBtnSearch">
@@ -28,7 +28,7 @@
 					</a> <span class="divider"> <span
 							class="icon16 icomoon-icon-arrow-right-3"></span>
 					</span></li>
-					<li class="active"><g:message code="transaction.list.label"
+					<li class="active"><g:message code="filter.list.label"
 							args="[entityName]" /></li>
 				</ul>
 
@@ -37,24 +37,20 @@
 			<ul class="bigBtnIcon">
 				<li><g:link class="create" action="">
 						<span class="icon icomoon-icon-menu"></span>
-						<g:message code="default.list.label" args="[entityName]" />
+						<g:message code="filter.list.label" args="[entityName]" />
 					</g:link></li>
 				<li><g:link class="create" action="upload">
 						<span class="icon icomoon-icon-table"></span>
-						<g:message code="default.upload.label" args="[entityName]" />
+						<g:message code="filter.upload.label" args="[entityName]" />
 					</g:link></li>
 			</ul>
 
 
 
 			<div class="row">
+				<div class="col-lg-12">
 
-				<div class="col-lg-2"></div>
-
-				<div class="col-lg-8">
-
-
-					<div id="create-transaction" class="content scaffold-create"
+					<div id="create-filter" class="content scaffold-create"
 						role="main">
 						<h1>
 							<g:message code="default.create.label" args="[entityName]" />
@@ -64,33 +60,34 @@
 								${flash.message}
 							</div>
 						</g:if>
-						<g:hasErrors bean="${transactionInstance}">
+						<g:hasErrors bean="${filterInstance}">
 							<ul class="errors" role="alert">
-								<g:eachError bean="${transactionInstance}" var="error">
+								<g:eachError bean="${filterInstance}" var="error">
 									<li
 										<g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message
 											error="${error}" /></li>
 								</g:eachError>
 							</ul>
 						</g:hasErrors>
+
 						<div class="panel panel-default">
 
 							<div class="panel-heading">
 								<h4>
-									<span><g:message code="transaction.create.heading" /></span>
+									<span><g:message code="filter.create.heading" /></span>
 								</h4>
 							</div>
 							<div class="panel-body">
 
-								<g:form class="form-horizontal"
-									url="[resource:transactionInstance, action:'save']">
+								<g:form url="[resource:filterInstance, action:'save']"
+									class="form-horizontal" role="form">
 									<fieldset class="form">
 										<g:render template="form" />
 									</fieldset>
 									<fieldset>
 										<div class="form-group">
 											<div class="col-lg-offset-3 col-lg-9">
-												<g:submitButton name="create" class="save"
+												<g:submitButton name="create" class="btn btn-info"
 													value="${message(code: 'default.button.create.label', default: 'Create')}" />
 											</div>
 										</div>

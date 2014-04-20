@@ -1,14 +1,19 @@
 package ar.com.burudos.sales
 
-import ar.com.burudos.party.Client
+import java.util.Date;
+
 import ar.com.burudos.business.BussinesUnit
-import ar.com.burudos.party.Party
+import ar.com.burudos.party.Client;
+import ar.com.burudos.party.Party;
 
-class Transaction {
 
-	Party  party
+class Filter {
+	
+	String name
+	String description
+	BussinesUnit bu
+	Date month
 	Operation op
-	Date date
 	String sds
 	String ani
 	String imei
@@ -17,8 +22,6 @@ class Transaction {
 	String partida
 	String equipo
 	String solicitud
-	BussinesUnit almacen
-	Client  cliente
 	String cancel
 	String estado
 	String factura
@@ -27,14 +30,15 @@ class Transaction {
 	String debaut
 	String cat_plan
 	String plan_promo
-	
 	Operation op_desde
 	Operation op_hasta
 
 	static constraints = {
-		party(nullable:false)
-		op(nullable:false)
-		date (max : new Date(), nullable: false)
+		name (nullable: false)
+		month (max : new Date(), nullable: false)
+		description (nullable: true)
+		bu( nullable:false)
+		op(nullable:true)
 		sds(nullable:true)
 		ani(nullable:true)
 		imei(nullable:true)
@@ -43,18 +47,20 @@ class Transaction {
 		partida(nullable:true)
 		equipo(nullable:true)
 		solicitud(nullable:true)
-		almacen(nullable:true)
-		cliente(nullable:true)
 		cancel(nullable:true)
 		estado(nullable:true)
 		factura(nullable:true)
 		importe(nullable:true)
 		plan_desc(nullable:true)
-		debaut(nullable:true)
+		debaut(nullable:true)		
 		cat_plan(nullable:true)
 		plan_promo(nullable:true)
 		op_desde(nullable:true)
 		op_hasta(nullable:true)
 	}
+	
+	String toString() {
+		return name
+	}
+
 }
- 
