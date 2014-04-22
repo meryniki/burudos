@@ -26,11 +26,7 @@ class ParameterResolver {
 
 	void loadParameters() {
 		Parameter.findAll().each() { it ->
-			def hash
-			if (it.businessUnit)
-				hash = it.code = it.businessUnit.id
-			else
-				hash = it.code
+			def hash = it.code = it.businessUnit.id
 			log.debug("Agrego un parametro al resolver: " + hash)
 			parameters.put(hash, it)
 		}
