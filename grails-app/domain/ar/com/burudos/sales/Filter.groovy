@@ -32,7 +32,7 @@ class Filter {
 	String plan_promo
 	Operation op_desde
 	Operation op_hasta
-
+	
 	static constraints = {
 		name (nullable: false)
 		month (max : new Date(), nullable: false)

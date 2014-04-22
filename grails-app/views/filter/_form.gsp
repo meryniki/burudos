@@ -48,8 +48,10 @@
 			<g:select id="op" name="op.id"
 				from="${ar.com.burudos.sales.Operation.list()}" optionKey="id"
 				value="${filterInstance?.op?.id}" class="many-to-one"
-				noSelection="['null': '']" />
+				noSelection="['null': '']"/>
 		</div>
+
+
 	</div>
 
 	<div

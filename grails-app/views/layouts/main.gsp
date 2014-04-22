@@ -54,8 +54,9 @@
 				<ul class="nav navbar-right usernav">
 					<li class="dropdown"><a href="#"
 						class="dropdown-toggle avatar" data-toggle="dropdown"> <img
-							src="${resource(dir: 'images', file: 'avatar.jpg')}" alt="" class="image"> <span
-							class="txt">unico@usuario.com</span> <b class="caret"></b>
+							src="${resource(dir: 'images', file: 'avatar.jpg')}" alt=""
+							class="image"> <span class="txt">unico@usuario.com</span> <b
+							class="caret"></b>
 					</a>
 						<ul class="dropdown-menu">
 							<li class="menu">
@@ -108,7 +109,22 @@
 									"></span>
 										<g:message
 											code="${c.getStaticPropertyValue('btnName', String)}" />
-									</g:link></li>
+									</g:link> 
+									<g:if test="${c.getStaticPropertyValue('submenu1', String)}">
+										<ul class="sub" style="display: block;">
+											<g:if test="${c.getStaticPropertyValue('submenu1', String)}">
+												<li><g:link action="index" params="[employeeorbu: '1']" controller="${c.logicalPropertyName}" ><span
+														class="icon16 icomoon-icon-arrow-right-3"></span> <g:message
+															code="${c.getStaticPropertyValue('submenu1', String)}" /></g:link></li>
+											</g:if>
+
+											<g:if test="${c.getStaticPropertyValue('submenu2', String)}">
+												<li><g:link action="index" params="[employeeorbu: '2']" controller="${c.logicalPropertyName}" ><span
+														class="icon16 icomoon-icon-arrow-right-3"></span> <g:message
+															code="${c.getStaticPropertyValue('submenu2', String)}" /></g:link></li>
+											</g:if>
+										</ul>
+										</g:if></li>
 							</g:if>
 						</g:each>
 					</ul>

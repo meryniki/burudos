@@ -10,7 +10,7 @@ class FilterController {
 	static Boolean linkMe = false
 	static String btnName = "filter.btnLabel"
 	static String iconName = "filter.iconName"
-
+	
 	static allowedMethods = [save: "POST", update: "PUT"]
 
 	def index(Integer max, Integer offset, String search) {

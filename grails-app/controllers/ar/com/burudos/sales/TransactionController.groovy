@@ -172,6 +172,8 @@ class TransactionController {
 		int linea = 0
 		def code
 		def Map row_mapa = [:]
+		
+		transactionInstance.clearErrors();
 
 		/*File management*/
 		def file = request.getFile(BuruConstants.uploadFileTransaction)
