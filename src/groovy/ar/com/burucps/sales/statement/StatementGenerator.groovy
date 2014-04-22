@@ -69,32 +69,33 @@ public class StatementGenerator {
 		businessUnitTree.loadTree()
 		ksession.setGlobal( "businessUnitsTree", businessUnitTree);
 		log.debug("Load Business Units")
+		
+		// Load Summary
+		// TODO month de summary es date
+		for (Summary summary : Summary.findAllByMonth(month)) {
+			ksession.insert(summary);
+		}
+		log.debug("Load Summary")
 
 		// Load EmployeeList and their statements
 		for (Employee employee : Employee.findAll()) {
-			ksession.insert(employee);
 			EmployeeStatement statement = new EmployeeStatement();
 			statement.employee = employee;
 			statement.statementPeriod = parsePeriod(month,year)
+
+			ksession.insert(employee);
 			ksession.insert(statement);
+			
+			log.info("Por ejecutar las reglas")
+			ksession.fireAllRules();
+			log.info("Fin de la ejecución")
+			
+			ksession.retract(employee)
+			ksession.retract(statement)
+			
+			statement.save(flush: true)
 		}
-		log.debug("Load Employees and their Statements")
-
-		// Load Transactions
-		/*for (Transaction transaction : Transaction.findAllByMonth(month)) {
-			ksession.insert(transaction);
-		}
-		log.debug("Load Transactions")
-
-		// Load Summary
-		for (Summary summary : Summary.findAllByMonth(month)) {
-			ksession.insert(summary);
-		}*/
-		log.debug("Load Summary")
-
-		log.info("Por ejecutar las reglas")
-		ksession.fireAllRules();
-		log.info("Fin de la ejecución")
+		log.debug("End process")
 
 		ksession.dispose();
 		

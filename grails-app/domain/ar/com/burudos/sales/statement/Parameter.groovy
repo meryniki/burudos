@@ -29,7 +29,8 @@ class Parameter {
 		paramCategory (nullable : false)
 		paramGroup (nullable : true)
 		paramDescription (nullable : false)
-		maxValue (nullable : false)
+		value (nullable : true)
+		maxValue (nullable : true)
 		minValue (nullable : true)
 		bussinesUnit (nullable : false, validator: { val, obj ->
 			def paramForSameBU = Parameter.findByParamCodeAndBussinesUnit(obj.paramCode, obj.bussinesUnit)

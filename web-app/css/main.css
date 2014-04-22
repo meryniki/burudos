@@ -2020,11 +2020,11 @@ line-height: 47px;ainnav li a:hover {
 		}
 		.panel .panel-heading .minimize {
 			cursor:pointer;
-			background: url(../images/icons/minus.png) no-repeat center 2px #f3f3f3;
+			background: url(../images/minus.png) no-repeat center 2px #f3f3f3;
 			display: none;
 		}
 		.panel .panel-heading .maximize {
-			background: url(../images/icons/plus.png) no-repeat center 2px #f3f3f3;
+			background: url(../images/plus.png) no-repeat center 2px #f3f3f3;
 			display: block;
 		}
 	.panel .panel-body {

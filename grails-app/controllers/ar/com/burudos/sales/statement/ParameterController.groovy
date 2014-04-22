@@ -1,8 +1,9 @@
 package ar.com.burudos.sales.statement
 
-
-
 import static org.springframework.http.HttpStatus.*
+import ar.com.burucps.sales.statement.StatementLineGroup;
+import ar.com.burudos.business.BussinesUnit;
+import ar.com.burudos.constants.BuruConstants;
 import ar.com.burudos.party.Employee;
 import grails.transaction.Transactional
 
@@ -76,7 +77,9 @@ class ParameterController {
 				])
 				redirect parameterInstance
 			}
-			'*' { respond parameterInstance, [status: CREATED] }
+			'*' {
+				respond parameterInstance, [status: CREATED]
+			}
 		}
 	}
 
@@ -106,7 +109,9 @@ class ParameterController {
 				])
 				redirect parameterInstance
 			}
-			'*'{ respond parameterInstance, [status: OK] }
+			'*'{
+				respond parameterInstance, [status: OK]
+			}
 		}
 	}
 
@@ -166,40 +171,52 @@ class ParameterController {
 		def mapreport = [:]
 		int linea = 0
 		def code
+		parameterInstance.clearErrors()
 
 		/*File management*/
-		//def file = request.getFile(BuruConstants.uploadFileEmployee)
-		//def jfile = new java.io.File(BuruConstants.saveFileEmployee)
-		//if(file && !file.empty && file.size < BuruConstants.MAX_FILE) {
-		//	file.transferTo( jfile )
-		//}
-		//else{
-		//	employeeInstance.errors.reject(BuruConstants.NO_VALID_FILE);
-		//	respond employeeInstance.errors, view:'upload_result', model:[report:mapreport]
-		//	return
-		//}
+		def file = request.getFile(BuruConstants.uploadFileParameter)
+		def jfile = new java.io.File(BuruConstants.saveFileParameter)
+		if(file && !file.empty && file.size < BuruConstants.MAX_FILE) {
+			file.transferTo( jfile )
+		}
+		else{
+			parameterInstance.errors.reject(BuruConstants.NO_VALID_FILE);
+			respond parameterInstance.errors, view:'upload_result', model:[report:mapreport]
+			return
+		}
 
-		//jfile.splitEachLine('\t') { row ->
-		//	try {
-		//		code = Employee.findByLegajo(row[0]) ?: new Employee(
-		//				legajo: row[0],
-		//				fullname: row[1],
-		//				dofingreso: Date.parse(BuruConstants.dateFormatEmployee,row[2]),
-		//				uid: row[3],
-		///				bu: BussinesUnit.findByCode(row[5]).id,
-		//				isworker: true,
-		//				iscoordinator: false
-		//				).save(failOnError: true, flush: true)
-		//	} catch (Exception e) {
+		jfile.splitEachLine('\t') { row ->
+			try {
+				def bu = BussinesUnit.findByNombre(row[7])
+				code = Parameter.findByParamCodeAndBussinesUnit(row[0],bu) ?: new Parameter(
+						paramCode: row[0],
+						paramCategory: getCategory(row[1]),
+						paramGroup: row[2],
+						paramDescription: row[3],
+						maxValue: row[6],
+						minValue: row[5],
+						value: row[4],
+						bussinesUnit:bu,
+						active: true
+						).save(failOnError: true, flush: true)
+			} catch (Exception e) {
 
-		//		linea = linea + 1;
-		//		employeeInstance.errors.reject(row[0], row[0]+"\t"+row[1]+"\t"+row[3]+"\t"+row[4]+"\t"+row[5]);
-		//		String sline = String.valueOf(linea);
-		//		reportOfErrors.put(sline, row)
+				linea = linea + 1;
+				parameterInstance.errors.reject('parameter.upload.row.fail', [
+					row[0],
+					row[1],
+					row[2],
+					row[3],
+					row[4],
+					row[5],
+					row[6],
+					row[7]] as Object[],'Upload failed: [{0},{1},{2},{3},{4},{5},{6},{7}]');
+				String sline = String.valueOf(linea);
+				reportOfErrors.put(sline, row)
 
-		//		e.printStackTrace();
-		//	}
-		//}
+				e.printStackTrace();
+			}
+		}
 
 		mapreport.put("report", reportOfErrors)
 
@@ -221,6 +238,23 @@ class ParameterController {
 				redirect action: "index", method: "GET"
 			}
 			'*'{ render status: NOT_FOUND }
+		}
+	}
+
+	private StatementLineGroup getCategory (String groupName) {
+		switch (groupName) {
+			case "VENTAS":
+				return StatementLineGroup.SALES;
+			case "PUNTOS":
+				return StatementLineGroup.POINTS;
+			case "INCENTIVO IND":
+				return StatementLineGroup.INDIVIDUAL_INCENTIVE;
+			case "INCENTIVO PTO VTA":
+				return StatementLineGroup.POS_INCENTIVE;
+			case "DEDUCCIONES":
+				return StatementLineGroup.DEDUCTIONS;
+			default:
+				return StatementLineGroup.OTHERS;
 		}
 	}
 }

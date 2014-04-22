@@ -26,3 +26,7 @@
 	font-weight: bold;
 	font-size: large;
 }
+
+.tab-pane {
+	padding-top: 5px;	
+}

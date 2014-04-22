@@ -1,3 +1,4 @@
+<%@ page import="ar.com.burudos.constants.BuruConstants"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,7 +79,7 @@
 										code="default.upload.file" /></label>
 								<div class="col-lg-5">
 									<div class="uploader" id="uniform-file">
-										<input type="file" class="form-control" name="myFile"
+										<input type="file" class="form-control" name="${BuruConstants.uploadFileParameter}"
 											id="file"> <span class="filename"
 											style="-webkit-user-select: none;">Click <strong>here</strong>
 											to Select
@@ -96,12 +97,10 @@
 					<div id="thinking" style="display: none">
 						<img src="../static/images/072.gif" alt="">
 					</div>
-
 				</div>
 			</div>
 		</div>
 	</div>
-
 </body>
 </html>
 
