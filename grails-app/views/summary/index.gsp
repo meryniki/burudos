@@ -41,7 +41,7 @@
 						<span class="icon icomoon-icon-plus"></span>
 						<g:message code="filter.new.label" args="[entityName]" />
 					</g:link></li>
-					<li><g:link controller="filter" class="index" action="index">
+				<li><g:link controller="filter" class="index" action="index">
 						<span class="icon icomoon-icon-list"></span>
 						<g:message code="filter.list.label" args="[entityName]" />
 					</g:link></li>
@@ -98,7 +98,7 @@
 												<g:form>
 													<div class="form-group">
 														<g:datePicker id="month" name="month" precision="month"
-															default="${defaultmonth}" value="${month}"/>
+															default="${defaultmonth}" value="${month}" />
 													</div>
 													<div class="form-group">
 														<g:actionSubmit class="save btn btn-info" action="index"
@@ -120,8 +120,15 @@
 														title="${message(code: 'summary.filter.label', default: 'Filtro')}" />
 													<g:sortableColumn params="${mapsearch}" property="name"
 														title="${message(code: 'summary.date.label', default: 'Fecha')}" />
-													<g:sortableColumn params="${mapsearch}" property="bu"
-														title="${message(code: 'summary.bu.label', default: 'Punto de Venta')}" />
+													<g:if test="${mapsearch["employeeorbu"]=='2'}">
+														<g:sortableColumn params="${mapsearch}" property="bu"
+															title="${message(code: 'summary.bu.label', default: 'Punto de Venta')}" />
+													</g:if>
+													<g:else>
+														<g:sortableColumn params="${mapsearch}"
+															property="employee"
+															title="${message(code: 'summary.employee.label', default: 'Empleado')}" />
+													</g:else>
 													<g:sortableColumn params="${mapsearch}" property="quantity"
 														title="${message(code: 'summary.quantity.label', default: 'Total')}" />
 												</tr>
@@ -133,8 +140,14 @@
 															code="summary.filter.label" default="Filter" /></th>
 													<th rowspan="1" colspan="1"><g:message
 															code="summary.date.label" default="Fecha" /></th>
-													<th rowspan="1" colspan="1"><g:message
-															code="summary.bu.label" default="Punto de Venta" /></th>
+													<g:if test="${mapsearch["employeeorbu"]=='2'}">
+														<th rowspan="1" colspan="1"><g:message
+																code="summary.bu.label" default="Punto de Venta" /></th>
+													</g:if>
+													<g:else>
+														<th rowspan="1" colspan="1"><g:message
+																code="summary.employee.label" default="Empleado" /></th>
+													</g:else>
 													<th rowspan="1" colspan="1"><g:message
 															code="summary.quantity.label" default="Total" /></th>
 												</tr>
@@ -144,19 +157,24 @@
 												<g:each in="${summaryInstanceList}" status="i"
 													var="summaryInstance">
 													<tr class="gradeA ${(i % 2) == 0 ? 'even' : 'odd'}">
-														
+
 														<td><g:link action="show" id="${summaryInstance.id}">
 																${fieldValue(bean: summaryInstance, field: "filter")}
 															</g:link></td>
-														
+
 														<td class=" ">
 															${fieldValue(bean: summaryInstance, field: "month")}
 														</td>
-
-														<td class=" ">
-															${fieldValue(bean: summaryInstance, field: "bu")}
-														</td>
-
+														<g:if test="${mapsearch["employeeorbu"]=='2'}">
+															<td class=" ">
+																${fieldValue(bean: summaryInstance, field: "bu")}
+															</td>
+														</g:if>
+														<g:else>
+															<td class=" ">
+																${fieldValue(bean: summaryInstance, field: "employee")}
+															</td>
+														</g:else>
 														<td class=" ">
 															${fieldValue(bean: summaryInstance, field: "quantity")}
 														</td>

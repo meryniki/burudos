@@ -108,6 +108,8 @@ class EmployeeController {
 		int linea = 0
 		def code
 
+		employeeInstance.clearErrors();
+		
 		/*File management*/
 		def file = request.getFile(BuruConstants.uploadFileEmployee)
 		def jfile = new java.io.File(BuruConstants.saveFileEmployee)
