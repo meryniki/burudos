@@ -13,10 +13,10 @@ dialect "mvel"
 
 rule "Altas - IM Ahorro/Contrato"
 	when
-		empleado : Employee
-		total : Summary()
+		$empleado : Employee
+		$total : Summary(employee == $empleado && filter == "IM")
 	then
-		
+		Parameter p = parameterResolver.resolve("VTA_IM_PU_ARS",$empleado.bu)
 end
 
 rule "Altas - MEC (Local)"
