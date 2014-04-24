@@ -25,7 +25,7 @@ import ar.com.burudos.sales.statement.Parameter;
 import ar.com.burudos.sales.statement.Statement;
 
 public class StatementGenerator {
-	
+
 	private static final log = LogFactory.getLog(this)
 
 	public void generateStatement(Integer month, Integer year) {
@@ -69,39 +69,45 @@ public class StatementGenerator {
 		businessUnitTree.loadTree()
 		ksession.setGlobal( "businessUnitsTree", businessUnitTree);
 		log.debug("Load Business Units")
-		
+
 		// Load Summary
 		// TODO month de summary es date
-		for (Summary summary : Summary.findAllByMonth(month)) {
-			ksession.insert(summary);
+		Summary.where{
+			(month(sumMonth) == month &&
+					year(sumMonth) == year)
+		}.list().each() { it ->
+			ksession.insert(it);
 		}
 		log.debug("Load Summary")
 
 		// Load EmployeeList and their statements
 		for (Employee employee : Employee.findAll()) {
-			EmployeeStatement statement = new EmployeeStatement();
-			statement.employee = employee;
-			statement.statementPeriod = parsePeriod(month,year)
+			if (employee.isworker) {
+				EmployeeStatement statement = new EmployeeStatement();
+				statement.employee = employee;
+				statement.statementPeriod = parsePeriod(month,year)
 
-			ksession.insert(employee);
-			ksession.insert(statement);
-			
-			log.info("Por ejecutar las reglas")
-			ksession.fireAllRules();
-			log.info("Fin de la ejecución")
-			
-			ksession.retract(employee)
-			ksession.retract(statement)
-			
-			statement.save(flush: true)
+				ksession.insert(employee);
+				ksession.setGlobal("statement", statement);
+
+				log.info("Por ejecutar las reglas")
+				ksession.fireAllRules();
+				log.info("Fin de la ejecución")
+
+				ksession.retract(employee)
+				ksession.setGlobal("statement",null)
+
+				statement = ksession.getGlobal("statement");
+				statement.save(flush: true)
+			}
 		}
 		log.debug("End process")
 
 		ksession.dispose();
-		
+
 		log
 	}
-	
+
 	Date parsePeriod(month,year) {
 		return Date.parse("yyyyMM", year.toString() + String.format("%02d", month))
 	}

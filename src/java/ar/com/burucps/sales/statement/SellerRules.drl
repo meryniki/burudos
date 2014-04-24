@@ -1,15 +1,125 @@
 package ar.com.burucps.sales.statement
 
+import ar.com.burucps.business.BusinessUnitTree
+import ar.com.burudos.party.Employee
+import ar.com.burucps.sales.statement.ParameterResolver
+import ar.com.burudos.sales.statement.Statement
+
 global ar.com.burucps.sales.statement.ParameterResolver parameterResolver 
 global ar.com.burucps.business.BusinessUnitTree businessUnitsTree
+global ar.com.burudos.sales.statement.Statement statement
 
 dialect "mvel"
 
-rule "Test1"
+rule "Altas - IM Ahorro/Contrato"
+	when
+		empleado : Employee
+		total : Summary()
+	then
+		
+end
+
+rule "Altas - MEC (Local)"
 	when
 		
 	then
-		//System.out.println( "Agregando items de recepción: contenedores de 20'" )
-		System.out.println( "Agregando items de recepción: contenedores de 20'" );
+		
+end
+
+rule "Altas - MEC (Externo)"
+	when
+		
+	then
+		
+end
+
+rule "Altas - Planes Externo/Interno Rango 1 (..49)"
+	when
+		
+	then
+		
+end
+
+rule "Altas - Planes Externo/Interno Rango 2 (49-99)"
+	when
+		
+	then
+		
+end
+
+rule "Altas - Planes Externo/Interno Rango 3 (99-159)"
+	when
+		
+	then
+		
+end
+
+rule "Altas - Planes Externo/Interno Rango 4 (159-229)"
+	when
+		
+	then
+		
+end
+
+rule "Altas - Planes Externo/Interno Rango 5 (229..)"
+	when
+		
+	then
+		
+end
+
+rule "Altas - Planes Corporativos"
+	when
+		
+	then
+		
+end
+
+rule "Altas - Accesorios"
+	when
+		
+	then
+		
+end
+
+rule "Altas - Prepago Interno"
+	when
+		
+	then
+		
+end
+
+rule "Altas - Operaciones Call Center"
+	when
+		
+	then
+		
+end
+
+rule "Altas - Tarjeta Itaú Rango 1 (..10)"
+	when
+		
+	then
+		
+end
+
+rule "Altas - Tarjeta Itaú Rango 2 (10-20)"
+	when
+		
+	then
+		
+end
+
+rule "Altas - Tarjeta Itaú Rango 3 (20..)"
+	when
+		
+	then
+		
+end
+
+rule "Altas - Portabilidades"
+	when
+		
+	then
 		
 end
