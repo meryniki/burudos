@@ -19,7 +19,7 @@ rule "Altas - IM Ahorro/Contrato"
 	then
 		Parameter p = parameterResolver.resolve("VTA_IM_PU_ARS",$empleado.bu);
 		
-		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getParamDescription(), 
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
 					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 10);
 end
 
@@ -30,7 +30,7 @@ rule "Altas - MEC (Local)"
 	then
 		Parameter p = parameterResolver.resolve("VTA_MEC_LOC_PU_ARS",$empleado.bu);
 		
-		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getParamDescription(), 
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
 					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 20);
 end
 
@@ -41,7 +41,7 @@ rule "Altas - MEC (Externo)"
 	then
 		Parameter p = parameterResolver.resolve("VTA_MEC_EXT_PU_ARS",$empleado.bu);
 		
-		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getParamDescription(), 
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
 					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 21);
 end
 
@@ -52,7 +52,7 @@ rule "Altas - Planes Externo/Interno Rango 1 (..49)"
 	then
 		Parameter p = parameterResolver.resolve("VTA_PLA_RG1_PU_ARS",$empleado.bu);
 		
-		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getParamDescription(), 
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
 					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 30);
 end
 
@@ -63,7 +63,7 @@ rule "Altas - Planes Externo/Interno Rango 2 (49-99)"
 	then
 		Parameter p = parameterResolver.resolve("VTA_PLA_RG2_PU_ARS",$empleado.bu);
 		
-		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getParamDescription(), 
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
 					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 31);
 end
 
@@ -74,7 +74,7 @@ rule "Altas - Planes Externo/Interno Rango 3 (99-159)"
 	then
 		Parameter p = parameterResolver.resolve("VTA_PLA_RG3_PU_ARS",$empleado.bu);
 		
-		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getParamDescription(), 
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
 					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 32);
 end
 
@@ -85,7 +85,7 @@ rule "Altas - Planes Externo/Interno Rango 4 (159-229)"
 	then
 		Parameter p = parameterResolver.resolve("VTA_PLA_RG4_PU_ARS",$empleado.bu);
 		
-		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getParamDescription(), 
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
 					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 33);
 end
 
@@ -96,7 +96,7 @@ rule "Altas - Planes Externo/Interno Rango 5 (229..)"
 	then
 		Parameter p = parameterResolver.resolve("VTA_PLA_RG5_PU_ARS",$empleado.bu);
 		
-		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getParamDescription(), 
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
 					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 34);
 end
 
@@ -107,7 +107,7 @@ rule "Altas - Planes Corporativos"
 	then
 		Parameter p = parameterResolver.resolve("VTA_PLA_CORP_PU_ARS",$empleado.bu);
 		
-		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getParamDescription(), 
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
 					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 40);
 end
 
@@ -118,7 +118,7 @@ rule "Altas - Accesorios"
 	then
 		Parameter p = parameterResolver.resolve("VTA_ACC_BON_PCT",$empleado.bu);
 		
-		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getParamDescription(), 
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
 					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 50);
 end
 
@@ -129,7 +129,7 @@ rule "Altas - Prepago Interno"
 	then
 		Parameter p = parameterResolver.resolve("VTA_PREP_INT_PU_ARS",$empleado.bu);
 		
-		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getParamDescription(), 
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
 					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 60);
 end
 
@@ -140,7 +140,7 @@ rule "Altas - Operaciones Call Center"
 	then
 		Parameter p = parameterResolver.resolve("VTA_CALL_PU_ARS",$empleado.bu);
 		
-		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getParamDescription(), 
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
 					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 70);
 end
 
@@ -151,7 +151,7 @@ rule "Altas - Operaciones Terreno"
 	then
 		Parameter p = parameterResolver.resolve("VTA_TERR_PU_ARS",$empleado.bu);
 		
-		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getParamDescription(), 
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
 					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 75);
 end
 
@@ -162,7 +162,7 @@ rule "Altas - Tarjeta Itaú Rango 1 (..10)"
 	then
 		Parameter p = parameterResolver.resolve("VTA_ITAU_RG1_PU_ARS",$empleado.bu);
 		
-		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getParamDescription(), 
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
 					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 80);
 end
 
@@ -173,7 +173,7 @@ rule "Altas - Tarjeta Itaú Rango 2 (10-20)"
 	then
 		Parameter p = parameterResolver.resolve("VTA_ITAU_RG2_PU_ARS",$empleado.bu);
 		
-		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getParamDescription(), 
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
 					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 81);
 end
 
@@ -184,7 +184,7 @@ rule "Altas - Tarjeta Itaú Rango 3 (20..)"
 	then
 		Parameter p = parameterResolver.resolve("VTA_ITAU_RG3_PU_ARS",$empleado.bu);
 		
-		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getParamDescription(), 
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
 					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 82);
 end
 
@@ -195,7 +195,7 @@ rule "Altas - Portabilidades"
 	then
 		Parameter p = parameterResolver.resolve("VTA_PORT_PU_ARS",$empleado.bu);
 		
-		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getParamDescription(), 
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
 					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 90);
 end
 
@@ -206,6 +206,6 @@ rule "Altas - Incentivo Sony ZL"
 	then
 		Parameter p = parameterResolver.resolve("EXT_BON_SONYZL_ARS",$empleado.bu);
 		
-		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getParamDescription(), 
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
 					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 99);
 end
