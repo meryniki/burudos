@@ -37,7 +37,7 @@ class SummaryController {
 		def datemonth
 		def dateyear
 		if (!params.month_month) {
-			String hql = "select month(max(month)) as maxMonth, year(max(month)) as maxYear  from Summary"
+			String hql = "select month(max(sumMonth)) as maxMonth, year(max(sumMonth)) as maxYear  from Summary"
 			def result = Summary.executeQuery(hql)
 			if (!result.isEmpty() && result[0][0]!=null){
 				datemonth = String.valueOf(result[0][0])
@@ -62,25 +62,28 @@ class SummaryController {
 			query = Summary.where{
 				(bu != null) &&
 						(bu.nombre ==~  "%${search}%") && (
-						month(month) == params.month_month &&
-						year(month) == params.month_year)
-			}
+						filter.filterCode ==~  "%${search}%") && (
+						month(sumMonth) == params.month_month &&
+						year(sumMonth) == params.month_year)
+					}
 		}
 		else if (employeeorbu=='1') {
 			query = Summary.where{
 				(employee != null) &&
 						(employee.name ==~  "%${search}%") && (
-						month(month) == params.month_month &&
-						year(month) == params.month_year)
-			}
+						filter.filterCode ==~  "%${search}%") && (
+						month(sumMonth) == params.month_month &&
+						year(sumMonth) == params.month_year)
+					}
 		}
 		else
-		query = Summary.where{
-					(bu.nombre ==~  "%${search}%") && (
-					month(month) == params.month_month &&
-					year(month) == params.month_year)
-		}
-		
+			query = Summary.where{
+				(bu.nombre ==~  "%${search}%") && (
+						filter.filterCode ==~  "%${search}%") && (
+						month(sumMonth) == params.month_month &&
+						year(sumMonth) == params.month_year)
+					}
+
 		lista = query.list(params)
 		total = query.count()
 
@@ -166,7 +169,7 @@ class SummaryController {
 		int counting_employes = 0
 		def bu_to_summarize = BussinesUnit.findById(params.bu)?.getSons()
 
-		Filter.findAllByBuInListAndMonth(bu_to_summarize,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year)).each() { filter->
+		Filter.findAllByBuInListAndValidMonth(bu_to_summarize,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year)).each() { filter->
 
 			bu_to_summarize.each(){ butmp->
 				counting = 0
@@ -282,17 +285,19 @@ class SummaryController {
 						counting += 1
 						counting_employes += 1
 					}
-					code = new Summary(
-						filter: filter,
-						employee: mparty,
-						month: Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),
-						quantity: counting_employes
-						).save(failOnError: true, flush: true)
+					code = Summary.findByEmployeeAndMonthAndFilter(mparty,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter) ?:new Summary(
+							filter: filter,
+							employee: mparty,
+							sumMonth: Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),
+							quantity: counting_employes
+							).save(failOnError: true, flush: true)
 					counting_employes = 0
 				}
 
+				//Si el summary ya estaba deberia actualizarse
+
 				if ( counting>0 )
-					code = new Summary(
+					code = Summary.findByBuAndMonthAndFilter(butmp,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter) ?:new Summary(
 							filter: filter,
 							bu: butmp,
 							month: Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),

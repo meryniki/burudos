@@ -3,7 +3,7 @@
 <div
 	class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'bu', 'error')} required">
 	<label class="col-lg-3 control-label" for="bu"> <g:message
-			code="summary.bu.label" default="Bu" /> <span
+			code="summary.bu.label" default="Punto de Venta" /> <span
 		class="required-indicator">*</span>
 	</label>
 	<div class="col-lg-9">
@@ -14,9 +14,9 @@
 </div>
 
 <div
-	class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'op', 'error')} required">
-	<label class="col-lg-3 control-label" for="op"> <g:message
-			code="summary.op.label" default="Op" /> <span
+	class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'filter', 'error')} required">
+	<label class="col-lg-3 control-label" for="filter"> <g:message
+			code="summary.op.label" default="Filtro" /> <span
 		class="required-indicator">*</span>
 	</label>
 	<div class="col-lg-9">
@@ -28,13 +28,13 @@
 </div>
 
 <div
-	class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'month', 'error')} required">
-	<label class="col-lg-3 control-label" for="month"> <g:message
+	class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'sumMonth', 'error')} required">
+	<label class="col-lg-3 control-label" for="sumMonth"> <g:message
 			code="summary.month.label" default="Month" /> <span
 		class="required-indicator">*</span>
 	</label>
 	<div class="col-lg-9">
-		<g:field name="month" type="number" value="${summaryInstance.month}"
+		<g:field name="month" type="number" value="${summaryInstance.sumMonth}"
 			required="" />
 		<a
 			onmouseover="nhpup.popup('<g:message code="summary.month.help"/>');">?</a>

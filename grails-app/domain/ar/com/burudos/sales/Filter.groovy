@@ -9,10 +9,10 @@ import ar.com.burudos.party.Party;
 
 class Filter {
 	
-	String name
+	String filterCode
 	String description
 	BussinesUnit bu
-	Date month
+	Date validMonth
 	Operation op
 	String sds
 	String ani
@@ -34,8 +34,8 @@ class Filter {
 	Operation op_hasta
 	
 	static constraints = {
-		name (nullable: false)
-		month (max : new Date(), nullable: false)
+		filterCode (nullable: false)
+		validMonth (max : new Date(), nullable: false)
 		description (nullable: true)
 		bu( nullable:false)
 		op(nullable:true)
@@ -60,7 +60,7 @@ class Filter {
 	}
 	
 	String toString() {
-		return name
+		return filterCode
 	}
 
 }

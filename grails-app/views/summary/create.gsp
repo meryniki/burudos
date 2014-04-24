@@ -49,7 +49,7 @@
 				<div class="col-lg-8">
 
 
-					<div id="create-transaction" class="content scaffold-create">
+					<div id="create-summary" class="content scaffold-create">
 						<h1>
 							<g:message code="default.create.label" args="[entityName]" />
 						</h1>
@@ -67,15 +67,33 @@
 								</g:eachError>
 							</ul>
 						</g:hasErrors>
-						<g:form url="[resource:summaryInstance, action:'save']">
-							<fieldset class="form">
-								<g:render template="form" />
-							</fieldset>
-							<fieldset class="buttons">
-								<g:submitButton name="create" class="save"
-									value="${message(code: 'default.button.create.label', default: 'Create')}" />
-							</fieldset>
-						</g:form>
+
+						<div class="panel panel-default">
+
+							<div class="panel-heading">
+								<h4>
+									<span><g:message code="summary.create.heading" /></span>
+								</h4>
+							</div>
+							<div class="panel-body">
+
+								<g:form url="[resource:summaryInstance, action:'save']"
+									class="form-horizontal" role="form">
+									<fieldset class="form">
+										<g:render template="form" />
+									</fieldset>
+
+									<fieldset>
+										<div class="form-group">
+											<div class="col-lg-offset-3 col-lg-9">
+												<g:submitButton name="create" class="btn btn-info"
+													value="${message(code: 'default.button.create.label', default: 'Create')}" />
+											</div>
+										</div>
+									</fieldset>
+								</g:form>
+							</div>
+						</div>
 					</div>
 				</div>
 

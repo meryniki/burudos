@@ -38,12 +38,19 @@
 
 			<ul class="bigBtnIcon">
 				<li><g:link controller="filter" class="create" action="create">
-						<span class="icon icomoon-icon-plus"></span>
+						<span class="icon icomoon-icon-plus-circle"></span>
 						<g:message code="filter.new.label" args="[entityName]" />
 					</g:link></li>
 				<li><g:link controller="filter" class="index" action="index">
 						<span class="icon icomoon-icon-list"></span>
 						<g:message code="filter.list.label" args="[entityName]" />
+					</g:link></li>
+				<li> </li>
+				<li> </li>
+				<li> </li>
+				<li><g:link class="create" action="create">
+						<span class="icon icomoon-icon-plus"></span>
+						<g:message code="default.new.label" args="[entityName]" />
 					</g:link></li>
 				<li><g:link class="domonthly" action="domonthly">
 						<span class="icon icomoon-icon-calculate-2"></span>

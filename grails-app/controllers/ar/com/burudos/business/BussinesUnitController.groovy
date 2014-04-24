@@ -2,6 +2,7 @@ package ar.com.burudos.business
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import ar.com.burudos.constants.BuruConstants
 
 @Transactional(readOnly = true)
 class BussinesUnitController {
@@ -91,12 +92,19 @@ class BussinesUnitController {
 
 	@Transactional
 	def uploadFile(BussinesUnit bussinesUnitInstance) {
-		def file = request.getFile('filebu')
-		def jfile = new java.io.File( "carga_${file.name}" )
-
-		if(file && !file.empty && file.size < 10240) {
+		
+		/*File management*/
+		def file = request.getFile(BuruConstants.uploadFileEmployee)
+		def jfile = new java.io.File(BuruConstants.saveFileEmployee)
+		if(file && !file.empty && file.size < BuruConstants.MAX_FILE) {
 			file.transferTo( jfile )
 		}
+		else{
+			bussinesUnitInstance.errors.reject(BuruConstants.NO_VALID_FILE);
+			respond bussinesUnitInstance.errors, view:'upload_result', model:[report:mapreport]
+			return
+		}
+
 		
 		def code
 		jfile.splitEachLine('\t') { row ->

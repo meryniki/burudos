@@ -9,13 +9,13 @@ class Summary {
 	Party employee;
 	Integer quantity;
 	Filter filter;
-	Date month;
+	Date sumMonth;
 
 	static constraints = {
 		bu(nullable:true)
 		employee(nullable:true)
 		filter(nullable:false)
-		month (nullable: false)
+		sumMonth (nullable: false)
 		quantity (nullable: false)
 	}
 

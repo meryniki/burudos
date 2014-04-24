@@ -106,7 +106,7 @@
 													<th rowspan="1" colspan="1"><g:message
 															code="operation.code.label" default="Codigo" /></th>
 													<th rowspan="1" colspan="1"><g:message
-															code="operation.meaning.label" default="Nombre" /></th>
+															code="operation.meaning.label" default="Descripcion" /></th>
 											</tr>
 											</tfoot>
 											<!--Data-->

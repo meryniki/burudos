@@ -3,13 +3,13 @@
 <div class="col-lg-6">
 
 	<div
-		class="form-group fieldcontain ${hasErrors(bean: filterInstance, field: 'name', 'error')} ">
-		<label class="col-lg-3 control-label" for="name"> <g:message
-				code="filter.name.label" default="Name" />
+		class="form-group fieldcontain ${hasErrors(bean: filterInstance, field: 'filterCode', 'error')} ">
+		<label class="col-lg-3 control-label" for="filterCode"> <g:message
+				code="filter.filterCode.label" default="Nombre del Filtro" />
 
 		</label>
 		<div class="col-lg-9">
-			<g:textField name="name" value="${filterInstance?.name}" />
+			<g:textField name="filterCode" value="${filterInstance?.filterCode}" />
 		</div>
 	</div>
 
@@ -209,14 +209,14 @@
 	</div>
 
 	<div
-		class="form-group fieldcontain ${hasErrors(bean: filterInstance, field: 'month', 'error')} required">
+		class="form-group fieldcontain ${hasErrors(bean: filterInstance, field: 'validMonth', 'error')} required">
 		<label class="col-lg-3 control-label" for="month"> <g:message
 				code="filter.month.label" default="Mes" /> <span
 			class="required-indicator">*</span>
 		</label>
 		<div class="col-lg-9">
 			<g:datePicker name="month" precision="month"
-				value="${filterInstance?.month}" />
+				value="${filterInstance?.validMonth}" />
 		</div>
 	</div>
 
@@ -259,7 +259,7 @@
 
 	<div
 		class="form-group fieldcontain ${hasErrors(bean: filterInstance, field: 'op_hasta', 'error')} required">
-		<label class="col-lg-3 control-label" for="month"> <g:message
+		<label class="col-lg-3 control-label" for="validMonth"> <g:message
 				code="filter.op_hasta.label" default="Op Hasta" /> <span
 			class="required-indicator">*</span>
 		</label>

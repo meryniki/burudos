@@ -129,7 +129,7 @@ class EmployeeController {
 						fullname: row[1],
 						dofingreso: Date.parse(BuruConstants.dateFormatEmployee,row[2]),
 						uid: row[3],
-						bu: BussinesUnit.findByCode(row[5]).id,
+						bu: BussinesUnit.findByNombre(row[4]).id,
 						isworker: true,
 						iscoordinator: false
 						).save(failOnError: true, flush: true)

@@ -111,7 +111,7 @@
 											code="${c.getStaticPropertyValue('btnName', String)}" />
 									</g:link> 
 									<g:if test="${c.getStaticPropertyValue('submenu1', String)}">
-										<ul class="sub" style="display: block;">
+										<ul class="sub" style="display: none;">
 											<g:if test="${c.getStaticPropertyValue('submenu1', String)}">
 												<li><g:link action="index" params="[employeeorbu: '1']" controller="${c.logicalPropertyName}" ><span
 														class="icon16 icomoon-icon-arrow-right-3"></span> <g:message

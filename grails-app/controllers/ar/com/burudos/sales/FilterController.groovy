@@ -32,10 +32,13 @@ class FilterController {
 		/*Date to get index list*/
 		def datemonth
 		def dateyear
-		if (!params.month_month) {
-			String hql = "select month(max(month)) as maxMonth, year(max(month)) as maxYear  from Filter"
+		
+		print params
+		
+		if ((!params.month_month) || params.month_month==0) {
+			String hql = "select month(max(validMonth)) as maxMonth, year(max(validMonth)) as maxYear  from Filter"
 			def result = Summary.executeQuery(hql)
-			if (!result.isEmpty() && result[0][0]!=null){
+			if (!result.isEmpty() && result[0][0]!=null && result[0][0]!=0){
 				datemonth = String.valueOf(result[0][0])
 				dateyear = String.valueOf(result[0][1])
 				params.month_month = String.valueOf(result[0][0])
@@ -51,12 +54,13 @@ class FilterController {
 			datemonth = params.month_month
 			dateyear = params.month_year
 		}
+	
 
 		def query = Filter.where{
-			(name ==~  "%${search}%" ||
+			(filterCode ==~  "%${search}%" ||
 					description ==~  "%${search}%" ) && (
-					month(month) == params.month_month &&
-					year(month) == params.month_year)
+					month(validMonth) == params.month_month &&
+					year(validMonth) == params.month_year)
 		}
 
 		lista = query.list(params)
