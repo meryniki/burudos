@@ -210,12 +210,12 @@
 
 	<div
 		class="form-group fieldcontain ${hasErrors(bean: filterInstance, field: 'validMonth', 'error')} required">
-		<label class="col-lg-3 control-label" for="month"> <g:message
+		<label class="col-lg-3 control-label" for="validMonth"> <g:message
 				code="filter.month.label" default="Mes" /> <span
 			class="required-indicator">*</span>
 		</label>
 		<div class="col-lg-9">
-			<g:datePicker name="month" precision="month"
+			<g:datePicker name="validMonth" precision="month"
 				value="${filterInstance?.validMonth}" />
 		</div>
 	</div>

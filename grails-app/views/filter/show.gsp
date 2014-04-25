@@ -71,11 +71,11 @@
 								<ul class="col-lg-12">
 
 
-									<g:if test="${filterInstance?.name}">
+									<g:if test="${filterInstance?.filterCode}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
-													code="filter.name.label" default="Name" /></span> <span
+													code="filter.filterCode.label" default="Nombre" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
-											<g:fieldValue bean="${filterInstance}" field="name" /></span></li>
+											<g:fieldValue bean="${filterInstance}" field="filterCode" /></span></li>
 									</g:if>
 
 									<g:if test="${filterInstance?.description}">
@@ -203,11 +203,11 @@
 											<g:fieldValue bean="${filterInstance}" field="debaut" /></span></li>
 									</g:if>
 
-									<g:if test="${filterInstance?.month}">
+									<g:if test="${filterInstance?.validMonth}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
-													code="filter.month.label" default="Month" /></span> <span
+													code="filter.validMonth.label" default="Month" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
-											<g:formatDate date="${filterInstance?.month}" /></span></li>
+											<g:formatDate date="${filterInstance?.validMonth}" /></span></li>
 									</g:if>
 
 								</ul>

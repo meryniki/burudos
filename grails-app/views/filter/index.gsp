@@ -112,8 +112,8 @@
 											<!--Titulos con posibilidad de ordenar por-->
 											<thead>
 												<tr role="row">
-													<g:sortableColumn params="${mapsearch}" property="name"
-														title="${message(code: 'filter.name.label', default: 'Name')}" />
+													<g:sortableColumn params="${mapsearch}" property="filterCode"
+														title="${message(code: 'filter.filterCode.label', default: 'filterCode')}" />
 													<g:sortableColumn params="${mapsearch}" property="legajo"
 														title="${message(code: 'filter.description.label', default: 'Description')}" />
 													<g:sortableColumn params="${mapsearch}" property="bu"
@@ -124,7 +124,7 @@
 											<tfoot>
 												<tr>
 													<th rowspan="1" colspan="1"><g:message
-															code="filter.name.label" default="Nombre" /></th>
+															code="filter.filterCode.label" default="Nombre" /></th>
 													<th rowspan="1" colspan="1"><g:message
 															code="filter.description.label" default="Descripcion" /></th>
 													<th rowspan="1" colspan="1"><g:message
@@ -140,7 +140,7 @@
 														<td class=" ">
 														<g:link action="show"
 																id="${filterInstance.id}">
-															${fieldValue(bean: filterInstance, field: "name")}
+															${fieldValue(bean: filterInstance, field: "filterCode")}
 														</g:link>
 														</td>
 
