@@ -119,6 +119,9 @@
 													<g:sortableColumn params="${mapsearch}"
 														property="paramDescription"
 														title="${message(code: 'parameter.paramDescription.label', default: 'Param Description')}" />
+													
+													<g:sortableColumn params="${mapsearch}" property="value"
+														title="${message(code: 'parameter.value.label', default: 'Value')}" />
 
 													<g:sortableColumn params="${mapsearch}" property="maxValue"
 														title="${message(code: 'parameter.maxValue.label', default: 'Max Value')}" />
@@ -140,6 +143,8 @@
 															code="parameter.paramGroup.label" default="Param Group" /></th>
 													<th rowspan="1" colspan="1"><g:message
 															code="parameter.paramDescription.label" default="Param" /></th>
+													<th rowspan="1" colspan="1"><g:message
+															code="parameter.value.label" default="value" /></th>
 													<th rowspan="1" colspan="1"><g:message
 															code="parameter.maxValue.label" default="Max Value" /></th>
 													<th rowspan="1" colspan="1"><g:message
@@ -173,6 +178,10 @@
 
 														<td>
 															${fieldValue(bean: parameterInstance, field: "paramDescription")}
+														</td>
+														
+														<td>
+															${fieldValue(bean: parameterInstance, field: "value")}
 														</td>
 
 														<td>

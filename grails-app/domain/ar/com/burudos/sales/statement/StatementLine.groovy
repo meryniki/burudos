@@ -10,8 +10,11 @@ class StatementLine {
 	StatementLineGroup paramGroup
 	String description
 	Double unitAmount
+	Double unitAmountFixed
 	Double operationsAmount
+	Double operationsAmountFixed
 	Double amount
+	Double amountFixed
 	Integer lineOrder
 
 	static constraints = {

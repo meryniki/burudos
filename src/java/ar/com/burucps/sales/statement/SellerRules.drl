@@ -4,6 +4,7 @@ import ar.com.burucps.business.BusinessUnitTree
 import ar.com.burudos.party.Employee
 import ar.com.burucps.sales.statement.ParameterResolver
 import ar.com.burudos.sales.statement.Statement
+import ar.com.burudos.sales.statement.StatementLineType
 
 global ar.com.burucps.sales.statement.ParameterResolver parameterResolver 
 global ar.com.burucps.business.BusinessUnitTree businessUnitsTree
@@ -16,110 +17,195 @@ rule "Altas - IM Ahorro/Contrato"
 		$empleado : Employee
 		$total : Summary(employee == $empleado && filter == "IM")
 	then
-		Parameter p = parameterResolver.resolve("VTA_IM_PU_ARS",$empleado.bu)
+		Parameter p = parameterResolver.resolve("VTA_IM_PU_ARS",$empleado.bu);
+		
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 10);
 end
 
 rule "Altas - MEC (Local)"
 	when
-		
+		$empleado : Employee
+		$total : Summary(employee == $empleado && filter == "MECL")
 	then
+		Parameter p = parameterResolver.resolve("VTA_MEC_LOC_PU_ARS",$empleado.bu);
 		
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 20);
 end
 
 rule "Altas - MEC (Externo)"
 	when
-		
+		$empleado : Employee
+		$total : Summary(employee == $empleado && filter == "MECE")
 	then
+		Parameter p = parameterResolver.resolve("VTA_MEC_EXT_PU_ARS",$empleado.bu);
 		
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 21);
 end
 
 rule "Altas - Planes Externo/Interno Rango 1 (..49)"
 	when
-		
+		$empleado : Employee
+		$total : Summary(employee == $empleado && filter == "PLAN1")
 	then
+		Parameter p = parameterResolver.resolve("VTA_PLA_RG1_PU_ARS",$empleado.bu);
 		
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 30);
 end
 
 rule "Altas - Planes Externo/Interno Rango 2 (49-99)"
 	when
-		
+		$empleado : Employee
+		$total : Summary(employee == $empleado && filter == "PLAN2")
 	then
+		Parameter p = parameterResolver.resolve("VTA_PLA_RG2_PU_ARS",$empleado.bu);
 		
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 31);
 end
 
 rule "Altas - Planes Externo/Interno Rango 3 (99-159)"
 	when
-		
+		$empleado : Employee
+		$total : Summary(employee == $empleado && filter == "PLAN3")
 	then
+		Parameter p = parameterResolver.resolve("VTA_PLA_RG3_PU_ARS",$empleado.bu);
 		
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 32);
 end
 
 rule "Altas - Planes Externo/Interno Rango 4 (159-229)"
 	when
-		
+		$empleado : Employee
+		$total : Summary(employee == $empleado && filter == "PLAN4")
 	then
+		Parameter p = parameterResolver.resolve("VTA_PLA_RG4_PU_ARS",$empleado.bu);
 		
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 33);
 end
 
 rule "Altas - Planes Externo/Interno Rango 5 (229..)"
 	when
-		
+		$empleado : Employee
+		$total : Summary(employee == $empleado && filter == "PLAN5")
 	then
+		Parameter p = parameterResolver.resolve("VTA_PLA_RG5_PU_ARS",$empleado.bu);
 		
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 34);
 end
 
 rule "Altas - Planes Corporativos"
 	when
-		
+		$empleado : Employee
+		$total : Summary(employee == $empleado && filter == "CORP")
 	then
+		Parameter p = parameterResolver.resolve("VTA_PLA_CORP_PU_ARS",$empleado.bu);
 		
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 40);
 end
 
 rule "Altas - Accesorios"
 	when
-		
+		$empleado : Employee
+		$total : Summary(employee == $empleado && filter == "ACC")
 	then
+		Parameter p = parameterResolver.resolve("VTA_ACC_BON_PCT",$empleado.bu);
 		
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 50);
 end
 
 rule "Altas - Prepago Interno"
 	when
-		
+		$empleado : Employee
+		$total : Summary(employee == $empleado && filter == "PREP")
 	then
+		Parameter p = parameterResolver.resolve("VTA_PREP_INT_PU_ARS",$empleado.bu);
 		
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 60);
 end
 
 rule "Altas - Operaciones Call Center"
 	when
-		
+		$empleado : Employee
+		$total : Summary(employee == $empleado && filter == "CALL")
 	then
+		Parameter p = parameterResolver.resolve("VTA_CALL_PU_ARS",$empleado.bu);
 		
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 70);
+end
+
+rule "Altas - Operaciones Terreno"
+	when
+		$empleado : Employee
+		$total : Summary(employee == $empleado && filter == "TERR")
+	then
+		Parameter p = parameterResolver.resolve("VTA_TERR_PU_ARS",$empleado.bu);
+		
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 75);
 end
 
 rule "Altas - Tarjeta Itaú Rango 1 (..10)"
 	when
-		
+		$empleado : Employee
+		$total : Summary(employee == $empleado && filter == "ITAU1")
 	then
+		Parameter p = parameterResolver.resolve("VTA_ITAU_RG1_PU_ARS",$empleado.bu);
 		
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 80);
 end
 
 rule "Altas - Tarjeta Itaú Rango 2 (10-20)"
 	when
-		
+		$empleado : Employee
+		$total : Summary(employee == $empleado && filter == "ITAU2")
 	then
+		Parameter p = parameterResolver.resolve("VTA_ITAU_RG2_PU_ARS",$empleado.bu);
 		
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 81);
 end
 
 rule "Altas - Tarjeta Itaú Rango 3 (20..)"
 	when
-		
+		$empleado : Employee
+		$total : Summary(employee == $empleado && filter == "ITAU3")
 	then
+		Parameter p = parameterResolver.resolve("VTA_ITAU_RG3_PU_ARS",$empleado.bu);
 		
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 82);
 end
 
 rule "Altas - Portabilidades"
 	when
-		
+		$empleado : Employee
+		$total : Summary(employee == $empleado && filter == "PORT")
 	then
+		Parameter p = parameterResolver.resolve("VTA_PORT_PU_ARS",$empleado.bu);
 		
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 90);
+end
+
+rule "Altas - Incentivo Sony ZL"
+	when
+		$empleado : Employee
+		$total : Summary(employee == $empleado && filter == "SONY")
+	then
+		Parameter p = parameterResolver.resolve("EXT_BON_SONYZL_ARS",$empleado.bu);
+		
+		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 99);
 end

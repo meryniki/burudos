@@ -64,4 +64,9 @@ class Parameter {
 		lastUpdateDate = new Date();
 	}
 
+	String getCurrentDescription() {
+		return paramDescription.replace("[VALUE]", value)
+				.replace("[MIN]", minValue).replace("[MAX]", maxValue)
+	}
+
 }

@@ -52,6 +52,19 @@
 </div>
 
 <div
+	class="form-group fieldcontain ${hasErrors(bean: parameterInstance, field: 'value', 'error')} required">
+	<label class="col-lg-3 control-label" for="value"> <g:message
+			code="parameter.value.label" default="Value" /> <span
+		class="required-indicator">*</span>
+	</label>
+	<div class="col-lg-9">
+		<g:field class="form-control" name="value" type="text"
+			value="${fieldValue(bean: parameterInstance, field: 'value')}"
+			required="" />
+	</div>
+</div>
+
+<div
 	class="form-group fieldcontain ${hasErrors(bean: parameterInstance, field: 'maxValue', 'error')} required">
 	<label class="col-lg-3 control-label" for="maxValue"> <g:message
 			code="parameter.maxValue.label" default="Max Value" /> <span

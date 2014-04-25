@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.grails.datastore.gorm.finders.MethodExpression.InRange;
 
+import ar.com.burucps.sales.statement.StatementLineGroup;
+import ar.com.burucps.sales.statement.StatementLineType;
 import ar.com.burudos.business.BussinesUnit;
 import ar.com.burudos.party.Employee;
 
@@ -26,7 +28,7 @@ class Statement {
 	Double fixedSubtotal
 	// Comision total
 	Double total
-	// If the employee has negative balance, 
+	// If the employee has negative balance,
 	// the difference goes to the next month statement
 	Double dueBalance
 	// Auiditoria
@@ -53,10 +55,10 @@ class Statement {
 		lastUpdateDate (nullable: true)
 		lastUpdateBy (nullable: true)
 	}
-	
+
 	String getStatementOwner() {};
 	String getStatementCui() {};
-	
+
 	def beforeInsert() {
 		active = true;
 		//createdBy = securityService.currentAuthenticatedUsername();
@@ -68,5 +70,13 @@ class Statement {
 	def beforeUpdate() {
 		//lastUpdatedBy = securityService.currentAuthenticatedUsername();
 		lastUpdateDate = new Date();
+	}
+
+	void addLine (StatementLineType type, StatementLineGroup paramGroup, String description, 
+					Double unitAmount, Double operationsAmount, Double amount, Integer lineOrder) {
+		StatementLine line = new StatementLine( statement: this,
+				type : type, paramGroup : paramGroup, description:description, unitAmount:unitAmount, 
+				operationsAmount:operationsAmount, amount:amount, lineOrder:lineOrder)
+		this.addToLines(line)
 	}
 }
