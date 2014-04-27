@@ -5,6 +5,7 @@ import ar.com.burudos.party.Employee;
 import ar.com.burudos.party.Party;
 
 class Summary {
+	String summaryCode;
 	BussinesUnit bu;
 	Party employee;
 	Integer quantity;
@@ -12,6 +13,7 @@ class Summary {
 	Date sumMonth;
 
 	static constraints = {
+		summaryCode(nullable:false)
 		bu(nullable:true)
 		employee(nullable:true)
 		filter(nullable:false)
