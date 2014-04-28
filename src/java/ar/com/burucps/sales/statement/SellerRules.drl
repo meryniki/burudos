@@ -292,7 +292,13 @@ rule "Totalización de puntos"
 		}
 		statement.setPointsSubtotal(total);
 		Double porcentajeAlcanzado = (total / pPuntajeObjetivo.value) * 100.0;
-		
+		Integer factor = 1;
+		if (porcentajeAlcanzado < pPorcentajePuntajeObjetivoMinimo.getValue()) {
+			factor = 0;
+		}
+		additionalValues.put("puntaje",total);
+		additionalValues.put("porcentajeAlcanzado",porcentajeAlcanzado);
+		additionalValues.put("factorAltas",factor);
 end
 /* ******************** FIN PUNTOS ********************* */
 /* ********************** ALTAS ************************ */
@@ -304,9 +310,10 @@ rule "Altas - IM Ahorro/Contrato"
 		$total : Summary(employee == $empleado && summaryCode == "IM")
 	then
 		Parameter p = parameterResolver.resolve("VTA_IM_PU_ARS",$empleado.bu);
+		Integer factor = (Integer) additionalValues.get("factorAltas");
 		
 		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
-					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 10);
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity() * factor, 10);
 end
 
 rule "Altas - MEC (Local)"
@@ -316,9 +323,10 @@ rule "Altas - MEC (Local)"
 		$total : Summary(employee == $empleado && summaryCode == "MECL")
 	then
 		Parameter p = parameterResolver.resolve("VTA_MEC_LOC_PU_ARS",$empleado.bu);
+		Integer factor = (Integer) additionalValues.get("factorAltas");
 		
 		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
-					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 20);
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity() * factor, 20);
 end
 
 rule "Altas - MEC (Externo)"
@@ -328,9 +336,10 @@ rule "Altas - MEC (Externo)"
 		$total : Summary(employee == $empleado && summaryCode == "MECE")
 	then
 		Parameter p = parameterResolver.resolve("VTA_MEC_EXT_PU_ARS",$empleado.bu);
+		Integer factor = (Integer) additionalValues.get("factorAltas");
 		
 		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
-					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 21);
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity() * factor, 21);
 end
 
 rule "Altas - Planes Externo/Interno Rango 1 (..49)"
@@ -340,9 +349,10 @@ rule "Altas - Planes Externo/Interno Rango 1 (..49)"
 		$total : Summary(employee == $empleado && summaryCode == "PLAN1")
 	then
 		Parameter p = parameterResolver.resolve("VTA_PLA_RG1_PU_ARS",$empleado.bu);
+		Integer factor = (Integer) additionalValues.get("factorAltas");
 		
 		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
-					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 30);
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity() * factor, 30);
 end
 
 rule "Altas - Planes Externo/Interno Rango 2 (49-99)"
@@ -352,9 +362,10 @@ rule "Altas - Planes Externo/Interno Rango 2 (49-99)"
 		$total : Summary(employee == $empleado && summaryCode == "PLAN2")
 	then
 		Parameter p = parameterResolver.resolve("VTA_PLA_RG2_PU_ARS",$empleado.bu);
+		Integer factor = (Integer) additionalValues.get("factorAltas");
 		
 		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
-					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 31);
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity() * factor, 31);
 end
 
 rule "Altas - Planes Externo/Interno Rango 3 (99-159)"
@@ -364,9 +375,10 @@ rule "Altas - Planes Externo/Interno Rango 3 (99-159)"
 		$total : Summary(employee == $empleado && summaryCode == "PLAN3")
 	then
 		Parameter p = parameterResolver.resolve("VTA_PLA_RG3_PU_ARS",$empleado.bu);
+		Integer factor = (Integer) additionalValues.get("factorAltas");
 		
 		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
-					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 32);
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity() * factor, 32);
 end
 
 rule "Altas - Planes Externo/Interno Rango 4 (159-229)"
@@ -376,9 +388,10 @@ rule "Altas - Planes Externo/Interno Rango 4 (159-229)"
 		$total : Summary(employee == $empleado && summaryCode == "PLAN4")
 	then
 		Parameter p = parameterResolver.resolve("VTA_PLA_RG4_PU_ARS",$empleado.bu);
+		Integer factor = (Integer) additionalValues.get("factorAltas");
 		
 		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
-					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 33);
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity() * factor, 33);
 end
 
 rule "Altas - Planes Externo/Interno Rango 5 (229..)"
@@ -388,9 +401,10 @@ rule "Altas - Planes Externo/Interno Rango 5 (229..)"
 		$total : Summary(employee == $empleado && summaryCode == "PLAN5")
 	then
 		Parameter p = parameterResolver.resolve("VTA_PLA_RG5_PU_ARS",$empleado.bu);
+		Integer factor = (Integer) additionalValues.get("factorAltas");
 		
 		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
-					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 34);
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity() * factor, 34);
 end
 
 rule "Altas - Planes Corporativos"
@@ -400,9 +414,10 @@ rule "Altas - Planes Corporativos"
 		$total : Summary(employee == $empleado && summaryCode == "CORP")
 	then
 		Parameter p = parameterResolver.resolve("VTA_PLA_CORP_PU_ARS",$empleado.bu);
+		Integer factor = (Integer) additionalValues.get("factorAltas");
 		
 		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
-					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 40);
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity() * factor, 40);
 end
 
 rule "Altas - Accesorios"
@@ -412,9 +427,10 @@ rule "Altas - Accesorios"
 		$total : Summary(employee == $empleado && summaryCode == "ACC")
 	then
 		Parameter p = parameterResolver.resolve("VTA_ACC_BON_PCT",$empleado.bu);
+		Integer factor = (Integer) additionalValues.get("factorAltas");
 		
 		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
-					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 50);
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity() * factor, 50);
 end
 
 rule "Altas - Prepago Interno"
@@ -424,9 +440,10 @@ rule "Altas - Prepago Interno"
 		$total : Summary(employee == $empleado && summaryCode == "PREP")
 	then
 		Parameter p = parameterResolver.resolve("VTA_PREP_INT_PU_ARS",$empleado.bu);
+		Integer factor = (Integer) additionalValues.get("factorAltas");
 		
 		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
-					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 60);
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity() * factor, 60);
 end
 
 rule "Altas - Operaciones Call Center"
@@ -436,9 +453,10 @@ rule "Altas - Operaciones Call Center"
 		$total : Summary(employee == $empleado && summaryCode == "CALL")
 	then
 		Parameter p = parameterResolver.resolve("VTA_CALL_PU_ARS",$empleado.bu);
+		Integer factor = (Integer) additionalValues.get("factorAltas");
 		
 		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
-					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 70);
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity() * factor, 70);
 end
 
 rule "Altas - Operaciones Terreno"
@@ -448,9 +466,10 @@ rule "Altas - Operaciones Terreno"
 		$total : Summary(employee == $empleado && summaryCode == "TERR")
 	then
 		Parameter p = parameterResolver.resolve("VTA_TERR_PU_ARS",$empleado.bu);
+		Integer factor = (Integer) additionalValues.get("factorAltas");
 		
 		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
-					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 75);
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity() * factor, 75);
 end
 
 rule "Altas - Tarjeta Itaú Rango 1 (..10)"
@@ -460,9 +479,10 @@ rule "Altas - Tarjeta Itaú Rango 1 (..10)"
 		$total : Summary(employee == $empleado && summaryCode == "ITAU1")
 	then
 		Parameter p = parameterResolver.resolve("VTA_ITAU_RG1_PU_ARS",$empleado.bu);
+		Integer factor = (Integer) additionalValues.get("factorAltas");
 		
 		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
-					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 80);
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity() * factor, 80);
 end
 
 rule "Altas - Tarjeta Itaú Rango 2 (10-20)"
@@ -472,9 +492,10 @@ rule "Altas - Tarjeta Itaú Rango 2 (10-20)"
 		$total : Summary(employee == $empleado && summaryCode == "ITAU2")
 	then
 		Parameter p = parameterResolver.resolve("VTA_ITAU_RG2_PU_ARS",$empleado.bu);
+		Integer factor = (Integer) additionalValues.get("factorAltas");
 		
 		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
-					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 81);
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity() * factor, 81);
 end
 
 rule "Altas - Tarjeta Itaú Rango 3 (20..)"
@@ -484,9 +505,10 @@ rule "Altas - Tarjeta Itaú Rango 3 (20..)"
 		$total : Summary(employee == $empleado && summaryCode == "ITAU3")
 	then
 		Parameter p = parameterResolver.resolve("VTA_ITAU_RG3_PU_ARS",$empleado.bu);
+		Integer factor = (Integer) additionalValues.get("factorAltas");
 		
 		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
-					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 82);
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity() * factor, 82);
 end
 
 rule "Altas - Portabilidades"
@@ -496,9 +518,10 @@ rule "Altas - Portabilidades"
 		$total : Summary(employee == $empleado && summaryCode == "PORT")
 	then
 		Parameter p = parameterResolver.resolve("VTA_PORT_PU_ARS",$empleado.bu);
+		Integer factor = (Integer) additionalValues.get("factorAltas");
 		
 		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
-					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 90);
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity() * factor, 90);
 end
 
 rule "Altas - Incentivo Sony ZL"
@@ -508,9 +531,25 @@ rule "Altas - Incentivo Sony ZL"
 		$total : Summary(employee == $empleado && summaryCode == "SONY")
 	then
 		Parameter p = parameterResolver.resolve("EXT_BON_SONYZL_ARS",$empleado.bu);
+		Integer factor = (Integer) additionalValues.get("factorAltas");
 		
 		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
-					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 99);
+					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity() * factor, 99);
 end
-
+/* ******************* TOTAL ALTAS ********************* */
 /* ******************** FIN ALTAS ********************** */
+
+/* ************** INCENTIVOS INDIVIDUALES ************** */
+/* ********** TOTAL INCENTIVOS INDIVIDUALES ************ */
+/* ************ FIN INCENTIVOS INDIVIDUALES ************ */
+
+/* ************ INCENTIVOS PUNTO DE VENTA ************** */
+/* ********* TOTAL INCENTIVOS PUNTO DE VENTA *********** */
+/* ********** FIN INCENTIVOS PUNTO DE VENTA  *********** */
+
+/* ******************** DEDUCCIONES ******************** */
+/* **************** TOTAL DEDUCCIONES ****************** */
+/* ****************** FIN DEDUCCIONES ****************** */
+
+/* ******************** REDONDEO *********************** */
+/* ****************** FIN REDONDEO ********************* */
