@@ -9,13 +9,299 @@ import ar.com.burudos.sales.statement.StatementLineType
 global ar.com.burucps.sales.statement.ParameterResolver parameterResolver 
 global ar.com.burucps.business.BusinessUnitTree businessUnitsTree
 global ar.com.burudos.sales.statement.Statement statement
+global java.util.Map additionalValues
 
 dialect "mvel"
 
+/* ********************** PUNTOS *********************** */
+rule "Puntos - Altas IEM"
+salience 99
+when
+	$empleado : Employee
+	$total : Summary(employee == $empleado && summaryCode == "IEM_ALTAS")
+then
+	Parameter p = parameterResolver.resolve("PUNTOS_ALTAS_IEM_PU_PTS",$empleado.bu);
+	
+	statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+				p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 10);
+end
+
+rule "Puntos - Bajas IEM"
+salience 99
+when
+	$empleado : Employee
+	$total : Summary(employee == $empleado && summaryCode == "IEM_BAJAS")
+then
+	Parameter p = parameterResolver.resolve("PUNTOS_BAJAS_IEM_PU_PTS",$empleado.bu);
+	
+	statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+				p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 11);
+end
+
+rule "Puntos - Altas Cambios de Plan"
+salience 99
+when
+	$empleado : Employee
+	$total : Summary(employee == $empleado && summaryCode == "CPLAN_ALTAS")
+then
+	Parameter p = parameterResolver.resolve("PUNTOS_ALTAS_CPLAN_PTS",$empleado.bu);
+	
+	statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+				p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 20);
+end
+
+rule "Puntos - Bajas Cambios de Plan"
+salience 99
+when
+	$empleado : Employee
+	$total : Summary(employee == $empleado && summaryCode == "CPLAN_BAJAS")
+then
+	Parameter p = parameterResolver.resolve("PUNTOS_BAJAS_CPLAN_PU_PTS",$empleado.bu);
+	
+	statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+				p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 21);
+end
+
+rule "Puntos - Altas Paquetes de Servicio"
+salience 99
+when
+	$empleado : Employee
+	$total : Summary(employee == $empleado && summaryCode == "SVC_ALTAS")
+then
+	Parameter p = parameterResolver.resolve("PUNTOS_ALTAS_SVC_PU_PTS",$empleado.bu);
+	
+	statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+				p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 30);
+end
+
+rule "Puntos - Bajas Paquetes de Servicio"
+salience 99
+when
+	$empleado : Employee
+	$total : Summary(employee == $empleado && summaryCode == "SVC_BAJAS")
+then
+	Parameter p = parameterResolver.resolve("PUNTOS_BAJAS_SVC_PU_PTS",$empleado.bu);
+	
+	statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+				p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 31);
+end
+
+rule "Puntos - Altas Garantías"
+salience 99
+when
+	$empleado : Employee
+	$total : Summary(employee == $empleado && summaryCode == "GTIA_ALTAS")
+then
+	Parameter p = parameterResolver.resolve("PUNTOS_ALTAS_GTIA_PU_PTS",$empleado.bu);
+	
+	statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+				p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 40);
+end
+
+rule "Puntos - Bajas Garantías"
+salience 99
+when
+	$empleado : Employee
+	$total : Summary(employee == $empleado && summaryCode == "GTIA_BAJAS")
+then
+	Parameter p = parameterResolver.resolve("PUNTOS_BAJAS_GTIA_PU_PTS",$empleado.bu);
+	
+	statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+				p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 41);
+end
+
+rule "Puntos - Altas Migraciones Positivas"
+salience 99
+when
+	$empleado : Employee
+	$total : Summary(employee == $empleado && summaryCode == "MIG_ALTAS")
+then
+	Parameter p = parameterResolver.resolve("PUNTOS_ALTAS_MIGPOS_PU_PTS",$empleado.bu);
+	
+	statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+				p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 50);
+end
+
+rule "Puntos - Bajas Migraciones Positivas"
+salience 99
+when
+	$empleado : Employee
+	$total : Summary(employee == $empleado && summaryCode == "MIG_BAJAS")
+then
+	Parameter p = parameterResolver.resolve("PUNTOS_BAJAS_MIGPOS_PU_PTS",$empleado.bu);
+	
+	statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+				p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 51);
+end
+
+rule "Puntos - Altas CATER Pospago"
+salience 99
+when
+	$empleado : Employee
+	$total : Summary(employee == $empleado && summaryCode == "CATER_POS_ALTAS")
+then
+	Parameter p = parameterResolver.resolve("PUNTOS_ALTAS_CATERPOS_PU_PTS",$empleado.bu);
+	
+	statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+				p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 60);
+end
+
+rule "Puntos - Bajas CATER Pospago"
+salience 99
+when
+	$empleado : Employee
+	$total : Summary(employee == $empleado && summaryCode == "CATER_POS_BAJAS")
+then
+	Parameter p = parameterResolver.resolve("PUNTOS_BAJAS_CATERPOS_PU_PTS",$empleado.bu);
+	
+	statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+				p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 61);
+end
+
+rule "Puntos - Altas CATER Prepago"
+salience 99
+when
+	$empleado : Employee
+	$total : Summary(employee == $empleado && summaryCode == "CATER_PRE_ALTAS")
+then
+	Parameter p = parameterResolver.resolve("PUNTOS_ALTAS_CATERPRE_PU_PTS",$empleado.bu);
+	
+	statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+				p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 70);
+end
+
+rule "Puntos - Bajas CATER Prepago"
+salience 99
+when
+	$empleado : Employee
+	$total : Summary(employee == $empleado && summaryCode == "CATER_PRE_BAJAS")
+then
+	Parameter p = parameterResolver.resolve("PUNTOS_BAJAS_CATERPRE_PU_PTS",$empleado.bu);
+	
+	statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+				p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 71);
+end
+
+rule "Puntos - Altas CASIM Pospago"
+salience 99
+when
+	$empleado : Employee
+	$total : Summary(employee == $empleado && summaryCode == "CASIM_POS_ALTAS")
+then
+	Parameter p = parameterResolver.resolve("PUNTOS_ALTAS_CASIMPOS_PU_PTS",$empleado.bu);
+	
+	statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+				p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 80);
+end
+
+rule "Puntos - Bajas CASIM Pospago"
+salience 99
+when
+	$empleado : Employee
+	$total : Summary(employee == $empleado && summaryCode == "CASIM_POS_BAJAS")
+then
+	Parameter p = parameterResolver.resolve("PUNTOS_BAJAS_CASIMPOS_PU_PTS",$empleado.bu);
+	
+	statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+				p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 81);
+end
+
+rule "Puntos - Altas CASIM Prepago"
+salience 99
+when
+	$empleado : Employee
+	$total : Summary(employee == $empleado && summaryCode == "CASIM_PRE_ALTAS")
+then
+	Parameter p = parameterResolver.resolve("PUNTOS_ALTAS_CASIMPRE_PU_PTS",$empleado.bu);
+	
+	statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+				p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 90);
+end
+
+rule "Puntos - Bajas CASIM Prepago"
+salience 99
+when
+	$empleado : Employee
+	$total : Summary(employee == $empleado && summaryCode == "CASIM_PRE_BAJAS")
+then
+	Parameter p = parameterResolver.resolve("PUNTOS_BAJAS_CASIMPRE_PU_PTS",$empleado.bu);
+	
+	statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+				p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 91);
+end
+
+rule "Puntos - Altas Bonos"
+salience 99
+when
+	$empleado : Employee
+	$total : Summary(employee == $empleado && summaryCode == "BONOS_ALTAS")
+then
+	Parameter p = parameterResolver.resolve("PUNTOS_ALTAS_BONOS_PU_PTS",$empleado.bu);
+	
+	statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+				p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 100);
+end
+
+rule "Puntos - Bajas Bonos"
+salience 99
+when
+	$empleado : Employee
+	$total : Summary(employee == $empleado && summaryCode == "BONOS_BAJAS")
+then
+	Parameter p = parameterResolver.resolve("PUNTOS_BAJAS_BONOS_PU_PTS",$empleado.bu);
+	
+	statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+				p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 101);
+end
+
+rule "Puntos - Altas Movitalk"
+salience 99
+when
+	$empleado : Employee
+	$total : Summary(employee == $empleado && summaryCode == "MTALK_ALTAS")
+then
+	Parameter p = parameterResolver.resolve("PUNTOS_ALTAS_MT_PU_PTS",$empleado.bu);
+	
+	statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+				p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 110);
+end
+
+rule "Puntos - Bajas Movitalk"
+salience 99
+when
+	$empleado : Employee
+	$total : Summary(employee == $empleado && summaryCode == "MTALK_BAJAS")
+then
+	Parameter p = parameterResolver.resolve("PUNTOS_BAJAS_MT_PU_PTS",$empleado.bu);
+	
+	statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
+				p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 111);
+end
+
+/* ****************** TOTAL PUNTOS ********************* */
+rule "Totalización de puntos"
+	salience 95
+	when
+		$empleado: Employee
+	then
+		Parameter pPuntajeObjetivo = parameterResolver.resolve("VTA_CTE_OBJ_PCT",$empleado.bu);
+		Parameter pPorcentajePuntajeObjetivoMinimo = parameterResolver.resolve("VTA_CTE_OBJ_PCT",$empleado.bu);
+		Integer total = 0;
+		for (StatementLine item : statement.getPointsLines() ) {
+			total += item.amount; 
+		}
+		statement.setPointsSubtotal(total);
+		Double porcentajeAlcanzado = (total / pPuntajeObjetivo.value) * 100.0;
+		
+end
+/* ******************** FIN PUNTOS ********************* */
+/* ********************** ALTAS ************************ */
+
 rule "Altas - IM Ahorro/Contrato"
+	salience 50
 	when
 		$empleado : Employee
-		$total : Summary(employee == $empleado && filter == "IM")
+		$total : Summary(employee == $empleado && summaryCode == "IM")
 	then
 		Parameter p = parameterResolver.resolve("VTA_IM_PU_ARS",$empleado.bu);
 		
@@ -24,9 +310,10 @@ rule "Altas - IM Ahorro/Contrato"
 end
 
 rule "Altas - MEC (Local)"
+	salience 50
 	when
 		$empleado : Employee
-		$total : Summary(employee == $empleado && filter == "MECL")
+		$total : Summary(employee == $empleado && summaryCode == "MECL")
 	then
 		Parameter p = parameterResolver.resolve("VTA_MEC_LOC_PU_ARS",$empleado.bu);
 		
@@ -35,9 +322,10 @@ rule "Altas - MEC (Local)"
 end
 
 rule "Altas - MEC (Externo)"
+	salience 50
 	when
 		$empleado : Employee
-		$total : Summary(employee == $empleado && filter == "MECE")
+		$total : Summary(employee == $empleado && summaryCode == "MECE")
 	then
 		Parameter p = parameterResolver.resolve("VTA_MEC_EXT_PU_ARS",$empleado.bu);
 		
@@ -46,9 +334,10 @@ rule "Altas - MEC (Externo)"
 end
 
 rule "Altas - Planes Externo/Interno Rango 1 (..49)"
+	salience 50
 	when
 		$empleado : Employee
-		$total : Summary(employee == $empleado && filter == "PLAN1")
+		$total : Summary(employee == $empleado && summaryCode == "PLAN1")
 	then
 		Parameter p = parameterResolver.resolve("VTA_PLA_RG1_PU_ARS",$empleado.bu);
 		
@@ -57,9 +346,10 @@ rule "Altas - Planes Externo/Interno Rango 1 (..49)"
 end
 
 rule "Altas - Planes Externo/Interno Rango 2 (49-99)"
+	salience 50
 	when
 		$empleado : Employee
-		$total : Summary(employee == $empleado && filter == "PLAN2")
+		$total : Summary(employee == $empleado && summaryCode == "PLAN2")
 	then
 		Parameter p = parameterResolver.resolve("VTA_PLA_RG2_PU_ARS",$empleado.bu);
 		
@@ -68,9 +358,10 @@ rule "Altas - Planes Externo/Interno Rango 2 (49-99)"
 end
 
 rule "Altas - Planes Externo/Interno Rango 3 (99-159)"
+	salience 50
 	when
 		$empleado : Employee
-		$total : Summary(employee == $empleado && filter == "PLAN3")
+		$total : Summary(employee == $empleado && summaryCode == "PLAN3")
 	then
 		Parameter p = parameterResolver.resolve("VTA_PLA_RG3_PU_ARS",$empleado.bu);
 		
@@ -79,9 +370,10 @@ rule "Altas - Planes Externo/Interno Rango 3 (99-159)"
 end
 
 rule "Altas - Planes Externo/Interno Rango 4 (159-229)"
+	salience 50
 	when
 		$empleado : Employee
-		$total : Summary(employee == $empleado && filter == "PLAN4")
+		$total : Summary(employee == $empleado && summaryCode == "PLAN4")
 	then
 		Parameter p = parameterResolver.resolve("VTA_PLA_RG4_PU_ARS",$empleado.bu);
 		
@@ -90,9 +382,10 @@ rule "Altas - Planes Externo/Interno Rango 4 (159-229)"
 end
 
 rule "Altas - Planes Externo/Interno Rango 5 (229..)"
+	salience 50
 	when
 		$empleado : Employee
-		$total : Summary(employee == $empleado && filter == "PLAN5")
+		$total : Summary(employee == $empleado && summaryCode == "PLAN5")
 	then
 		Parameter p = parameterResolver.resolve("VTA_PLA_RG5_PU_ARS",$empleado.bu);
 		
@@ -101,9 +394,10 @@ rule "Altas - Planes Externo/Interno Rango 5 (229..)"
 end
 
 rule "Altas - Planes Corporativos"
+	salience 50
 	when
 		$empleado : Employee
-		$total : Summary(employee == $empleado && filter == "CORP")
+		$total : Summary(employee == $empleado && summaryCode == "CORP")
 	then
 		Parameter p = parameterResolver.resolve("VTA_PLA_CORP_PU_ARS",$empleado.bu);
 		
@@ -112,9 +406,10 @@ rule "Altas - Planes Corporativos"
 end
 
 rule "Altas - Accesorios"
+	salience 50
 	when
 		$empleado : Employee
-		$total : Summary(employee == $empleado && filter == "ACC")
+		$total : Summary(employee == $empleado && summaryCode == "ACC")
 	then
 		Parameter p = parameterResolver.resolve("VTA_ACC_BON_PCT",$empleado.bu);
 		
@@ -123,9 +418,10 @@ rule "Altas - Accesorios"
 end
 
 rule "Altas - Prepago Interno"
+	salience 50
 	when
 		$empleado : Employee
-		$total : Summary(employee == $empleado && filter == "PREP")
+		$total : Summary(employee == $empleado && summaryCode == "PREP")
 	then
 		Parameter p = parameterResolver.resolve("VTA_PREP_INT_PU_ARS",$empleado.bu);
 		
@@ -134,9 +430,10 @@ rule "Altas - Prepago Interno"
 end
 
 rule "Altas - Operaciones Call Center"
+	salience 50
 	when
 		$empleado : Employee
-		$total : Summary(employee == $empleado && filter == "CALL")
+		$total : Summary(employee == $empleado && summaryCode == "CALL")
 	then
 		Parameter p = parameterResolver.resolve("VTA_CALL_PU_ARS",$empleado.bu);
 		
@@ -145,9 +442,10 @@ rule "Altas - Operaciones Call Center"
 end
 
 rule "Altas - Operaciones Terreno"
+	salience 50
 	when
 		$empleado : Employee
-		$total : Summary(employee == $empleado && filter == "TERR")
+		$total : Summary(employee == $empleado && summaryCode == "TERR")
 	then
 		Parameter p = parameterResolver.resolve("VTA_TERR_PU_ARS",$empleado.bu);
 		
@@ -156,9 +454,10 @@ rule "Altas - Operaciones Terreno"
 end
 
 rule "Altas - Tarjeta Itaú Rango 1 (..10)"
+	salience 50
 	when
 		$empleado : Employee
-		$total : Summary(employee == $empleado && filter == "ITAU1")
+		$total : Summary(employee == $empleado && summaryCode == "ITAU1")
 	then
 		Parameter p = parameterResolver.resolve("VTA_ITAU_RG1_PU_ARS",$empleado.bu);
 		
@@ -167,9 +466,10 @@ rule "Altas - Tarjeta Itaú Rango 1 (..10)"
 end
 
 rule "Altas - Tarjeta Itaú Rango 2 (10-20)"
+	salience 50
 	when
 		$empleado : Employee
-		$total : Summary(employee == $empleado && filter == "ITAU2")
+		$total : Summary(employee == $empleado && summaryCode == "ITAU2")
 	then
 		Parameter p = parameterResolver.resolve("VTA_ITAU_RG2_PU_ARS",$empleado.bu);
 		
@@ -178,9 +478,10 @@ rule "Altas - Tarjeta Itaú Rango 2 (10-20)"
 end
 
 rule "Altas - Tarjeta Itaú Rango 3 (20..)"
+	salience 50
 	when
 		$empleado : Employee
-		$total : Summary(employee == $empleado && filter == "ITAU3")
+		$total : Summary(employee == $empleado && summaryCode == "ITAU3")
 	then
 		Parameter p = parameterResolver.resolve("VTA_ITAU_RG3_PU_ARS",$empleado.bu);
 		
@@ -189,9 +490,10 @@ rule "Altas - Tarjeta Itaú Rango 3 (20..)"
 end
 
 rule "Altas - Portabilidades"
+	salience 50
 	when
 		$empleado : Employee
-		$total : Summary(employee == $empleado && filter == "PORT")
+		$total : Summary(employee == $empleado && summaryCode == "PORT")
 	then
 		Parameter p = parameterResolver.resolve("VTA_PORT_PU_ARS",$empleado.bu);
 		
@@ -200,12 +502,15 @@ rule "Altas - Portabilidades"
 end
 
 rule "Altas - Incentivo Sony ZL"
+	salience 50
 	when
 		$empleado : Employee
-		$total : Summary(employee == $empleado && filter == "SONY")
+		$total : Summary(employee == $empleado && summaryCode == "SONY")
 	then
 		Parameter p = parameterResolver.resolve("EXT_BON_SONYZL_ARS",$empleado.bu);
 		
 		statement.addLine(StatementLineType.RULE, p.getParamCategory(), p.getCurrentDescription(), 
 					p.getValue(), $total.getQuantity(), p.getValue() * $total.getQuantity(), 99);
 end
+
+/* ******************** FIN ALTAS ********************** */
