@@ -45,9 +45,9 @@
 						<span class="icon icomoon-icon-list"></span>
 						<g:message code="filter.list.label" args="[entityName]" />
 					</g:link></li>
-				<li> </li>
-				<li> </li>
-				<li> </li>
+				<li></li>
+				<li></li>
+				<li></li>
 				<li><g:link class="create" action="create">
 						<span class="icon icomoon-icon-plus"></span>
 						<g:message code="default.new.label" args="[entityName]" />
@@ -55,6 +55,10 @@
 				<li><g:link class="domonthly" action="domonthly">
 						<span class="icon icomoon-icon-calculate-2"></span>
 						<g:message code="summary.domonthly.label" args="[entityName]" />
+					</g:link></li>
+				<li><g:link class="create" action="upload">
+						<span class="icon icomoon-icon-table"></span>
+						<g:message code="default.upload.label" args="[entityName]" />
 					</g:link></li>
 			</ul>
 			<g:if test="${flash.message}">
@@ -104,7 +108,7 @@
 											<div class="col-lg-7">
 												<g:form>
 													<div class="form-group">
-														<g:datePicker id="month" name="month" precision="month"
+														<g:datePicker id="month" name="sumMonth" precision="month"
 															default="${defaultmonth}" value="${month}" />
 													</div>
 													<div class="form-group">
@@ -123,8 +127,8 @@
 											<!--Titulos con posibilidad de ordenar por-->
 											<thead>
 												<tr role="row">
-													<g:sortableColumn params="${mapsearch}" property="uid"
-														title="${message(code: 'summary.filter.label', default: 'Filtro')}" />
+													<g:sortableColumn params="${mapsearch}" property="summaryCode"
+														title="${message(code: 'summary.summaryCode.label', default: 'Codigo')}" />
 													<g:sortableColumn params="${mapsearch}" property="name"
 														title="${message(code: 'summary.date.label', default: 'Fecha')}" />
 													<g:if test="${mapsearch["employeeorbu"]=='2'}">
@@ -144,7 +148,7 @@
 											<tfoot>
 												<tr>
 													<th rowspan="1" colspan="1"><g:message
-															code="summary.filter.label" default="Filter" /></th>
+															code="summary.summaryCode.label" default="Codigo" /></th>
 													<th rowspan="1" colspan="1"><g:message
 															code="summary.date.label" default="Fecha" /></th>
 													<g:if test="${mapsearch["employeeorbu"]=='2'}">
@@ -166,11 +170,11 @@
 													<tr class="gradeA ${(i % 2) == 0 ? 'even' : 'odd'}">
 
 														<td><g:link action="show" id="${summaryInstance.id}">
-																${fieldValue(bean: summaryInstance, field: "filter")}
+																${fieldValue(bean: summaryInstance, field: "summaryCode")}
 															</g:link></td>
 
 														<td class=" ">
-															${fieldValue(bean: summaryInstance, field: "month")}
+															${fieldValue(bean: summaryInstance, field: "sumMonth")}
 														</td>
 														<g:if test="${mapsearch["employeeorbu"]=='2'}">
 															<td class=" ">

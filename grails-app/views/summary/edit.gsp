@@ -43,6 +43,10 @@
 						<span class="icon icomoon-icon-calculate-2"></span>
 						<g:message code="summary.domonthly.label" args="[entityName]" />
 					</g:link></li>
+					<li><g:link class="create" action="upload">
+						<span class="icon icomoon-icon-table"></span>
+						<g:message code="default.upload.label" args="[entityName]" />
+					</g:link></li>
 			</ul>
 
 

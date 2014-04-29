@@ -31,17 +31,17 @@ class EmployeeController {
 			max = 20;
 
 		params.max = max;
-		
+
 		def query = Employee.where{
 			name ==~  "%${search}%" ||
-			legajo ==~  "%${search}%" ||
-			uid ==~  "%${search}%" ||
-			bu.nombre ==~  "%${search}%"
+					legajo ==~  "%${search}%" ||
+					uid ==~  "%${search}%" ||
+					bu.nombre ==~  "%${search}%"
 		}
-		
+
 		lista = query.list(params)
 		total = query.count()
-		
+
 		/*The map will be passed as param in g:sorteable and g:paginate*/
 		mapsearch.put("search", search);
 
@@ -98,7 +98,7 @@ class EmployeeController {
 	}
 
 	def upload = {
-		// shows info 
+		// shows info
 	}
 
 	@Transactional
@@ -109,7 +109,7 @@ class EmployeeController {
 		def code
 
 		employeeInstance.clearErrors();
-		
+
 		/*File management*/
 		def file = request.getFile(BuruConstants.uploadFileEmployee)
 		def jfile = new java.io.File(BuruConstants.saveFileEmployee)
@@ -122,30 +122,41 @@ class EmployeeController {
 			return
 		}
 
+		
 		jfile.splitEachLine('\t') { row ->
-			try {
-				code = Employee.findByLegajo(row[0]) ?: new Employee(
-						legajo: row[0],
-						fullname: row[1],
-						dofingreso: Date.parse(BuruConstants.dateFormatEmployee,row[2]),
-						uid: row[3],
-						bu: BussinesUnit.findByNombre(row[4]).id,
-						isworker: true,
-						iscoordinator: false
-						).save(failOnError: true, flush: true)
-			} catch (Exception e) {
+			BussinesUnit pdv = BussinesUnit.findByNombre(row[4])
 
+			if (!pdv) {
 				linea = linea + 1;
-				employeeInstance.errors.reject(row[0], row[0]+"\t"+row[1]+"\t"+row[3]+"\t"+row[4]+"\t"+row[5]);
+				employeeInstance.errors.reject(row[0], row[1]+BuruConstants.bu_exist_error+row[4]);
 				String sline = String.valueOf(linea);
 				reportOfErrors.put(sline, row)
+			}else{
 
-				e.printStackTrace();
+				try {
+					code = Employee.findByLegajo(row[0]) ?: new Employee(
+							legajo: row[0],
+							fullname: row[1],
+							dofingreso: Date.parse(BuruConstants.dateFormatEmployee,row[2]),
+							uid: row[3],
+							bu: pdv.id,
+							isworker: true,
+							iscoordinator: false
+							).save(failOnError: true, flush: true)
+				} catch (Exception e) {
+
+					linea = linea + 1;
+					employeeInstance.errors.reject(row[0], row[1]+BuruConstants.emp_create_error);
+					String sline = String.valueOf(linea);
+					reportOfErrors.put(sline, row)
+
+					e.printStackTrace();
+				}
 			}
 		}
 
 		mapreport.put("report", reportOfErrors)
-		
+
 		if (employeeInstance.hasErrors()) {
 			respond employeeInstance.errors, view:'upload_result', model:[report:mapreport]
 			return

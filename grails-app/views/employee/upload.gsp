@@ -78,7 +78,7 @@
 										code="default.upload.file" /></label>
 								<div class="col-lg-5">
 									<div class="uploader" id="uniform-file">
-										<input type="file" class="form-control" name="myFile"
+										<input type="file" class="form-control" name="FileEmployee"
 											id="file"> <span class="filename"
 											style="-webkit-user-select: none;">Click <strong>here</strong>
 											to Select
@@ -93,15 +93,13 @@
 							</div>
 						</g:uploadForm>
 					</div>
-					<div id="thinking" style="display: none">
-						<img src="../static/images/072.gif" alt="">
-					</div>
-
 				</div>
 			</div>
 		</div>
 	</div>
-
+	<div id="thinking" style="display: none">
+		<img src="../static/images/ajax-loader.gif" alt="" style="width:100px;">
+	</div>
 </body>
 </html>
 

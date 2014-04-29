@@ -92,15 +92,13 @@
 							</div>
 						</g:uploadForm>
 					</div>
-					<div id="thinking" style="display: none">
-						<img src="../static/images/072.gif" alt="">
-					</div>
-
 				</div>
 			</div>
 		</div>
 	</div>
-
+	<div id="thinking" style="display: none">
+		<img src="../static/images/ajax-loader.gif" alt="" style="width:100px;">
+	</div>
 </body>
 </html>
 

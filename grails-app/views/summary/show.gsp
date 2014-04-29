@@ -40,6 +40,10 @@
 						<span class="icon icomoon-icon-plus"></span>
 						<g:message code="default.new.label" args="[entityName]" />
 					</g:link></li>
+				<li><g:link class="create" action="">
+						<span class="icon icomoon-icon-menu"></span>
+						<g:message code="default.list.label" args="[entityName]" />
+					</g:link></li>
 				<li><g:link class="domonthly" action="domonthly">
 						<span class="icon icomoon-icon-calculate-2"></span>
 						<g:message code="summary.domonthly.label" args="[entityName]" />
@@ -73,22 +77,41 @@
 							<div class="panel-body">
 
 								<ul class="col-lg-12">
+								
+									<g:if test="${summaryInstance?.summaryCode}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="summary.summaryCode.label" default="Codigo" /></span> <span
+											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
+											class="col-lg-6"><g:fieldValue
+													bean="${summaryInstance}" field="summaryCode" /></span></li>
+									</g:if>
+									
 									<g:if test="${summaryInstance?.bu}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
-													code="summary.bu.label" default="Bu" /></span> <span
+													code="summary.bu.label" default="Punto de Venta" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
 											class="col-lg-6"><g:link controller="bussinesUnit"
 													action="show" id="${summaryInstance?.bu?.id}">
 													${summaryInstance?.bu?.encodeAsHTML()}
 												</g:link></span></li>
 									</g:if>
-
-									<g:if test="${summaryInstance?.month}">
+									
+									<g:if test="${summaryInstance?.employee}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
-													code="summary.month.label" default="Month" /></span> <span
+													code="summary.employee.label" default="Empleado" /></span> <span
+											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
+											class="col-lg-6"><g:link controller="employee"
+													action="show" id="${summaryInstance?.employee?.id}">
+													${summaryInstance?.employee?.encodeAsHTML()}
+												</g:link></span></li>
+									</g:if>
+
+									<g:if test="${summaryInstance?.sumMonth}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="summary.month.label" default="Mes" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
 											class="col-lg-6"><g:fieldValue
-													bean="${summaryInstance}" field="month" /></span></li>
+													bean="${summaryInstance}" field="sumMonth" /></span></li>
 									</g:if>
 
 									<g:if test="${summaryInstance?.quantity}">

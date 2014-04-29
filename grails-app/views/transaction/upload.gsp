@@ -78,18 +78,17 @@
 									<label for="fileoption"> <g:message
 											code="transaction.fileoption.label" default="Option" />
 									</label> <label><g:radio name="type_file" value="ALTA"
-											checked="true" />
-										<g:message code="transaction.alta.label" /></label> <label><g:radio
-											name="type_file" value="CATER" />
-										<g:message code="transaction.cater.label" /></label> <label><g:radio
-											name="type_file" value="POSTVENTA" />
-										<g:message code="transaction.postventa.label" /></label>
+											checked="true" /> <g:message code="transaction.alta.label" /></label>
+									<label><g:radio name="type_file" value="CATER" /> <g:message
+											code="transaction.cater.label" /></label> <label><g:radio
+											name="type_file" value="POSTVENTA" /> <g:message
+											code="transaction.postventa.label" /></label>
 								</div>
 								<label class="col-lg-3 control-label" for="fileinput"><g:message
 										code="default.upload.file" /></label>
 								<div class="col-lg-5">
 									<div class="uploader" id="uniform-file">
-										<input type="file" class="form-control" name="myFile"
+										<input type="file" class="form-control" name="FileTransaction"
 											id="file"> <span class="filename"
 											style="-webkit-user-select: none;">Click <strong>here</strong>
 											to Select
@@ -104,15 +103,13 @@
 							</div>
 						</g:uploadForm>
 					</div>
-					<div id="thinking" style="display: none">
-						<img src="../static/images/072.gif" alt="">
-					</div>
-
 				</div>
 			</div>
 		</div>
 	</div>
-
+	<div id="thinking" style="display: none">
+		<img src="../static/images/ajax-loader.gif" alt="" style="width:100px;">
+	</div>
 </body>
 </html>
 

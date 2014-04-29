@@ -43,6 +43,10 @@
 						<span class="icon icomoon-icon-calculate-2"></span>
 						<g:message code="summary.domonthly.label" args="[entityName]" />
 					</g:link></li>
+					<li><g:link class="create" action="upload">
+						<span class="icon icomoon-icon-table"></span>
+						<g:message code="default.upload.label" args="[entityName]" />
+					</g:link></li>
 			</ul>
 
 			<div class="row">
@@ -81,9 +85,9 @@
 								<g:uploadForm action="createMonthly" class="form-horizontal">
 									<fieldset class="form">
 										<div
-											class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'month', 'error')} required">
-											<label class="col-lg-3 control-label" for="month"> <g:message
-													code="summary.month.label" default="Mes a totalizar" /> <span
+											class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'sumMonth', 'error')} required">
+											<label class="col-lg-3 control-label" for="sumMonth"> <g:message
+													code="summary.sumMonth.label" default="Mes a totalizar" /> <span
 												class="required-indicator">*</span>
 											</label>
 											<g:datePicker name="month" precision="month" />

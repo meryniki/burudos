@@ -1,5 +1,19 @@
 <%@ page import="ar.com.burudos.sales.Summary"%>
 
+
+<div
+	class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'summaryCode', 'error')} required">
+	<label class="col-lg-3 control-label" for="summaryCode"> <g:message
+			code="summary.summaryCode.label" default="Codigo" />
+	</label>
+	<div class="col-lg-9">
+		<g:field name="summaryCode" type="text"
+			value="${summaryInstance.summaryCode}" />
+		<a
+			onmouseover="nhpup.popup('<g:message code="summary.summaryCode.help"/>');">?</a>
+	</div>
+</div>
+
 <div
 	class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'bu', 'error')} required">
 	<label class="col-lg-3 control-label" for="bu"> <g:message
@@ -14,31 +28,40 @@
 </div>
 
 <div
-	class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'filter', 'error')} required">
-	<label class="col-lg-3 control-label" for="filter"> <g:message
-			code="summary.op.label" default="Filtro" /> <span
+	class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'employee', 'error')} required">
+	<label class="col-lg-3 control-label" for="employee"> <g:message
+			code="summary.employee.label" default="Empleado" /> <span
 		class="required-indicator">*</span>
+	</label>
+	<div class="col-lg-9">
+		<g:select id="employee" name="employee.id"
+			from="${ar.com.burudos.party.Employee.list()}" optionKey="id"
+			required="" value="${summaryInstance?.employee?.id}" class="many-to-one" />
+	</div>
+</div>
+
+<div
+	class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'filter', 'error')}">
+	<label class="col-lg-3 control-label" for="filter"> <g:message
+			code="summary.op.label" default="Filtro" />
 	</label>
 	<div class="col-lg-9">
 		<g:select id="filter" name="filter.id"
 			from="${ar.com.burudos.sales.Filter.list()}" optionKey="id"
-			required="" value="${summaryInstance?.filter?.id}" class="many-to-one" />
-		<a onmouseover="nhpup.popup('<g:message code="summary.filter.help"/>');">?</a>
+			value="${summaryInstance?.filter?.id}" class="many-to-one" />
+		<a
+			onmouseover="nhpup.popup('<g:message code="summary.filter.help"/>');">?</a>
 	</div>
 </div>
 
 <div
 	class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'sumMonth', 'error')} required">
 	<label class="col-lg-3 control-label" for="sumMonth"> <g:message
-			code="summary.month.label" default="Month" /> <span
+			code="summary.month.label" default="Mes a totalizar" /> <span
 		class="required-indicator">*</span>
 	</label>
-	<div class="col-lg-9">
-		<g:field name="month" type="number" value="${summaryInstance.sumMonth}"
-			required="" />
-		<a
-			onmouseover="nhpup.popup('<g:message code="summary.month.help"/>');">?</a>
-	</div>
+	<g:datePicker name="sumMonth" precision="month" />
+	<a onmouseover="nhpup.popup('<g:message code="summary.month.help"/>');">?</a>
 </div>
 
 <div
@@ -48,7 +71,7 @@
 	</label>
 	<div class="col-lg-9">
 		<g:field name="quantity" type="number"
-			value="${summaryInstance.quantity}"/>
+			value="${summaryInstance.quantity}" />
 		<a
 			onmouseover="nhpup.popup('<g:message code="summary.quantity.help"/>');">?</a>
 	</div>
