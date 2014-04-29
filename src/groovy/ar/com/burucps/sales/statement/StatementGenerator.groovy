@@ -60,6 +60,7 @@ public class StatementGenerator {
 				.newStatefulKnowledgeSession();
 		log.info("Se creó la sesión de drools")
 
+		// GLOBALS
 		// Load Statement parameters
 		parameterResolver.loadParameters()
 		ksession.setGlobal( "parameterResolver", parameterResolver);
@@ -70,8 +71,13 @@ public class StatementGenerator {
 		ksession.setGlobal( "businessUnitsTree", businessUnitTree);
 		log.debug("Load Business Units")
 
+		// Load Map for calculations
+		Map<String,Object> additionalValuesMap = new HashMap<String,Object>();
+		ksession.setGlobal( "additionalValues", additionalValuesMap);
+		log.debug("Load Map for calculations")
+
+		// FACTS
 		// Load Summary
-		// TODO month de summary es date
 		Summary.where{
 			(month(sumMonth) == month &&
 					year(sumMonth) == year)

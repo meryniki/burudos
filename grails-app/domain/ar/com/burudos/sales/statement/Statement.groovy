@@ -79,4 +79,8 @@ class Statement {
 				operationsAmount:operationsAmount, amount:amount, lineOrder:lineOrder)
 		this.addToLines(line)
 	}
+					
+	List<StatementLine> getPointsLines() {
+		// TODO
+	}
 }
