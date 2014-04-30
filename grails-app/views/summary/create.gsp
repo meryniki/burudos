@@ -89,7 +89,7 @@
 									<fieldset>
 										<div class="form-group">
 											<div class="col-lg-offset-3 col-lg-9">
-												<g:submitButton name="create" class="btn btn-info"
+												<g:submitButton name="create" class="btn btn-info" params="${mapsearch}"
 													value="${message(code: 'default.button.create.label', default: 'Create')}" />
 											</div>
 										</div>

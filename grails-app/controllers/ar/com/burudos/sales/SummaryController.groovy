@@ -250,24 +250,25 @@ class SummaryController {
 				def where_filter = ""
 
 				if (filter.op)
+				{
 					if (filter.op=="(null)")
 						where_filter += " and t.op is null"
 					else if (filter.op == "(any)")
 						where_filter += " and t.op is not null"
 					else if ( filter.op.contains(" o ") && filter.op.contains("(") && filter.op.contains(")")  ){
-						filter.op.replace("(","")
-						filter.op.replace(")","")
+						filter.op = filter.op.replace("(","")
+						filter.op = filter.op.replace(")","")
 						where_filter += " and ("
 						filter.op.split(" o ").each { ops->
-							where_filter = " or t.op == '" + ops + "'"
+							where_filter += " or t.op == '" + ops + "'"
 						}
 						where_filter += ")"
-						where_filter.replace("( or ", "( ")
+						where_filter += where_filter.replace("( or ", "( ")
 						print where_filter
 					}
 					else
 						where_filter += " and t.op = '" + filter.op  + "'"
-				
+				}
 				if (filter.ani)
 					if (filter.ani=="(null)")
 						where_filter += " and t.ani is null"
@@ -376,7 +377,7 @@ class SummaryController {
 						counting += 1
 						counting_employes += 1
 					}
-					code = Summary.findByEmployeeAndMonthAndFilter(mparty,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter) ?:new Summary(
+					code = Summary.findByEmployeeAndSumMonthAndFilter(mparty,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter) ?:new Summary(
 							filter: filter,
 							summaryCode:filter.filterCode,
 							employee: mparty,

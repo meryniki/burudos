@@ -108,6 +108,7 @@
 										<div class="center form-group">
 											<g:actionSubmit class="save btn btn-info"
 												action="createMonthly"
+												params="${mapsearch}"
 												value="${message(code: 'default.button.create.label', default: 'uploadFile')}" />
 										</div>
 									</fieldset>
