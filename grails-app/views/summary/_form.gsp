@@ -47,8 +47,8 @@
 	</label>
 	<div class="col-lg-9">
 		<g:select id="filter" name="filter.id"
-			from="${ar.com.burudos.sales.Filter.list()}" optionKey="id"
-			value="${summaryInstance?.filter?.id}" class="many-to-one" />
+			from="${ar.com.burudos.sales.Filter.list()}" optionKey="id" 
+			value="${summaryInstance?.filter?.id}" class="many-to-one" noSelection="['':'-Ninguno-']" />
 		<a
 			onmouseover="nhpup.popup('<g:message code="summary.filter.help"/>');">?</a>
 	</div>
