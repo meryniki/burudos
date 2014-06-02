@@ -16,9 +16,15 @@ class Summary {
 		summaryCode(nullable:false)
 		bu(nullable:true)
 		employee(nullable:true)
-		filter(nullable:false)
+		filter(nullable:true)
 		sumMonth (nullable: false)
 		quantity (nullable: false)
+	}
+	
+	
+	def beforeInsert() {
+		if (!summaryCode && filter)
+			summaryCode = filter.filterCode;
 	}
 
 }

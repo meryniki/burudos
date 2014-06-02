@@ -99,10 +99,7 @@
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="filter.op.label" default="Op" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
-											<g:link controller="operation" action="show"
-												id="${filterInstance?.op?.id}">
-												${filterInstance?.op?.encodeAsHTML()}
-											</g:link></span></li>
+											<g:fieldValue bean="${filterInstance}" field="op" /></li>
 									</g:if>
 
 									<g:if test="${filterInstance?.sds}">

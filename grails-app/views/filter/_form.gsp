@@ -45,12 +45,9 @@
 
 		</label>
 		<div class="col-lg-9">
-			<g:select id="op" name="op.id"
-				from="${ar.com.burudos.sales.Operation.list()}" optionKey="id"
-				value="${filterInstance?.op?.id}" class="many-to-one"
-				noSelection="['null': '']"/>
+			<g:textField name="op"
+				value="${filterInstance?.op}" />
 		</div>
-
 
 	</div>
 

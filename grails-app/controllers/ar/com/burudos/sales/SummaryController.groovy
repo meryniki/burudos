@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import ar.com.burudos.business.BussinesUnit
 import ar.com.burudos.party.Employee
+import ar.com.burudos.constants.BuruConstants
 import static java.util.Calendar.MONTH
 
 @Transactional(readOnly = true)
@@ -62,19 +63,19 @@ class SummaryController {
 			query = Summary.where{
 				(bu != null) &&
 						(bu.nombre ==~  "%${search}%") && (
-						filter.filterCode ==~  "%${search}%") && (
+						summaryCode ==~  "%${search}%") && (
 						month(sumMonth) == params.month_month &&
 						year(sumMonth) == params.month_year)
-					}
+			}
 		}
 		else if (employeeorbu=='1') {
 			query = Summary.where{
 				(employee != null) &&
 						(employee.name ==~  "%${search}%") && (
-						filter.filterCode ==~  "%${search}%") && (
+						summaryCode ==~  "%${search}%") && (
 						month(sumMonth) == params.month_month &&
 						year(sumMonth) == params.month_year)
-					}
+			}
 		}
 		else
 			query = Summary.where{
@@ -82,7 +83,7 @@ class SummaryController {
 						filter.filterCode ==~  "%${search}%") && (
 						month(sumMonth) == params.month_month &&
 						year(sumMonth) == params.month_year)
-					}
+			}
 
 		lista = query.list(params)
 		total = query.count()
@@ -125,7 +126,9 @@ class SummaryController {
 				])
 				redirect summaryInstance
 			}
-			'*' { respond summaryInstance, [status: CREATED] }
+			'*' {
+				respond summaryInstance, [status: CREATED]
+			}
 		}
 	}
 
@@ -155,9 +158,80 @@ class SummaryController {
 				])
 				redirect summaryInstance
 			}
-			'*'{ respond summaryInstance, [status: OK] }
+			'*'{
+				respond summaryInstance, [status: OK]
+			}
 		}
 	}
+
+	def upload = {
+		// shows info
+	}
+
+	@Transactional
+	def uploadFile(Summary summaryInstace) {
+		def reportOfErrors = [:]
+		def mapreport = [:]
+		int linea = 0
+		def code
+
+		summaryInstace.clearErrors();
+
+		/*File management*/
+		def file = request.getFile(BuruConstants.uploadFileSummary)
+		def jfile = new java.io.File(BuruConstants.saveFileSummary)
+		if(file && !file.empty && file.size < BuruConstants.MAX_FILE) {
+			file.transferTo( jfile )
+		}
+		else{
+			summaryInstace.errors.reject(BuruConstants.NO_VALID_FILE);
+			respond summaryInstace.errors, view:'upload_result', model:[report:mapreport]
+			return
+		}
+
+
+		jfile.splitEachLine('\t') { row ->
+
+			BussinesUnit pdv = BussinesUnit.findByNombre(row[1])
+			Employee emp = Employee.findByName(row[2])
+
+			if (!pdv && !emp) {
+				linea = linea + 1;
+				summaryInstace.errors.reject(row[0], row[1]+BuruConstants.bu_exist_error+row[2]+BuruConstants.employee_exist_error);
+				String sline = String.valueOf(linea);
+				reportOfErrors.put(sline, row)
+			}
+			else{
+				try {
+					code = new Summary(
+							summaryCode: row[0],
+							employee: emp,
+							bu: pdv,
+							sumMonth: Date.parse("MM/yyyy",  row[4]),
+							quantity: Integer.parseInt(row[3])
+							).save(failOnError: true, flush: true)
+				} catch (Exception e) {
+
+					linea = linea + 1;
+					summaryInstace.errors.reject(row[0], row[1]+BuruConstants.sum_create_error);
+					String sline = String.valueOf(linea);
+					reportOfErrors.put(sline, row)
+
+					e.printStackTrace();
+				}
+			}
+		}
+
+		mapreport.put("report", reportOfErrors)
+
+		if (summaryInstace.hasErrors()) {
+			respond summaryInstace.errors, view:'upload_result', model:[report:mapreport]
+			return
+		}
+
+		redirect action:"index"
+	}
+
 
 	def domonthly = {
 	}
@@ -176,7 +250,25 @@ class SummaryController {
 				def where_filter = ""
 
 				if (filter.op)
-					where_filter += " and  t.op.id = " + filter.op.id
+				{
+					if (filter.op=="(null)")
+						where_filter += " and t.op is null"
+					else if (filter.op == "(any)")
+						where_filter += " and t.op is not null"
+					else if ( filter.op.contains(" o ") && filter.op.contains("(") && filter.op.contains(")")  ){
+						filter.op = filter.op.replace("(","")
+						filter.op = filter.op.replace(")","")
+						where_filter += " and ("
+						filter.op.split(" o ").each { ops->
+							where_filter += " or t.op == '" + ops + "'"
+						}
+						where_filter += ")"
+						where_filter += where_filter.replace("( or ", "( ")
+						print where_filter
+					}
+					else
+						where_filter += " and t.op = '" + filter.op  + "'"
+				}
 				if (filter.ani)
 					if (filter.ani=="(null)")
 						where_filter += " and t.ani is null"
@@ -276,7 +368,7 @@ class SummaryController {
 					else
 						where_filter += " and t.plan_promo = '" + filter.plan_promo + "'"
 
-				Employee.findAllWhere(bu:butmp).each(){	mparty ->
+				Employee.findAllWhere(bu:butmp).each(){ mparty ->
 					def query = "from Transaction t where t.party.id = " + mparty.id  +
 							where_filter +
 							" and month(t.date) = " + params.month_month +
@@ -285,8 +377,9 @@ class SummaryController {
 						counting += 1
 						counting_employes += 1
 					}
-					code = Summary.findByEmployeeAndMonthAndFilter(mparty,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter) ?:new Summary(
+					code = Summary.findByEmployeeAndSumMonthAndFilter(mparty,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter) ?:new Summary(
 							filter: filter,
+							summaryCode:filter.filterCode,
 							employee: mparty,
 							sumMonth: Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),
 							quantity: counting_employes
@@ -294,19 +387,19 @@ class SummaryController {
 					counting_employes = 0
 				}
 
-				//Si el summary ya estaba deberia actualizarse
-
-				if ( counting>0 )
-					code = Summary.findByBuAndMonthAndFilter(butmp,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter) ?:new Summary(
-							filter: filter,
-							bu: butmp,
-							month: Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),
-							quantity: counting
-							).save(failOnError: true, flush: true)
+				//TODO: Si el summary ya estaba deberia actualizarse
+				code = Summary.findByBuAndSumMonthAndFilter(butmp,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter) ?:new Summary(
+						filter: filter,
+						summaryCode:filter.filterCode,
+						bu: butmp,
+						sumMonth: Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),
+						quantity: counting
+						).save(failOnError: true, flush: true)
 			}
 		}
 		redirect action:"index"
 	}
+
 
 
 	@Transactional

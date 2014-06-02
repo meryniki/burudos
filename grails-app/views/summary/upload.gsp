@@ -1,10 +1,9 @@
-<%@ page import="ar.com.burudos.constants.BuruConstants"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta name="layout" content="main">
 <g:set var="entityName"
-	value="${message(code: 'parameter.label', default: 'parameter')}" />
+	value="${message(code: 'summary.label', default: 'summary')}" />
 <title><g:message code="default.upload.label"
 		args="[entityName]" /></title>
 </head>
@@ -14,7 +13,7 @@
 			<div class="heading">
 
 				<h3>
-					<g:message code="parameter.btnLabel" args="[entityName]" />
+					<g:message code="summary.btnLabel" args="[entityName]" />
 				</h3>
 
 				<div class="resBtnSearch">
@@ -28,7 +27,7 @@
 					</a> <span class="divider"> <span
 							class="icon16 icomoon-icon-arrow-right-3"></span>
 					</span></li>
-					<li class="active"><g:message code="parameter.upload.label"
+					<li class="active"><g:message code="summary.upload.label"
 							args="[entityName]" /></li>
 				</ul>
 
@@ -45,7 +44,7 @@
 					</g:link></li>
 			</ul>
 
-			<div id="#upload-parameter" class="content scaffold-create"
+			<div id="#upload-summary" class="content scaffold-create"
 				role="main">
 				<h1>
 					<g:message code="default.upload.label" args="[entityName]" />
@@ -55,9 +54,9 @@
 						${flash.message}
 					</div>
 				</g:if>
-				<g:hasErrors bean="${parameterInstance}">
+				<g:hasErrors bean="${summaryInstance}">
 					<ul class="errors" role="alert">
-						<g:eachError bean="${parameterInstance}" var="error">
+						<g:eachError bean="${summaryInstance}" var="error">
 							<li><g:if
 									test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message
 									error="${error}" /></li>
@@ -79,7 +78,7 @@
 										code="default.upload.file" /></label>
 								<div class="col-lg-5">
 									<div class="uploader" id="uniform-file">
-										<input type="file" class="form-control" name="${BuruConstants.uploadFileParameter}"
+										<input type="file" class="form-control" name="FileSummary"
 											id="file"> <span class="filename"
 											style="-webkit-user-select: none;">Click <strong>here</strong>
 											to Select
@@ -98,9 +97,8 @@
 			</div>
 		</div>
 	</div>
-		<div id="thinking" style="display: none">
-		<img src="../static/images/ajax-loader.gif" alt=""
-			style="width: 100px;">
+	<div id="thinking" style="display: none">
+		<img src="../static/images/ajax-loader.gif" alt="" style="width:100px;">
 	</div>
 </body>
 </html>

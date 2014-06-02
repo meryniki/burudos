@@ -13,7 +13,7 @@ class Filter {
 	String description
 	BussinesUnit bu
 	Date validMonth
-	Operation op
+	String op
 	String sds
 	String ani
 	String imei
@@ -34,7 +34,7 @@ class Filter {
 	Operation op_hasta
 	
 	static constraints = {
-		filterCode (nullable: false)
+		filterCode (nullable: false, unique:true)
 		validMonth (max : new Date(), nullable: false)
 		description (nullable: true)
 		bu( nullable:false)

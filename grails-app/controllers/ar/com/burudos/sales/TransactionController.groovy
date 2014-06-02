@@ -283,9 +283,6 @@ class TransactionController {
 
 				/*Finally Search for the employee to match*/
 				BussinesUnit butmp = BussinesUnit.findByNombre(row_mapa[BuruConstants.row_buname])
-				println butmp.id
-				println butmp.nombre
-				println row_mapa[BuruConstants.row_emp]
 				Employee tmpemployee = Employee.findByNameAndBu(row_mapa[BuruConstants.row_emp], butmp )
 				if (! tmpemployee ){
 					linea = linea + 1

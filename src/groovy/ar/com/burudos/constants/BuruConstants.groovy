@@ -12,10 +12,13 @@ class BuruConstants {
 	static final String file_altas = "ALTA";
 	static final String file_cater = "CATER";
 	static final String file_post = "POSTVENTA";
-	static final String op_create_error = " No se puede crear Operacion";
-	static final String employee_exist_error = " No existe el empleado asociado";
-	static final String trx_create_error = " No se puede crear Transaccion";
-	static final String cl_create_error = " No se puede crear el Cliente asociado";
+	static final String op_create_error = " No se puede crear Operacion ";
+	static final String employee_exist_error = " No existe el empleado asociado ";
+	static final String bu_exist_error = " No existe el Punto de venta asociado ";
+	static final String trx_create_error = " No se puede crear Transaccion ";
+	static final String emp_create_error = " No se puede crear el Empleado ";
+	static final String cl_create_error = " No se puede crear el Cliente asociado ";
+	static final String sum_create_error = " No se puede crear el Total ";
 	
 	static final String row_type="Tipo"
 	static final String row_buname="Punto de Venta"
@@ -46,13 +49,17 @@ class BuruConstants {
 	static final String row_plan_h="Plan hasta"
 	static final String row_debaut="Debaut"
 	
-	static final String uploadFileEmployee="myFile"
+	static final String uploadFileEmployee="FileEmployee"
 	static final String saveFileEmployee="/tmp/carga_" + uploadFileEmployee
-	static final String uploadFileTransaction="myFile"
-	static final String saveFileTransaction="/tmp/tx_" + uploadFileTransaction
-	static final String dateFormatEmployee="MM/dd/yyyy"	
+	static final String dateFormatEmployee="MM/dd/yyyy"
+	
+	static final String uploadFileTransaction="FileTransaction"
+	static final String saveFileTransaction="/tmp/carga_" + uploadFileTransaction
 	
 	static final String uploadFileParameter="FileParameters"
 	static final String saveFileParameter="/tmp/carga_" + uploadFileParameter
+	
+	static final String uploadFileSummary="FileSummary"
+	static final String saveFileSummary="/tmp/carga_" + uploadFileParameter
 	
 }
