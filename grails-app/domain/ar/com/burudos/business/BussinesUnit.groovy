@@ -63,4 +63,8 @@ class BussinesUnit {
 		}
 		return sons
 	}
+	
+	public Integer getEmployeeCount() {
+		return Employee.countByBu(id)
+	}
 }
