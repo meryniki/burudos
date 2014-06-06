@@ -36,7 +36,7 @@
 	<div class="col-lg-9">
 		<g:select id="employee" name="employee.id"
 			from="${ar.com.burudos.party.Employee.list()}" optionKey="id"
-			required="" value="${summaryInstance?.employee?.id}" class="many-to-one" />
+			required="" value="${summaryInstance?.employee?.id}" class="many-to-one" noSelection="['':'-Ninguno-']"/>
 	</div>
 </div>
 
