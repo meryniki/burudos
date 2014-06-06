@@ -99,7 +99,7 @@
 												<div class="dataTables_filter"
 													id="DataTables_Table_1_filter">
 													<label> <span class="icon16 icomoon-icon-search"></span>
-														<input id="search" style="width: 75%;" type="text"
+														<input id="search" style="width: 75%;" type="text" 
 														aria-controls="DataTables_Table_1" class="form-control"
 														value="${mapsearch["search"]}" autofocus>
 													</label>
@@ -112,7 +112,7 @@
 															default="${defaultmonth}" value="${month}" />
 													</div>
 													<div class="form-group">
-														<g:actionSubmit class="save btn btn-info" action="index"
+														<g:actionSubmit class="save btn btn-info" action="index" params="${mapsearch}"
 															value="${message(code: 'default.button.search.label', default: 'Buscar')}" />
 													</div>
 												</g:form>
@@ -174,7 +174,7 @@
 															</g:link></td>
 
 														<td class=" ">
-															${fieldValue(bean: summaryInstance, field: "sumMonth")}
+															<g:formatDate format="yyyy/MM" date="${summaryInstance.sumMonth}" />
 														</td>
 														<g:if test="${mapsearch["employeeorbu"]=='2'}">
 															<td class=" ">
@@ -223,12 +223,15 @@
 		isearch.addEventListener("change", function() {
 			var vmax = document.getElementById("max");
 			var voff = document.getElementById("offset");
+			var vbu = document.getElementById("employeeorbu");
 			var vser = document.getElementById("search");
 			var url = "./index?search=" + vser.value;
 			if (vmax)
 				url += "&max=" + vmax.value;
 			if (voff)
 				url += "&offset=" + voff.value;
+			if (vbu)
+				url += "&employeeorbu=" + vbu.value;
 
 			window.location.replace(url);
 		});

@@ -19,10 +19,14 @@ class StatementLine {
 
 	static constraints = {
 		type (nullable : false, blank : false)
+		description( nullable: false) 
 		paramGroup (nullable : false, blank : false)
 		unitAmount (nullable : true)
+		unitAmountFixed (nullable : true)
 		operationsAmount (nullable : true, min : 0D)
-		amount (nullable : false)
+		operationsAmountFixed (nullable : true, min : 0D)
+		amount (nullable : true)
+		amountFixed (nullable : true)
 		lineOrder (nullable : false)
 	}
 

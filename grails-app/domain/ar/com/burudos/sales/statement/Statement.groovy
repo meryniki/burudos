@@ -1,9 +1,7 @@
 package ar.com.burudos.sales.statement
 
 import java.util.Date;
-
 import org.grails.datastore.gorm.finders.MethodExpression.InRange;
-
 import ar.com.burucps.sales.statement.StatementLineGroup;
 import ar.com.burucps.sales.statement.StatementLineType;
 import ar.com.burudos.business.BussinesUnit;
@@ -71,16 +69,33 @@ class Statement {
 		//lastUpdatedBy = securityService.currentAuthenticatedUsername();
 		lastUpdateDate = new Date();
 	}
-
-	void addLine (StatementLineType type, StatementLineGroup paramGroup, String description, 
-					Double unitAmount, Double operationsAmount, Double amount, Integer lineOrder) {
+	
+	void addLine (StatementLineType type, StatementLineGroup paramGroup, String description,
+			Double unitAmount, Double operationsAmount, Double amount, Integer lineOrder) {
 		StatementLine line = new StatementLine( statement: this,
-				type : type, paramGroup : paramGroup, description:description, unitAmount:unitAmount, 
-				operationsAmount:operationsAmount, amount:amount, lineOrder:lineOrder)
+		type : type, paramGroup : paramGroup, description:description, unitAmount:unitAmount,
+		operationsAmount:operationsAmount, amount:amount, lineOrder:lineOrder)
 		this.addToLines(line)
 	}
-					
-	List<StatementLine> getPointsLines() {
-		// TODO
+
+	List<StatementLine> getBuPointsLines(){
+		StatementLine.findAll(sort: 'lineOrder', order:'asc'){ paramGroup == StatementLineGroup.POINTS && statement == this  }
 	}
+
+	List<StatementLine> getBuIncentivesLines(){
+		StatementLine.findAll(sort: 'lineOrder', order:'asc'){ paramGroup == StatementLineGroup.POS_INCENTIVE && statement== this }
+	}
+
+	List<StatementLine> getEmpSalesLines(){
+		StatementLine.findAll(sort: 'lineOrder', order:'asc'){ paramGroup == StatementLineGroup.SALES && statement== this }
+	}
+
+	List<StatementLine> getEmpIncentivesLines(){
+		StatementLine.findAll(sort: 'lineOrder', order:'asc'){ paramGroup == StatementLineGroup.INDIVIDUAL_INCENTIVE && statement== this }
+	}
+
+	List<StatementLine> getEmpDedLines(){
+		StatementLine.findAll(sort: 'lineOrder', order:'asc'){ paramGroup == StatementLineGroup.DEDUCTIONS && statement== this }
+	}
+
 }

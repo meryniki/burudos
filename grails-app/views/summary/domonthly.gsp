@@ -107,7 +107,7 @@
 										</div>
 										<div class="center form-group">
 											<g:actionSubmit class="save btn btn-info"
-												action="createMonthly"
+												action="createMonthly" onclick="showThinking()"
 												params="${mapsearch}"
 												value="${message(code: 'default.button.create.label', default: 'uploadFile')}" />
 										</div>
@@ -119,6 +119,9 @@
 				</div>
 			</div>
 		</div>
+	</div>
+		<div id="thinking" style="display: none">
+		<img src="../static/images/ajax-loader.gif" alt="" style="width:100px;">
 	</div>
 </body>
 </html>

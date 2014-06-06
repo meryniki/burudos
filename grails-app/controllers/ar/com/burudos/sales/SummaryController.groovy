@@ -79,8 +79,7 @@ class SummaryController {
 		}
 		else
 			query = Summary.where{
-				(bu.nombre ==~  "%${search}%") && (
-						filter.filterCode ==~  "%${search}%") && (
+						summaryCode ==~  "%${search}%" && (
 						month(sumMonth) == params.month_month &&
 						year(sumMonth) == params.month_year)
 			}
@@ -229,7 +228,7 @@ class SummaryController {
 			return
 		}
 
-		redirect action:"index"
+		redirect action:"index", params:[employeeorbu:"1"];
 	}
 
 
@@ -241,33 +240,38 @@ class SummaryController {
 		def code
 		int counting = 0
 		int counting_employes = 0
-		def bu_to_summarize = BussinesUnit.findById(params.bu)?.getSons()
-
+		def bu_to_summarize = BussinesUnit.findById(params.bu).getFamily()
+		
 		Filter.findAllByBuInListAndValidMonth(bu_to_summarize,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year)).each() { filter->
 
 			bu_to_summarize.each(){ butmp->
 				counting = 0
 				def where_filter = ""
-
+				
+				println butmp
+				
 				if (filter.op)
 				{
+					println filter.op
+					
 					if (filter.op=="(null)")
 						where_filter += " and t.op is null"
 					else if (filter.op == "(any)")
 						where_filter += " and t.op is not null"
-					else if ( filter.op.contains(" o ") && filter.op.contains("(") && filter.op.contains(")")  ){
+					else if ( filter.op.contains(" o ") ){//&& filter.op.contains("(") && filter.op.contains(")")  ){
 						filter.op = filter.op.replace("(","")
 						filter.op = filter.op.replace(")","")
 						where_filter += " and ("
 						filter.op.split(" o ").each { ops->
-							where_filter += " or t.op == '" + ops + "'"
+							where_filter += " or t.op.code = '" + ops + "'"
 						}
 						where_filter += ")"
-						where_filter += where_filter.replace("( or ", "( ")
-						print where_filter
+						where_filter = where_filter.replace("( or ", "( ")
+						
+						println where_filter
 					}
 					else
-						where_filter += " and t.op = '" + filter.op  + "'"
+						where_filter += " and t.op.code = '" + filter.op  + "'"
 				}
 				if (filter.ani)
 					if (filter.ani=="(null)")
@@ -377,6 +381,7 @@ class SummaryController {
 						counting += 1
 						counting_employes += 1
 					}
+					
 					code = Summary.findByEmployeeAndSumMonthAndFilter(mparty,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter) ?:new Summary(
 							filter: filter,
 							summaryCode:filter.filterCode,
@@ -387,6 +392,7 @@ class SummaryController {
 					counting_employes = 0
 				}
 
+				if ( counting!=0 )
 				//TODO: Si el summary ya estaba deberia actualizarse
 				code = Summary.findByBuAndSumMonthAndFilter(butmp,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter) ?:new Summary(
 						filter: filter,

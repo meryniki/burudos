@@ -1,9 +1,11 @@
 package ar.com.burudos.sales.statement
 
 import ar.com.burucps.sales.statement.StatementGenerator
-
+import ar.com.burucps.sales.statement.StatementLineGroup;
+import ar.com.burucps.sales.statement.StatementLineType;
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import ar.com.burudos.sales.statement.StatementLine
 
 @Transactional(readOnly = true)
 class StatementController {
@@ -15,7 +17,6 @@ class StatementController {
 	static allowedMethods = [save: "POST", update: "PUT"]
 
 	def example() {
-
 	}
 
 	def index(Integer max, Integer offset, String search) {
@@ -77,8 +78,26 @@ class StatementController {
 			mapsearch: mapsearch, defaultmonth:Date.parse("yyyyMM", dateyear+datemonth)]
 	}
 
-	def show(Statement statementInstance) {
-		respond statementInstance
+	// @Transactional
+	def show(EmployeeStatement employeeStatementInstance) {
+	/*	StatementLine.withNewSession{session->
+			try {
+				def code = new StatementLine(statement: employeeStatementInstance, 	type: StatementLineType.RULE,
+				paramGroup: StatementLineGroup.POINTS,
+				description: "fdls; dfs",
+				unitAmount:20,
+				unitAmountFixed:34,
+				operationsAmount:30,
+				operationsAmountFixed:50,
+				amount: 10,
+				amountFixed: 20,
+				lineOrder: 0).save(failOnError: true, flush: true)
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	   */
+		respond employeeStatementInstance
 	}
 
 	def process() {

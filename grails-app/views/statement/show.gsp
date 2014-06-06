@@ -1,4 +1,4 @@
-<%@ page import="ar.com.burudos.sales.statement.Statement"%>
+<%@ page import="ar.com.burudos.sales.statement.EmployeeStatement"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +10,18 @@
 <title><g:message code="default.show.label" args="[entityName]" /></title>
 </head>
 <body>
+	<script type="text/javascript"
+		src="../../static/plugins/misc/pnotify/jquery.pnotify.min.js"></script>
+		<script language="javascript">
+$( document ).ready( function() {
+	$("a[rel='pop-up']").click(function () {
+      	var caracteristicas = "height=400,width=400,scrollTo,resizable=1,scrollbars=0,location=0";
+      	nueva=window.open(this.href, 'Editar/Borrar', caracteristicas);
+      	return false;
+ });
+});
+</script>
+
 	<div id="content" class="clearfix">
 		<div class="contentwrapper">
 			<div class="heading">
@@ -36,7 +48,7 @@
 			</div>
 
 			<ul class="bigBtnIcon">
-				<li><g:link class="create" action="">
+				<li><g:link class="create" action="index">
 						<span class="icon icomoon-icon-menu"></span>
 						<g:message code="default.list.label" args="[entityName]" />
 					</g:link></li>
@@ -44,9 +56,7 @@
 
 			<div class="row">
 
-				<div class="col-lg-2"></div>
-
-				<div class="col-lg-8">
+				<div class="col-lg-12">
 					<div id="show-statement" class="content scaffold-show" role="main">
 						<g:if test="${flash.message}">
 							<div class="message" role="status">
@@ -55,172 +65,464 @@
 						</g:if>
 						<div class="panel panel-default">
 
-							<div class="panel-heading">
-								<h4>
-								<!-- TODO Change period -->
-									<span><g:message code="statement.show.heading"
-											args="['2014','04']" /></span>
-								</h4>
-							</div>
 							<div class="panel-body">
 
-								<ul class="col-lg-12">
+								<div id="statement-header" class="row statement-group">
+									<div class="page-header">
+										<h4>Datos de la liquidación</h4>
+									</div>
+									<div class="col-lg-8">
+										<div class="row">
+											<ul class="col-lg-12">
 
-									<g:if test="${statementInstance?.statementPeriod}">
-										<li class="fieldcontain"><span id="statementPeriod-label"
-											class="property-label"><g:message
-													code="statement.statementPeriod.label"
-													default="Statement Period" /></span> <span class="property-value"
-											aria-labelledby="statementPeriod-label"><g:formatDate
-													date="${statementInstance?.statementPeriod}" /></span></li>
-									</g:if>
+												<li><span class="blue col-lg-3"><g:message
+															code="statement.statementPeriod.label" default="Periodo" /></span>
+													<span
+													class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
+													class="col-lg-7"><g:formatDate format="yyyy/MM" date="${employeeStatementInstance.statementPeriod}" /></span></li>
 
+												<li><span class="blue col-lg-3"><g:message
+															code="statement.statement.employee.label"
+															default="Empleado" /></span> <span
+													class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
+													class="col-lg-7"> <g:link controller="employee"
+															action="show"
+															id="${employeeStatementInstance?.employee?.id}">
+															${employeeStatementInstance?.employee?.encodeAsHTML()}
+														</g:link></span></li>
 
-									<g:if test="${statementInstance?.statementOwner}">
-										<li class="fieldcontain"><span id="statementOwner-label"
-											class="property-label"><g:message
-													code="statement.statementOwner.label"
-													default="Statement owner" /></span> <span class="property-value"
-											aria-labelledby="statementOwner-label"></span></li>
-									</g:if>
-
-									<g:if test="${statementInstance?.businessUnit}">
-										<li style="display: block;"><span class="blue col-lg-3"><g:message
-													code="statement.businessUnit.label" default="Business Unit" /></span>
-											<span class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
-											class="col-lg-6"><g:link controller="bussinesUnit"
-													action="show" id="${statementInstance?.businessUnit?.id}">
-													${statementInstance?.businessUnit?.encodeAsHTML()}
-												</g:link></span></li>
-									</g:if>
-
-									<g:if test="${statementInstance?.pointsSubtotal}">
-										<li class="fieldcontain"><span id="pointsSubtotal-label"
-											class="property-label"><g:message
-													code="statement.pointsSubtotal.label"
-													default="Points Subtotal" /></span> <span class="property-value"
-											aria-labelledby="pointsSubtotal-label"><g:fieldValue
-													bean="${statementInstance}" field="pointsSubtotal" /></span></li>
-									</g:if>
-
-									<g:if test="${statementInstance?.stalesSubtotal}">
-										<li class="fieldcontain"><span id="stalesSubtotal-label"
-											class="property-label"><g:message
-													code="statement.stalesSubtotal.label"
-													default="Stales Subtotal" /></span> <span class="property-value"
-											aria-labelledby="stalesSubtotal-label"><g:fieldValue
-													bean="${statementInstance}" field="stalesSubtotal" /></span></li>
-									</g:if>
-
-									<g:if test="${statementInstance?.indIncentSubtotal}">
-										<li class="fieldcontain"><span
-											id="indIncentSubtotal-label" class="property-label"><g:message
-													code="statement.indIncentSubtotal.label"
-													default="Ind Incent Subtotal" /></span> <span
-											class="property-value"
-											aria-labelledby="indIncentSubtotal-label"><g:fieldValue
-													bean="${statementInstance}" field="indIncentSubtotal" /></span></li>
-									</g:if>
-
-									<g:if test="${statementInstance?.posIncentSubtotal}">
-										<li class="fieldcontain"><span
-											id="posIncentSubtotal-label" class="property-label"><g:message
-													code="statement.posIncentSubtotal.label"
-													default="Pos Incent Subtotal" /></span> <span
-											class="property-value"
-											aria-labelledby="posIncentSubtotal-label"><g:fieldValue
-													bean="${statementInstance}" field="posIncentSubtotal" /></span></li>
-									</g:if>
-
-									<g:if test="${statementInstance?.positiveSubtotal}">
-										<li class="fieldcontain"><span
-											id="positiveSubtotal-label" class="property-label"><g:message
-													code="statement.positiveSubtotal.label"
-													default="Positive Subtotal" /></span> <span
-											class="property-value"
-											aria-labelledby="positiveSubtotal-label"><g:fieldValue
-													bean="${statementInstance}" field="positiveSubtotal" /></span></li>
-									</g:if>
-
-									<g:if test="${statementInstance?.deductionsSubtotal}">
-										<li class="fieldcontain"><span
-											id="deductionsSubtotal-label" class="property-label"><g:message
-													code="statement.deductionsSubtotal.label"
-													default="Deductions Subtotal" /></span> <span
-											class="property-value"
-											aria-labelledby="deductionsSubtotal-label"><g:fieldValue
-													bean="${statementInstance}" field="deductionsSubtotal" /></span></li>
-									</g:if>
-
-									<g:if test="${statementInstance?.fixedSubtotal}">
-										<li class="fieldcontain"><span id="fixedSubtotal-label"
-											class="property-label"><g:message
-													code="statement.fixedSubtotal.label"
-													default="Fixed Subtotal" /></span> <span class="property-value"
-											aria-labelledby="fixedSubtotal-label"><g:fieldValue
-													bean="${statementInstance}" field="fixedSubtotal" /></span></li>
-									</g:if>
-
-									<g:if test="${statementInstance?.total}">
-										<li class="fieldcontain"><span id="total-label"
-											class="property-label"><g:message
-													code="statement.total.label" default="Total" /></span> <span
-											class="property-value" aria-labelledby="total-label"><g:fieldValue
-													bean="${statementInstance}" field="total" /></span></li>
-									</g:if>
-
-									<g:if test="${statementInstance?.dueBalance}">
-										<li class="fieldcontain"><span id="dueBalance-label"
-											class="property-label"><g:message
-													code="statement.dueBalance.label" default="Due Balance" /></span>
-											<span class="property-value"
-											aria-labelledby="dueBalance-label"><g:fieldValue
-													bean="${statementInstance}" field="dueBalance" /></span></li>
-									</g:if>
-
-									<g:if test="${statementInstance?.lines}">
-										<li class="fieldcontain"><span id="lines-label"
-											class="property-label"><g:message
-													code="statement.lines.label" default="Lines" /></span> <g:each
-												in="${statementInstance.lines}" var="l">
-												<span class="property-value" aria-labelledby="lines-label"><g:link
-														controller="statementLine" action="show" id="${l.id}">
-														${l?.encodeAsHTML()}
-													</g:link></span>
-											</g:each></li>
-									</g:if>
-
-									<g:if test="${statementInstance?.othersSubtotal}">
-										<li class="fieldcontain"><span id="othersSubtotal-label"
-											class="property-label"><g:message
-													code="statement.othersSubtotal.label"
-													default="Others Subtotal" /></span> <span class="property-value"
-											aria-labelledby="othersSubtotal-label"><g:fieldValue
-													bean="${statementInstance}" field="othersSubtotal" /></span></li>
-									</g:if>
-
-									</ol>
-									<g:form url="[resource:statementInstance, action:'delete']"
-										method="DELETE">
-										<fieldset class="buttons">
-											<ul class="bigBtnIcon" style="display: -webkit-box;">
-												<li><g:link class="edit" action="edit"
-														resource="${statementInstance}">
-														<span class="icon icomoon-icon-pencil"></span>
-														<g:message code="default.button.edit.label" default="Edit" />
-													</g:link></li>
-												<li><g:link class="delete" action="delete"
-														value="${message(code: 'default.button.delete.label', default: 'Delete')}"
-														resource="${statementInstance}"
-														onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
-														<span class="icon icomoon-icon-backspace"></span>
-														<g:message code="default.button.delete.label"
-															default="Delete" />
-													</g:link></li>
+												<li><span class="blue col-lg-3"><g:message
+															code="statement.businessUnit.label"
+															default="Punto de Venta" /></span> <span
+													class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
+													class="col-lg-7"><g:link controller="bussinesUnit"
+															action="show"
+															id="${employeeStatementInstance?.businessUnit?.id}">
+															${employeeStatementInstance?.businessUnit?.encodeAsHTML()}
+														</g:link></span></li>
 											</ul>
-										</fieldset>
-									</g:form>
-								</ul>
+										</div>
+									</div>
+									<div class="col-lg-4 statement-result">
+										<div class="alert alert-success">
+											Saldo a cobrar<br /> $
+											<g:fieldValue bean="${employeeStatementInstance}"
+												field="total" />
+										</div>
+									</div>
+								</div>
+
+								<div class="row statement-group">
+									<div class="page-header">
+
+										<h4>Detalle de la liquidación del Punto de Venta</h4>
+
+
+										<div class="tab content">
+											<div id="pos-tab" class="tab-pane fade active in">
+												<div class="col-lg-12">
+													<div class="panel panel-default">
+														<div class="panel-heading">
+															<h4>
+																<span>Puntajes del mes</span>
+																<form class="panel-form right" action="">
+																	<a class="btn dropdown-toggle" data-toggle="dropdown"
+																		href="#"> <span class="icon16 icomoon-icon-cog-2"></span>
+																		<span class="caret"></span>
+																	</a>
+																	<ul class="dropdown-menu">
+																		<li><a href="#"><span
+																				class="icomoon-icon-plus"></span> Agregar</a></li>
+																	</ul>
+																</form>
+
+															</h4>
+															<a href="#" class="minimize" style="display: none;">Minimize</a>
+														</div>
+														<div class="panel-body noPad" style="display: block;">
+															<div class="responsive" tabindex="5006"
+																style="overflow: hidden; outline: none;">
+																<table class="table table-bordered" id="checkAll">
+																	<thead>
+																		<tr>
+																			<th>Operación comercial</th>
+																			<th>Pts. / operación</th>
+																			<th># operaciones</th>
+																			<th>Total</th>
+																			<th>Actions</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<g:each
+																			in="${employeeStatementInstance.getBuPointsLines()}">
+																			<tr>
+																				<td>
+																					${it.description}
+																				</td>
+																				<td>
+																					${it.unitAmount}
+																				</td>
+																				<td>
+																					${it.operationsAmount}
+																				</td>
+																				<td>
+																					${it.amount}
+																				</td>
+																				<td>
+																					<div class="controls center">
+																						<g:link class="edit" action="edit" rel="pop-up"
+																							controller="statementLine" resource="${it}">
+																							<span class="icon12 icomoon-icon-pencil"></span>
+																						</g:link>
+																						<g:link class="delete" action="delete" rel="pop-up"
+																							controller="statementLine"
+																							value="${message(code: 'default.button.delete.label', default: 'Delete')}"
+																							resource="${it}"
+																							onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
+																							<span class="icon12 icomoon-icon-remove"></span>
+																						</g:link>
+																					</div>
+																				</td>
+																			</tr>
+																		</g:each>
+
+
+																		<tr>
+																			<td colspan="3">Total</td>
+																			<td><g:fieldValue
+																					bean="${employeeStatementInstance}"
+																					field="pointsSubtotal" /></td>
+																			<td>
+																				<div class="controls center">
+																					<a href="#" class="tip" oldtitle="Edit task"
+																						title="" data-hasqtip="true"
+																						aria-describedby="qtip-17"><span
+																						class="icon12 icomoon-icon-sigma"></span></a>
+																				</div>
+																			</td>
+																		</tr>
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
+												<!-- End .panel -->
+												<!-- End totales de ountos -->
+												<!-- Incentivos -->
+												<div class="col-lg-12">
+													<div class="panel panel-default">
+														<div class="panel-heading">
+															<h4>Incentivos</h4>
+															<a href="#" class="minimize" style="display: none;">Minimize</a>
+														</div>
+														<div class="panel-body noPad" style="display: block;">
+															<div class="responsive" tabindex="5007"
+																style="overflow: hidden; outline: none;">
+																<table class="table">
+																	<thead>
+																		<tr>
+																			<th>Descripción</th>
+																			<th>Valor</th>
+																			<th>Cantidad/%</th>
+																			<th>Total</th>
+																			<th>Actions</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<g:each
+																			in="${employeeStatementInstance.getBuIncentivesLines()}">
+																			<tr>
+																				<td>
+																					${it.description}
+																				</td>
+																				<td>
+																					${it.unitAmount}
+																				</td>
+																				<td>
+																					${it.operationsAmount}
+																				</td>
+																				<td>
+																					${it.amount}
+																				</td>
+																				<td>
+																					<div class="controls center">
+																						<g:link class="edit" action="edit" rel="pop-up"
+																							controller="statementLine" resource="${it}">
+																							<span class="icon12 icomoon-icon-pencil"></span>
+																						</g:link>
+																						<g:link class="delete" action="delete" rel="pop-up"
+																							controller="statementLine"
+																							value="${message(code: 'default.button.delete.label', default: 'Delete')}"
+																							resource="${it}"
+																							onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
+																							<span class="icon12 icomoon-icon-remove"></span>
+																						</g:link>
+																					</div>
+																				</td>
+																			</tr>
+																		</g:each>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
+												<!-- End Incentivos -->
+												<!-- Objetivos -->
+												<!-- 	<div class="col-lg-12">
+													<div class="panel panel-default">
+														<div class="panel-heading">
+															<h4>Objetivos</h4>
+															<a href="#" class="minimize" style="display: none;">Minimize</a>
+														</div>
+														<div class="panel-body noPad" style="display: block;">
+															<div class="responsive" tabindex="5007"
+																style="overflow: hidden; outline: none;">
+																<table class="table">
+																	<thead>
+																		<tr>
+																			<th colspan="2">Puntajes</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<tr class="">
+																			<td>Puntaje objetivo</td>
+																			<td>1900</td>
+																		</tr>
+																			<td>Porcentaje de cumplimiento logrado</td>
+																			<td>109,21%</td>
+																		</tr>
+																</table>
+																<table class="table">
+																	<thead>
+																		<tr>
+																			<th colspan="2">Cantidad de operaciones</th>
+																		</tr>
+																		<tr>
+																			<th>Operación</th>
+																			<th>Q objetivo</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<tr class="">
+																			<td>Altas</td>
+																			<td>70</td>
+																		</tr>
+																		<tr class="">
+																			<td>MEC</td>
+																			<td>10</td>
+																		</tr>
+																		<tr class="">
+																			<td>Prepago</td>
+																			<td>20</td>
+																		</tr>
+																		<tr>
+																			<td>Total</td>
+																			<td>100</td>
+																		</tr>
+																		<tr>
+																			<td>Estimación CATER</td>
+																			<td>100</td>
+																		</tr>
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
+												 -->
+												<!-- End Objetivos -->
+											</div>
+											<!-- Employee -->
+											<div>
+
+												<h4>Detalle de la liquidación del Empleado</h4>
+
+												<div class="col-lg-12">
+													<div class="panel panel-default">
+														<div class="panel-heading">
+															<h4>Altas</h4>
+														</div>
+														<div class="panel-body noPad" style="display: block;">
+															<div class="responsive" tabindex="5006"
+																style="overflow: hidden; outline: none;"></div>
+														</div>
+														<div class="panel-body noPad" style="display: block;">
+															<div class="responsive" tabindex="5007"
+																style="overflow: hidden; outline: none;">
+																<table class="table">
+																	<thead>
+																		<tr>
+																			<th>Descripción</th>
+																			<th>Valor</th>
+																			<th>Cantidad/%</th>
+																			<th>Total</th>
+																			<th>Actions</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<g:each
+																			in="${employeeStatementInstance.getEmpSalesLines()}">
+																			<tr>
+																				<td>
+																					${it.description}
+																				</td>
+																				<td>
+																					${it.unitAmount}
+																				</td>
+																				<td>
+																					${it.operationsAmount}
+																				</td>
+																				<td>
+																					${it.amount}
+																				</td>
+																				<td>
+																					<div class="controls center">
+																						<g:link class="edit" action="edit" rel="pop-up"
+																							controller="statementLine" resource="${it}">
+																							<span class="icon12 icomoon-icon-pencil"></span>
+																						</g:link>
+																						<g:link class="delete" action="delete" rel="pop-up"
+																							controller="statementLine"
+																							value="${message(code: 'default.button.delete.label', default: 'Delete')}"
+																							resource="${it}"
+																							onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
+																							<span class="icon12 icomoon-icon-remove"></span>
+																						</g:link>
+																					</div>
+																				</td>
+																			</tr>
+																		</g:each>
+																</table>
+															</div>
+														</div>
+													</div>
+													<div class="panel panel-default">
+														<div class="panel-heading">
+															<h4>Incentivos Individuales</h4>
+															<a href="#" class="minimize" style="display: none;">Minimize</a>
+														</div>
+														<div class="panel-body noPad" style="display: block;">
+															<div class="responsive" tabindex="5006"
+																style="overflow: hidden; outline: none;"></div>
+														</div>
+														<div class="panel-body noPad" style="display: block;">
+															<div class="responsive" tabindex="5007"
+																style="overflow: hidden; outline: none;">
+																<table class="table">
+																	<thead>
+																		<tr>
+																			<th>Descripción</th>
+																			<th>Valor</th>
+																			<th>Cantidad/%</th>
+																			<th>Total</th>
+																			<th>Actions</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<g:each
+																			in="${employeeStatementInstance.getEmpIncentivesLines()}">
+																			<tr>
+																				<td>
+																					${it.description}
+																				</td>
+																				<td>
+																					${it.unitAmount}
+																				</td>
+																				<td>
+																					${it.operationsAmount}
+																				</td>
+																				<td>
+																					${it.amount}
+																				</td>
+																				<td>
+																					<div class="controls center">
+																						<g:link class="edit" action="edit"  rel="pop-up"
+																							controller="statementLine" resource="${it}">
+																							<span class="icon12 icomoon-icon-pencil"></span>
+																						</g:link>
+																						<g:link class="delete" action="delete"
+																							controller="statementLine"
+																							value="${message(code: 'default.button.delete.label', default: 'Delete')}"
+																							resource="${it}" rel="pop-up"
+																							onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
+																							<span class="icon12 icomoon-icon-remove"></span>
+																						</g:link>
+																					</div>
+																				</td>
+																			</tr>
+																		</g:each>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="col-lg-12">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h4>Deducciones</h4>
+													<a href="#" class="minimize" style="display: none;">Minimize</a>
+												</div>
+												<div class="panel-body noPad" style="display: block;">
+													<div class="responsive" tabindex="5006"
+														style="overflow: hidden; outline: none;"></div>
+												</div>
+												<div class="panel-body noPad" style="display: block;">
+													<div class="responsive" tabindex="5007"
+														style="overflow: hidden; outline: none;">
+														<table class="table">
+															<thead>
+																<tr>
+																	<th>Descripción</th>
+																	<th>Valor</th>
+																	<th>Cantidad/%</th>
+																	<th>Total</th>
+																	<th>Actions</th>
+																</tr>
+															</thead>
+															<tbody>
+																<g:each
+																	in="${employeeStatementInstance.getEmpDedLines()}">
+																	<tr>
+																		<td>
+																			${it.description}
+																		</td>
+																		<td>
+																			${it.unitAmount}
+																		</td>
+																		<td>
+																			${it.operationsAmount}
+																		</td>
+																		<td>
+																			${it.amount}
+																		</td>
+																		<td>
+																			<div class="controls center">
+																						<g:link class="edit" action="edit"
+																							controller="statementLine" resource="${it}">
+																							<span class="icon12 icomoon-icon-pencil"></span>
+																						</g:link>
+																						<g:link class="delete" action="delete"
+																							controller="statementLine"
+																							value="${message(code: 'default.button.delete.label', default: 'Delete')}"
+																							resource="${it}"
+																							onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
+																							<span class="icon12 icomoon-icon-remove"></span>
+																						</g:link>
+																					</div>
+																		</td>
+																	</tr>
+																</g:each>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>

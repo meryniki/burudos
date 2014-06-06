@@ -45,9 +45,7 @@
 
 			<div class="row">
 
-				<div class="col-lg-2"></div>
-
-				<div class="col-lg-8">
+				<div class="col-lg-12">
 					<div id="show-statement" class="content scaffold-show" role="main">
 						<g:if test="${flash.message}">
 							<div class="message" role="status">

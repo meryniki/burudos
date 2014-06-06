@@ -44,8 +44,9 @@ class BussinesUnit {
 		while(thisone.father!=null)
 		{
 			thisone = thisone.father
-			family.add(thisone)
+			family.addAll(thisone.getSons())
 		}
+		family.addAll(thisone.getSons())
 		return family
 	}
 

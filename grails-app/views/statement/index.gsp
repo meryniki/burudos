@@ -90,7 +90,7 @@
 												<g:form>
 													<div class="form-group">
 														<g:datePicker id="month" name="month" precision="month"
-															default="${defaultmonth}" value="${month}"/>
+															default="${defaultmonth}" value="${month}" />
 													</div>
 													<div class="form-group">
 														<g:actionSubmit class="save btn btn-info" action="index"
@@ -110,25 +110,13 @@
 													<g:sortableColumn params="${mapsearch}"
 														property="statementPeriod"
 														title="${message(code: 'statement.statementPeriod.label', default: 'Statement Period')}" />
-
+													<th><g:message code="statement.employee.label"
+															default="Employee" /></th>
 													<th><g:message code="statement.businessUnit.label"
 															default="Business Unit" /></th>
+													<th><g:message code="statement.total.label"
+															default="Total" /></th>
 
-													<g:sortableColumn params="${mapsearch}"
-														property="pointsSubtotal"
-														title="${message(code: 'statement.pointsSubtotal.label', default: 'Points Subtotal')}" />
-
-													<g:sortableColumn params="${mapsearch}"
-														property="stalesSubtotal"
-														title="${message(code: 'statement.stalesSubtotal.label', default: 'Stales Subtotal')}" />
-
-													<g:sortableColumn params="${mapsearch}"
-														property="indIncentSubtotal"
-														title="${message(code: 'statement.indIncentSubtotal.label', default: 'Ind Incent Subtotal')}" />
-
-													<g:sortableColumn params="${mapsearch}"
-														property="posIncentSubtotal"
-														title="${message(code: 'statement.posIncentSubtotal.label', default: 'Pos Incent Subtotal')}" />
 												</tr>
 											</thead>
 											<!-- Pie con titulos-->
@@ -138,22 +126,13 @@
 															code="statement.statementPeriod.label"
 															default="Statement Period" />
 													<th rowspan="1" colspan="1"><g:message
+															code="statement.employee.label" default="Employee" /></th>
+													<th rowspan="1" colspan="1"><g:message
 															code="statement.businessUnit.label"
 															default="Business Unit" /></th>
+													<th rowspan="1" colspan="1"><g:message
+															code="statement.total.label" default="Total" /></th>
 
-													<th rowspan="1" colspan="1"><g:message
-															code="statement.pointsSubtotal.label"
-															default="Points Subtotal" />
-													<th rowspan="1" colspan="1"><g:message
-															code='statement.stalesSubtotal.label'
-															default='Stales Subtotal' /></th>
-
-													<th rowspan="1" colspan="1"><g:message
-															code="statement.indIncentSubtotal.label"
-															default="Ind Incent Subtotal" /></th>
-													<th rowspan="1" colspan="1"><g:message
-															code="statement.posIncentSubtotal.label"
-															default="Pos Incent Subtotal" /></th>
 												</tr>
 											</tfoot>
 											<tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -167,25 +146,16 @@
 															</g:link></td>
 
 														<td>
+															${fieldValue(bean: statementInstance, field: "employee.names")}
+														</td>
+
+														<td>
 															${fieldValue(bean: statementInstance, field: "businessUnit")}
 														</td>
 
 														<td>
-															${fieldValue(bean: statementInstance, field: "pointsSubtotal")}
+															${fieldValue(bean: statementInstance, field: "total")}
 														</td>
-
-														<td>
-															${fieldValue(bean: statementInstance, field: "stalesSubtotal")}
-														</td>
-
-														<td>
-															${fieldValue(bean: statementInstance, field: "indIncentSubtotal")}
-														</td>
-
-														<td>
-															${fieldValue(bean: statementInstance, field: "posIncentSubtotal")}
-														</td>
-
 													</tr>
 												</g:each>
 											</tbody>

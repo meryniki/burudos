@@ -254,10 +254,9 @@ class TransactionController {
 							//op_hasta:Operation.findByCode(row_mapa[BuruConstants.row_plan_h])?.id).save(failOnError: true, flush: true)
 						} catch (Exception e) {
 							linea = linea + 1
-							if (linea<200) transactionInstance.errors.reject(row[9],row_mapa[BuruConstants.row_op_code]+BuruConstants.op_create_error)
+							if (linea<200) transactionInstance.errors.reject(row[0],row_mapa[BuruConstants.row_op_code]+BuruConstants.op_create_error)
 							String sline = String.valueOf(linea);
 							reportOfErrors.put(sline, BuruConstants.op_create_error+row)
-
 							e.printStackTrace();
 						}
 					}
