@@ -15,7 +15,6 @@ import org.drools.definition.KnowledgePackage;
 import org.drools.io.ResourceFactory;
 import org.drools.runtime.StatefulKnowledgeSession;
 
-import ar.com.burucps.business.BusinessUnitTree
 import ar.com.burudos.business.BussinesUnit;
 import ar.com.burudos.party.Employee;
 import ar.com.burudos.sales.Summary;
@@ -31,7 +30,6 @@ public class StatementGenerator {
 	public void generateStatement(Integer month, Integer year) {
 		log.debug("Se van a generar liquidaciones para el periodo: " + year + "/" + month)
 		ParameterResolver parameterResolver = new ParameterResolver()
-		BusinessUnitTree businessUnitTree = new BusinessUnitTree()
 		final KnowledgeBuilder kbuilder = KnowledgeBuilderFactory
 				.newKnowledgeBuilder();
 		log.debug("Se obtuvo el KnowledgeBuilder")
@@ -66,11 +64,6 @@ public class StatementGenerator {
 		ksession.setGlobal( "parameterResolver", parameterResolver);
 		log.debug("Load Statement parameters")
 
-		// Load Business Units
-		businessUnitTree.loadTree()
-		ksession.setGlobal( "businessUnitsTree", businessUnitTree);
-		log.debug("Load Business Units")
-
 		// Load Map for calculations
 		Map<String,Object> additionalValuesMap = new HashMap<String,Object>();
 		ksession.setGlobal( "additionalValues", additionalValuesMap);
@@ -86,26 +79,50 @@ public class StatementGenerator {
 		}
 		log.debug("Load Summary")
 
+		// Load parameters for BU and set as facts
+		def query = Parameter.where { bussinesUnit != null}.projections { distinct 'paramCode' }
+		def allParamCodes = query.list()
+
 		// Load EmployeeList and their statements
-		for (Employee employee : Employee.findAll()) {
-			if (employee.isworker) {
-				EmployeeStatement statement = new EmployeeStatement();
-				statement.employee = employee;
-				statement.statementPeriod = parsePeriod(month,year)
+		def allEmployees = Employee.findAll(sort: 'bu', order: 'asc') { bu != null && isworker }
 
-				ksession.insert(employee);
-				ksession.setGlobal("statement", statement);
+		BussinesUnit lastUnit = null;
+		def parameterFacts = [];
 
-				log.info("Por ejecutar las reglas")
-				ksession.fireAllRules();
-				log.info("Fin de la ejecución")
-
-				ksession.retract(employee)
-				ksession.setGlobal("statement",null)
-
-				statement = ksession.getGlobal("statement");
-				statement.save(flush: true)
+		for (Employee employee : allEmployees ) {
+			additionalValuesMap.clear();
+			if (lastUnit != employee.bu) {
+				if (lastUnit != null) {
+					parameterFacts.each {
+						ksession.retract(it);
+					}
+					parameterFacts.clear()
+				}
+				for (String codeName : allParamCodes) {
+					def parameter = parameterResolver.resolve(codeName, employee.bu);
+					if (parameter != null) {
+						ksession.insert(parameter);
+						parameterFacts << parameter;
+					}
+				}
 			}
+			
+			EmployeeStatement statement = new EmployeeStatement();
+			statement.employee = employee;
+			statement.statementPeriod = parsePeriod(month,year)
+
+			ksession.insert(employee);
+			ksession.setGlobal("statement", statement);
+
+			log.info("Por ejecutar las reglas")
+			ksession.fireAllRules();
+			log.info("Fin de la ejecución")
+
+			statement = ksession.getGlobal("statement");
+			statement.save(flush: true)
+			
+			ksession.retract(employee)
+			ksession.setGlobal("statement",null)
 		}
 		log.debug("End process")
 
