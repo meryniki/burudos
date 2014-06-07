@@ -43,7 +43,7 @@
 						<span class="icon icomoon-icon-calculate-2"></span>
 						<g:message code="summary.domonthly.label" args="[entityName]" />
 					</g:link></li>
-					<li><g:link class="create" action="upload">
+				<li><g:link class="create" action="upload">
 						<span class="icon icomoon-icon-table"></span>
 						<g:message code="default.upload.label" args="[entityName]" />
 					</g:link></li>
@@ -86,15 +86,16 @@
 									<fieldset class="form">
 										<div
 											class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'sumMonth', 'error')} required">
-											<label class="col-lg-3 control-label" for="sumMonth"> <g:message
-													code="summary.sumMonth.label" default="Mes a totalizar" /> <span
+											<label class="col-lg-3 control-label" for="sumMonth">
+												<g:message code="summary.sumMonth.label"
+													default="Mes a totalizar" /> <span
 												class="required-indicator">*</span>
 											</label>
 											<g:datePicker name="month" precision="month" />
 											<a
 												onmouseover="nhpup.popup('<g:message code="summary.month.help"/>');">?</a>
 										</div>
-										<div
+										<div style="display: none;"
 											class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'bu', 'error')} required">
 											<label class="col-lg-3 control-label" for="bu"> <g:message
 													code="summary.bu.label" default="Punto de Venta" /> <span
@@ -120,8 +121,9 @@
 			</div>
 		</div>
 	</div>
-		<div id="thinking" style="display: none">
-		<img src="../static/images/ajax-loader.gif" alt="" style="width:100px;">
+	<div id="thinking" style="display: none">
+		<img src="../static/images/ajax-loader.gif" alt=""
+			style="width: 100px;">
 	</div>
 </body>
 </html>

@@ -33,28 +33,30 @@ class SummaryController {
 		if (!max)
 			max = 20;
 		params.max = max;
+		
+		print params
 
 		/*Date to get index list*/
 		def datemonth
 		def dateyear
-		if (!params.month_month) {
+		if (!params.sumMonth_month) {
 			String hql = "select month(max(sumMonth)) as maxMonth, year(max(sumMonth)) as maxYear  from Summary"
 			def result = Summary.executeQuery(hql)
 			if (!result.isEmpty() && result[0][0]!=null){
 				datemonth = String.valueOf(result[0][0])
 				dateyear = String.valueOf(result[0][1])
-				params.month_month = String.valueOf(result[0][0])
-				params.month_year = dateyear
+				params.sumMonth_month = String.valueOf(result[0][0])
+				params.sumMonth_year = dateyear
 			}else {
 				def today= new Date()
 				datemonth = String.valueOf(today[Calendar.MONTH])
 				dateyear = String.valueOf(today[Calendar.YEAR])
-				params.month_month = datemonth
-				params.month_year = dateyear
+				params.sumMonth_month = datemonth
+				params.sumMonth_year = dateyear
 			}
 		}else{
-			datemonth = params.month_month
-			dateyear = params.month_year
+			datemonth = params.sumMonth_month
+			dateyear = params.sumMonth_year
 		}
 
 
@@ -64,8 +66,8 @@ class SummaryController {
 				(bu != null) &&
 						(bu.nombre ==~  "%${search}%") && (
 						summaryCode ==~  "%${search}%") && (
-						month(sumMonth) == params.month_month &&
-						year(sumMonth) == params.month_year)
+						month(sumMonth) == params.sumMonth_month &&
+						year(sumMonth) == params.sumMonth_year)
 			}
 		}
 		else if (employeeorbu=='1') {
@@ -73,19 +75,18 @@ class SummaryController {
 				(employee != null) &&
 						(employee.name ==~  "%${search}%") && (
 						summaryCode ==~  "%${search}%") && (
-						month(sumMonth) == params.month_month &&
-						year(sumMonth) == params.month_year)
+						month(sumMonth) == params.sumMonth_month &&
+						year(sumMonth) == params.sumMonth_year)
 			}
 		}
 		else
 			query = Summary.where{
-						summaryCode ==~  "%${search}%" && (
-						month(sumMonth) == params.month_month &&
-						year(sumMonth) == params.month_year)
+				summaryCode ==~  "%${search}%" && (
+						month(sumMonth) == params.sumMonth_month &&
+						year(sumMonth) == params.sumMonth_year)
 			}
 
 		lista = query.list(params)
-		total = query.count()
 
 		/*The map will be passed as param in g:sorteable and g:paginate*/
 		mapsearch.put("search", search);
@@ -147,7 +148,7 @@ class SummaryController {
 			return
 		}
 
-		summaryInstance.create
+		summaryInstance.save flush:true
 
 		request.withFormat {
 			form {
@@ -231,7 +232,9 @@ class SummaryController {
 		redirect action:"index", params:[employeeorbu:"1"];
 	}
 
-
+	def totals = {
+	}
+	
 	def domonthly = {
 	}
 
@@ -240,20 +243,27 @@ class SummaryController {
 		def code
 		int counting = 0
 		int counting_employes = 0
-		def bu_to_summarize = BussinesUnit.findById(params.bu).getFamily()
-		
+		int count_total_filter = 0
+		BussinesUnit thisbu = BussinesUnit.findById(params.bu)
+		def bu_to_summarize = thisbu.getFamily()
+
+		//TODO Temporalmente va a borrar toda la tabla
+
+
 		Filter.findAllByBuInListAndValidMonth(bu_to_summarize,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year)).each() { filter->
+
+			count_total_filter = 0
 
 			bu_to_summarize.each(){ butmp->
 				counting = 0
 				def where_filter = ""
-				
+
 				println butmp
-				
+
 				if (filter.op)
 				{
 					println filter.op
-					
+
 					if (filter.op=="(null)")
 						where_filter += " and t.op is null"
 					else if (filter.op == "(any)")
@@ -267,7 +277,7 @@ class SummaryController {
 						}
 						where_filter += ")"
 						where_filter = where_filter.replace("( or ", "( ")
-						
+
 						println where_filter
 					}
 					else
@@ -379,30 +389,66 @@ class SummaryController {
 							" and year(t.date) = " + params.month_year
 					Transaction.findAll(query).each() { trx->
 						counting += 1
+						count_total_filter += 1
 						counting_employes += 1
 					}
-					
-					code = Summary.findByEmployeeAndSumMonthAndFilter(mparty,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter) ?:new Summary(
-							filter: filter,
-							summaryCode:filter.filterCode,
-							employee: mparty,
-							sumMonth: Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),
-							quantity: counting_employes
-							).save(failOnError: true, flush: true)
+
+					code = Summary.findByEmployeeAndSumMonthAndFilter(mparty,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter)
+					if (code){
+						code.quantity = counting_employes
+						code.save(failOnError: true, flush: true)
+					}
+					else{
+						new Summary(
+								filter: filter,
+								summaryCode:filter.filterCode,
+								employee: mparty,
+								sumMonth: Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),
+								quantity: counting_employes
+								).save(failOnError: true, flush: true)
+					}
 					counting_employes = 0
 				}
 
-				if ( counting!=0 )
+				if ( counting!=0 ){
+					//TODO: Si el summary ya estaba deberia actualizarse
+					code = Summary.findByBuAndSumMonthAndFilter(butmp,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter)
+					if (code){
+						code.quantity = counting
+						code.save(failOnError: true, flush: true)
+					}
+					else{
+						code = new Summary(
+								filter: filter,
+								summaryCode:filter.filterCode,
+								bu: butmp,
+								sumMonth: Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),
+								quantity: counting
+								).save(failOnError: true, flush: true)
+					}
+				}
+			}//End Bu_tu_summarize
+
+			if ( count_total_filter!=0 )
+			{
 				//TODO: Si el summary ya estaba deberia actualizarse
-				code = Summary.findByBuAndSumMonthAndFilter(butmp,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter) ?:new Summary(
-						filter: filter,
-						summaryCode:filter.filterCode,
-						bu: butmp,
-						sumMonth: Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),
-						quantity: counting
-						).save(failOnError: true, flush: true)
+				code = Summary.findByBuAndSumMonthAndFilter(thisbu,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter)
+				if (code)
+				{
+					code.quantity = count_total_filter
+					code.save(failOnError: true, flush: true)
+				}else{
+					code = new Summary(
+							filter: filter,
+							summaryCode:filter.filterCode,
+							bu: thisbu,
+							sumMonth: Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),
+							quantity: count_total_filter
+							).save(failOnError: true, flush: true)
+				}
 			}
 		}
+		//redirect action:"totals"
 		redirect action:"index"
 	}
 

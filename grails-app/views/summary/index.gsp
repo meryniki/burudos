@@ -77,9 +77,6 @@
 			</g:hasErrors>
 
 			<div id="list-summary" class="content scaffold-list" role="main">
-				<g:if test="${summaryInstanceCount == 0}">
-					<h4>No hay registros</h4>
-				</g:if>
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="panel panel-default gradient">

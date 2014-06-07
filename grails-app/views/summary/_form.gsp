@@ -2,7 +2,7 @@
 
 
 <div
-	class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'summaryCode', 'error')} required">
+	class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'summaryCode', 'error')}" required>
 	<label class="col-lg-3 control-label" for="summaryCode"> <g:message
 			code="summary.summaryCode.label" default="Codigo" />
 	</label>
@@ -15,28 +15,26 @@
 </div>
 
 <div
-	class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'bu', 'error')} required">
+	class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'bu', 'error')}">
 	<label class="col-lg-3 control-label" for="bu"> <g:message
-			code="summary.bu.label" default="Punto de Venta" /> <span
-		class="required-indicator">*</span>
+			code="summary.bu.label" default="Punto de Venta" />
 	</label>
 	<div class="col-lg-9">
 		<g:select id="bu" name="bu.id"
 			from="${ar.com.burudos.business.BussinesUnit.list()}" optionKey="id"
-			required="" value="${summaryInstance?.bu?.id}" class="many-to-one" />
+			 value="${summaryInstance?.bu?.id}" class="many-to-one" />
 	</div>
 </div>
 
 <div
-	class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'employee', 'error')} required">
+	class=" form-group fieldcontain ${hasErrors(bean: summaryInstance, field: 'employee', 'error')}">
 	<label class="col-lg-3 control-label" for="employee"> <g:message
-			code="summary.employee.label" default="Empleado" /> <span
-		class="required-indicator">*</span>
+			code="summary.employee.label" default="Empleado" />
 	</label>
 	<div class="col-lg-9">
 		<g:select id="employee" name="employee.id"
 			from="${ar.com.burudos.party.Employee.list()}" optionKey="id"
-			required="" value="${summaryInstance?.employee?.id}" class="many-to-one" noSelection="['':'-Ninguno-']"/>
+		 value="${summaryInstance?.employee?.id}" class="many-to-one" noSelection="['':'-Ninguno-']"/>
 	</div>
 </div>
 
