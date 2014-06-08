@@ -35,7 +35,7 @@
 			</div>
 
 			<ul class="bigBtnIcon">
-								<li><g:link class="create" action="create">
+				<li><g:link class="create" action="create">
 						<span class="icon icomoon-icon-plus"></span>
 						<g:message code="default.new.label" args="[entityName]" />
 					</g:link></li>
@@ -43,7 +43,7 @@
 						<span class="icon icomoon-icon-calculate-2"></span>
 						<g:message code="summary.domonthly.label" args="[entityName]" />
 					</g:link></li>
-					<li><g:link class="create" action="upload">
+				<li><g:link class="create" action="upload">
 						<span class="icon icomoon-icon-table"></span>
 						<g:message code="default.upload.label" args="[entityName]" />
 					</g:link></li>
@@ -75,24 +75,27 @@
 								</g:eachError>
 							</ul>
 						</g:hasErrors>
+						
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h4>
-									<span><g:message code="employee.edit.heading" /></span>
+									<span><g:message code="summary.edit.heading" /></span>
 								</h4>
 							</div>
 							<div class="panel-body">
 								<g:form url="[resource:summaryInstance, action:'update']"
-									class="form-horizontal"  method="PUT">
+									class="form-horizontal" method="PUT">
 									<g:hiddenField name="version"
 										value="${summaryInstance?.version}" />
-									<fieldset>
+									<fieldset class="form">
 										<g:render template="form" />
 									</fieldset>
 									<fieldset>
 										<div class="form-group">
-											<g:actionSubmit class="save" action="update"
-												value="${message(code: 'default.button.update.label', default: 'Update')}" />
+											<div class="col-lg-offset-3 col-lg-9">
+												<g:actionSubmit class="btn btn-info" action="update" params="${mapsearch}"
+													value="${message(code: 'default.button.update.label', default: 'Update')}" />
+											</div>
 										</div>
 									</fieldset>
 								</g:form>

@@ -84,7 +84,7 @@
 									<fieldset class="form">
 										<g:render template="form" />
 									</fieldset>
-									<fieldset>
+									<fieldset class="buttons">
 										<div class="form-group">
 											<div class="col-lg-offset-3 col-lg-9">
 												<g:submitButton name="create" class="btn btn-info"

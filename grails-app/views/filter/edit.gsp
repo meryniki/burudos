@@ -4,7 +4,7 @@
 <head>
 <meta name="layout" content="main">
 <g:set var="entityName"
-	value="${message(code: 'operation.label', default: 'operation')}" />
+	value="${message(code: 'filter.label', default: 'filter')}" />
 <title><g:message code="default.edit.label" args="[entityName]" /></title>
 </head>
 <body>
@@ -14,7 +14,7 @@
 			<div class="heading">
 
 				<h3>
-					<g:message code="operation.btnLabel" args="[entityName]" />
+					<g:message code="filter.btnLabel" args="[entityName]" />
 				</h3>
 
 				<div class="resBtnSearch">
@@ -28,7 +28,7 @@
 					</a> <span class="divider"> <span
 							class="icon16 icomoon-icon-arrow-right-3"></span>
 					</span></li>
-					<li class="active"><g:message code="operation.list.label"
+					<li class="active"><g:message code="filter.list.label"
 							args="[entityName]" /></li>
 				</ul>
 
@@ -49,12 +49,8 @@
 					</g:link></li>
 			</ul>
 
-
 			<div class="row">
-
-				<div class="col-lg-2"></div>
-
-				<div class="col-lg-8">
+				<div class="col-lg-12">
 
 					<div id="edit-filter" class="content scaffold-edit" role="main">
 						<h1>
@@ -74,17 +70,33 @@
 								</g:eachError>
 							</ul>
 						</g:hasErrors>
-						<g:form url="[resource:filterInstance, action:'update']"
-							method="PUT">
-							<g:hiddenField name="version" value="${filterInstance?.version}" />
-							<fieldset class="form">
-								<g:render template="form" />
-							</fieldset>
-							<fieldset class="buttons">
-								<g:actionSubmit class="save" action="update"
-									value="${message(code: 'default.button.update.label', default: 'Update')}" />
-							</fieldset>
-						</g:form>
+
+						<div class="panel panel-default">
+
+							<div class="panel-heading">
+								<h4>
+									<span><g:message code="filter.edit.heading" /></span>
+								</h4>
+							</div>
+							<div class="panel-body">
+								<g:form url="[resource:filterInstance, action:'update']"
+									method="PUT" class="form-horizontal" >
+									<g:hiddenField name="version"
+										value="${filterInstance?.version}" />
+									<fieldset class="form">
+										<g:render template="form" />
+									</fieldset>
+									<fieldset class="buttons">
+										<div class="form-group">
+											<div class="col-lg-offset-3 col-lg-9">
+												<g:actionSubmit class="save" action="update"
+													value="${message(code: 'default.button.update.label', default: 'Update')}" />
+											</div>
+										</div>
+									</fieldset>
+								</g:form>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
