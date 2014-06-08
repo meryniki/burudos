@@ -53,7 +53,7 @@ class Statement {
 		lastUpdateDate (nullable: true)
 		lastUpdateBy (nullable: true)
 	}
-
+	
 	String getStatementOwner() {};
 	String getStatementCui() {};
 

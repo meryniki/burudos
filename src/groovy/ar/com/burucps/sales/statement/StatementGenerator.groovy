@@ -1,34 +1,35 @@
 package ar.com.burucps.sales.statement;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import org.apache.commons.logging.LogFactory
+import org.drools.KnowledgeBase
+import org.drools.KnowledgeBaseFactory
+import org.drools.builder.KnowledgeBuilder
+import org.drools.builder.KnowledgeBuilderFactory
+import org.drools.builder.ResourceType
+import org.drools.definition.KnowledgePackage
+import org.drools.io.ResourceFactory
+import org.drools.logger.KnowledgeRuntimeLogger
+import org.drools.logger.KnowledgeRuntimeLoggerFactory
+import org.drools.runtime.StatefulKnowledgeSession
 
-import org.drools.KnowledgeBase;
-import org.drools.KnowledgeBaseFactory;
-import org.drools.agent.KnowledgeAgent;
-import org.drools.builder.KnowledgeBuilder;
-import org.drools.builder.KnowledgeBuilderFactory;
-import org.drools.builder.ResourceType;
-import org.drools.definition.KnowledgePackage;
-import org.drools.io.ResourceFactory;
-import org.drools.runtime.StatefulKnowledgeSession;
-
-import ar.com.burudos.business.BussinesUnit;
-import ar.com.burudos.party.Employee;
-import ar.com.burudos.sales.Summary;
-import ar.com.burudos.sales.Transaction;
+import ar.com.burudos.business.BussinesUnit
+import ar.com.burudos.party.Employee
+import ar.com.burudos.sales.Summary
 import ar.com.burudos.sales.statement.EmployeeStatement
-import ar.com.burudos.sales.statement.Parameter;
-import ar.com.burudos.sales.statement.Statement;
+import ar.com.burudos.sales.statement.Parameter
 
+/**
+ * This is a sample file to launch a rule package from a rule source file.
+ */
 public class StatementGenerator {
 
 	private static final log = LogFactory.getLog(this)
 
 	public void generateStatement(Integer month, Integer year) {
 		log.debug("Se van a generar liquidaciones para el periodo: " + year + "/" + month)
+
+		cleanDataForPeriodIfExists(month, year);
+		
 		ParameterResolver parameterResolver = new ParameterResolver()
 		final KnowledgeBuilder kbuilder = KnowledgeBuilderFactory
 				.newKnowledgeBuilder();
@@ -68,7 +69,7 @@ public class StatementGenerator {
 		Map<String,Object> additionalValuesMap = new HashMap<String,Object>();
 		ksession.setGlobal( "additionalValues", additionalValuesMap);
 		log.debug("Load Map for calculations")
-
+		
 		// FACTS
 		// Load Summary
 		Summary.where{
@@ -88,10 +89,17 @@ public class StatementGenerator {
 
 		BussinesUnit lastUnit = null;
 		def parameterFacts = [];
+		
+		// setup the audit logging
+		// Remove comment to use FileLogger
+		KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newFileLogger( ksession, "./helloworld" );
+
+		// Remove comment to use ThreadedFileLogger so audit view reflects events whilst debugging
+		//KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newThreadedFileLogger( ksession, "./helloworld", 1000 );
 
 		for (Employee employee : allEmployees ) {
 			additionalValuesMap.clear();
-			if (lastUnit != employee.bu) {
+			if (lastUnit && lastUnit != employee.bu) {
 				if (lastUnit != null) {
 					parameterFacts.each {
 						ksession.retract(it);
@@ -101,17 +109,16 @@ public class StatementGenerator {
 				for (String codeName : allParamCodes) {
 					def parameter = parameterResolver.resolve(codeName, employee.bu);
 					if (parameter != null) {
-						ksession.insert(parameter);
-						parameterFacts << parameter;
+						parameterFacts << ksession.insert(parameter);
 					}
 				}
 			}
-			
+
 			EmployeeStatement statement = new EmployeeStatement();
 			statement.employee = employee;
 			statement.statementPeriod = parsePeriod(month,year)
 
-			ksession.insert(employee);
+			def employeeFact = ksession.insert(employee);
 			ksession.setGlobal("statement", statement);
 
 			log.info("Por ejecutar las reglas")
@@ -120,18 +127,26 @@ public class StatementGenerator {
 
 			statement = ksession.getGlobal("statement");
 			statement.save(flush: true)
-			
-			ksession.retract(employee)
+
+			ksession.retract(employeeFact)
 			ksession.setGlobal("statement",null)
 		}
+
+		// Remove comment if using logging
+		logger.close();
+
 		log.debug("End process")
 
 		ksession.dispose();
-
-		log
 	}
 
-	Date parsePeriod(month,year) {
+	Date parsePeriod(Integer month, Integer year) {
 		return Date.parse("yyyyMM", year.toString() + String.format("%02d", month))
 	}
+
+	void cleanDataForPeriodIfExists(Integer month, Integer year) {
+		EmployeeStatement.executeUpdate("delete Statement s where s.statementPeriod = :period",
+				[period: parsePeriod(month,year)])
+	}
+
 }
