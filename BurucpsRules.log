@@ -1,0 +1,512 @@
+<object-stream>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>758</factId>
+  <objectToString>VELINO CARLOS</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>758</factId>
+  <objectToString>VELINO CARLOS</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>759</factId>
+  <objectToString>PADILLA PABLO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>759</factId>
+  <objectToString>PADILLA PABLO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>760</factId>
+  <objectToString>FERNANDEZ JUAN</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>760</factId>
+  <objectToString>FERNANDEZ JUAN</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>761</factId>
+  <objectToString>PABLO PANOZZO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>761</factId>
+  <objectToString>PABLO PANOZZO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>762</factId>
+  <objectToString>MUNOZ FRANCISCO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>762</factId>
+  <objectToString>MUNOZ FRANCISCO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>763</factId>
+  <objectToString>BURON ESTEBAN</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>763</factId>
+  <objectToString>BURON ESTEBAN</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>764</factId>
+  <objectToString>MOLLA ALEJANDRO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>764</factId>
+  <objectToString>MOLLA ALEJANDRO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>765</factId>
+  <objectToString>MARTÍNEZ DIEGO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>765</factId>
+  <objectToString>MARTÍNEZ DIEGO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>766</factId>
+  <objectToString>MANUEL MARTINEZ</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>766</factId>
+  <objectToString>MANUEL MARTINEZ</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>767</factId>
+  <objectToString>SERABIAN ARIEL</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>767</factId>
+  <objectToString>SERABIAN ARIEL</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>768</factId>
+  <objectToString>TALAVERA LUCAS</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>768</factId>
+  <objectToString>TALAVERA LUCAS</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>769</factId>
+  <objectToString>REY ROXANA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>769</factId>
+  <objectToString>REY ROXANA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>770</factId>
+  <objectToString>VILA CAROLINA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>770</factId>
+  <objectToString>VILA CAROLINA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>771</factId>
+  <objectToString>PACINI LAURA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>771</factId>
+  <objectToString>PACINI LAURA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>772</factId>
+  <objectToString>CATALANO DIEGO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>772</factId>
+  <objectToString>CATALANO DIEGO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>773</factId>
+  <objectToString>PREZIO JOSE</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>773</factId>
+  <objectToString>PREZIO JOSE</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>774</factId>
+  <objectToString>GUZMAN ENRIQUE</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>774</factId>
+  <objectToString>GUZMAN ENRIQUE</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>775</factId>
+  <objectToString>ALTAMIRANDA DANIEL</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>775</factId>
+  <objectToString>ALTAMIRANDA DANIEL</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>776</factId>
+  <objectToString>SILVERO VIVIANA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>776</factId>
+  <objectToString>SILVERO VIVIANA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>777</factId>
+  <objectToString>CALABRO LEONARDO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>777</factId>
+  <objectToString>CALABRO LEONARDO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>778</factId>
+  <objectToString>MIJANGOS JORGE</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>778</factId>
+  <objectToString>MIJANGOS JORGE</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>779</factId>
+  <objectToString>ANTELMI MARIA DE LOS ANGELES</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>779</factId>
+  <objectToString>ANTELMI MARIA DE LOS ANGELES</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>780</factId>
+  <objectToString>MARTINEZ MIGUEL</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>780</factId>
+  <objectToString>MARTINEZ MIGUEL</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>781</factId>
+  <objectToString>TELLO SYLVIA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>781</factId>
+  <objectToString>TELLO SYLVIA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>782</factId>
+  <objectToString>SANDOVAL DUBARRY MATIAS</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>782</factId>
+  <objectToString>SANDOVAL DUBARRY MATIAS</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>783</factId>
+  <objectToString>VON FEHLEISEN RICARDO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>783</factId>
+  <objectToString>VON FEHLEISEN RICARDO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>784</factId>
+  <objectToString>MORENO ANA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>784</factId>
+  <objectToString>MORENO ANA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>785</factId>
+  <objectToString>VERON LUCAS</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>785</factId>
+  <objectToString>VERON LUCAS</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>786</factId>
+  <objectToString>GUASCHINO M. FERNANDA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>786</factId>
+  <objectToString>GUASCHINO M. FERNANDA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>787</factId>
+  <objectToString>PAGANI VANESA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>787</factId>
+  <objectToString>PAGANI VANESA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>788</factId>
+  <objectToString>UMANSKY ESTEBAN</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>788</factId>
+  <objectToString>UMANSKY ESTEBAN</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>789</factId>
+  <objectToString>FIORENTINO CLAUDIA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>789</factId>
+  <objectToString>FIORENTINO CLAUDIA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>790</factId>
+  <objectToString>MELOGNO EZEQUIEL</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>790</factId>
+  <objectToString>MELOGNO EZEQUIEL</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>791</factId>
+  <objectToString>NO INGRESADO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>791</factId>
+  <objectToString>NO INGRESADO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>792</factId>
+  <objectToString>DIAZ FLORENCIA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>792</factId>
+  <objectToString>DIAZ FLORENCIA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>793</factId>
+  <objectToString>GONZALEZ ROBERTO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>793</factId>
+  <objectToString>GONZALEZ ROBERTO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>794</factId>
+  <objectToString>JARA GUSTAVO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>794</factId>
+  <objectToString>JARA GUSTAVO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>795</factId>
+  <objectToString>GARCIA GLADYS</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>795</factId>
+  <objectToString>GARCIA GLADYS</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>796</factId>
+  <objectToString>GARCIA ANTONELA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>796</factId>
+  <objectToString>GARCIA ANTONELA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>797</factId>
+  <objectToString>PEREIRA WALTER</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>797</factId>
+  <objectToString>PEREIRA WALTER</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>798</factId>
+  <objectToString>FERNANDEZ CARMEN</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>798</factId>
+  <objectToString>FERNANDEZ CARMEN</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>799</factId>
+  <objectToString>PAREDES LORENA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>799</factId>
+  <objectToString>PAREDES LORENA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>800</factId>
+  <objectToString>GONZALEZ VALERIA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>800</factId>
+  <objectToString>GONZALEZ VALERIA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>801</factId>
+  <objectToString>PEZOA FERNANDO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>801</factId>
+  <objectToString>PEZOA FERNANDO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>802</factId>
+  <objectToString>ALAMINO PAMELA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>802</factId>
+  <objectToString>ALAMINO PAMELA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>803</factId>
+  <objectToString>QUEVEDO HORACIO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>803</factId>
+  <objectToString>QUEVEDO HORACIO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>804</factId>
+  <objectToString>GONZALEZ PI GISELA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>804</factId>
+  <objectToString>GONZALEZ PI GISELA</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>805</factId>
+  <objectToString>ALAMOS CRISTIAN</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>805</factId>
+  <objectToString>ALAMOS CRISTIAN</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>806</factId>
+  <objectToString>LIMA DANIEL</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>806</factId>
+  <objectToString>LIMA DANIEL</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>807</factId>
+  <objectToString>NO INGRESADO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>807</factId>
+  <objectToString>NO INGRESADO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>1</type>
+  <factId>808</factId>
+  <objectToString>GONZALEZ MAURICIO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+<org.drools.audit.event.ObjectLogEvent>
+  <type>3</type>
+  <factId>808</factId>
+  <objectToString>GONZALEZ MAURICIO</objectToString>
+</org.drools.audit.event.ObjectLogEvent>
+</object-stream>

@@ -117,6 +117,8 @@ log4j = {
 	//appenders {
 	//    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
 	//}
+	
+	debug 'ar.com.burucps.sales.statement.StatementGenerator'
 
 	error  'org.codehaus.groovy.grails.web.servlet',        // controllers
 		   'org.codehaus.groovy.grails.web.pages',          // GSP

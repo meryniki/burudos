@@ -1,8 +1,11 @@
 package ar.com.burucps.sales.statement;
 
 import ar.com.burudos.party.Employee;
+
 import ar.com.burudos.sales.statement.Parameter;
 import ar.com.burudos.sales.statement.EmployeeStatement;
+
+import ar.com.burudos.sales.Summary;
 
 import ar.com.burucps.sales.statement.ParameterResolver;
 import ar.com.burucps.sales.statement.StatementLineType;
@@ -12,11 +15,68 @@ global ar.com.burudos.sales.statement.EmployeeStatement statement
 global java.util.Map additionalValues
 
 dialect "mvel"
- 
-rule "Hello World"
-    dialect "mvel"
-    when
-        e : Employee( isworker )
-    then
-        System.out.println( e );
+
+rule "Altas - Planes Externo/Interno Rango 1 (..49)"
+salience 90
+when
+	$empleado : Employee(isworker)
+	$total : Summary(employee.id == $empleado.id && summaryCode == "PLAN1")
+	$p : Parameter(paramCode == "VTA_PLA_RG1_PU_ARS")
+then
+	Integer factor = (Integer) additionalValues.get("factorAltas");
+	
+	statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
+				$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 30);
+end
+
+rule "Altas - Planes Externo/Interno Rango 2 (49-99)"
+salience 90
+when
+	$empleado : Employee(isworker)
+	$total : Summary(employee.id == $empleado.id && summaryCode == "PLAN2")
+	$p : Parameter(paramCode == "VTA_PLA_RG2_PU_ARS")
+then
+	Integer factor = (Integer) additionalValues.get("factorAltas");
+	
+	statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
+				$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 31);
+end
+
+rule "Altas - Planes Externo/Interno Rango 3 (99-159)"
+salience 90
+when
+	$empleado : Employee(isworker)
+	$total : Summary(employee.id == $empleado.id && summaryCode == "PLAN3")
+	$p : Parameter(paramCode == "VTA_PLA_RG3_PU_ARS")
+then
+	Integer factor = (Integer) additionalValues.get("factorAltas");
+	
+	statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
+				$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 32);
+end
+
+rule "Altas - Planes Externo/Interno Rango 4 (159-229)"
+salience 90
+when
+	$empleado : Employee(isworker)
+	$total : Summary(employee.id == $empleado.id && summaryCode == "PLAN4")
+	$p : Parameter(paramCode == "VTA_PLA_RG4_PU_ARS")
+then
+	Integer factor = (Integer) additionalValues.get("factorAltas");
+	
+	statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
+				$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 33);
+end
+
+rule "Altas - Planes Externo/Interno Rango 5 (229..)"
+salience 90
+when
+	$empleado : Employee(isworker)
+	$total : Summary(employee.id == $empleado.id && summaryCode == "PLAN5")
+	$p : Parameter(paramCode == "VTA_PLA_RG5_PU_ARS")
+then
+	Integer factor = (Integer) additionalValues.get("factorAltas");
+	
+	statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
+				$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 34);
 end

@@ -3,6 +3,7 @@ package ar.com.burucps.sales.statement;
 import org.apache.commons.logging.LogFactory
 import org.drools.KnowledgeBase
 import org.drools.KnowledgeBaseFactory
+import org.drools.agent.LastUpdatedPing;
 import org.drools.builder.KnowledgeBuilder
 import org.drools.builder.KnowledgeBuilderFactory
 import org.drools.builder.ResourceType
@@ -76,9 +77,16 @@ public class StatementGenerator {
 			(month(sumMonth) == month &&
 					year(sumMonth) == year)
 		}.list().each() { it ->
-			ksession.insert(it);
+			println it
+			try {
+				ksession.insert(it);
+			} catch (Exception e) {
+				println "Exception"
+				println e
+			}
 		}
 		log.debug("Load Summary")
+		log.debug("Fact Count" + ksession.getFactCount())
 
 		// Load parameters for BU and set as facts
 		def query = Parameter.where { bussinesUnit != null}.projections { distinct 'paramCode' }
@@ -92,31 +100,39 @@ public class StatementGenerator {
 		
 		// setup the audit logging
 		// Remove comment to use FileLogger
-		KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newFileLogger( ksession, "./helloworld" );
+		KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newFileLogger( ksession, "./BurucpsRules" );
 
 		// Remove comment to use ThreadedFileLogger so audit view reflects events whilst debugging
 		//KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newThreadedFileLogger( ksession, "./helloworld", 1000 );
 
 		for (Employee employee : allEmployees ) {
 			additionalValuesMap.clear();
-			if (lastUnit && lastUnit != employee.bu) {
+			log.debug("Last Unit: " + lastUnit);
+			if ((!lastUnit) || (lastUnit != employee.bu)) {
 				if (lastUnit != null) {
+					log.debug("Elimino los parametros para la BU previa: " + lastUnit)
 					parameterFacts.each {
 						ksession.retract(it);
 					}
+					log.debug("Fact Count" + ksession.getFactCount())
 					parameterFacts.clear()
 				}
+				log.debug("Agrego los parametros para la nueva BU: " + employee.bu)
 				for (String codeName : allParamCodes) {
 					def parameter = parameterResolver.resolve(codeName, employee.bu);
 					if (parameter != null) {
 						parameterFacts << ksession.insert(parameter);
 					}
 				}
+				log.debug("Fact Count" + ksession.getFactCount())
+				lastUnit = employee.bu
 			}
 
+			log.debug("Creo la liquidación para el empleado: " + employee)
 			EmployeeStatement statement = new EmployeeStatement();
 			statement.employee = employee;
 			statement.statementPeriod = parsePeriod(month,year)
+			statement.save(flush: true)
 
 			def employeeFact = ksession.insert(employee);
 			ksession.setGlobal("statement", statement);
