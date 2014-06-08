@@ -26,10 +26,10 @@ public class StatementGenerator {
 
 	private static final log = LogFactory.getLog(this)
 
-	public void generateStatement(Integer month, Integer year) {
-		log.debug("Se van a generar liquidaciones para el periodo: " + year + "/" + month)
+	public void generateStatement(Integer param_month, Integer param_year) {
+		log.debug("Se van a generar liquidaciones para el periodo: " + param_year + "/" + param_month)
 
-		cleanDataForPeriodIfExists(month, year);
+		cleanDataForPeriodIfExists(param_month, param_year);
 		
 		ParameterResolver parameterResolver = new ParameterResolver()
 		final KnowledgeBuilder kbuilder = KnowledgeBuilderFactory
@@ -37,7 +37,7 @@ public class StatementGenerator {
 		log.debug("Se obtuvo el KnowledgeBuilder")
 		kbuilder.add(ResourceFactory.newClassPathResource("SellerRules.drl",
 				StatementGenerator.class), ResourceType.DRL);
-		log.debug("Se agregó el SellerRules.drl")
+		log.debug("Se agreg�� el SellerRules.drl")
 
 		// Check the builder for errors
 		if (kbuilder.hasErrors()) {
@@ -58,7 +58,7 @@ public class StatementGenerator {
 
 		final StatefulKnowledgeSession ksession = kbase
 				.newStatefulKnowledgeSession();
-		log.info("Se creó la sesión de drools")
+		log.info("Se cre�� la sesi��n de drools")
 
 		// GLOBALS
 		// Load Statement parameters
@@ -73,15 +73,15 @@ public class StatementGenerator {
 		
 		// FACTS
 		// Load Summary
+		
 		Summary.where{
-			(month(sumMonth) == month &&
-					year(sumMonth) == year)
+			(       month(sumMonth) == param_month &&
+					year(sumMonth) == param_year        )
 		}.list().each() { it ->
-			println it
 			try {
 				ksession.insert(it);
 			} catch (Exception e) {
-				println "Exception"
+				println "Exception" + it
 				println e
 			}
 		}
@@ -128,10 +128,10 @@ public class StatementGenerator {
 				lastUnit = employee.bu
 			}
 
-			log.debug("Creo la liquidación para el empleado: " + employee)
+			log.debug("Creo la liquidaci��n para el empleado: " + employee)
 			EmployeeStatement statement = new EmployeeStatement();
 			statement.employee = employee;
-			statement.statementPeriod = parsePeriod(month,year)
+			statement.statementPeriod = parsePeriod(param_month,param_year)
 			statement.save(flush: true)
 
 			def employeeFact = ksession.insert(employee);
@@ -139,7 +139,7 @@ public class StatementGenerator {
 
 			log.info("Por ejecutar las reglas")
 			ksession.fireAllRules();
-			log.info("Fin de la ejecución")
+			log.info("Fin de la ejecuci��n")
 
 			statement = ksession.getGlobal("statement");
 			statement.save(flush: true)

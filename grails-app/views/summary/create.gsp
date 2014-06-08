@@ -39,7 +39,7 @@
 						<span class="icon icomoon-icon-menu"></span>
 						<g:message code="default.list.label" args="[entityName]" />
 					</g:link></li>
-<li><g:link class="create" action="upload">
+				<li><g:link class="create" action="upload">
 						<span class="icon icomoon-icon-table"></span>
 						<g:message code="default.upload.label" args="[entityName]" />
 					</g:link></li>
@@ -72,7 +72,6 @@
 						</g:hasErrors>
 
 						<div class="panel panel-default">
-
 							<div class="panel-heading">
 								<h4>
 									<span><g:message code="summary.create.heading" /></span>
@@ -85,11 +84,11 @@
 									<fieldset class="form">
 										<g:render template="form" />
 									</fieldset>
-
 									<fieldset>
 										<div class="form-group">
 											<div class="col-lg-offset-3 col-lg-9">
-												<g:submitButton name="create" class="btn btn-info" params="${mapsearch}"
+												<g:submitButton name="create" class="btn btn-info"
+													params="${mapsearch}"
 													value="${message(code: 'default.button.create.label', default: 'Create')}" />
 											</div>
 										</div>
@@ -99,7 +98,6 @@
 						</div>
 					</div>
 				</div>
-
 			</div>
 		</div>
 	</div>
