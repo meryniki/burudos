@@ -77,11 +77,10 @@ public class StatementGenerator {
 			(month(sumMonth) == month &&
 					year(sumMonth) == year)
 		}.list().each() { it ->
-			println it
 			try {
 				ksession.insert(it);
 			} catch (Exception e) {
-				println "Exception"
+				println "Exception " + it
 				println e
 			}
 		}
