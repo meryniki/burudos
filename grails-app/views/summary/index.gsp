@@ -96,7 +96,7 @@
 												<div class="dataTables_filter"
 													id="DataTables_Table_1_filter">
 													<label> <span class="icon16 icomoon-icon-search"></span>
-														<input id="search" style="width: 75%;" type="text" 
+														<input id="search" style="width: 75%;" type="text"
 														aria-controls="DataTables_Table_1" class="form-control"
 														value="${mapsearch["search"]}" autofocus>
 													</label>
@@ -109,7 +109,8 @@
 															default="${defaultmonth}" value="${month}" />
 													</div>
 													<div class="form-group">
-														<g:actionSubmit class="save btn btn-info" action="index" params="${mapsearch}"
+														<g:actionSubmit class="save btn btn-info" action="index"
+															params="${mapsearch}"
 															value="${message(code: 'default.button.search.label', default: 'Buscar')}" />
 													</div>
 												</g:form>
@@ -124,7 +125,8 @@
 											<!--Titulos con posibilidad de ordenar por-->
 											<thead>
 												<tr role="row">
-													<g:sortableColumn params="${mapsearch}" property="summaryCode"
+													<g:sortableColumn params="${mapsearch}"
+														property="summaryCode"
 														title="${message(code: 'summary.summaryCode.label', default: 'Codigo')}" />
 													<g:sortableColumn params="${mapsearch}" property="name"
 														title="${message(code: 'summary.date.label', default: 'Fecha')}" />
@@ -170,9 +172,8 @@
 																${fieldValue(bean: summaryInstance, field: "summaryCode")}
 															</g:link></td>
 
-														<td class=" ">
-															<g:formatDate format="yyyy/MM" date="${summaryInstance.sumMonth}" />
-														</td>
+														<td class=" "><g:formatDate format="yyyy/MM"
+																date="${summaryInstance.sumMonth}" /></td>
 														<g:if test="${mapsearch["employeeorbu"]=='2'}">
 															<td class=" ">
 																${fieldValue(bean: summaryInstance, field: "bu")}
@@ -192,7 +193,7 @@
 
 										</table>
 										<div class="row">
-											<div class="col-lg-8">
+											<div class="col-lg-12">
 												<div class="dataTables_paginate paging_bootstrap pagination">
 													<ul class="pagination">
 														<li><g:paginate total="${summaryInstanceCount ?: 0}"
