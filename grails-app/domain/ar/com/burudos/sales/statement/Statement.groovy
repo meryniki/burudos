@@ -44,6 +44,7 @@ class Statement {
 		posIncentSubtotal(nullable:true, min : 0D)
 		positiveSubtotal(nullable:true, min : 0D)
 		deductionsSubtotal(nullable:true, min : 0D)
+		othersSubtotal(nullable:true, min : 0D)
 		fixedSubtotal(nullable:true, min : 0D)
 		total(nullable:true, min : 0D)
 		dueBalance(nullable:true, min : 0D)
@@ -58,7 +59,8 @@ class Statement {
 	String getStatementCui() {};
 
 	def beforeInsert() {
-		active = true;
+		// TODO borrado logico
+		//active = true;
 		//createdBy = securityService.currentAuthenticatedUsername();
 		//lastUpdatedBy = securityService.currentAuthenticatedUsername();
 		creationDate = new Date();
