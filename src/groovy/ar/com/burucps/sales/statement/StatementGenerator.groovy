@@ -132,10 +132,9 @@ public class StatementGenerator {
 			}
 
 			log.debug("Creo la liquidaci��n para el empleado: " + employee)
-			EmployeeStatement statement = new EmployeeStatement();
-			statement.employee = employee;
-			statement.statementPeriod = parsePeriod(param_month,param_year)
-			statement.save(flush: true)
+			
+			EmployeeStatement statement = new EmployeeStatement(employee: employee, businessUnit: employee.bu,
+				statementPeriod: parsePeriod(param_month,param_year)).save(failOnError: true, flush: true)
 
 			def employeeFact = ksession.insert(employee);
 			ksession.setGlobal("statement", statement);
@@ -145,7 +144,7 @@ public class StatementGenerator {
 			log.info("Fin de la ejecucion")
 
 			statement = ksession.getGlobal("statement");
-			statement.save(flush: true)
+			statement.save(failOnError: true, flush: true)
 
 			ksession.retract(employeeFact)
 			ksession.setGlobal("statement",null)

@@ -45,6 +45,7 @@ class Statement {
 		posIncentSubtotal(nullable:true, min : 0D)
 		positiveSubtotal(nullable:true, min : 0D)
 		deductionsSubtotal(nullable:true, min : 0D)
+		othersSubtotal(nullable:true, min : 0D)
 		fixedSubtotal(nullable:true, min : 0D)
 		total(nullable:true, min : 0D)
 		dueBalance(nullable:true, min : 0D)

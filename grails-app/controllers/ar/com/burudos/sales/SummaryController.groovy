@@ -1,5 +1,5 @@
 package ar.com.burudos.sales
-
+import grails.converters.JSON
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import ar.com.burudos.business.BussinesUnit
@@ -33,7 +33,7 @@ class SummaryController {
 		if (!max)
 			max = 20;
 		params.max = max;
-		
+
 		print params
 
 		/*Date to get index list*/
@@ -58,7 +58,6 @@ class SummaryController {
 			datemonth = params.sumMonth_month
 			dateyear = params.sumMonth_year
 		}
-
 
 		def query
 		if (employeeorbu=='2') {
@@ -102,6 +101,26 @@ class SummaryController {
 
 	def create() {
 		respond new Summary(params)
+	}
+
+	def sumchart() {
+		totalOfSummary()
+	}
+
+	/**
+	 * Obtener las transacciones totales para las liquidaciones
+	 * @return
+	 */
+	def totalOfSummary(){
+		def lista = [];
+		Summary.findAllByBu(BussinesUnit.findByNombre("JAG")).each{ sum->
+			def totals = [:];
+			totals.put("name", sum.filter.filterCode.toString());
+			totals.put("y", sum.quantity);
+			if ( sum.quantity && sum.quantity != 0)
+				lista.add(totals);
+		}
+		render (lista as JSON)
 	}
 
 	@Transactional
@@ -234,7 +253,7 @@ class SummaryController {
 
 	def totals = {
 	}
-	
+
 	def domonthly = {
 	}
 
@@ -448,8 +467,8 @@ class SummaryController {
 				}
 			}
 		}
-		//redirect action:"totals"
-		redirect action:"index"
+		redirect action:"totals"
+		//redirect action:"index"
 	}
 
 

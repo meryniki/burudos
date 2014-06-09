@@ -106,12 +106,11 @@
 											<!--Titulos con posibilidad de ordenar por-->
 											<thead>
 												<tr role="row">
-
+													<th><g:message code="statement.employee.label"
+															default="Employee" /></th>
 													<g:sortableColumn params="${mapsearch}"
 														property="statementPeriod"
 														title="${message(code: 'statement.statementPeriod.label', default: 'Statement Period')}" />
-													<th><g:message code="statement.employee.label"
-															default="Employee" /></th>
 													<th><g:message code="statement.businessUnit.label"
 															default="Business Unit" /></th>
 													<th><g:message code="statement.total.label"
@@ -123,10 +122,10 @@
 											<tfoot>
 												<tr role="row">
 													<th rowspan="1" colspan="1"><g:message
+															code="statement.employee.label" default="Employee" /></th>
+													<th rowspan="1" colspan="1"><g:message
 															code="statement.statementPeriod.label"
 															default="Statement Period" />
-													<th rowspan="1" colspan="1"><g:message
-															code="statement.employee.label" default="Employee" /></th>
 													<th rowspan="1" colspan="1"><g:message
 															code="statement.businessUnit.label"
 															default="Business Unit" /></th>
@@ -136,25 +135,25 @@
 												</tr>
 											</tfoot>
 											<tbody role="alert" aria-live="polite" aria-relevant="all">
-												<g:each in="${statementInstanceList}" status="i"
-													var="statementInstance">
+												<g:each in="${employeeStatementInstanceList}" status="i"
+													var="employeeStatementInstance">
 													<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 
 														<td><g:link action="show"
-																id="${statementInstance.id}">
-																${fieldValue(bean: statementInstance, field: "statementPeriod")}
+																id="${employeeStatementInstance.id}">
+																${fieldValue(bean: employeeStatementInstance, field: "employee.name")}
 															</g:link></td>
 
 														<td>
-															${fieldValue(bean: statementInstance, field: "employee.names")}
+															${fieldValue(bean: employeeStatementInstance, field: "statementPeriod")}
 														</td>
 
 														<td>
-															${fieldValue(bean: statementInstance, field: "businessUnit")}
+															${fieldValue(bean: employeeStatementInstance, field: "businessUnit")}
 														</td>
 
 														<td>
-															${fieldValue(bean: statementInstance, field: "total")}
+															${fieldValue(bean: employeeStatementInstance, field: "total")}
 														</td>
 													</tr>
 												</g:each>

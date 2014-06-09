@@ -38,9 +38,9 @@ class StatementController {
 		def datemonth
 		def dateyear
 		if (!params.month_month) {
-			String hql = "select month(max(statementPeriod)) as maxMonth, year(max(statementPeriod)) as maxYear  from EmployeeStatement"
-			def result = EmployeeStatement.executeQuery(hql)
-			print "result " + result
+			String hql = "select month(max(statementPeriod)) as maxMonth, year(max(statementPeriod)) as maxYear  from Statement"
+			def result = Statement.executeQuery(hql)
+			println "result " + result
 			if (!String.valueOf(result[0][0]) == "null"){
 				datemonth = String.valueOf(result[0][0])
 				dateyear = String.valueOf(result[0][1])
@@ -57,24 +57,35 @@ class StatementController {
 		}else{
 			datemonth = params.month_month
 			dateyear = params.month_year
+			println " DAte month" + datemonth
 		}
 
+		println " DAte month" + datemonth
+		println " DAte year" + dateyear
+		println "search " + search
+		
 		def query = EmployeeStatement.where{
 			(
-					businessUnit.nombre==~  "%${search}%" ||
-					employee.name ==~  "%${search}%" ||
-					employee.uid ==~  "%${search}%" ) && (
+					(businessUnit.nombre==~  "%${search}%" ||
+					employee.names ==~  "%${search}%" ) && (
 					month(statementPeriod) == params.month_month &&
 					year(statementPeriod) == params.month_year)
+			)
 		}
 
 		lista = query.list(params)
 		total = query.count()
+		
+		
+		//lista = EmployeeStatement.findAll();
+		//total = lista.size()
+		
+		println total
 
 		/*The map will be passed as param in g:sorteable and g:paginate*/
 		mapsearch.put("search", search);
 
-		respond lista, model:[statementInstanceCount: Statement.count(),
+		respond lista, model:[statementInstanceCount: total,
 			mapsearch: mapsearch, defaultmonth:Date.parse("yyyyMM", dateyear+datemonth)]
 	}
 
