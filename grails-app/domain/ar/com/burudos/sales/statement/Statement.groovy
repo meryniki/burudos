@@ -7,8 +7,11 @@ import ar.com.burucps.sales.statement.StatementLineGroup;
 import ar.com.burucps.sales.statement.StatementLineType;
 import ar.com.burudos.business.BussinesUnit;
 import ar.com.burudos.party.Employee;
+import org.apache.commons.logging.LogFactory;
 
 class Statement {
+
+	private static final log = LogFactory.getLog(this)
 
 	Date statementPeriod
 	BussinesUnit businessUnit
@@ -55,11 +58,9 @@ class Statement {
 		lastUpdateDate (nullable: true)
 		lastUpdateBy (nullable: true)
 	}
-	
-	static mapping = {
-		lines cascade: 'all-delete-orphan'
-	}
-	
+
+	static mapping = { lines cascade: 'all-delete-orphan' }
+
 	String getStatementOwner() {};
 	String getStatementCui() {};
 
@@ -74,9 +75,10 @@ class Statement {
 		//lastUpdatedBy = securityService.currentAuthenticatedUsername();
 		lastUpdateDate = new Date();
 	}
-	
+
 	void addLine (StatementLineType type, StatementLineGroup paramGroup, String description,
 			Double unitAmount, Double operationsAmount, Double amount, Integer lineOrder) {
+		log.debug("Agrego una linea: " + description);
 		StatementLine line = new StatementLine( statement: this,
 		type : type, paramGroup : paramGroup, description:description, unitAmount:unitAmount,
 		operationsAmount:operationsAmount, amount:amount, lineOrder:lineOrder)

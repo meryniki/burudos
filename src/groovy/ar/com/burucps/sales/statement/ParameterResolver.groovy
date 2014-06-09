@@ -21,14 +21,14 @@ class ParameterResolver {
 		if ((!parameter) && (bu.father)) {
 			return resolve(parameterCode, bu.father)
 		}
-		log.debug("Resolución de parámetro: " + parameter + "Hash: " + hash)
+		//log.debug("Resolución de parámetro: " + parameter + "Hash: " + hash)
 		return parameter
 	}
 
 	void loadParameters() {
 		Parameter.findAll().each() { it ->
 			def hash = it.paramCode + it.bussinesUnit.id
-			log.debug("Agrego un parametro al resolver: " + hash)
+			//log.debug("Agrego un parametro al resolver: " + hash)
 			parameters.put(hash, it)
 		}
 	}
