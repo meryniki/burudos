@@ -56,6 +56,10 @@ class Statement {
 		lastUpdateBy (nullable: true)
 	}
 	
+	static mapping = {
+		lines cascade: 'all-delete-orphan'
+	}
+	
 	String getStatementOwner() {};
 	String getStatementCui() {};
 

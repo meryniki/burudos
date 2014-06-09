@@ -345,6 +345,8 @@ rule "Altas - Planes Externo/Interno Rango 1 (..49)"
 			factor = (Integer) additionalValues.get("factorAltas");
 		}
 		
+		System.out.println("PLAN1 - factor = " + factor);
+		
 		statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
 					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 30);
 end
@@ -361,6 +363,8 @@ rule "Altas - Planes Externo/Interno Rango 2 (49-99)"
 			factor = (Integer) additionalValues.get("factorAltas");
 		}
 		
+		System.out.println("PLAN2 - factor = " + factor);
+		
 		statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
 					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 31);
 end
@@ -376,6 +380,8 @@ rule "Altas - Planes Externo/Interno Rango 3 (99-159)"
 		if (additionalValues.containsKey("factorAltas")) {
 			factor = (Integer) additionalValues.get("factorAltas");
 		}
+		
+		System.out.println("PLAN3 - factor = " + factor);
 			
 		statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
 					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 32);
@@ -393,6 +399,8 @@ rule "Altas - Planes Externo/Interno Rango 4 (159-229)"
 			factor = (Integer) additionalValues.get("factorAltas");
 		}
 		
+		System.out.println("PLAN4 - factor = " + factor);
+		
 		statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
 					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 33);
 end
@@ -408,6 +416,8 @@ rule "Altas - Planes Externo/Interno Rango 5 (229..)"
 		if (additionalValues.containsKey("factorAltas")) {
 			factor = (Integer) additionalValues.get("factorAltas");
 		}
+		
+		System.out.println("PLAN5 - factor = " + factor);
 		
 		statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
 					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 34);

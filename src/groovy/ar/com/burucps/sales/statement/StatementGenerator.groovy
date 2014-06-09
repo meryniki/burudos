@@ -33,14 +33,14 @@ public class StatementGenerator {
 		log.debug("Se van a generar liquidaciones para el periodo: " + param_year + "/" + param_month)
 
 		cleanDataForPeriodIfExists(param_month, param_year);
-		
+
 		ParameterResolver parameterResolver = new ParameterResolver()
 		final KnowledgeBuilder kbuilder = KnowledgeBuilderFactory
 				.newKnowledgeBuilder();
 		log.debug("Se obtuvo el KnowledgeBuilder")
 		kbuilder.add(ResourceFactory.newClassPathResource("SellerRules.drl",
 				StatementGenerator.class), ResourceType.DRL);
-		log.debug("Se agreg�� el SellerRules.drl")
+		log.debug("Se agrego el SellerRules.drl")
 
 		// Check the builder for errors
 		if (kbuilder.hasErrors()) {
@@ -61,7 +61,7 @@ public class StatementGenerator {
 
 		final StatefulKnowledgeSession ksession = kbase
 				.newStatefulKnowledgeSession();
-		log.info("Se cre�� la sesi��n de drools")
+		log.info("Se creo la sesion de drools")
 
 		// GLOBALS
 		// Load Statement parameters
@@ -73,10 +73,10 @@ public class StatementGenerator {
 		Map<String,Object> additionalValuesMap = new HashMap<String,Object>();
 		ksession.setGlobal( "additionalValues", additionalValuesMap);
 		log.debug("Load Map for calculations")
-		
+
 		// FACTS
 		// Load Summary
-		
+
 		Summary.where{
 			(       month(sumMonth) == param_month &&
 					year(sumMonth) == param_year        )
@@ -100,7 +100,7 @@ public class StatementGenerator {
 
 		BussinesUnit lastUnit = null;
 		def parameterFacts = [];
-		
+
 		// setup the audit logging
 		// Remove comment to use FileLogger
 		KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newFileLogger( ksession, "./BurucpsRules" );
@@ -131,10 +131,10 @@ public class StatementGenerator {
 				lastUnit = employee.bu
 			}
 
-			log.debug("Creo la liquidaci��n para el empleado: " + employee)
-			
+			log.debug("Creo la liquidacion para el empleado: " + employee)
+
 			EmployeeStatement statement = new EmployeeStatement(employee: employee, businessUnit: employee.bu,
-				statementPeriod: parsePeriod(param_month,param_year)).save(failOnError: true, flush: true)
+			statementPeriod: parsePeriod(param_month,param_year)).save(failOnError: true, flush: true)
 
 			def employeeFact = ksession.insert(employee);
 			ksession.setGlobal("statement", statement);
@@ -163,8 +163,9 @@ public class StatementGenerator {
 	}
 
 	void cleanDataForPeriodIfExists(Integer month, Integer year) {
-		EmployeeStatement.executeUpdate("delete Statement s where s.statementPeriod = :period",
-				[period: parsePeriod(month,year)])
+		EmployeeStatement.findAllByStatementPeriod(parsePeriod(month,year)).each() {
+			it.delete(flush:true)
+		}
 	}
 
 }
