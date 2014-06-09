@@ -1,6 +1,7 @@
 package ar.com.burudos.sales.statement
 
 import java.util.Date;
+import java.util.List;
 import org.grails.datastore.gorm.finders.MethodExpression.InRange;
 import ar.com.burucps.sales.statement.StatementLineGroup;
 import ar.com.burucps.sales.statement.StatementLineType;
@@ -58,7 +59,6 @@ class Statement {
 	String getStatementCui() {};
 
 	def beforeInsert() {
-		active = true;
 		//createdBy = securityService.currentAuthenticatedUsername();
 		//lastUpdatedBy = securityService.currentAuthenticatedUsername();
 		creationDate = new Date();
