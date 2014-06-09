@@ -266,8 +266,8 @@ rule "Totalización de puntos"
 		$pPuntajeObjetivo : Parameter(paramCode == "PTOVTA_OBJ_PTS")
 		$pPorcentajePuntajeObjetivoMinimo : Parameter(paramCode == "VTA_CTE_OBJ_PCT")
 	then
-		Double total = 0.0;
-		Iterator iterador = (Iterator) statement.getPointsLines().iterator();
+		Double total = 0.0D;
+		/*Iterator iterador = (Iterator) statement.getPointsLines().iterator();
 		while (iterador.hasNext()) {
 			StatementLine item = (StatementLine) iterador.next();
 			total += item.amount; 
@@ -280,7 +280,7 @@ rule "Totalización de puntos"
 		}
 		additionalValues.put("puntaje",total);
 		additionalValues.put("porcentajeAlcanzado",porcentajeAlcanzado);
-		additionalValues.put("factorAltas",factor);
+		additionalValues.put("factorAltas",factor);*/
 end
 /* ******************** FIN PUNTOS ********************* */
 /* ********************** ALTAS ************************ */
@@ -573,13 +573,13 @@ salience 85
 when
 	$empleado: Employee()
 then
-	Double total = 0;
-	Iterator iterador = (Iterator) statement.getSalesLines().iterator();
+	Double total = 0.0D;
+	/*Iterator iterador = (Iterator) statement.getSalesLines().iterator();
 	while (iterador.hasNext()) {
 		StatementLine item = (StatementLine) iterador.next();
 		total += item.amount; 
 	}
-	statement.setStalesSubtotal(total);
+	statement.setStalesSubtotal(total);*/
 end
 /* ******************** FIN ALTAS ********************** */
 
@@ -697,13 +697,13 @@ salience 75
 when
 	$empleado: Employee()
 then
-	Double total = 0;
-	Iterator iterador = (Iterator) statement.getIndIncentLines().iterator();
+	Double total = 0.0D;
+	/*Iterator iterador = (Iterator) statement.getIndIncentLines().iterator();
 	while (iterador.hasNext()) {
 		StatementLine item = (StatementLine) iterador.next();
 		total += item.amount; 
 	}
-	statement.setIndIncentSubtotal(total);
+	statement.setIndIncentSubtotal(total);*/
 end
 /* ************ FIN INCENTIVOS INDIVIDUALES ************ */
 
@@ -753,13 +753,13 @@ salience 65
 when
 	$empleado: Employee()
 then
-	Double total = 0;
-	Iterator iterador = (Iterator) statement.getPosIncentLines().iterator();
+	Double total = 0.0D;
+	/*Iterator iterador = (Iterator) statement.getPosIncentLines().iterator();
 	while (iterador.hasNext()) {
 		StatementLine item = (StatementLine) iterador.next();
 		total += item.amount; 
 	}
-	statement.setPosIncentSubtotal(total);
+	statement.setPosIncentSubtotal(total);*/
 end
 /* ********** FIN INCENTIVOS PUNTO DE VENTA  *********** */
 
@@ -846,18 +846,18 @@ salience 55
 when
 	$empleado: Employee()
 then
-	Double total = 0;
-	Iterator iterador = (Iterator) statement.getDeductionsLines().iterator();
+	Double total = 0.0D;
+	/*Iterator iterador = (Iterator) statement.getDeductionsLines().iterator();
 	while (iterador.hasNext()) {
 		StatementLine item = (StatementLine) iterador.next();
 		total += item.amount; 
 	}
-	statement.setDeductionsSubtotal(total);
+	statement.setDeductionsSubtotal(total);*/
 end
 /* ****************** FIN DEDUCCIONES ****************** */
 
 /* ******************** REDONDEO *********************** */
-rule "Redondeo"
+/*rule "Redondeo"
 salience 50
 when
 	$empleado: Employee()
@@ -866,13 +866,13 @@ then
 							+ statement.getPosIncentSubtotal();
 	statement.setPositiveSubtotal(posSubtotal);
 	Double balance = posSubtotal - statement.getDeductionsSubtotal();
-	if (balance > 0d) {
+	if (balance > 0.0D) {
 		// TODO REDONDEO
-		Double redondeo = 0d;
+		Double redondeo = 0.0D;
 		statement.setTotal(balance + redondeo);
-	} else if (balance < 0d) {
+	} else if (balance < 0.0D) {
 		statement.setDueBalance(balance);
-		statement.setTotal(0d);
+		statement.setTotal(0.0D);
 	}
-end
+end*/
 /* ****************** FIN REDONDEO ********************* */
