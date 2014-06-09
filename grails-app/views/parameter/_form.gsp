@@ -65,15 +65,13 @@
 </div>
 
 <div
-	class="form-group fieldcontain ${hasErrors(bean: parameterInstance, field: 'maxValue', 'error')} required">
+	class="form-group fieldcontain ${hasErrors(bean: parameterInstance, field: 'maxValue', 'error')}">
 	<label class="col-lg-3 control-label" for="maxValue"> <g:message
-			code="parameter.maxValue.label" default="Max Value" /> <span
-		class="required-indicator">*</span>
+			code="parameter.maxValue.label" default="Max Value" />
 	</label>
 	<div class="col-lg-9">
 		<g:field class="form-control" name="maxValue" type="text"
-			value="${fieldValue(bean: parameterInstance, field: 'maxValue')}"
-			required="" />
+			value="${fieldValue(bean: parameterInstance, field: 'maxValue')}" />
 	</div>
 </div>
 
