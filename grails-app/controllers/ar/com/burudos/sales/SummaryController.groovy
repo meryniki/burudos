@@ -86,6 +86,7 @@ class SummaryController {
 			}
 
 		lista = query.list(params)
+		total = query.count()
 
 		/*The map will be passed as param in g:sorteable and g:paginate*/
 		mapsearch.put("search", search);

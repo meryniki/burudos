@@ -59,15 +59,11 @@ class StatementController {
 			dateyear = params.month_year
 			println " DAte month" + datemonth
 		}
-
-		println " DAte month" + datemonth
-		println " DAte year" + dateyear
-		println "search " + search
 		
 		def query = EmployeeStatement.where{
 			(
 					(businessUnit.nombre==~  "%${search}%" ||
-					employee.names ==~  "%${search}%" ) && (
+					employee.name ==~  "%${search}%" ) && (
 					month(statementPeriod) == params.month_month &&
 					year(statementPeriod) == params.month_year)
 			)
@@ -75,12 +71,6 @@ class StatementController {
 
 		lista = query.list(params)
 		total = query.count()
-		
-		
-		//lista = EmployeeStatement.findAll();
-		//total = lista.size()
-		
-		println total
 
 		/*The map will be passed as param in g:sorteable and g:paginate*/
 		mapsearch.put("search", search);
