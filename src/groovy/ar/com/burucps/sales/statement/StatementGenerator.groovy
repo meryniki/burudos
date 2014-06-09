@@ -81,7 +81,7 @@ public class StatementGenerator {
 			try {
 				ksession.insert(it);
 			} catch (Exception e) {
-				println "Exception" + it
+				println "Exception " + it
 				println e
 			}
 		}

@@ -17,19 +17,30 @@ grails.project.groupId = burudos // change this to alter the default package nam
 grails.plugins.twitterbootstrap.fixtaglib = true
 grails.plugins.twitterbootstrap.defaultBundle = 'bundle_bootstrap'
 grails.resources.modules = {
-	
-		'custom-bootstrap' {
-			dependsOn 'bootstrap'
-			resource url:[dir: 'less', file: 'custom-bootstrap.less'], attrs:[rel: "stylesheet/less", type:'css']
-		}
-	
+
+	'custom-bootstrap' {
+		dependsOn 'bootstrap'
+		resource url:[dir: 'less', file: 'custom-bootstrap.less'], attrs:[rel: "stylesheet/less", type:'css']
 	}
 
-// The ACCEPT header will not be used for content negotiation for user agents containing the following strings (defaults to the 4 major rendering engines)
-grails.mime.disable.accept.header.userAgents = ['Gecko', 'WebKit', 'Presto', 'Trident']
+}
 
-grails.mime.types = [ html: ['text/html','application/xhtml+xml'],
-	xml: ['text/xml', 'application/xml'],
+// The ACCEPT header will not be used for content negotiation for user agents containing the following strings (defaults to the 4 major rendering engines)
+grails.mime.disable.accept.header.userAgents = [
+	'Gecko',
+	'WebKit',
+	'Presto',
+	'Trident'
+]
+
+grails.mime.types = [ html: [
+		'text/html',
+		'application/xhtml+xml'
+	],
+	xml: [
+		'text/xml',
+		'application/xml'
+	],
 	text: 'text-plain',
 	js: 'text/javascript',
 	rss: 'application/rss+xml',
@@ -41,16 +52,24 @@ grails.mime.types = [ html: ['text/html','application/xhtml+xml'],
 	excel: 'application/vnd.ms-excel',
 	ods: 'application/vnd.oasis.opendocument.spreadsheet',
 	all: '*/*',
-	json: ['application/json','text/json'],
+	json: [
+		'application/json',
+		'text/json'
+	],
 	form: 'application/x-www-form-urlencoded',
 	multipartForm: 'multipart/form-data'
-  ]
+]
 
 // URL Mapping Cache Max Size, defaults to 5000
 //grails.urlmapping.cache.maxsize = 1000
 
 // What URL patterns should be processed by the resources plugin
-grails.resources.adhoc.patterns = ['/images/*', '/css/*', '/js/*', '/plugins/*']
+grails.resources.adhoc.patterns = [
+	'/images/*',
+	'/css/*',
+	'/js/*',
+	'/plugins/*'
+]
 
 // Legacy setting for codec used to encode data with ${}
 grails.views.default.codec = "html"
@@ -80,7 +99,7 @@ grails {
 		}
 	}
 }
- 
+
 grails.converters.encoding = "UTF-8"
 // scaffolding templates configuration
 grails.scaffolding.templates.domainSuffix = 'Instance'
@@ -117,18 +136,19 @@ log4j = {
 	//appenders {
 	//    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
 	//}
-	
-	debug 'ar.com.burucps.sales.statement.StatementGenerator'
+
+	debug 'ar.com.burucps.sales.statement.StatementGenerator',
+			'ar.com.burucps.sales.statement.ParameterResolver'
 
 	error  'org.codehaus.groovy.grails.web.servlet',        // controllers
-		   'org.codehaus.groovy.grails.web.pages',          // GSP
-		   'org.codehaus.groovy.grails.web.sitemesh',       // layouts
-		   'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
-		   'org.codehaus.groovy.grails.web.mapping',        // URL mapping
-		   'org.codehaus.groovy.grails.commons',            // core / classloading
-		   'org.codehaus.groovy.grails.plugins',            // plugins
-		   'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
-		   'org.springframework',
-		   'org.hibernate',
-		   'net.sf.ehcache.hibernate'
+			'org.codehaus.groovy.grails.web.pages',          // GSP
+			'org.codehaus.groovy.grails.web.sitemesh',       // layouts
+			'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
+			'org.codehaus.groovy.grails.web.mapping',        // URL mapping
+			'org.codehaus.groovy.grails.commons',            // core / classloading
+			'org.codehaus.groovy.grails.plugins',            // plugins
+			'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
+			'org.springframework',
+			'org.hibernate',
+			'net.sf.ehcache.hibernate'
 }

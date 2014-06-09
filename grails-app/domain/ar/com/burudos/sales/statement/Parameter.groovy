@@ -65,8 +65,15 @@ class Parameter {
 	}
 
 	String getCurrentDescription() {
-		return paramDescription.replace("[VALUE]", value)
-				.replace("[MIN]", minValue).replace("[MAX]", maxValue)
+		def currentDescription = paramDescription
+		if (value)
+			currentDescription.replace("[VALUE]",String.format("%.2f", value))
+		if (minValue)
+			currentDescription.replace("[MIN]", String.format("%.2f", minValue))
+		if (maxValue)
+			currentDescription.replace("[MAX]", String.format("%.2f", maxValue))
+		return currentDescription
+
 	}
 
 }
