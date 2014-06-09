@@ -13,6 +13,9 @@ import org.drools.logger.KnowledgeRuntimeLogger
 import org.drools.logger.KnowledgeRuntimeLoggerFactory
 import org.drools.runtime.StatefulKnowledgeSession
 
+import java.util.Map
+import java.util.HashMap
+
 import ar.com.burudos.business.BussinesUnit
 import ar.com.burudos.party.Employee
 import ar.com.burudos.sales.Summary
@@ -63,7 +66,7 @@ public class StatementGenerator {
 		// GLOBALS
 		// Load Statement parameters
 		parameterResolver.loadParameters()
-		ksession.setGlobal( "parameterResolver", parameterResolver);
+		//ksession.setGlobal( "parameterResolver", parameterResolver);
 		log.debug("Load Statement parameters")
 
 		// Load Map for calculations
@@ -139,7 +142,7 @@ public class StatementGenerator {
 
 			log.info("Por ejecutar las reglas")
 			ksession.fireAllRules();
-			log.info("Fin de la ejecuci��n")
+			log.info("Fin de la ejecucion")
 
 			statement = ksession.getGlobal("statement");
 			statement.save(flush: true)
