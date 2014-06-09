@@ -8,4 +8,4 @@ bu.sql
 party.sql
 burucps.war
 tx_myFile
-BurucpsRules.log
+BurucpsRules*.log
