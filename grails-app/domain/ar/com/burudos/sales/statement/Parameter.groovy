@@ -68,13 +68,13 @@ class Parameter {
 		def currentDescription = paramDescription
 		
 		if (value != null) {
-			currentDescription = (currentDescription =~ /\[VALUE\]/).replaceAll(String.format("%.2f", value))
+			currentDescription = (paramDescription =~ /\[VALUE\]/).replaceAll(String.format("%.2f", value))
 		}
 		if (minValue != null) {
-			currentDescription = (currentDescription =~ /\[MIN\]/).replaceAll(String.format("%.2f", minValue))
+			currentDescription = (paramDescription =~ /\[MIN\]/).replaceAll(String.format("%.2f", minValue))
 		}
 		if (maxValue != null) {
-			currentDescription = (currentDescription =~ /\[MAX\]/).replaceAll(String.format("%.2f", maxValue))
+			currentDescription = (paramDescription =~ /\[MAX\]/).replaceAll(String.format("%.2f", maxValue))
 		}
 		return currentDescription
 

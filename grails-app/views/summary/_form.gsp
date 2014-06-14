@@ -58,7 +58,7 @@
 			code="summary.month.label" default="Mes a totalizar" /> <span
 		class="required-indicator">*</span>
 	</label>
-	<g:datePicker name="sumMonth" precision="month" />
+	<g:datePicker name="sumMonth" precision="month" default="${sumMonth}"/>
 	<a onmouseover="nhpup.popup('<g:message code="summary.month.help"/>');">?</a>
 </div>
 
