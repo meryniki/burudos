@@ -1,12 +1,18 @@
 package ar.com.burudos.sales.statement
 
+import org.apache.commons.logging.LogFactory
+
 import java.util.Date;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 import ar.com.burudos.sales.statement.StatementLine;
 import ar.com.burucps.sales.statement.StatementLineGroup;
 import ar.com.burudos.business.BussinesUnit;
 
 class Parameter {
+	
+	private static final log = LogFactory.getLog(this)
 
 	String paramCode
 	StatementLineGroup paramCategory
@@ -66,16 +72,22 @@ class Parameter {
 
 	String getCurrentDescription() {
 		def currentDescription = paramDescription
+		def aux = ""
+		log.debug(currentDescription)
 		
 		if (value != null) {
-			currentDescription = (currentDescription =~ /\[VALUE\]/).replaceAll(String.format("%.2f", value))
+			aux = currentDescription.replaceAll(Pattern.quote("[VALUE]"), Matcher.quoteReplacement(String.format("%.2f", value)))
+			currentDescription = aux
 		}
 		if (minValue != null) {
-			currentDescription = (currentDescription =~ /\[MIN\]/).replaceAll(String.format("%.2f", minValue))
+			aux = currentDescription.replaceAll(Pattern.quote("[MIN]"), Matcher.quoteReplacement(String.format("%.2f", minValue)))
+			currentDescription = aux
 		}
 		if (maxValue != null) {
-			currentDescription = (currentDescription =~ /\[MAX\]/).replaceAll(String.format("%.2f", maxValue))
+			aux = currentDescription.replaceAll(Pattern.quote("[MAX]"), Matcher.quoteReplacement(String.format("%.2f", maxValue)))
+			currentDescription = aux
 		}
+		log.debug(currentDescription)
 		return currentDescription
 
 	}
