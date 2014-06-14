@@ -35,6 +35,10 @@
 			</div>
 
 			<ul class="bigBtnIcon">
+				<li><g:link class="create" action="">
+						<span class="icon icomoon-icon-menu"></span>
+						<g:message code="filter.list.label" args="[entityName]" />
+					</g:link></li>
 				<li><g:link class="create" action="create">
 						<span class="icon icomoon-icon-plus"></span>
 						<g:message code="default.new.label" args="[entityName]" />

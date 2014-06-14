@@ -153,7 +153,6 @@
 													</tr>
 												</g:each>
 											</tbody>
-
 										</table>
 										<div class="row">
 											<div class="col-lg-10">

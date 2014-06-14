@@ -27,14 +27,14 @@ class ParameterController {
 		if (!offset)
 			offset = 0;
 		if (!max)
-			max = Math.min(max ?: 10, 100)
+			max = Math.min(max ?: 20, 100)
 
 		params.max = max
 
 		def query = Parameter.where{
-			//paramCategory ==~  "%${search}%" ||
-			//paramGroup ==~  "%${search}%" ||
-			paramDescription ==~  "%${search}%"
+		    paramGroup ==~  "%${search}%" ||
+			paramDescription ==~  "%${search}%" ||
+			bussinesUnit.nombre ==~  "%${search}%"
 		}
 
 		lista = query.list(params)

@@ -12,7 +12,7 @@
 <body>
 	<script type="text/javascript"
 		src="../../static/plugins/misc/pnotify/jquery.pnotify.min.js"></script>
-		<script language="javascript">
+	<script language="javascript">
 $( document ).ready( function() {
 	$("a[rel='pop-up']").click(function () {
       	var caracteristicas = "height=400,width=400,scrollTo,resizable=1,scrollbars=0,location=0";
@@ -47,13 +47,6 @@ $( document ).ready( function() {
 
 			</div>
 
-			<ul class="bigBtnIcon">
-				<li><g:link class="create" action="index">
-						<span class="icon icomoon-icon-menu"></span>
-						<g:message code="default.list.label" args="[entityName]" />
-					</g:link></li>
-			</ul>
-
 			<div class="row">
 
 				<div class="col-lg-12">
@@ -69,7 +62,7 @@ $( document ).ready( function() {
 
 								<div id="statement-header" class="row statement-group">
 									<div class="page-header">
-										<h4>Datos de la liquidación</h4>
+										<h4>Liquidación</h4>
 									</div>
 									<div class="col-lg-8">
 										<div class="row">
@@ -79,7 +72,16 @@ $( document ).ready( function() {
 															code="statement.statementPeriod.label" default="Periodo" /></span>
 													<span
 													class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
-													class="col-lg-7"><g:formatDate format="yyyy/MM" date="${employeeStatementInstance.statementPeriod}" /></span></li>
+													class="col-lg-7"><g:formatDate format="yyyy/MM"
+															date="${employeeStatementInstance.statementPeriod}" /></span></li>
+
+												<li><span class="blue col-lg-3"><g:message
+															code="statement.updateDate.label"
+															default="Última Actualización" /></span> <span
+													class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
+													class="col-lg-7"><g:formatDate
+															format="yyyy/MM/dd hh:mm"
+															date="${employeeStatementInstance.lastUpdateDate}" /></span></li>
 
 												<li><span class="blue col-lg-3"><g:message
 															code="statement.statement.employee.label"
@@ -104,13 +106,81 @@ $( document ).ready( function() {
 										</div>
 									</div>
 									<div class="col-lg-4 statement-result">
-										<div class="alert alert-success">
+										<div class="alert alert-info">
 											Saldo a cobrar<br /> $
 											<g:fieldValue bean="${employeeStatementInstance}"
 												field="total" />
 										</div>
 									</div>
 								</div>
+
+								<!-- Objetivos -->
+								<div class="col-lg-12">
+									<div class="panel panel-default">
+										<div class="panel-body noPad" style="display: block;">
+											<div class="responsive" tabindex="5007"
+												style="overflow: hidden; outline: none;">
+												<table class="table">
+													<tbody>
+														<tr class="alert alert-success">
+															<td><g:fieldValue
+																	bean="${employeeStatementInstance}" field="total" /></td>
+															<td>1900</td>
+														</tr>
+														<tr class="alert alert-success">
+															<td>Porcentaje de cumplimiento logrado</td>
+															<td>109,21%</td>
+														</tr>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-12">
+									<div class="panel panel-default">
+										<div class="panel-body noPad" style="display: block;">
+
+											<div class="responsive" tabindex="5007"
+												style="overflow: hidden; outline: none;">
+												<table class="table">
+													<thead>
+														<tr>
+															<th colspan="2">Objetivos de operaciones</th>
+														</tr>
+														<tr>
+															<th>Operación</th>
+															<th>Q objetivo</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr class="">
+															<td>Altas</td>
+															<td>70</td>
+														</tr>
+														<tr class="">
+															<td>MEC</td>
+															<td>10</td>
+														</tr>
+														<tr class="">
+															<td>Prepago</td>
+															<td>20</td>
+														</tr>
+														<tr>
+															<td>Total</td>
+															<td>100</td>
+														</tr>
+														<tr>
+															<td>Estimación CATER</td>
+															<td>100</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
 
 								<div class="row statement-group">
 									<div class="page-header">
@@ -124,7 +194,7 @@ $( document ).ready( function() {
 													<div class="panel panel-default">
 														<div class="panel-heading">
 															<h4>
-																<span>Puntajes del mes</span>
+																<span>Operaciones Comerciales de Postventa</span>
 																<form class="panel-form right" action="">
 																	<a class="btn dropdown-toggle" data-toggle="dropdown"
 																		href="#"> <span class="icon16 icomoon-icon-cog-2"></span>
@@ -174,8 +244,8 @@ $( document ).ready( function() {
 																							controller="statementLine" resource="${it}">
 																							<span class="icon12 icomoon-icon-pencil"></span>
 																						</g:link>
-																						<g:link class="delete" action="delete" rel="pop-up"
-																							controller="statementLine"
+																						<g:link class="delete" action="delete"
+																							rel="pop-up" controller="statementLine"
 																							value="${message(code: 'default.button.delete.label', default: 'Delete')}"
 																							resource="${it}"
 																							onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
@@ -251,8 +321,8 @@ $( document ).ready( function() {
 																							controller="statementLine" resource="${it}">
 																							<span class="icon12 icomoon-icon-pencil"></span>
 																						</g:link>
-																						<g:link class="delete" action="delete" rel="pop-up"
-																							controller="statementLine"
+																						<g:link class="delete" action="delete"
+																							rel="pop-up" controller="statementLine"
 																							value="${message(code: 'default.button.delete.label', default: 'Delete')}"
 																							resource="${it}"
 																							onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
@@ -268,70 +338,7 @@ $( document ).ready( function() {
 													</div>
 												</div>
 												<!-- End Incentivos -->
-												<!-- Objetivos -->
-												<!-- 	<div class="col-lg-12">
-													<div class="panel panel-default">
-														<div class="panel-heading">
-															<h4>Objetivos</h4>
-															<a href="#" class="minimize" style="display: none;">Minimize</a>
-														</div>
-														<div class="panel-body noPad" style="display: block;">
-															<div class="responsive" tabindex="5007"
-																style="overflow: hidden; outline: none;">
-																<table class="table">
-																	<thead>
-																		<tr>
-																			<th colspan="2">Puntajes</th>
-																		</tr>
-																	</thead>
-																	<tbody>
-																		<tr class="">
-																			<td>Puntaje objetivo</td>
-																			<td>1900</td>
-																		</tr>
-																			<td>Porcentaje de cumplimiento logrado</td>
-																			<td>109,21%</td>
-																		</tr>
-																</table>
-																<table class="table">
-																	<thead>
-																		<tr>
-																			<th colspan="2">Cantidad de operaciones</th>
-																		</tr>
-																		<tr>
-																			<th>Operación</th>
-																			<th>Q objetivo</th>
-																		</tr>
-																	</thead>
-																	<tbody>
-																		<tr class="">
-																			<td>Altas</td>
-																			<td>70</td>
-																		</tr>
-																		<tr class="">
-																			<td>MEC</td>
-																			<td>10</td>
-																		</tr>
-																		<tr class="">
-																			<td>Prepago</td>
-																			<td>20</td>
-																		</tr>
-																		<tr>
-																			<td>Total</td>
-																			<td>100</td>
-																		</tr>
-																		<tr>
-																			<td>Estimación CATER</td>
-																			<td>100</td>
-																		</tr>
-																	</tbody>
-																</table>
-															</div>
-														</div>
-													</div>
-												</div>
-												 -->
-												<!-- End Objetivos -->
+
 											</div>
 											<!-- Employee -->
 											<div>
@@ -382,8 +389,8 @@ $( document ).ready( function() {
 																							controller="statementLine" resource="${it}">
 																							<span class="icon12 icomoon-icon-pencil"></span>
 																						</g:link>
-																						<g:link class="delete" action="delete" rel="pop-up"
-																							controller="statementLine"
+																						<g:link class="delete" action="delete"
+																							rel="pop-up" controller="statementLine"
 																							value="${message(code: 'default.button.delete.label', default: 'Delete')}"
 																							resource="${it}"
 																							onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
@@ -437,7 +444,7 @@ $( document ).ready( function() {
 																				</td>
 																				<td>
 																					<div class="controls center">
-																						<g:link class="edit" action="edit"  rel="pop-up"
+																						<g:link class="edit" action="edit" rel="pop-up"
 																							controller="statementLine" resource="${it}">
 																							<span class="icon12 icomoon-icon-pencil"></span>
 																						</g:link>
@@ -463,7 +470,7 @@ $( document ).ready( function() {
 										<div class="col-lg-12">
 											<div class="panel panel-default">
 												<div class="panel-heading">
-													<h4>Deducciones</h4>
+													<h4>Descuentos</h4>
 													<a href="#" class="minimize" style="display: none;">Minimize</a>
 												</div>
 												<div class="panel-body noPad" style="display: block;">
@@ -501,18 +508,18 @@ $( document ).ready( function() {
 																		</td>
 																		<td>
 																			<div class="controls center">
-																						<g:link class="edit" action="edit"
-																							controller="statementLine" resource="${it}">
-																							<span class="icon12 icomoon-icon-pencil"></span>
-																						</g:link>
-																						<g:link class="delete" action="delete"
-																							controller="statementLine"
-																							value="${message(code: 'default.button.delete.label', default: 'Delete')}"
-																							resource="${it}"
-																							onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
-																							<span class="icon12 icomoon-icon-remove"></span>
-																						</g:link>
-																					</div>
+																				<g:link class="edit" action="edit"
+																					controller="statementLine" resource="${it}">
+																					<span class="icon12 icomoon-icon-pencil"></span>
+																				</g:link>
+																				<g:link class="delete" action="delete"
+																					controller="statementLine"
+																					value="${message(code: 'default.button.delete.label', default: 'Delete')}"
+																					resource="${it}"
+																					onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
+																					<span class="icon12 icomoon-icon-remove"></span>
+																				</g:link>
+																			</div>
 																		</td>
 																	</tr>
 																</g:each>

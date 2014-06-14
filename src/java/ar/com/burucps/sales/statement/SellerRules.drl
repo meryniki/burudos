@@ -82,7 +82,7 @@ then
 				$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity(), 31);
 end
 
-rule "Puntos - Altas Garantías"
+rule "Puntos - Altas Garant��as"
 salience 99
 when
 	$empleado : Employee()
@@ -93,7 +93,7 @@ then
 				$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity(), 40);
 end
 
-rule "Puntos - Bajas Garantías"
+rule "Puntos - Bajas Garant��as"
 salience 99
 when
 	$empleado : Employee()
@@ -259,7 +259,7 @@ then
 end
 
 /* ****************** TOTAL PUNTOS ********************* */
-rule "Totalización de puntos"
+rule "Totalizaci��n de puntos"
 	salience 95
 	when
 		$empleado: Employee()
@@ -498,7 +498,7 @@ rule "Altas - Operaciones Terreno"
 					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 75);
 end
 
-rule "Altas - Tarjeta Itaú Rango 1 (..10)"
+rule "Altas - Tarjeta Ita�� Rango 1 (..10)"
 	salience 90
 	when
 		$empleado : Employee()
@@ -514,7 +514,7 @@ rule "Altas - Tarjeta Itaú Rango 1 (..10)"
 					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 80);
 end
 
-rule "Altas - Tarjeta Itaú Rango 2 (10-20)"
+rule "Altas - Tarjeta Ita�� Rango 2 (10-20)"
 	salience 90
 	when
 		$empleado : Employee()
@@ -530,7 +530,7 @@ rule "Altas - Tarjeta Itaú Rango 2 (10-20)"
 					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 81);
 end
 
-rule "Altas - Tarjeta Itaú Rango 3 (20..)"
+rule "Altas - Tarjeta Ita�� Rango 3 (20..)"
 	salience 90
 	when
 		$empleado : Employee()
@@ -578,7 +578,7 @@ rule "Altas - Incentivo Sony ZL"
 					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 99);
 end
 /* ******************* TOTAL ALTAS ********************* */
-rule "Totalización por desempeño individual"
+rule "Totalizaci��n por desempe��o individual"
 salience 85
 when
 	$empleado: Employee()
@@ -702,7 +702,7 @@ then
 				$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity(), 40);
 end
 /* ********** TOTAL INCENTIVOS INDIVIDUALES ************ */
-rule "Totalización por incentivos individuales"
+rule "Totalizaci��n por incentivos individuales"
 salience 75
 when
 	$empleado: Employee()
@@ -758,7 +758,7 @@ then
 end
 
 /* ********* TOTAL INCENTIVOS PUNTO DE VENTA *********** */
-rule "Totalización por incentivos punto de venta"
+rule "Totalizaci��n por incentivos punto de venta"
 salience 65
 when
 	$empleado: Employee()
@@ -829,7 +829,7 @@ then
 			$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity(), 50);
 end
 
-rule "Bajas - Débitos por fraudes"
+rule "Bajas - D��bitos por fraudes"
 salience 60
 when
 	$empleado : Employee()
@@ -851,7 +851,7 @@ then
 end
 
 /* **************** TOTAL DEDUCCIONES ****************** */
-rule "Totalización por deducciones"
+rule "Totalizaci��n por deducciones"
 salience 55
 when
 	$empleado: Employee()

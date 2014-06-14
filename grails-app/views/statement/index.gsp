@@ -99,7 +99,7 @@
 												</g:form>
 											</div>
 										</div>
-										<table cellpadding="0" cellspacing="0" border="0"
+										<table  id="thetable" cellpadding="0" cellspacing="0" border="0"
 											class="tableTools display table table-bordered dataTable"
 											width="100%" id="DataTables_Table_1"
 											aria-describedby="DataTables_Table_1_info">
@@ -139,14 +139,13 @@
 													var="employeeStatementInstance">
 													<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 
-														<td><g:link action="show"
+														<td><g:link action="show" 
 																id="${employeeStatementInstance.id}">
 																${fieldValue(bean: employeeStatementInstance, field: "employee.name")}
 															</g:link></td>
-
-														<td>
-															${fieldValue(bean: employeeStatementInstance, field: "statementPeriod")}
-														</td>
+															
+														<td class=" "><g:formatDate format="yyyy/MM"
+																date="${employeeStatementInstance.statementPeriod}" /></td>
 
 														<td>
 															${fieldValue(bean: employeeStatementInstance, field: "businessUnit")}
@@ -163,7 +162,9 @@
 											<div class="col-lg-8">
 												<div class="dataTables_paginate paging_bootstrap pagination">
 													<ul class="pagination">
-														<li><g:paginate total="${statementInstance ?: 0}" /></li>
+														<li><g:paginate
+																total="${statementInstanceCount ?: 0}"
+																params="${mapsearch}" /></li>
 													</ul>
 												</div>
 											</div>

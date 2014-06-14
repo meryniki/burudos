@@ -26,12 +26,15 @@ class TransactionController {
 		def total = 0;
 		def lista = [];
 		def mapsearch = [:];
+
+		/*Initialization*/
 		if (!search)
 			search = "";
 		if (!offset)
 			offset = 0;
 		if (!max)
 			max = 20;
+		params.max = max;
 
 		/*Date to get index list*/
 		def datemonth
@@ -232,15 +235,16 @@ class TransactionController {
 					row_mapa[BuruConstants.row_cliente] = row[14];
 					row_mapa[BuruConstants.row_cliente_doc]  = row[15];
 				}else if ( params.type_file.equals(BuruConstants.file_post)){
-					row_mapa[BuruConstants.row_buname]        = row[1];
+					row_mapa[BuruConstants.row_buname]    = row[1];
 					row_mapa[BuruConstants.row_emp]       = row[2];
 					row_mapa[BuruConstants.row_date]      = row[3];
-					row_mapa[BuruConstants.row_op_code]   = row[0]+row[7];
+					row_mapa[BuruConstants.row_op_code]   = row[0];
 					row_mapa[BuruConstants.row_ani]       = row[5];
 					row_mapa[BuruConstants.row_solicitud] = row[6];
 					row_mapa[BuruConstants.row_plan]      = row[7];
 					row_mapa[BuruConstants.row_plan_h]    = row[8];
 					row_mapa[BuruConstants.row_plan_d]    = row[9];
+					row_mapa[BuruConstants.row_plan_dec]  = row[7];
 				}
 
 				/*Creates the Op if not exists*/

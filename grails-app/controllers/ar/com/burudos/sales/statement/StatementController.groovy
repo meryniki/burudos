@@ -30,7 +30,7 @@ class StatementController {
 		if (!offset)
 			offset = 0;
 		if (!max)
-			max = Math.min(max ?: 10, 100)
+			max = Math.min(max ?: 20, 100)
 
 		params.max = max
 
@@ -40,7 +40,7 @@ class StatementController {
 		if (!params.month_month) {
 			String hql = "select month(max(statementPeriod)) as maxMonth, year(max(statementPeriod)) as maxYear  from Statement"
 			def result = Statement.executeQuery(hql)
-			println "result " + result
+			//println "result " + result
 			if (!String.valueOf(result[0][0]) == "null"){
 				datemonth = String.valueOf(result[0][0])
 				dateyear = String.valueOf(result[0][1])
@@ -57,8 +57,9 @@ class StatementController {
 		}else{
 			datemonth = params.month_month
 			dateyear = params.month_year
-			println " DAte month" + datemonth
 		}
+		
+		println "params " + params
 		
 		def query = EmployeeStatement.where{
 			(
@@ -69,11 +70,12 @@ class StatementController {
 			)
 		}
 
+		println "SEARCH " + search
+		
 		lista = query.list(params)
 		total = query.count()
 
-		/*The map will be passed as param in g:sorteable and g:paginate*/
-		mapsearch.put("search", search);
+		mapsearch.put("search", params.search);
 
 		respond lista, model:[statementInstanceCount: total,
 			mapsearch: mapsearch, defaultmonth:Date.parse("yyyyMM", dateyear+datemonth)]
