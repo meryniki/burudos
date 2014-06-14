@@ -106,7 +106,7 @@
 														title="${message(code: 'parameter.paramCode.label', default: 'Param Code')}" />
 
 													<g:sortableColumn params="${mapsearch}" property="minValue"
-														title="${message(code: 'parameter.businessUnit.label', default: 'Level')}" />
+														title="${message(code: 'parameter.businessUnit.label', default: 'Punto de Venta')}" />
 
 													<g:sortableColumn params="${mapsearch}"
 														property="paramCategory"
@@ -136,7 +136,7 @@
 													<th rowspan="1" colspan="1"><g:message
 															code="parameter.paramCode.label" default="Param Code" /></th>
 													<th rowspan="1" colspan="1"><g:message
-															code="parameter.businessUnit.label" default="Level" /></th>
+															code="parameter.businessUnit.label" default="Punto de Venta" /></th>
 													<th rowspan="1" colspan="1"><g:message
 															code="parameter.paramCategory.label" default="Param Cat" /></th>
 													<th rowspan="1" colspan="1"><g:message

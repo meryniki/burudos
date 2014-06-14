@@ -105,4 +105,12 @@ class Statement {
 		StatementLine.findAll(sort: 'lineOrder', order:'asc'){ paramGroup == StatementLineGroup.DEDUCTIONS && statement== this }
 	}
 
+	List<StatementLine> getBUOBJPointsLines(){
+		StatementLine.findAll(sort: 'lineOrder', order:'asc'){ paramGroup == StatementLineGroup.OBJ_POINTS && statement== this }
+	}
+
+	List<StatementLine> getObjQLines(){
+		StatementLine.findAll(sort: 'lineOrder', order:'asc'){ paramGroup == StatementLineGroup.OBJ_Q && statement== this }
+	}
+	
 }

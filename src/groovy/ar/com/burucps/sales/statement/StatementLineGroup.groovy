@@ -20,6 +20,10 @@ public enum StatementLineGroup {
 			return "statement.line.fixed";
 		case OTHERS:
 			return "statement.line.others";
+		case OBJ_POINTS:
+			return "statement.line.fixed";
+		case OBJ_Q:
+			return "statement.line.others";
 		default:
 			throw new IllegalArgumentException();
 		}

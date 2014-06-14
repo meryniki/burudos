@@ -33,7 +33,8 @@ class ParameterController {
 
 		def query = Parameter.where{
 		    paramGroup ==~  "%${search}%" ||
-			paramDescription ==~  "%${search}%"
+			paramDescription ==~  "%${search}%" ||
+			bussinesUnit.nombre ==~  "%${search}%"
 		}
 
 		lista = query.list(params)

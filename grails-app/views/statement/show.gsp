@@ -123,7 +123,8 @@ $( document ).ready( function() {
 												<table class="table">
 													<tbody>
 														<tr class="alert alert-success">
-															<td>Puntaje objetivo</td>
+															<td><g:fieldValue
+																	bean="${employeeStatementInstance}" field="total" /></td>
 															<td>1900</td>
 														</tr>
 														<tr class="alert alert-success">
