@@ -18,6 +18,7 @@ class Statement {
 	static hasMany = [lines : StatementLine]
 	// Points
 	Double pointsSubtotal
+	Double pointsObjPerc
 	// Positive values
 	Double stalesSubtotal
 	Double indIncentSubtotal
@@ -50,6 +51,7 @@ class Statement {
 		deductionsSubtotal(nullable:true, min : 0D)
 		othersSubtotal(nullable:true, min : 0D)
 		fixedSubtotal(nullable:true, min : 0D)
+		pointsObjPerc(nullable:true, min: 0D)
 		total(nullable:true, min : 0D)
 		dueBalance(nullable:true, min : 0D)
 		// Auditoria
@@ -105,11 +107,11 @@ class Statement {
 		StatementLine.findAll(sort: 'lineOrder', order:'asc'){ paramGroup == StatementLineGroup.DEDUCTIONS && statement== this }
 	}
 
-	List<StatementLine> getBUOBJPointsLines(){
+	List<StatementLine> getBuObjPointsLines(){
 		StatementLine.findAll(sort: 'lineOrder', order:'asc'){ paramGroup == StatementLineGroup.OBJ_POINTS && statement== this }
 	}
 
-	List<StatementLine> getObjQLines(){
+	List<StatementLine> getBuObjQLines(){
 		StatementLine.findAll(sort: 'lineOrder', order:'asc'){ paramGroup == StatementLineGroup.OBJ_Q && statement== this }
 	}
 	

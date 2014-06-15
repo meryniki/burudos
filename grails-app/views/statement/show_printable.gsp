@@ -52,8 +52,7 @@ $( document ).ready( function() {
 				<div class="col-lg-12">
 					<div id="show-statement" class="content scaffold-show" role="main">
 						<ul class="bigBtnIcon">
-							<li><g:link class="show_printable" action="show_printable"
-												resource="${employeeStatementInstance}">
+							<li><g:link class="print" action="print">
 									<span class="icon icomoon-icon-print"></span>
 									<g:message code="default.print.label" args="[entityName]" />
 								</g:link></li>

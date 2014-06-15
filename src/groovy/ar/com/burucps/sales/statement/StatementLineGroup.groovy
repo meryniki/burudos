@@ -1,7 +1,7 @@
 package ar.com.burucps.sales.statement;
 
 public enum StatementLineGroup {
-	SALES, INDIVIDUAL_INCENTIVE, POS_INCENTIVE, DEDUCTIONS, POINTS, FIXED, OTHERS;
+	SALES, INDIVIDUAL_INCENTIVE, POS_INCENTIVE, DEDUCTIONS, POINTS, FIXED, OTHERS, OBJ_POINTS, OBJ_Q;
 
 	@Override
 	public String toString() {
