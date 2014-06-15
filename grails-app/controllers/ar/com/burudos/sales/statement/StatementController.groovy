@@ -106,6 +106,10 @@ class StatementController {
 	def process() {
 	}
 
+	def show_printable(EmployeeStatement employeeStatementInstance) {
+		respond employeeStatementInstance
+	}
+	
 	@Transactional
 	def doProcess() {
 		StatementGenerator generator = new StatementGenerator();
@@ -139,7 +143,7 @@ class StatementController {
 			'*'{ respond statementInstance, [status: OK] }
 		}
 	}
-
+	
 	@Transactional
 	def delete(Statement statementInstance) {
 
