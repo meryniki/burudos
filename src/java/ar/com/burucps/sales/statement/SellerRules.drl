@@ -82,7 +82,7 @@ then
 				$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity(), 31);
 end
 
-rule "Puntos - Altas Garant��as"
+rule "Puntos - Altas Garantias"
 salience 99
 when
 	$empleado : Employee()
@@ -93,7 +93,7 @@ then
 				$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity(), 40);
 end
 
-rule "Puntos - Bajas Garant��as"
+rule "Puntos - Bajas Garantias"
 salience 99
 when
 	$empleado : Employee()
@@ -259,13 +259,15 @@ then
 end
 
 /* ****************** TOTAL PUNTOS ********************* */
-rule "Totalizaci��n de puntos"
+rule "Totalizacion de puntos"
 	salience 95
 	when
 		$empleado: Employee()
 		$pPuntajeObjetivo : Parameter(paramCode == "PTOVTA_OBJ_PTS")
 		$pPorcentajePuntajeObjetivoMinimo : Parameter(paramCode == "VTA_CTE_OBJ_PCT")
 	then
+		statement.addLine(StatementLineType.OBJECTIVE, $pPuntajeObjetivo.getParamCategory(), $pPuntajeObjetivo.getCurrentDescription(), 
+				$pPuntajeObjetivo.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity(), 111);
 		Double total = 0.0D;
 		/*Iterator iterador = (Iterator) statement.getPointsLines().iterator();
 		while (iterador.hasNext()) {
