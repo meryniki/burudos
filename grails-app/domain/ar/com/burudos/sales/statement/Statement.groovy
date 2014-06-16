@@ -19,6 +19,11 @@ class Statement {
 	// Points
 	Double pointsSubtotal
 	Double pointsObjPerc
+	// Q
+	Double qBUTotal
+	Double qEmployeeTotal
+	Double qEmployeeReachedTotal
+	Double qEmployeeReachedPerc
 	// Positive values
 	Double stalesSubtotal
 	Double indIncentSubtotal
@@ -27,7 +32,6 @@ class Statement {
 	// Negative values
 	Double deductionsSubtotal
 	// Manual arrangements
-	Double othersSubtotal
 	Double fixedSubtotal
 	// Comision total
 	Double total
@@ -43,15 +47,18 @@ class Statement {
 	static constraints = {
 		statementPeriod (nullable : false)
 		businessUnit(nullable: true)
-		pointsSubtotal(nullable:true, min : 0D)
+		pointsSubtotal(nullable:true)
 		stalesSubtotal(nullable:true, min : 0D)
 		indIncentSubtotal(nullable:true, min : 0D)
 		posIncentSubtotal(nullable:true, min : 0D)
 		positiveSubtotal(nullable:true, min : 0D)
-		deductionsSubtotal(nullable:true, min : 0D)
-		othersSubtotal(nullable:true, min : 0D)
+		deductionsSubtotal(nullable:true)
 		fixedSubtotal(nullable:true, min : 0D)
 		pointsObjPerc(nullable:true, min: 0D)
+		qBUTotal(nullable:true, min: 0D)
+		qEmployeeTotal(nullable:true, min: 0D)
+		qEmployeeReachedTotal(nullable:true, min: 0D)
+		qEmployeeReachedPerc(nullable:true, min: 0D)
 		total(nullable:true, min : 0D)
 		dueBalance(nullable:true, min : 0D)
 		// Auditoria
@@ -82,9 +89,41 @@ class Statement {
 			Double unitAmount, Double operationsAmount, Double amount, Integer lineOrder) {
 		log.debug("Agrego una linea: " + description);
 		StatementLine line = new StatementLine( statement: this,
-		type : type, paramGroup : paramGroup, description:description, unitAmount:unitAmount,
-		operationsAmount:operationsAmount, amount:amount, lineOrder:lineOrder)
+				type : type, paramGroup : paramGroup, description:description, unitAmount:unitAmount,
+				operationsAmount:operationsAmount, amount:amount, lineOrder:lineOrder)
 		this.addToLines(line)
+		switch (paramGroup) {
+			case StatementLineGroup.SALES:
+				stalesSubtotal += amount;
+				total += amount;
+				break;
+			case StatementLineGroup.INDIVIDUAL_INCENTIVE:
+				indIncentSubtotal += amount;
+				total += amount;
+				break;
+			case StatementLineGroup.POS_INCENTIVE:
+				posIncentSubtotal += amount;
+				total += amount;
+				break;
+			case StatementLineGroup.DEDUCTIONS:
+				deductionsSubtotal += amount;
+				total += amount;
+				break;
+			case StatementLineGroup.POINTS:
+				pointsSubtotal += amount;
+				break;
+			case StatementLineGroup.FIXED:
+				fixedSubtotal += amount;
+				total += amount;
+				break;
+			case StatementLineGroup.OBJ_POINTS:
+				break;
+			case StatementLineGroup.OBJ_Q:
+				qBUTotal += unitAmount;
+				qEmployeeTotal += operationsAmount;
+				qEmployeeReachedTotal += amount;
+				break;
+		}
 	}
 
 	List<StatementLine> getBuPointsLines(){
@@ -114,5 +153,5 @@ class Statement {
 	List<StatementLine> getBuObjQLines(){
 		StatementLine.findAll(sort: 'lineOrder', order:'asc'){ paramGroup == StatementLineGroup.OBJ_Q && statement== this }
 	}
-	
+
 }

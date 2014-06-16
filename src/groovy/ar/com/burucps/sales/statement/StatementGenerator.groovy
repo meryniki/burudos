@@ -134,7 +134,21 @@ public class StatementGenerator {
 			log.debug("Creo la liquidacion para el empleado: " + employee)
 
 			EmployeeStatement statement = new EmployeeStatement(employee: employee, businessUnit: employee.bu,
-			statementPeriod: parsePeriod(param_month,param_year)).save(failOnError: true, flush: true)
+			statementPeriod: parsePeriod(param_month,param_year))
+
+			statement.pointsSubtotal = 0.0D
+			statement.pointsObjPerc = 0.0D
+			statement.stalesSubtotal = 0.0D
+			statement.indIncentSubtotal = 0.0D
+			statement.posIncentSubtotal = 0.0D
+			statement.positiveSubtotal = 0.0D
+			statement.total = 0.0D
+			statement.qBUTotal = 0D
+			statement.qEmployeeTotal = 0D
+			statement.qEmployeeReachedTotal = 0D
+			statement.qEmployeeReachedPerc = 0D
+
+			statement.save(failOnError: true, flush: true)
 
 			def employeeFact = ksession.insert(employee);
 			ksession.setGlobal("statement", statement);

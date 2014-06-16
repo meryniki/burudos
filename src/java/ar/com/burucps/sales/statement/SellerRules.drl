@@ -259,35 +259,48 @@ then
 end
 
 /* ****************** TOTAL PUNTOS ********************* */
-rule "Totalizacion de puntos"
+rule "Puntos - Totalizacion de puntos"
 	salience 95
 	when
 		$empleado: Employee()
 		$pPuntajeObjetivo : Parameter(paramCode == "PTOVTA_OBJ_PTS")
 		$pPorcentajePuntajeObjetivoMinimo : Parameter(paramCode == "VTA_CTE_OBJ_PCT")
 	then
-		statement.addLine(StatementLineType.OBJECTIVE, $pPuntajeObjetivo.getParamCategory(), $pPuntajeObjetivo.getCurrentDescription(), 
-				$pPuntajeObjetivo.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity(), 111);
-		Double total = 0.0D;
-		/*Iterator iterador = (Iterator) statement.getPointsLines().iterator();
-		while (iterador.hasNext()) {
-			StatementLine item = (StatementLine) iterador.next();
-			total += item.amount; 
-		}
-		statement.setPointsSubtotal(total);
+		statement.addLine(StatementLineType.OBJECTIVE, StatementLineGroup.OBJ_POINTS, $pPuntajeObjetivo.getCurrentDescription(), 
+				$pPuntajeObjetivo.getValue(), null, null, 1);
+		
+		Double total = statement.getPointsSubtotal();
 		Double porcentajeAlcanzado = (total / $pPuntajeObjetivo.getValue()) * 100.0;
+		statement.setPointsObjPerc(porcentajeAlcanzado);
 		Integer factor = 1;
 		if (porcentajeAlcanzado < $pPorcentajePuntajeObjetivoMinimo.getValue()) {
 			factor = 0;
 		}
-		additionalValues.put("puntaje",total);
-		additionalValues.put("porcentajeAlcanzado",porcentajeAlcanzado);
-		additionalValues.put("factorAltas",factor);*/
+		additionalValues.put("factorAltas",factor);
+		additionalValues.put("IM",0);
+		additionalValues.put("LEC",0);
+		additionalValues.put("ALTASVOZ",0);
+		additionalValues.put("ALTAS",0);
+end
+
+rule "Puntos - Premio Postventa"
+salience 94
+when
+	$empleado: Employee()
+	$pPuntajeObjetivo : Parameter(paramCode == "PTOVTA_OBJ_PTS")
+	$p : Parameter(paramCode == "PVTA_BON_ARS")
+then
+	Integer factor = 1;
+	if (statement.getPointsObjPerc() < $p.getMinValue()) {
+		factor = 0;
+	}
+	statement.addLine(StatementLineType.RULE, StatementLineGroup.OBJ_POINTS, $p.getCurrentDescription(), 
+			$p.getValue(), null, $p.getValue() * factor, 2);
 end
 /* ******************** FIN PUNTOS ********************* */
 /* ********************** ALTAS ************************ */
 
-rule "Altas - IM Ahorro/Contrato"
+rule "Altas - IM Control 500 MB"
 	salience 90
 	when
 		$empleado : Employee()
@@ -301,14 +314,15 @@ rule "Altas - IM Ahorro/Contrato"
 		
 		statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
 					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 10);
+		additionalValues.put("IM",$total.getQuantity());
 end
 
-rule "Altas - MEC (Local)"
+rule "Altas - LEC"
 	salience 90
 	when
 		$empleado : Employee()
-		$total : Summary(employee == $empleado && summaryCode == "MECL")
-		$p : Parameter(paramCode == "VTA_MEC_LOC_PU_ARS")
+		$total : Summary(employee == $empleado && summaryCode == "LEC")
+		$p : Parameter(paramCode == "VTA_LEC_PU_ARS")
 	then
 		Integer factor = 1; 
 		if (additionalValues.containsKey("factorAltas")) {
@@ -317,25 +331,10 @@ rule "Altas - MEC (Local)"
 		
 		statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
 					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 20);
+		additionalValues.put("LEC",$total.getQuantity());
 end
 
-rule "Altas - MEC (Externo)"
-	salience 90
-	when
-		$empleado : Employee()
-		$total : Summary(employee == $empleado && summaryCode == "MECE")
-		$p : Parameter(paramCode == "VTA_MEC_EXT_PU_ARS")
-	then
-		Integer factor = 1; 
-		if (additionalValues.containsKey("factorAltas")) {
-			factor = (Integer) additionalValues.get("factorAltas");
-		}
-		
-		statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
-					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 21);
-end
-
-rule "Altas - Planes Externo/Interno Rango 1 (..49)"
+rule "Altas - Planes Externo/Interno Rango 1"
 	salience 90
 	when
 		$empleado : Employee()
@@ -347,13 +346,15 @@ rule "Altas - Planes Externo/Interno Rango 1 (..49)"
 			factor = (Integer) additionalValues.get("factorAltas");
 		}
 		
-		System.out.println("PLAN1 - factor = " + factor);
-		
 		statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
 					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 30);
+		
+		Integer partial = (Integer) additionalValues.get("ALTASVOZ");
+		partial += $total.getQuantity();
+		additionalValues.put("ALTASVOZ", partial);
 end
 
-rule "Altas - Planes Externo/Interno Rango 2 (49-99)"
+rule "Altas - Planes Externo/Interno Rango 2"
 	salience 90
 	when
 		$empleado : Employee()
@@ -365,13 +366,15 @@ rule "Altas - Planes Externo/Interno Rango 2 (49-99)"
 			factor = (Integer) additionalValues.get("factorAltas");
 		}
 		
-		System.out.println("PLAN2 - factor = " + factor);
-		
 		statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
 					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 31);
+		
+		Integer partial = (Integer) additionalValues.get("ALTASVOZ");
+		partial += $total.getQuantity();
+		additionalValues.put("ALTASVOZ", partial);
 end
 
-rule "Altas - Planes Externo/Interno Rango 3 (99-159)"
+rule "Altas - Planes Externo/Interno Rango 3"
 	salience 90
 	when
 		$empleado : Employee()
@@ -383,13 +386,15 @@ rule "Altas - Planes Externo/Interno Rango 3 (99-159)"
 			factor = (Integer) additionalValues.get("factorAltas");
 		}
 		
-		System.out.println("PLAN3 - factor = " + factor);
-			
 		statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
 					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 32);
+		
+		Integer partial = (Integer) additionalValues.get("ALTASVOZ");
+		partial += $total.getQuantity();
+		additionalValues.put("ALTASVOZ", partial);
 end
 
-rule "Altas - Planes Externo/Interno Rango 4 (159-229)"
+rule "Altas - Planes Externo/Interno Rango 4"
 	salience 90
 	when
 		$empleado : Employee()
@@ -401,13 +406,15 @@ rule "Altas - Planes Externo/Interno Rango 4 (159-229)"
 			factor = (Integer) additionalValues.get("factorAltas");
 		}
 		
-		System.out.println("PLAN4 - factor = " + factor);
-		
 		statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
 					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 33);
+		
+		Integer partial = (Integer) additionalValues.get("ALTASVOZ");
+		partial += $total.getQuantity();
+		additionalValues.put("ALTASVOZ", partial);
 end
 
-rule "Altas - Planes Externo/Interno Rango 5 (229..)"
+rule "Altas - Planes Externo/Interno Rango 5"
 	salience 90
 	when
 		$empleado : Employee()
@@ -419,10 +426,12 @@ rule "Altas - Planes Externo/Interno Rango 5 (229..)"
 			factor = (Integer) additionalValues.get("factorAltas");
 		}
 		
-		System.out.println("PLAN5 - factor = " + factor);
-		
 		statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
 					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 34);
+		
+		Integer partial = (Integer) additionalValues.get("ALTASVOZ");
+		partial += $total.getQuantity();
+		additionalValues.put("ALTASVOZ", partial);
 end
 
 rule "Altas - Planes Corporativos"
@@ -439,6 +448,30 @@ rule "Altas - Planes Corporativos"
 		
 		statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
 					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 40);
+		
+		Integer partial = (Integer) additionalValues.get("ALTASVOZ");
+		partial += $total.getQuantity();
+		additionalValues.put("ALTASVOZ", partial);
+end
+
+rule "Altas - Planes Promo 2x1 2º Linea $ 169"
+salience 90
+when
+	$empleado : Employee()
+	$total : Summary(employee == $empleado && summaryCode == "2X1")
+	$p : Parameter(paramCode == "VTA_PLA_2X1_PU_ARS")
+then
+	Integer factor = 1; 
+	if (additionalValues.containsKey("factorAltas")) {
+		factor = (Integer) additionalValues.get("factorAltas");
+	}
+	
+	statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
+				$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 40);
+	
+	Integer partial = (Integer) additionalValues.get("ALTASVOZ");
+	partial += $total.getQuantity();
+	additionalValues.put("ALTASVOZ", partial);
 end
 
 rule "Altas - Accesorios"
@@ -466,6 +499,10 @@ rule "Altas - Prepago Interno"
 		
 		statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
 					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 60);
+		
+		Integer partial = (Integer) additionalValues.get("ALTASVOZ");
+		partial += $total.getQuantity();
+		additionalValues.put("ALTASVOZ", partial);
 end
 
 rule "Altas - Operaciones Call Center"
@@ -500,7 +537,7 @@ rule "Altas - Operaciones Terreno"
 					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 75);
 end
 
-rule "Altas - Tarjeta Ita�� Rango 1 (..10)"
+rule "Altas - Tarjeta Itau Rango 1 (..10)"
 	salience 90
 	when
 		$empleado : Employee()
@@ -516,7 +553,7 @@ rule "Altas - Tarjeta Ita�� Rango 1 (..10)"
 					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 80);
 end
 
-rule "Altas - Tarjeta Ita�� Rango 2 (10-20)"
+rule "Altas - Tarjeta Itau Rango 2 (10-20)"
 	salience 90
 	when
 		$empleado : Employee()
@@ -532,7 +569,7 @@ rule "Altas - Tarjeta Ita�� Rango 2 (10-20)"
 					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 81);
 end
 
-rule "Altas - Tarjeta Ita�� Rango 3 (20..)"
+rule "Altas - Tarjeta Itau Rango 3 (20..)"
 	salience 90
 	when
 		$empleado : Employee()
@@ -564,12 +601,12 @@ rule "Altas - Portabilidades"
 					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 90);
 end
 
-rule "Altas - Incentivo Sony ZL"
+rule "Altas - Casim /Repros ($ 50)"
 	salience 90
 	when
 		$empleado : Employee()
-		$total : Summary(employee == $empleado && summaryCode == "SONY")
-		$p : Parameter(paramCode == "EXT_BON_SONYZL_ARS")
+		$total : Summary(employee == $empleado && summaryCode == "CASIM_REPRO")
+		$p : Parameter(paramCode == "VTA_CASIMREPRO_PU_ARS")
 	then
 		Integer factor = 1; 
 		if (additionalValues.containsKey("factorAltas")) {
@@ -580,18 +617,37 @@ rule "Altas - Incentivo Sony ZL"
 					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 99);
 end
 /* ******************* TOTAL ALTAS ********************* */
-rule "Totalizaci��n por desempe��o individual"
+rule "Totalizacion por desempeno individual"
 salience 85
 when
 	$empleado: Employee()
+	$pIM : Parameter(paramCode == "QVTA_IM_OP")
+	$pLEC : Parameter(paramCode == "QVTA_LEC_OP")
+	$pVOZ : Parameter(paramCode == "QVTA_ALTAS_VOZ_OP")
 then
-	Double total = 0.0D;
-	/*Iterator iterador = (Iterator) statement.getSalesLines().iterator();
-	while (iterador.hasNext()) {
-		StatementLine item = (StatementLine) iterador.next();
-		total += item.amount; 
-	}
-	statement.setStalesSubtotal(total);*/
+	Integer im = (Integer) additionalValues.get("IM");
+	Integer lec = (Integer) additionalValues.get("LEC");
+	Integer altasvoz = (Integer) additionalValues.get("ALTASVOZ");
+	Integer altas = im + lec + altasvoz;
+	Integer qAltas = $pIM.getValue() + $pLEC.getValue() + $pVOZ.getValue();
+	Integer employeeCount = $empleado.getBu().getEmployeeCount();
+	
+	additionalValues.put("ALTAS", altas);
+	additionalValues.put("QVTA_ALTAS", qAltas);
+	
+	/* El subtotal upfront se calcula a medida que se agregan lineas.
+	 * El total de altas de voz hay que ir calculandolo en cada regla
+	 * El total de altas hay que sumar el de altas de voz + IM + LEC */
+	
+	statement.addLine(StatementLineType.OBJECTIVE, StatementLineGroup.OBJ_Q, $pIM.getCurrentDescription(), 
+			$pIM.getValue(), $pIM.getValue() / employeeCount, im, 1);
+	statement.addLine(StatementLineType.OBJECTIVE, StatementLineGroup.OBJ_Q, $pLEC.getCurrentDescription(), 
+			$pLEC.getValue(), $pLEC.getValue() / employeeCount, im, 2);
+	statement.addLine(StatementLineType.OBJECTIVE, StatementLineGroup.OBJ_Q, $pVOZ.getCurrentDescription(), 
+			$pVOZ.getValue(), $pVOZ.getValue() / employeeCount, im, 3);
+	statement.addLine(StatementLineType.OBJECTIVE, StatementLineGroup.OBJ_Q, "ALTAS", 
+			qAltas, qAltas / employeeCount, altas, 4);
+	
 end
 /* ******************** FIN ALTAS ********************** */
 
@@ -600,14 +656,11 @@ rule "Incentivos  Individuales - Altas 100% Q"
 salience 80
 when
 	$empleado : Employee()
-	$total : Summary(employee == $empleado && summaryCode == "ALTAS")
 	$p : Parameter(paramCode == "QVTA_TOT_RG1_BON_ARS")
-	$qAltas : Parameter(paramCode == "QVTA_ALTAS_OP")
-	$qMec : Parameter(paramCode == "QVTA_MEC_OP")
-	$qPrep : Parameter(paramCode == "QVTA_PREP_OP")
 then
-	Double qAltasTotal = $qAltas.getValue() + $qMec.getValue() + $qPrep.getValue();
-	Double performance = $total.getQuantity() * 100.0 / (qAltasTotal / $empleado.getBu().getEmployeeCount());
+	Integer qAltas = (Integer) additionalValues.get("QVTA_ALTAS");
+	Integer altas = (Integer) additionalValues.get("ALTAS");
+	Double performance = altas * 100.0 / (qAltas / $empleado.getBu().getEmployeeCount());
 	if ( (performance >= $p.getMinValue()) && (performance < $p.getMaxValue())) {
 		statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
 					null, null, $p.getValue(), 10);
@@ -618,27 +671,24 @@ rule "Incentivos  Individuales - Altas 120% Q"
 salience 80
 when
 	$empleado : Employee()
-	$total : Summary(employee == $empleado && summaryCode == "ALTAS")
 	$p : Parameter(paramCode == "QVTA_TOT_RG2_BON_ARS")
-	$qAltas : Parameter(paramCode == "QVTA_ALTAS_OP")
-	$qMec : Parameter(paramCode == "QVTA_MEC_OP")
-	$qPrep : Parameter(paramCode == "QVTA_PREP_OP")
 then
-	Double qAltasTotal = $qAltas.getValue() + $qMec.getValue() + $qPrep.getValue();
-	Double performance = $total.getQuantity() * 100.0 / (qAltasTotal / $empleado.getBu().getEmployeeCount());
+	Integer qAltas = (Integer) additionalValues.get("QVTA_ALTAS");
+	Integer altas = (Integer) additionalValues.get("ALTAS");
+	Double performance = altas * 100.0 / (qAltas / $empleado.getBu().getEmployeeCount());
 	if (performance >= $p.getMinValue()) {
 		statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
 				null, null, $p.getValue(), 11);
 	}
 end
 
-rule "Incentivos  Individuales - MEC 100% Q"
+rule "Incentivos  Individuales - LEC 100% Q"
 salience 80
 when
 	$empleado : Employee()
-	$total : Summary(employee == $empleado && summaryCode == "MEC")
-	$p : Parameter(paramCode == "QVTA_MEC_PU_ARS")
-	$q : Parameter(paramCode == "QVTA_MEC_OP")
+	$total : Summary(employee == $empleado && summaryCode == "LEC")
+	$p : Parameter(paramCode == "QIND_LEC_PU_ARS")
+	$q : Parameter(paramCode == "QVTA_LEC_OP")
 then
 	Double performance = $total.getQuantity() * 100.0 / ($q.getValue() / $empleado.getBu().getEmployeeCount());
 	if (performance >= $p.getMinValue()) {
@@ -647,21 +697,15 @@ then
 	}
 end
 
+// TODO
 rule "Incentivos  Individuales - Altas de Voz 100% Q"
 salience 80
 when
 	$empleado : Employee()
-	// objetivo JAG
-	$qJAG : Parameter(paramCode == "QJAG_ALTAS_OP")
-	// objetivo bu
-	$qBu : Parameter(paramCode == "QVTA_ALTAS_OP")
-	// altas empleado
+	$qBu : Parameter(paramCode == "QVTA_ALTAS_VOZ_OP")
 	$total : Summary(employee == $empleado && summaryCode == "ALTAS_VOZ")
-	// altas jag TODO
-	$totalBu : Summary(bu == $empleado.bu && summaryCode == "ALTAS_VOZ" && quantity < $qJAG.value)
-	//$totalBu : Summary(bu == JAG && summaryCode == "ALTAS_VOZ" && quantity < $q.value)
-	// parametro para la linea
-	$p : Parameter(paramCode == "QVTA_ALTAS_PU_ARS")
+	$totalBu : Summary(bu == $empleado.bu && summaryCode == "ALTAS_VOZ" && quantity < $qBu.value)
+	$p : Parameter(paramCode == "QIND_ALTAS_VOZ_PU_ARS")
 then
 	Double performance = $total.getQuantity() * 100.0 / ($qBu.getValue() / $empleado.getBu().getEmployeeCount());
 	if (performance >= $p.getMinValue()) {
@@ -670,21 +714,15 @@ then
 	}
 end
 
+//TODO
 rule "Incentivos  Individuales - Altas de Voz 100% Q y Q Punto de Venta"
 salience 80
 when
 	$empleado : Employee()
-	// objetivo JAG
-	$qJAG : Parameter(paramCode == "QJAG_ALTAS_OP")
-	// objetivo bu
 	$qBu : Parameter(paramCode == "QVTA_ALTAS_OP")
-	// altas empleado
 	$total : Summary(employee == $empleado && summaryCode == "ALTAS_VOZ")
-	// altas jag TODO
-	$totalBu : Summary(bu == $empleado.bu && summaryCode == "ALTAS_VOZ" && quantity >= $qJAG.value)
-	//$totalBu : Summary(bu == JAG && summaryCode == "ALTAS_VOZ" && quantity < $q.value)
-	// parametro para la linea
-	$p : Parameter(paramCode == "QJAG_ALTAS_PU_ARS")
+	$totalBu : Summary(bu == $empleado.bu && summaryCode == "ALTAS_VOZ" && quantity >= $qBu.value)
+	$p : Parameter(paramCode == "QVTA_ALTAS_VOZ_PU_ARS")
 then
 	Double performance = $total.getQuantity() * 100.0 / ($qBu.getValue() / $empleado.getBu().getEmployeeCount());
 	if (performance >= $p.getMinValue()) {
@@ -693,38 +731,14 @@ then
 	}
 end
 
-rule "Incentivos  Individuales - CASIM Postpago"
-salience 80
-when
-	$empleado : Employee()
-	$total : Summary(employee == $empleado && summaryCode == "CASIM_REPRO")
-	$p : Parameter(paramCode == "IIND_CASIM_PVTA_PU_ARS")
-then
-	statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
-				$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity(), 40);
-end
-/* ********** TOTAL INCENTIVOS INDIVIDUALES ************ */
-rule "Totalizaci��n por incentivos individuales"
-salience 75
-when
-	$empleado: Employee()
-then
-	Double total = 0.0D;
-	/*Iterator iterador = (Iterator) statement.getIndIncentLines().iterator();
-	while (iterador.hasNext()) {
-		StatementLine item = (StatementLine) iterador.next();
-		total += item.amount; 
-	}
-	statement.setIndIncentSubtotal(total);*/
-end
 /* ************ FIN INCENTIVOS INDIVIDUALES ************ */
 
 /* ************ INCENTIVOS PUNTO DE VENTA ************** */
-rule "Incentivos  Punto de Venta - 250 Altas Proporcional"
+rule "Incentivos  Punto de Venta - X Altas Proporcional"
 salience 70
 when
 	$empleado : Employee()
-	$p : Parameter(paramCode == "IEMP_ALTAS_RG1_BON_ARS")
+	$p : Parameter(paramCode == "IVTA_ALTAS_RG1_BON_ARS")
 	$totalBu : Summary(bu == $empleado.bu && summaryCode == "ALTASYCATER" && quantity >= $p.minValue && quantity < $p.maxValue)
 	$total : Summary(employee == $empleado && summaryCode == "ALTASYCATER")
 then
@@ -733,11 +747,11 @@ then
 			$p.getValue(), performance * 100.0, $p.getValue() * performance, 10);
 end
 
-rule "Incentivos  Punto de Venta - 300 Altas Proporcional"
+rule "Incentivos  Punto de Venta - XX Altas Proporcional"
 salience 70
 when
 	$empleado : Employee()
-	$p : Parameter(paramCode == "IEMP_ALTAS_RG2_BON_ARS")
+	$p : Parameter(paramCode == "IVTA_ALTAS_RG2_BON_ARS")
 	$totalBu : Summary(bu == $empleado.bu && summaryCode == "ALTASYCATER" && quantity >= $p.minValue)
 	$total : Summary(employee == $empleado && summaryCode == "ALTASYCATER")
 then
@@ -746,33 +760,6 @@ then
 			$p.getValue(), performance, $p.getValue() * performance, 11);
 end
 
-rule "Incentivos  Punto de Venta - 1005 MEC ($ 5 adicionales por alta de MEC)* Sujeto al alcance de su Objetivo MEC EMPRESA"
-salience 70
-when
-	$empleado : Employee()
-	$p : Parameter(paramCode == "IEMP_MEC_PU_ARS")
-	// TODO Esto es el MEC de la BU, no de JAG - CORREGIR
-	$totalJAG : Summary(bu == $empleado.bu && summaryCode == "MEC" && quantity >= $p.minValue)
-	$total : Summary(employee == $empleado && summaryCode == "MEC")
-then
-	statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
-			$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity(), 20);
-end
-
-/* ********* TOTAL INCENTIVOS PUNTO DE VENTA *********** */
-rule "Totalizaci��n por incentivos punto de venta"
-salience 65
-when
-	$empleado: Employee()
-then
-	Double total = 0.0D;
-	/*Iterator iterador = (Iterator) statement.getPosIncentLines().iterator();
-	while (iterador.hasNext()) {
-		StatementLine item = (StatementLine) iterador.next();
-		total += item.amount; 
-	}
-	statement.setPosIncentSubtotal(total);*/
-end
 /* ********** FIN INCENTIVOS PUNTO DE VENTA  *********** */
 
 /* ******************** DEDUCCIONES ******************** */
@@ -791,8 +778,8 @@ rule "Bajas - MEC"
 salience 60
 when
 	$empleado : Employee()
-	$p : Parameter(paramCode == "BAJAS_MEC_PU_ARS")
-	$total : Summary(employee == $empleado && summaryCode == "MEC_BAJAS")
+	$p : Parameter(paramCode == "BAJAS_LEC_PU_ARS")
+	$total : Summary(employee == $empleado && summaryCode == "LEC_BAJAS")
 then
 	statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
 			$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity(), 20);
@@ -852,20 +839,6 @@ then
 			null, null, $total.getQuantity(), 70);
 end
 
-/* **************** TOTAL DEDUCCIONES ****************** */
-rule "Totalizaci��n por deducciones"
-salience 55
-when
-	$empleado: Employee()
-then
-	Double total = 0.0D;
-	/*Iterator iterador = (Iterator) statement.getDeductionsLines().iterator();
-	while (iterador.hasNext()) {
-		StatementLine item = (StatementLine) iterador.next();
-		total += item.amount; 
-	}
-	statement.setDeductionsSubtotal(total);*/
-end
 /* ****************** FIN DEDUCCIONES ****************** */
 
 /* ******************** REDONDEO *********************** */
