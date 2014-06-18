@@ -72,20 +72,15 @@ class Parameter {
 
 	String getCurrentDescription() {
 		def currentDescription = paramDescription
-		def aux = ""
-		log.debug(currentDescription)
 		
 		if (value != null) {
-			aux = currentDescription.replaceAll(Pattern.quote("[VALUE]"), Matcher.quoteReplacement(String.format("%.2f", value)))
-			currentDescription = aux
+			currentDescription = currentDescription.replaceAll(Pattern.quote("[VALUE]"), Matcher.quoteReplacement(String.format("%.2f", value)))
 		}
 		if (minValue != null) {
-			aux = currentDescription.replaceAll(Pattern.quote("[MIN]"), Matcher.quoteReplacement(String.format("%.2f", minValue)))
-			currentDescription = aux
+			currentDescription = currentDescription.replaceAll(Pattern.quote("[MIN]"), Matcher.quoteReplacement(String.format("%.2f", minValue)))
 		}
 		if (maxValue != null) {
-			aux = currentDescription.replaceAll(Pattern.quote("[MAX]"), Matcher.quoteReplacement(String.format("%.2f", maxValue)))
-			currentDescription = aux
+			currentDescription = currentDescription.replaceAll(Pattern.quote("[MAX]"), Matcher.quoteReplacement(String.format("%.2f", maxValue)))
 		}
 		log.debug(currentDescription)
 		return currentDescription

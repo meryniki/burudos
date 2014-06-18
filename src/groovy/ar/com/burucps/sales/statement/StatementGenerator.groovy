@@ -81,12 +81,7 @@ public class StatementGenerator {
 			(       month(sumMonth) == param_month &&
 					year(sumMonth) == param_year        )
 		}.list().each() { it ->
-			try {
-				ksession.insert(it);
-			} catch (Exception e) {
-				println "Exception " + it
-				println e
-			}
+			ksession.insert(it);
 		}
 		log.debug("Load Summary")
 		log.debug("Fact Count" + ksession.getFactCount())
