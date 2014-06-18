@@ -277,7 +277,7 @@ rule "Puntos - Totalizacion de puntos"
 			factor = 0;
 		}
 		additionalValues.put("factorAltas",factor);
-		additionalValues.put("IM",0);
+		additionalValues.put("IM_PREP",0);
 		additionalValues.put("LEC",0);
 		additionalValues.put("ALTASVOZ",0);
 		additionalValues.put("ALTAS",0);
@@ -314,7 +314,10 @@ rule "Altas - IM Control 500 MB"
 		
 		statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
 					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 10);
-		additionalValues.put("IM",$total.getQuantity());
+		
+		Integer partial = (Integer) additionalValues.get("IM_PREP");
+		partial += $total.getQuantity();
+		additionalValues.put("IM_PREP", partial);
 end
 
 rule "Altas - LEC"
@@ -500,9 +503,9 @@ rule "Altas - Prepago Interno"
 		statement.addLine(StatementLineType.RULE, $p.getParamCategory(), $p.getCurrentDescription(), 
 					$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity() * factor, 60);
 		
-		Integer partial = (Integer) additionalValues.get("ALTASVOZ");
+		Integer partial = (Integer) additionalValues.get("IM_PREP");
 		partial += $total.getQuantity();
-		additionalValues.put("ALTASVOZ", partial);
+		additionalValues.put("IM_PREP", partial);
 end
 
 rule "Altas - Operaciones Call Center"
@@ -625,11 +628,11 @@ when
 	$pLEC : Parameter(paramCode == "QVTA_LEC_OP")
 	$pVOZ : Parameter(paramCode == "QVTA_ALTAS_VOZ_OP")
 then
-	Integer im = (Integer) additionalValues.get("IM");
+	Integer im = (Integer) additionalValues.get("IM_PREP");
 	Integer lec = (Integer) additionalValues.get("LEC");
 	Integer altasvoz = (Integer) additionalValues.get("ALTASVOZ");
 	Integer altas = im + lec + altasvoz;
-	Integer qAltas = $pIM.getValue() + $pLEC.getValue() + $pVOZ.getValue();
+	Double qAltas = $pIM.getValue() + $pLEC.getValue() + $pVOZ.getValue();
 	Integer employeeCount = $empleado.getBu().getEmployeeCount();
 	
 	additionalValues.put("ALTAS", altas);
@@ -642,10 +645,10 @@ then
 	statement.addLine(StatementLineType.OBJECTIVE, StatementLineGroup.OBJ_Q, $pIM.getCurrentDescription(), 
 			$pIM.getValue(), $pIM.getValue() / employeeCount, im, 1);
 	statement.addLine(StatementLineType.OBJECTIVE, StatementLineGroup.OBJ_Q, $pLEC.getCurrentDescription(), 
-			$pLEC.getValue(), $pLEC.getValue() / employeeCount, im, 2);
+			$pLEC.getValue(), $pLEC.getValue() / employeeCount, lec, 2);
 	statement.addLine(StatementLineType.OBJECTIVE, StatementLineGroup.OBJ_Q, $pVOZ.getCurrentDescription(), 
-			$pVOZ.getValue(), $pVOZ.getValue() / employeeCount, im, 3);
-	statement.addLine(StatementLineType.OBJECTIVE, StatementLineGroup.OBJ_Q, "ALTAS", 
+			$pVOZ.getValue(), $pVOZ.getValue() / employeeCount, altasvoz, 3);
+	statement.addLine(StatementLineType.OBJECTIVE, StatementLineGroup.OBJ_Q, "Total ALTAS (ALTAS DE VOZ / LEC / PREPAGOS / IM)", 
 			qAltas, qAltas / employeeCount, altas, 4);
 	
 end
@@ -818,7 +821,7 @@ then
 			$p.getValue(), $total.getQuantity(), $p.getValue() * $total.getQuantity(), 50);
 end
 
-rule "Bajas - D��bitos por fraudes"
+rule "Bajas - Debitos por fraudes"
 salience 60
 when
 	$empleado : Employee()
