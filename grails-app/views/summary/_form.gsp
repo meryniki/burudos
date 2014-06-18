@@ -22,7 +22,7 @@
 	<div class="col-lg-9">
 		<g:select id="bu" name="bu.id"
 			from="${ar.com.burudos.business.BussinesUnit.list()}" optionKey="id"
-			 value="${summaryInstance?.bu?.id}" class="many-to-one" />
+			 value="${summaryInstance?.bu?.id}" class="many-to-one"  noSelection="['':'-Ninguno-']" />
 	</div>
 </div>
 
@@ -58,7 +58,7 @@
 			code="summary.month.label" default="Mes a totalizar" /> <span
 		class="required-indicator">*</span>
 	</label>
-	<g:datePicker name="sumMonth" precision="month" default="${sumMonth}"/>
+	<g:datePicker name="sumMonth" precision="month" default="${summaryInstance?.sumMonth}"/>
 	<a onmouseover="nhpup.popup('<g:message code="summary.month.help"/>');">?</a>
 </div>
 

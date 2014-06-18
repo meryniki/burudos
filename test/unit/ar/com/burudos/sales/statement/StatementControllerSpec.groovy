@@ -5,7 +5,7 @@ package ar.com.burudos.sales.statement
 import grails.test.mixin.*
 import spock.lang.*
 
-@TestFor(StatementController)
+@TestFor(EmployeeStatementController)
 @Mock(Statement)
 class StatementControllerSpec extends Specification {
 
