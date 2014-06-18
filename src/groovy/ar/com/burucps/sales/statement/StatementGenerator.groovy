@@ -96,7 +96,7 @@ public class StatementGenerator {
 		def allParamCodes = query.list()
 
 		// Load EmployeeList and their statements
-		def allEmployees = Employee.findAll(sort: 'bu', order: 'asc') { bu != null && isworker }
+		def allEmployees = Employee.findAll(sort: 'bu', order: 'asc') { bu != null && isworker && bu.id == 12 }
 
 		BussinesUnit lastUnit = null;
 		def parameterFacts = [];
@@ -133,8 +133,7 @@ public class StatementGenerator {
 
 			log.debug("Creo la liquidacion para el empleado: " + employee)
 
-			EmployeeStatement statement = new EmployeeStatement(employee: employee, businessUnit: employee.bu,
-			statementPeriod: parsePeriod(param_month,param_year))
+			EmployeeStatement statement = new EmployeeStatement(employee: employee, businessUnit: employee.bu,statementPeriod: parsePeriod(param_month,param_year))
 
 			statement.pointsSubtotal = 0.0D
 			statement.pointsObjPerc = 0.0D
@@ -143,10 +142,13 @@ public class StatementGenerator {
 			statement.posIncentSubtotal = 0.0D
 			statement.positiveSubtotal = 0.0D
 			statement.total = 0.0D
-			statement.qBUTotal = 0D
-			statement.qEmployeeTotal = 0D
-			statement.qEmployeeReachedTotal = 0D
-			statement.qEmployeeReachedPerc = 0D
+			statement.deductionsSubtotal = 0.0D
+			statement.dueBalance = 0.0D
+			statement.fixedSubtotal = 0.0D
+			statement.qBUTotal = 0.0D
+			statement.qEmployeeTotal = 0.0D
+			statement.qEmployeeReachedTotal = 0.0D
+			statement.qEmployeeReachedPerc = 0.0D
 
 			statement.save(failOnError: true, flush: true)
 
