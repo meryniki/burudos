@@ -8,7 +8,7 @@ import grails.transaction.Transactional
 import ar.com.burudos.sales.statement.StatementLine
 
 @Transactional(readOnly = true)
-class StatementController {
+class EmployeeStatementController {
 
 	static Boolean linkMe = true
 	static String btnName = "statement.btnLabel"

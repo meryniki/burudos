@@ -117,7 +117,7 @@
 				<li class="fieldcontain">
 					<span id="statement-label" class="property-label"><g:message code="statementLine.statement.label" default="Statement" /></span>
 					
-						<span class="property-value" aria-labelledby="statement-label"><g:link controller="statement" action="show" id="${statementLineInstance?.statement?.id}">${statementLineInstance?.statement?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="statement-label"><g:link controller="employeeStatement" action="show" id="${statementLineInstance?.statement?.id}">${statementLineInstance?.statement?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>

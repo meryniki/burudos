@@ -60,19 +60,20 @@ class SummaryController {
 		}
 
 		def query
-		if (employeeorbu=='2') {
+		println params.employeeorbu
+		println params.employeeorbu=='1'
+		if (params.employeeorbu=='2') {
 			query = Summary.where{
 				(bu != null) &&
-						(bu.nombre ==~  "%${search}%") && (
+						(bu.nombre ==~  "%${search}%") || (
 						summaryCode ==~  "%${search}%") && (
 						month(sumMonth) == params.sumMonth_month &&
 						year(sumMonth) == params.sumMonth_year)
 			}
 		}
-		else if (employeeorbu=='1') {
+		else if (params.employeeorbu=='1') {
 			query = Summary.where{
-				(employee != null) &&
-						(employee.name ==~  "%${search}%") && (
+						(employee.name ==~  "%${search}%") || (
 						summaryCode ==~  "%${search}%") && (
 						month(sumMonth) == params.sumMonth_month &&
 						year(sumMonth) == params.sumMonth_year)

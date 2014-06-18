@@ -75,6 +75,19 @@ body {
 body.errorPage, body.loginPage {
 	background: url(../burudos/static/images/patterns/2.png) repeat;
 }
+
+.panel .plano_negro{
+color: black;
+background: white;
+border: none;
+}
+
+.width_fijo{
+margin:auto;
+width: 1000px;
+}
+
+
 .errorContainer {
 	background: url(../burudos/static/images/patterns/6.png) repeat;
 	border:1px solid #c4c4c4;
