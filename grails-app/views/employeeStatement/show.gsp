@@ -53,7 +53,8 @@ $( document ).ready( function() {
 					<div id="show-statement" class="content scaffold-show" role="main">
 						<ul class="bigBtnIcon">
 							<li><g:link class="show_printable" action="show_printable"
-												controller="employeeStatement" resource="${employeeStatementInstance}" >
+									controller="employeeStatement"
+									resource="${employeeStatementInstance}">
 									<span class="icon icomoon-icon-print"></span>
 									<g:message code="default.print.label" args="[entityName]" />
 								</g:link></li>
@@ -134,38 +135,39 @@ $( document ).ready( function() {
 															<th>Puntaje Objetivo</th>
 															<th>% Alcanzado</th>
 															<th>Comision</th>
+															<th>Actions</th>
 														</tr>
 													</thead>
 													<tbody>
 														<g:each
 															in="${employeeStatementInstance.getBuObjPointsLines()}">
 															<tr>
-																<td>
-																	${it.description}
+																<td>${it.description}
 																</td>
-																<td>
-																	${it.unitAmount}
-																</td>
-																<td>
-																	${it.operationsAmount}
-																</td>
-																<td>
-																	${it.amount}
-																</td>
-																<td>
-																	<div class="controls center">
-																		<g:link class="edit" action="edit" rel="pop-up"
-																			controller="statementLine" resource="${it}">
-																			<span class="icon12 icomoon-icon-pencil"></span>
-																		</g:link>
-																		<g:link class="delete" action="delete" rel="pop-up"
-																			controller="statementLine"
-																			value="${message(code: 'default.button.delete.label', default: 'Delete')}"
-																			resource="${it}"
-																			onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
-																			<span class="icon12 icomoon-icon-remove"></span>
-																		</g:link>
-																	</div>
+																<td><g:formatNumber number="${it.unitAmount}"
+																		type="number" minIntegerDigits="1"
+																		maxFractionDigits="0" /></td>
+																<td><g:formatNumber
+																		number="${employeeStatementInstance.pointsObjPerc}"
+																		type="number" minIntegerDigits="1"
+																		maxFractionDigits="2" /></td>
+																<td><g:formatNumber number="${it.amount}"
+																		type="number" minIntegerDigits="1"
+																		maxFractionDigits="2" /></td>
+																		<td>
+																<div class="controls center">
+																	<g:link class="edit" action="edit" rel="pop-up"
+																		controller="statementLine" resource="${it}">
+																		<span class="icon12 icomoon-icon-pencil"></span>
+																	</g:link>
+																	<g:link class="delete" action="delete" rel="pop-up"
+																		controller="statementLine"
+																		value="${message(code: 'default.button.delete.label', default: 'Delete')}"
+																		resource="${it}"
+																		onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
+																		<span class="icon12 icomoon-icon-remove"></span>
+																	</g:link>
+																</div>
 																</td>
 															</tr>
 														</g:each>
@@ -183,25 +185,40 @@ $( document ).ready( function() {
 												style="overflow: hidden; outline: none;">
 												<table class="table">
 													<thead>
-														<tr>
-															<th colspan="2">Objetivos de operaciones</th>
-														</tr>
+														<div class="panel-heading">
+															<h4>Objetivos de Operaciones</h4>
+														</div>
 														<tr>
 															<th>Operación</th>
-															<th>Q objetivo</th>
+															<th>Q Punto de Venta</th>
+															<th>Q Empleado</th>
+															<th>Q alcanzado</th>
+															<th>%</th>
+															<th>Actions</th>
 														</tr>
 													</thead>
 													<tbody>
 														<g:each in="${employeeStatementInstance.getBuObjQLines()}">
 															<tr>
-																<td>
-																	${it.description}
+																<td>${it.description}
 																</td>
 																<td>
-																	${it.unitAmount}
+																	<g:formatNumber number="${it.unitAmount}"
+																		type="number" minIntegerDigits="1"
+																		maxFractionDigits="0" />
 																</td>
 																<td>
-																	${it.amount}
+																	<g:formatNumber number="${it.operationsAmount}"
+																		type="number" minIntegerDigits="1"
+																		maxFractionDigits="0" />
+																</td>
+																<td>
+																	<g:formatNumber number="${it.amount}"
+																		type="number" minIntegerDigits="1"
+																		maxFractionDigits="0" />
+																</td>
+																<td>%
+																		
 																</td>
 																<td>
 																	<div class="controls center">
@@ -379,6 +396,20 @@ $( document ).ready( function() {
 																				</td>
 																			</tr>
 																		</g:each>
+																		<tr>
+																			<td colspan="3">Total</td>
+																			<td><g:fieldValue
+																					bean="${employeeStatementInstance}"
+																					field="posIncentSubtotal" /></td>
+																			<td>
+																				<div class="controls center">
+																					<a href="#" class="tip" oldtitle="Edit task"
+																						title="" data-hasqtip="true"
+																						aria-describedby="qtip-17"><span
+																						class="icon12 icomoon-icon-sigma"></span></a>
+																				</div>
+																			</td>
+																		</tr>
 																</table>
 															</div>
 														</div>
@@ -447,6 +478,21 @@ $( document ).ready( function() {
 																				</td>
 																			</tr>
 																		</g:each>
+																		
+																		<tr>
+																			<td colspan="3">Total</td>
+																			<td><g:fieldValue
+																					bean="${employeeStatementInstance}"
+																					field="stalesSubtotal" /></td>
+																			<td>
+																				<div class="controls center">
+																					<a href="#" class="tip" oldtitle="Edit task"
+																						title="" data-hasqtip="true"
+																						aria-describedby="qtip-17"><span
+																						class="icon12 icomoon-icon-sigma"></span></a>
+																				</div>
+																			</td>
+																		</tr>
 																</table>
 															</div>
 														</div>
@@ -506,6 +552,20 @@ $( document ).ready( function() {
 																				</td>
 																			</tr>
 																		</g:each>
+																		<tr>
+																			<td colspan="3">Total</td>
+																			<td><g:fieldValue
+																					bean="${employeeStatementInstance}"
+																					field="indIncentSubtotal" /></td>
+																			<td>
+																				<div class="controls center">
+																					<a href="#" class="tip" oldtitle="Edit task"
+																						title="" data-hasqtip="true"
+																						aria-describedby="qtip-17"><span
+																						class="icon12 icomoon-icon-sigma"></span></a>
+																				</div>
+																			</td>
+																		</tr>
 																</table>
 															</div>
 														</div>
@@ -570,6 +630,20 @@ $( document ).ready( function() {
 																		</td>
 																	</tr>
 																</g:each>
+																<tr>
+																			<td colspan="3">Total</td>
+																			<td><g:fieldValue
+																					bean="${employeeStatementInstance}"
+																					field="deductionsSubtotal" /></td>
+																			<td>
+																				<div class="controls center">
+																					<a href="#" class="tip" oldtitle="Edit task"
+																						title="" data-hasqtip="true"
+																						aria-describedby="qtip-17"><span
+																						class="icon12 icomoon-icon-sigma"></span></a>
+																				</div>
+																			</td>
+																		</tr>
 														</table>
 													</div>
 												</div>
