@@ -86,6 +86,14 @@
 													bean="${summaryInstance}" field="summaryCode" /></span></li>
 									</g:if>
 									
+									<g:if test="${summaryInstance?.filter}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="summary.summaryCode.label" default="Filtro" /></span> <span
+											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
+											class="col-lg-6"><g:link controller="filter" action="show" id="${summaryInstance?.filter?.id}" ><g:fieldValue
+													bean="${summaryInstance}" field="filter" /></g:link></span></li>
+									</g:if>
+									
 									<g:if test="${summaryInstance?.bu}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="summary.bu.label" default="Punto de Venta" /></span> <span

@@ -40,10 +40,6 @@
 						<span class="icon icomoon-icon-plus"></span>
 						<g:message code="default.new.label" args="[entityName]" />
 					</g:link></li>
-				<li><g:link class="create" action="upload">
-						<span class="icon icomoon-icon-table"></span>
-						<g:message code="default.upload.label" args="[entityName]" />
-					</g:link></li>
 			</ul>
 
 			<div id="list-filter" class="content scaffold-list" role="main">

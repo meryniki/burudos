@@ -29,7 +29,12 @@ class Filter {
 	String plan_desc
 	String debaut
 	String cat_plan
+	
+	/*Si suma por un campo, se escribe aca*/
+	String suma
+	
 	String plan_promo
+	
 	Operation op_desde
 	Operation op_hasta
 	
@@ -57,6 +62,7 @@ class Filter {
 		plan_promo(nullable:true)
 		op_desde(nullable:true)
 		op_hasta(nullable:true)
+	    suma(nullable:true)		
 	}
 	
 	String toString() {

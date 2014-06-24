@@ -135,7 +135,6 @@ $( document ).ready( function() {
 															<th>Puntaje Objetivo</th>
 															<th>% Alcanzado</th>
 															<th>Comision</th>
-															<th>Actions</th>
 														</tr>
 													</thead>
 													<tbody>
@@ -154,21 +153,7 @@ $( document ).ready( function() {
 																<td><g:formatNumber number="${it.amount}"
 																		type="number" minIntegerDigits="1"
 																		maxFractionDigits="2" /></td>
-																		<td>
-																<div class="controls center">
-																	<g:link class="edit" action="edit" rel="pop-up"
-																		controller="statementLine" resource="${it}">
-																		<span class="icon12 icomoon-icon-pencil"></span>
-																	</g:link>
-																	<g:link class="delete" action="delete" rel="pop-up"
-																		controller="statementLine"
-																		value="${message(code: 'default.button.delete.label', default: 'Delete')}"
-																		resource="${it}"
-																		onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
-																		<span class="icon12 icomoon-icon-remove"></span>
-																	</g:link>
-																</div>
-																</td>
+																	
 															</tr>
 														</g:each>
 													</tbody>
@@ -194,7 +179,6 @@ $( document ).ready( function() {
 															<th>Q Empleado</th>
 															<th>Q alcanzado</th>
 															<th>%</th>
-															<th>Actions</th>
 														</tr>
 													</thead>
 													<tbody>
@@ -219,21 +203,6 @@ $( document ).ready( function() {
 																</td>
 																<td>%
 																		
-																</td>
-																<td>
-																	<div class="controls center">
-																		<g:link class="edit" action="edit" rel="pop-up"
-																			controller="statementLine" resource="${it}">
-																			<span class="icon12 icomoon-icon-pencil"></span>
-																		</g:link>
-																		<g:link class="delete" action="delete" rel="pop-up"
-																			controller="statementLine"
-																			value="${message(code: 'default.button.delete.label', default: 'Delete')}"
-																			resource="${it}"
-																			onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
-																			<span class="icon12 icomoon-icon-remove"></span>
-																		</g:link>
-																	</div>
 																</td>
 															</tr>
 														</g:each>
@@ -283,7 +252,6 @@ $( document ).ready( function() {
 																			<th>Pts. / operación</th>
 																			<th># operaciones</th>
 																			<th>Total</th>
-																			<th>Actions</th>
 																		</tr>
 																	</thead>
 																	<tbody>
@@ -301,21 +269,6 @@ $( document ).ready( function() {
 																				</td>
 																				<td>
 																					${it.amount}
-																				</td>
-																				<td>
-																					<div class="controls center">
-																						<g:link class="edit" action="edit" rel="pop-up"
-																							controller="statementLine" resource="${it}">
-																							<span class="icon12 icomoon-icon-pencil"></span>
-																						</g:link>
-																						<g:link class="delete" action="delete"
-																							rel="pop-up" controller="statementLine"
-																							value="${message(code: 'default.button.delete.label', default: 'Delete')}"
-																							resource="${it}"
-																							onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
-																							<span class="icon12 icomoon-icon-remove"></span>
-																						</g:link>
-																					</div>
 																				</td>
 																			</tr>
 																		</g:each>
@@ -360,7 +313,6 @@ $( document ).ready( function() {
 																			<th>Valor</th>
 																			<th>Cantidad/%</th>
 																			<th>Total</th>
-																			<th>Actions</th>
 																		</tr>
 																	</thead>
 																	<tbody>
@@ -378,21 +330,6 @@ $( document ).ready( function() {
 																				</td>
 																				<td>
 																					${it.amount}
-																				</td>
-																				<td>
-																					<div class="controls center">
-																						<g:link class="edit" action="edit" rel="pop-up"
-																							controller="statementLine" resource="${it}">
-																							<span class="icon12 icomoon-icon-pencil"></span>
-																						</g:link>
-																						<g:link class="delete" action="delete"
-																							rel="pop-up" controller="statementLine"
-																							value="${message(code: 'default.button.delete.label', default: 'Delete')}"
-																							resource="${it}"
-																							onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
-																							<span class="icon12 icomoon-icon-remove"></span>
-																						</g:link>
-																					</div>
 																				</td>
 																			</tr>
 																		</g:each>
@@ -442,7 +379,6 @@ $( document ).ready( function() {
 																			<th>Valor</th>
 																			<th>Cantidad/%</th>
 																			<th>Total</th>
-																			<th>Actions</th>
 																		</tr>
 																	</thead>
 																	<tbody>
@@ -460,21 +396,6 @@ $( document ).ready( function() {
 																				</td>
 																				<td>
 																					${it.amount}
-																				</td>
-																				<td>
-																					<div class="controls center">
-																						<g:link class="edit" action="edit" rel="pop-up"
-																							controller="statementLine" resource="${it}">
-																							<span class="icon12 icomoon-icon-pencil"></span>
-																						</g:link>
-																						<g:link class="delete" action="delete"
-																							rel="pop-up" controller="statementLine"
-																							value="${message(code: 'default.button.delete.label', default: 'Delete')}"
-																							resource="${it}"
-																							onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
-																							<span class="icon12 icomoon-icon-remove"></span>
-																						</g:link>
-																					</div>
 																				</td>
 																			</tr>
 																		</g:each>
@@ -516,7 +437,6 @@ $( document ).ready( function() {
 																			<th>Valor</th>
 																			<th>Cantidad/%</th>
 																			<th>Total</th>
-																			<th>Actions</th>
 																		</tr>
 																	</thead>
 																	<tbody>
@@ -534,21 +454,6 @@ $( document ).ready( function() {
 																				</td>
 																				<td>
 																					${it.amount}
-																				</td>
-																				<td>
-																					<div class="controls center">
-																						<g:link class="edit" action="edit" rel="pop-up"
-																							controller="statementLine" resource="${it}">
-																							<span class="icon12 icomoon-icon-pencil"></span>
-																						</g:link>
-																						<g:link class="delete" action="delete"
-																							controller="statementLine"
-																							value="${message(code: 'default.button.delete.label', default: 'Delete')}"
-																							resource="${it}" rel="pop-up"
-																							onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
-																							<span class="icon12 icomoon-icon-remove"></span>
-																						</g:link>
-																					</div>
 																				</td>
 																			</tr>
 																		</g:each>
@@ -594,7 +499,6 @@ $( document ).ready( function() {
 																	<th>Valor</th>
 																	<th>Cantidad/%</th>
 																	<th>Total</th>
-																	<th>Actions</th>
 																</tr>
 															</thead>
 															<tbody>
@@ -612,21 +516,6 @@ $( document ).ready( function() {
 																		</td>
 																		<td>
 																			${it.amount}
-																		</td>
-																		<td>
-																			<div class="controls center">
-																				<g:link class="edit" action="edit"
-																					controller="statementLine" resource="${it}">
-																					<span class="icon12 icomoon-icon-pencil"></span>
-																				</g:link>
-																				<g:link class="delete" action="delete"
-																					controller="statementLine"
-																					value="${message(code: 'default.button.delete.label', default: 'Delete')}"
-																					resource="${it}"
-																					onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
-																					<span class="icon12 icomoon-icon-remove"></span>
-																				</g:link>
-																			</div>
 																		</td>
 																	</tr>
 																</g:each>
