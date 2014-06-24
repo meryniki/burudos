@@ -1,20 +1,19 @@
-<%@ page import="ar.com.burudos.business.BussinesUnit"%>
+<%@ page import="ar.com.burucps.drools.RuleSet"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta name="layout" content="main">
 <g:set var="entityName"
-	value="${message(code: 'bussinesUnit.label', default: 'bussinesUnit')}" />
+	value="${message(code: 'ruleSet.label', default: 'RuleSet')}" />
 <title><g:message code="default.edit.label" args="[entityName]" /></title>
 </head>
 <body>
-
 	<div id="content" class="clearfix">
 		<div class="contentwrapper">
 			<div class="heading">
 
 				<h3>
-					<g:message code="bussinesUnit.btnLabel" args="[entityName]" />
+					<g:message code="ruleSet.btnLabel" args="[entityName]" />
 				</h3>
 
 				<div class="resBtnSearch">
@@ -28,7 +27,7 @@
 					</a> <span class="divider"> <span
 							class="icon16 icomoon-icon-arrow-right-3"></span>
 					</span></li>
-					<li class="active"><g:message code="bussinesUnit.list.label"
+					<li class="active"><g:message code="ruleSet.list.label"
 							args="[entityName]" /></li>
 				</ul>
 
@@ -43,21 +42,14 @@
 						<span class="icon icomoon-icon-menu"></span>
 						<g:message code="default.list.label" args="[entityName]" />
 					</g:link></li>
-				<li><g:link class="create" action="upload">
-						<span class="icon icomoon-icon-table"></span>
-						<g:message code="default.upload.label" args="[entityName]" />
-					</g:link></li>
 			</ul>
-
 
 			<div class="row">
 
 				<div class="col-lg-2"></div>
 
 				<div class="col-lg-8">
-
-					<div id="edit-bussinesUnit" class="content scaffold-edit"
-						role="main">
+					<div id="edit-ruleSet" class="content scaffold-edit" role="main">
 						<h1>
 							<g:message code="default.edit.label" args="[entityName]" />
 						</h1>
@@ -66,9 +58,9 @@
 								${flash.message}
 							</div>
 						</g:if>
-						<g:hasErrors bean="${bussinesUnitInstance}">
+						<g:hasErrors bean="${ruleSetInstance}">
 							<ul class="errors" role="alert">
-								<g:eachError bean="${bussinesUnitInstance}" var="error">
+								<g:eachError bean="${ruleSetInstance}" var="error">
 									<li
 										<g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message
 											error="${error}" /></li>
@@ -76,24 +68,23 @@
 							</ul>
 						</g:hasErrors>
 						<div class="panel panel-default">
-
 							<div class="panel-heading">
 								<h4>
-									<span><g:message code="bussinesUnit.create.heading" /></span>
+									<span><g:message code="ruleSet.edit.heading" /></span>
 								</h4>
 							</div>
 							<div class="panel-body">
-								<g:form url="[resource:bussinesUnitInstance, action:'update']"
-									class="form-horizontal" method="PUT">
-									<g:hiddenField name="version"
-										value="${bussinesUnitInstance?.version}" />
-									<fieldset class="form">
+								<g:form url="[resource:ruleSetInstance, action:'update']"
+									method="PUT" class="form-horizontal" role="form">
+									<fieldset>
 										<g:render template="form" />
 									</fieldset>
 									<fieldset>
-										<div class="center form-group">
-											<g:actionSubmit class="save btn btn-info" action="update"
-												value="${message(code: 'default.button.update.label', default: 'Update')}" />
+										<div class="form-group">
+											<div class="col-lg-offset-3 col-lg-9">
+												<g:actionSubmit class="btn btn-info" action="update"
+													value="${message(code: 'default.button.update.label', default: 'Update')}" />
+											</div>
 										</div>
 									</fieldset>
 								</g:form>
@@ -104,6 +95,6 @@
 			</div>
 		</div>
 	</div>
-
 </body>
 </html>
+

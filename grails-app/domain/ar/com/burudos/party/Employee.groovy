@@ -7,6 +7,8 @@ import ar.com.burudos.business.BussinesUnit;
 import ar.com.burudos.sales.Transaction;
 import ar.com.burudos.sales.Operation;
 
+import ar.com.burucps.drools.RuleSet;
+
 class Employee extends Party{
 
 	String legajo;
@@ -19,6 +21,7 @@ class Employee extends Party{
 	BussinesUnit bu;
 	boolean isworker;
 	boolean iscoordinator;
+	RuleSet statementRules;
 
 	static constraints = {
 		legajo (nullable: false);
@@ -34,6 +37,7 @@ class Employee extends Party{
 		isworker (nullable: false);
 		iscoordinator (nullable: false);
 		basic( nullable: true);
+		statementRules(nullable:true);
 
 		// Auditoria
 		creationDate (nullable: true);
