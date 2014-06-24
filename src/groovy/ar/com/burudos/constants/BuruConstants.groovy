@@ -12,6 +12,8 @@ class BuruConstants {
 	static final String file_altas = "ALTA";
 	static final String file_cater = "CATER";
 	static final String file_post = "POSTVENTA";
+	static final String file_facturacion = "FACTURACION";
+	static final String file_bajas = "BAJAS";
 	static final String op_create_error = " No se puede crear Operacion ";
 	static final String employee_exist_error = " No existe el empleado asociado ";
 	static final String bu_exist_error = " No existe el Punto de venta asociado ";
@@ -24,6 +26,8 @@ class BuruConstants {
 	static final String row_buname="Punto de Venta"
 	static final String row_emp="Empleado";
 	static final String row_op_code="Operacion";
+	static final String row_op_type="Tipo Operacion";
+	static final String row_op_desc="Descripcion Operacion";
 	static final String row_date="Fecha";
 	static final String row_sds="Sds"
 	static final String row_ani="Ani"
@@ -42,9 +46,16 @@ class BuruConstants {
 	static final String row_cancel="Cancel"
 	static final String row_estado="Estado"
 	static final String row_legajo="Legajo"
+	static final String row_blister="Blister"
+	static final String row_neto="Neto"
+	static final String row_iva="Iva"
+	static final String row_iibb="IIBB"
+	static final String row_total="Total"
+	static final String row_cantidad="Cantidad"
 	static final String row_factura="Factura"
+	static final String row_tipo_fact="Tipo de Factura"
 	static final String row_importe="Importe"
-	static final String row_plan_dec="Plan desc"
+	static final String row_descuento="Descuento"
 	static final String row_plan_d="Plan desde"
 	static final String row_plan_h="Plan hasta"
 	static final String row_debaut="Debaut"

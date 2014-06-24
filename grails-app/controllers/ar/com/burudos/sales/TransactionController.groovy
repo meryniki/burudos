@@ -175,7 +175,7 @@ class TransactionController {
 		int linea = 0
 		def code
 		def Map row_mapa = [:]
-		
+
 		transactionInstance.clearErrors();
 
 		/*File management*/
@@ -193,6 +193,10 @@ class TransactionController {
 		jfile.splitEachLine('\t') { row ->
 			try {
 				row_mapa[BuruConstants.row_type]        = "params.type_file";
+				row_mapa[BuruConstants.row_iva]         = 0;
+				row_mapa[BuruConstants.row_iibb]        = 0;
+				row_mapa[BuruConstants.row_total]       = 0;
+				row_mapa[BuruConstants.row_neto]        = 0;
 				//print params.type_file.equals(BuruConstants.file_altas)
 				if ( params.type_file.equals(BuruConstants.file_altas) ) {
 					row_mapa[BuruConstants.row_buname]      = row[1];
@@ -215,7 +219,7 @@ class TransactionController {
 					row_mapa[BuruConstants.row_legajo]  = row[17];
 					row_mapa[BuruConstants.row_factura] = row[18];
 					row_mapa[BuruConstants.row_importe] = row[19];
-					row_mapa[BuruConstants.row_plan_dec]= row[20];
+					row_mapa[BuruConstants.row_op_desc]= row[20];
 					row_mapa[BuruConstants.row_debaut]  = row[21];
 				}else if ( params.type_file.equals(BuruConstants.file_cater)){
 					row_mapa[BuruConstants.row_buname]  = row[2];
@@ -244,7 +248,26 @@ class TransactionController {
 					row_mapa[BuruConstants.row_plan]      = row[7];
 					row_mapa[BuruConstants.row_plan_h]    = row[8];
 					row_mapa[BuruConstants.row_plan_d]    = row[9];
-					row_mapa[BuruConstants.row_plan_dec]  = row[7];
+					row_mapa[BuruConstants.row_op_desc]  = row[7];
+				}else if ( params.type_file.equals(BuruConstants.file_facturacion)){
+					row_mapa[BuruConstants.row_date]      = row[0];
+					row_mapa[BuruConstants.row_emp]       = row[1];
+					row_mapa[BuruConstants.row_tipo_fact] = row[2];
+					row_mapa[BuruConstants.row_factura]   = row[3];
+					row_mapa[BuruConstants.row_op_code]   = row[4];
+					row_mapa[BuruConstants.row_op_type]   = row[5];
+					row_mapa[BuruConstants.row_op_desc]   = row[6];
+					row_mapa[BuruConstants.row_equipo]    = row[7];
+					row_mapa[BuruConstants.row_blister]   = row[8];
+					row_mapa[BuruConstants.row_cantidad]  = row[9];
+					row_mapa[BuruConstants.row_neto]      = row[10];
+					row_mapa[BuruConstants.row_descuento] = row[11];
+					//row_mapa[BuruConstants.row_neto]      = row[12];
+					row_mapa[BuruConstants.row_iva]       = row[13];
+					//row_mapa[BuruConstants.row_neto]      = row[14];
+					row_mapa[BuruConstants.row_iibb]      = row[15];
+					row_mapa[BuruConstants.row_total]     = row[16];
+					row_mapa[BuruConstants.row_imei]      = row[17];
 				}
 
 				/*Creates the Op if not exists*/
@@ -253,9 +276,7 @@ class TransactionController {
 						try {
 							code = new Operation(type:row_mapa[BuruConstants.row_type] ,
 							code:row_mapa[BuruConstants.row_op_code],
-							description:row_mapa[BuruConstants.row_plan_dec]).save(failOnError: true, flush: true)
-							//op_desde:Operation.findByCode(row_mapa[BuruConstants.row_plan_d])?.id,
-							//op_hasta:Operation.findByCode(row_mapa[BuruConstants.row_plan_h])?.id).save(failOnError: true, flush: true)
+							description:row_mapa[BuruConstants.row_op_desc]).save(failOnError: true, flush: true)
 						} catch (Exception e) {
 							linea = linea + 1
 							if (linea<200) transactionInstance.errors.reject(row[0],row_mapa[BuruConstants.row_op_code]+BuruConstants.op_create_error)
@@ -265,28 +286,33 @@ class TransactionController {
 						}
 					}
 				}
-				
+
 				/*Creates the Client if not exists*
-				if (row_mapa[BuruConstants.row_cliente_doc]!=null
-				&& Client.findByNdoc(row_mapa[BuruConstants.row_cliente_doc])==null) {
-					Client.withNewSession{session->
-						try {
-							code = new Client(cname:row_mapa[BuruConstants.row_cliente],ndoc:row_mapa[BuruConstants.row_cliente_doc]).save(failOnError:true,flush:true)
-						} catch (Exception e) {
-							linea = linea + 1
-							if (linea<200) transactionInstance.errors.reject(row[0],row_mapa[BuruConstants.row_cliente]+BuruConstants.cl_create_error)
-							String sline = String.valueOf(linea);
-							reportOfErrors.put(sline, BuruConstants.cl_create_error+row)
-
-							e.printStackTrace()
-							return
-						}
-					}
-				}
-
-				/*Finally Search for the employee to match*/
-				BussinesUnit butmp = BussinesUnit.findByNombre(row_mapa[BuruConstants.row_buname])
-				Employee tmpemployee = Employee.findByNameAndBu(row_mapa[BuruConstants.row_emp], butmp )
+				 if (row_mapa[BuruConstants.row_cliente_doc]!=null
+				 && Client.findByNdoc(row_mapa[BuruConstants.row_cliente_doc])==null) {
+				 Client.withNewSession{session->
+				 try {
+				 code = new Client(cname:row_mapa[BuruConstants.row_cliente],ndoc:row_mapa[BuruConstants.row_cliente_doc]).save(failOnError:true,flush:true)
+				 } catch (Exception e) {
+				 linea = linea + 1
+				 if (linea<200) transactionInstance.errors.reject(row[0],row_mapa[BuruConstants.row_cliente]+BuruConstants.cl_create_error)
+				 String sline = String.valueOf(linea);
+				 reportOfErrors.put(sline, BuruConstants.cl_create_error+row)
+				 e.printStackTrace()
+				 return
+				 }
+				 }
+				 }
+				 /*Finally Search for the employee to match*/
+				Employee tmpemployee
+				BussinesUnit butmp
+				if ( !row_mapa[BuruConstants.row_buname])
+					tmpemployee= Employee.findByName(row_mapa[BuruConstants.row_emp])
+				else{
+					butmp = BussinesUnit.findByNombre(row_mapa[BuruConstants.row_buname])
+				    tmpemployee= Employee.findByNameAndBu(row_mapa[BuruConstants.row_emp], butmp )
+				}	
+			
 				if (! tmpemployee ){
 					linea = linea + 1
 					if (linea<200) transactionInstance.errors.reject(row[0],row_mapa[BuruConstants.row_emp]+BuruConstants.employee_exist_error)
@@ -295,14 +321,14 @@ class TransactionController {
 				}
 				else{
 					code = new Transaction(
-							party: tmpemployee.id,
-							op:    Operation.findByCode(row_mapa[BuruConstants.row_op_code]).id,
-							date:  Date.parse("dd/MM/yyyy", row_mapa[BuruConstants.row_date]),
-							sds:   row_mapa[BuruConstants.row_sds],
-							ani:   row_mapa[BuruConstants.row_ani],
-							imei:  row_mapa[BuruConstants.row_imei],
-							sim:   row_mapa[BuruConstants.row_sim],
-							folio: row_mapa[BuruConstants.row_folio],
+							party:     tmpemployee.id,
+							op:        Operation.findByCode(row_mapa[BuruConstants.row_op_code]).id,
+							date:      Date.parse("dd/MM/yyyy", row_mapa[BuruConstants.row_date]),
+							sds:       row_mapa[BuruConstants.row_sds],
+							ani:       row_mapa[BuruConstants.row_ani],
+							imei:      row_mapa[BuruConstants.row_imei],
+							sim:       row_mapa[BuruConstants.row_sim],
+							folio:     row_mapa[BuruConstants.row_folio],
 							partida:   row_mapa[BuruConstants.row_partida],
 							equipo:    row_mapa[BuruConstants.row_equipo],
 							//almacen:   BussinesUnit.findByCode(row_mapa[BuruConstants.row_almacen])?.id,
@@ -311,9 +337,17 @@ class TransactionController {
 							estado:    row_mapa[BuruConstants.row_estado],
 							factura:   row_mapa[BuruConstants.row_factura],
 							importe:   row_mapa[BuruConstants.row_importe],
-							plan_desc: row_mapa[BuruConstants.row_plan_dec],
+							plan_desc: row_mapa[BuruConstants.row_op_desc],
 							debaut:    row_mapa[BuruConstants.row_debaut],
 							cat_plan:  row_mapa[BuruConstants.row_cat_plan],
+							tipo_factura:    row_mapa[BuruConstants.row_tipo_fact],
+							blister:   row_mapa[BuruConstants.row_blister],
+							cantidad:  row_mapa[BuruConstants.row_cantidad],
+							iva:       row_mapa[BuruConstants.row_iva].toDouble(),
+							iibb:      row_mapa[BuruConstants.row_iibb].toDouble(),
+							total:     row_mapa[BuruConstants.row_total].toDouble(),
+							neto:      row_mapa[BuruConstants.row_neto].toDouble(),
+							descuento: row_mapa[BuruConstants.row_descuento],
 							plan_promo:row_mapa[BuruConstants.row_promo]
 							).save(failOnError: true, flush: true)
 				}
@@ -336,7 +370,6 @@ class TransactionController {
 			respond transactionInstance.errors, view:'upload_result', model:[report:mapreport]
 			return
 		}
-
 
 		redirect action:"index"
 	}

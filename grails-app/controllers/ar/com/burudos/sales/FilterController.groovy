@@ -7,7 +7,7 @@ import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class FilterController {
-	static Boolean linkMe = false
+	static Boolean linkMe = true
 	static String btnName = "filter.btnLabel"
 	static String iconName = "filter.iconName"
 	

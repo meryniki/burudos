@@ -80,9 +80,13 @@
 									</label> <label><g:radio name="type_file" value="ALTA"
 											checked="true" /> <g:message code="transaction.alta.label" /></label>
 									<label><g:radio name="type_file" value="CATER" /> <g:message
-											code="transaction.cater.label" /></label> <label><g:radio
-											name="type_file" value="POSTVENTA" /> <g:message
+											code="transaction.cater.label" /></label> 
+									<label><g:radio name="type_file" value="POSTVENTA" /> <g:message
 											code="transaction.postventa.label" /></label>
+									<label><g:radio name="type_file" value="BAJAS" /> <g:message
+											code="transaction.bajas.label" /></label>
+									<label><g:radio name="type_file" value="FACTURACION" /> <g:message
+											code="transaction.facturacion.label" /></label>
 								</div>
 								<label class="col-lg-3 control-label" for="fileinput"><g:message
 										code="default.upload.file" /></label>
@@ -108,7 +112,8 @@
 		</div>
 	</div>
 	<div id="thinking" style="display: none">
-		<img src="../static/images/ajax-loader.gif" alt="" style="width:100px;">
+		<img src="../static/images/ajax-loader.gif" alt=""
+			style="width: 100px;">
 	</div>
 </body>
 </html>

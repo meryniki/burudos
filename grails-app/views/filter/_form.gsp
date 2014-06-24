@@ -240,31 +240,15 @@
 		</div>
 	</div>
 
+	
 	<div
-		class="form-group fieldcontain ${hasErrors(bean: filterInstance, field: 'op_desde', 'error')} ">
-		<label class="col-lg-3 control-label" for="debaut"> <g:message
-				code="filter.op_desde.label" default="Op Desde" />
+		class="form-group fieldcontain ${hasErrors(bean: filterInstance, field: 'suma', 'error')} ">
+		<label class="col-lg-3 control-label" for="suma"> <g:message
+				code="filter.suma.label" default="Sumar por" />
 
 		</label>
 		<div class="col-lg-9">
-			<g:select id="op_desde" name="op_desde.id"
-				from="${ar.com.burudos.sales.Operation.list()}" optionKey="id"
-				value="${filterInstance?.op_desde?.id}" class="many-to-one"
-				noSelection="['null': '']" />
-		</div>
-	</div>
-
-	<div
-		class="form-group fieldcontain ${hasErrors(bean: filterInstance, field: 'op_hasta', 'error')} required">
-		<label class="col-lg-3 control-label" for="validMonth"> <g:message
-				code="filter.op_hasta.label" default="Op Hasta" /> <span
-			class="required-indicator">*</span>
-		</label>
-		<div class="col-lg-9">
-			<g:select id="op_hasta" name="op_hasta.id"
-				from="${ar.com.burudos.sales.Operation.list()}" optionKey="id"
-				value="${filterInstance?.op_hasta?.id}" class="many-to-one"
-				noSelection="['null': '']" />
+			<g:textField name="suma" value="${filterInstance?.suma}" />
 		</div>
 	</div>
 

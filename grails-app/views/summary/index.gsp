@@ -96,6 +96,8 @@
 												<div class="dataTables_filter"
 													id="DataTables_Table_1_filter">
 													<label> <span class="icon16 icomoon-icon-search"></span>
+													<input id="employeeorbu" type="hidden"
+														value="${mapsearch["employeeorbu"]}">
 														<input id="search" style="width: 75%;" type="text"
 														aria-controls="DataTables_Table_1" class="form-control"
 														value="${mapsearch["search"]}" autofocus>
