@@ -26,7 +26,7 @@ class FilterController {
 		if (!offset)
 			offset = 0;
 		if (!max)
-			max = 20;
+			max = 30;
 		params.max = max;
 
 		/*Date to get index list*/

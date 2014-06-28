@@ -76,15 +76,114 @@ body.errorPage, body.loginPage {
 	background: url(../burudos/static/images/patterns/2.png) repeat;
 }
 
-.panel .plano_negro{
+
+/*Tables*/
+.printable_titulo {
+   position: relative; 
+   font-size: 10px;  
+   border-color: #000000;
+   border-top:3px solid #000000;
+   padding-bottom: 1px;
+   border-collapse: collapse;
+   width: 100%;
+}
+
+.printable {
+	position: relative; 
+	font-size: 13px;  
+	border-color: #000000;
+  border-top:3px solid #000000;
+  border-left:1px solid #000000;
+  border-right:1px solid #000000;
+  -webkit-border-radius: 2px;
+     -moz-border-radius: 2px;
+          border-radius: 2px;
+   padding-bottom: 1px;
+   border-collapse: collapse;
+   width: 100%;
+}
+.printable td { border-left: 1px solid #000000; border-top: 1px solid #000000;}
+.printable thead th, .printable tbody td {text-align: right;}
+.printable thead th:first-child, .printable tbody td:first-child  {text-align: left;font-size: 14px;}
+
+.printable tr {
+}
+
+.printable tbody {}
+.printable tbody + tbody {border-top: 2px solid #000000; border-left: 1px solid #000000}
+.printable tbody tr:last-child{font-size: 14px; font-weight: bold; border-bottom: 1px solid #000000; }
+.printable thead th {
+  	background: rgb(255,255,255);
+	-moz-box-shadow:0 1px 1px rgba(255, 255, 255, 1);
+	-webkit-box-shadow: 0 1px 1px rgba(255, 255, 255, 1);
+	box-shadow: 0 1px 1px rgba(255, 255, 255, 1);
+}
+
+.printable-bordered {
+  border-color: #c4c4c4;
+  border-top:1px solid transparent;
+  -webkit-border-radius: 2px;
+     -moz-border-radius: 2px;
+          border-radius: 2px;
+   padding-bottom: 1px;
+   border-collapse: collapse;
+}
+
+.printable caption + thead tr:first-child th,.printable caption + thead tr:first-child td,.printable colgroup + thead tr:first-child th,
+.printable colgroup + thead tr:first-child td,.printable thead:first-child tr:first-child th,.printable thead:first-child tr:first-child td {
+  border-top: 1px solid #c4c4c4;
+}
+.printable-bordered th,.printable-bordered td { border-left: 1px solid #c4c4c4;}
+.printable-bordered thead:first-child tr:first-child th:first-child, .printable-bordered tbody:first-child tr:first-child td:first-child {
+  -webkit-border-top-left-radius: 2px;
+          border-top-left-radius: 2px;
+  -moz-border-radius-topleft: 2px;
+}
+.printable-bordered thead:first-child tr:first-child th:last-child,.printable-bordered tbody:first-child tr:first-child td:last-child {
+  -webkit-border-top-right-radius: 2px;
+          border-top-right-radius: 2px;
+  -moz-border-radius-topright: 2px;
+}
+.printable-bordered thead:last-child tr:last-child th:first-child,.printable-bordered tbody:last-child tr:last-child td:first-child {
+  -webkit-border-radius: 0 0 0 2px;
+     -moz-border-radius: 0 0 0 2px;
+          border-radius: 0 0 0 2px;
+  -webkit-border-bottom-left-radius: 2px;
+          border-bottom-left-radius: 2px;
+  -moz-border-radius-bottomleft: 2px;
+}
+
+.printable-bordered thead:last-child tr:last-child th:last-child,.printable-bordered tbody:last-child tr:last-child td:last-child {
+  -webkit-border-bottom-right-radius: 2px;
+          border-bottom-right-radius: 2px;
+  -moz-border-radius-bottomright: 2px;
+}
+
+.printable-striped tbody tr:nth-child(odd) td,.printable-striped tbody tr:nth-child(odd) th {
+}
+
+.printable tbody tr:hover td,
+.printable tbody tr:hover th {
+}
+
+.printable .ch {width: 10px;}
+
+.panel .planogris{
 color: black;
-background: white;
+background: #c4c4c4;
 border: none;
 }
 
+.panel .plano_negro{
+color: black;
+background: white;
+margin-bottom: 1px;
+}
+
+
 .width_fijo{
 margin:auto;
-width: 1000px;
+width: 1024px;
 }
 
 

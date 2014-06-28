@@ -36,18 +36,28 @@
 					ellos.</p>
 
 				<div id="controller-list" role="navigation">
-					<h2>Comenzar creando:</h2>
+					<h2>Para liquidar:</h2>
 					<ul>
-						<g:each var="c"
-							in="${grailsApplication.controllerClasses.sort { it.fullName } }">
-							<g:if test="${c.getStaticPropertyValue('linkMe', Boolean)}">
-								<li class="controller"><g:link
-										controller="${c.logicalPropertyName}">
-										<g:message
-											code="${c.getStaticPropertyValue('btnName', String)}" />
-									</g:link></li>
-							</g:if>
-						</g:each>
+						
+						<li><g:link class="create" controller="employee" action="index">
+						<span class="icon icomoon-icon-people"></span>Verificar los Empleados del Mes
+						</g:link></li>
+					
+						<li><g:link class="create" controller="transaction" action="upload">
+						<span class="icon icomoon-icon-cabinet"></span>Subir Transacciones del Mes
+						</g:link></li>
+						
+						<li><g:link class="create" controller="summary" action="domonthly">
+						<span class="icon icomoon-icon-stats-up"></span>Totalizar transacciones
+						</g:link></li>
+						
+						<li><g:link class="create" controller="parameter" action="index">
+						<span class="icon icomoon-icon-settings"></span>Verificar los Parametros de las Reglas de Liquidación
+						</g:link></li>
+						
+						<li><g:link class="create" controller="employeeStatement" action="process">
+						<span class="icon icomoon-icon-stack"></span>Liquidar
+						</g:link></li>
 					</ul>
 				</div>
 			</div>
