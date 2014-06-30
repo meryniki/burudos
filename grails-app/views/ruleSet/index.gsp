@@ -92,11 +92,11 @@
 											<thead>
 												<tr role="row">
 
-													<g:sortableColumn property="setName"
-														title="${message(code: 'ruleSet.setName.label', default: 'Set Name')}" />
+													<g:sortableColumn property="ruleSetName"
+														title="${message(code: 'ruleSet.ruleSetName.label', default: 'Rule Set Name')}" />
 
-													<g:sortableColumn property="setDescription"
-														title="${message(code: 'ruleSet.setDescription.label', default: 'Set Description')}" />
+													<g:sortableColumn property="ruleSetDescription"
+														title="${message(code: 'ruleSet.ruleSetDescription.label', default: 'Rule Set Description')}" />
 
 													<g:sortableColumn property="creationDate"
 														title="${message(code: 'ruleSet.creationDate.label', default: 'Creation Date')}" />
@@ -110,9 +110,9 @@
 											<tfoot>
 												<tr role="row">
 													<th rowspan="1" colspan="1"><g:message
-															code="ruleSet.setName.label" default="Rule Set Name" /></th>
+															code="ruleSet.ruleSetName.label" default="Rule Set Name" /></th>
 													<th rowspan="1" colspan="1"><g:message
-															code="ruleSet.setDescription.label" default="Description" />
+															code="ruleSet.ruleSetDescription.label" default="Rule Set Description" />
 													<th rowspan="1" colspan="1"><g:message
 															code="ruleSet.creationDate.label" default="Creation Date" /></th>
 													<th rowspan="1" colspan="1"><g:message
@@ -125,11 +125,11 @@
 													<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 
 														<td><g:link action="show" id="${ruleSetInstance.id}">
-																${fieldValue(bean: ruleSetInstance, field: "setName")}
+																${fieldValue(bean: ruleSetInstance, field: "ruleSetName")}
 															</g:link></td>
 
 														<td>
-															${fieldValue(bean: ruleSetInstance, field: "setDescription")}
+															${fieldValue(bean: ruleSetInstance, field: "ruleSetDescription")}
 														</td>
 
 														<td><g:formatDate

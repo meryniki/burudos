@@ -54,6 +54,10 @@ class Rule {
 		//lastUpdatedBy = securityService.currentAuthenticatedUsername();
 		lastUpdateDate = new Date();
 	}
+	
+	String toString() {
+		"$ruleName";
+	}
 	 
 	
 }

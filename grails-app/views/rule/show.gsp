@@ -114,8 +114,9 @@
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="rule.ruleGroup.label" default="Rule Group" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
-											class="col-lg-6"><g:fieldValue bean="${ruleInstance}"
-													field="ruleGroup" /></span></li>
+											class="col-lg-6">
+												${g.message(code: fieldValue(bean: ruleInstance, field: "ruleGroup"))}
+										</span></li>
 									</g:if>
 
 									<g:if test="${ruleInstance?.active}">

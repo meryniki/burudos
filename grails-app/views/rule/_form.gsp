@@ -69,6 +69,7 @@
 	</label>
 	<div class="col-lg-9">
 		<g:select name="ruleGroup" class="form-control uniform-input text"
+			optionValue="${ {name->g.message(code: name) } }"
 			from="${ar.com.burucps.sales.statement.StatementLineGroup?.values()}"
 			keys="${ar.com.burucps.sales.statement.StatementLineGroup.values()*.name()}"
 			required="" value="${ruleInstance?.ruleGroup?.name()}" />

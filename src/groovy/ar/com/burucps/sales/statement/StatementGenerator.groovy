@@ -13,6 +13,7 @@ import org.drools.logger.KnowledgeRuntimeLogger
 import org.drools.logger.KnowledgeRuntimeLoggerFactory
 import org.drools.runtime.StatefulKnowledgeSession
 
+//import java.io.StringInputStream
 import java.util.Map
 import java.util.HashMap
 
@@ -21,11 +22,27 @@ import ar.com.burudos.party.Employee
 import ar.com.burudos.sales.Summary
 import ar.com.burudos.sales.statement.EmployeeStatement
 import ar.com.burudos.sales.statement.Parameter
+import ar.com.burucps.drools.Rule
+import ar.com.burucps.drools.RuleSet
 
 /**
  * This is a sample file to launch a rule package from a rule source file.
  */
 public class StatementGenerator {
+	
+	String drlHead = """package ar.com.burucps.sales.statement;
+
+import ar.com.burudos.party.Employee;
+import ar.com.burudos.sales.statement.Parameter;
+import ar.com.burudos.sales.statement.EmployeeStatement;
+import ar.com.burudos.sales.Summary;
+import ar.com.burucps.sales.statement.StatementLineGroup; 
+import ar.com.burucps.sales.statement.StatementLineType;
+
+global ar.com.burudos.sales.statement.EmployeeStatement statement
+global java.util.Map additionalValues
+
+"""; 
 
 	private static final log = LogFactory.getLog(this)
 
@@ -38,9 +55,25 @@ public class StatementGenerator {
 		final KnowledgeBuilder kbuilder = KnowledgeBuilderFactory
 				.newKnowledgeBuilder();
 		log.debug("Se obtuvo el KnowledgeBuilder")
-		kbuilder.add(ResourceFactory.newClassPathResource("SellerRules.drl",
-				StatementGenerator.class), ResourceType.DRL);
-		log.debug("Se agrego el SellerRules.drl")
+		
+		String drlString = ""
+		
+		drlString += drlHead
+		Rule.findAll(){active == true}.each() { rule ->
+			drlString += "rule \"" + rule.ruleName + "\"\n"
+			drlString += "dialect \"" + rule.dialect + "\"\n"
+			drlString += "salience " + rule.salience + "\n"
+			drlString += "when \n" + rule.ruleCondition + "\n"
+			drlString += "then \n" + rule.ruleConsequence + "\n"
+			drlString += "end\n\n"
+		}
+		
+		log.info(drlString)
+		
+		InputStream drlDefinition = new ByteArrayInputStream(drlString.getBytes())
+		kbuilder.add( ResourceFactory.newInputStreamResource(drlDefinition), ResourceType.DRL);
+		//kbuilder.add(ResourceFactory.newClassPathResource("SellerRules.drl",StatementGenerator.class), ResourceType.DRL);
+		log.debug("Se agrego la definicion drl")
 
 		// Check the builder for errors
 		if (kbuilder.hasErrors()) {
@@ -105,24 +138,24 @@ public class StatementGenerator {
 
 		for (Employee employee : allEmployees ) {
 			additionalValuesMap.clear();
-			log.debug("Last Unit: " + lastUnit);
+			//log.debug("Last Unit: " + lastUnit);
 			if ((!lastUnit) || (lastUnit != employee.bu)) {
 				if (lastUnit != null) {
-					log.debug("Elimino los parametros para la BU previa: " + lastUnit)
+					//log.debug("Elimino los parametros para la BU previa: " + lastUnit)
 					parameterFacts.each {
 						ksession.retract(it);
 					}
-					log.debug("Fact Count" + ksession.getFactCount())
+					//log.debug("Fact Count" + ksession.getFactCount())
 					parameterFacts.clear()
 				}
-				log.debug("Agrego los parametros para la nueva BU: " + employee.bu)
+				//log.debug("Agrego los parametros para la nueva BU: " + employee.bu)
 				for (String codeName : allParamCodes) {
 					def parameter = parameterResolver.resolve(codeName, employee.bu);
 					if (parameter != null) {
 						parameterFacts << ksession.insert(parameter);
 					}
 				}
-				log.debug("Fact Count" + ksession.getFactCount())
+				//log.debug("Fact Count" + ksession.getFactCount())
 				lastUnit = employee.bu
 			}
 
@@ -150,7 +183,7 @@ public class StatementGenerator {
 			def employeeFact = ksession.insert(employee);
 			ksession.setGlobal("statement", statement);
 
-			log.info("Por ejecutar las reglas")
+			//log.info("Por ejecutar las reglas")
 			ksession.fireAllRules();
 			log.info("Fin de la ejecucion")
 

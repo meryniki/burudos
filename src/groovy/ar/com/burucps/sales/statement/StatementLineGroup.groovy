@@ -21,9 +21,9 @@ public enum StatementLineGroup {
 		case OTHERS:
 			return "statement.line.others";
 		case OBJ_POINTS:
-			return "statement.line.fixed";
+			return "statement.line.pointObjectives";
 		case OBJ_Q:
-			return "statement.line.others";
+			return "statement.line.objectives";
 		default:
 			throw new IllegalArgumentException();
 		}

@@ -4,8 +4,8 @@ import java.util.Date;
 
 class RuleSet {
 	
-	String setName
-	String setDescription
+	String ruleSetName
+	String ruleSetDescription
 	static hasMany = [rules: Rule]
 	
 	// Auiditoria
@@ -15,8 +15,8 @@ class RuleSet {
 	String lastUpdateBy
 
     static constraints = {
-		setName (nullable : false, unique: true)
-		setDescription (nullable : true)
+		ruleSetName (nullable : false, unique: true)
+		ruleSetDescription (nullable : true)
 		// Auditoria
 		creationDate (nullable: true)
 		createdBy (nullable: true)

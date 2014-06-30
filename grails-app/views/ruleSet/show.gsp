@@ -69,21 +69,21 @@
 
 								<ul class="col-lg-12">
 
-									<g:if test="${ruleSetInstance?.setName}">
+									<g:if test="${ruleSetInstance?.ruleSetName}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
-													code="ruleSet.setName.label" default="Set Name" /></span> <span
+													code="ruleSet.ruleSetName.label" default="Rule Set Name" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
 											class="col-lg-6"><g:fieldValue
-													bean="${ruleSetInstance}" field="setName" /></span></li>
+													bean="${ruleSetInstance}" field="ruleSetName" /></span></li>
 									</g:if>
 
-									<g:if test="${ruleSetInstance?.setDescription}">
+									<g:if test="${ruleSetInstance?.ruleSetDescription}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
-													code="ruleSet.setDescription.label"
-													default="Set Description" /></span> <span
+													code="ruleSet.ruleSetDescription.label"
+													default="Rule Set Description" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
 											class="col-lg-6"><g:fieldValue
-													bean="${ruleSetInstance}" field="setDescription" /></span></li>
+													bean="${ruleSetInstance}" field="ruleSetDescription" /></span></li>
 									</g:if>
 
 									<g:if test="${ruleSetInstance?.creationDate}">
@@ -115,12 +115,11 @@
 													</g:link></span>
 											</g:each></li>
 									</g:if>
-
 								</ul>
 
 								<ul class="bigBtnIcon" style="display: -webkit-box;">
 									<li><g:link class="edit" action="edit"
-											resource="${ruleInstance}">
+											resource="${ruleSetInstance}">
 											<span class="icon icomoon-icon-pencil"></span>
 											<g:message code="default.button.edit.label" default="Edit" />
 										</g:link></li>

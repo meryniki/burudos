@@ -52,15 +52,13 @@
 </div>
 
 <div
-	class="form-group fieldcontain ${hasErrors(bean: parameterInstance, field: 'value', 'error')} required">
+	class="form-group fieldcontain ${hasErrors(bean: parameterInstance, field: 'value', 'error')}">
 	<label class="col-lg-3 control-label" for="value"> <g:message
-			code="parameter.value.label" default="Value" /> <span
-		class="required-indicator">*</span>
+			code="parameter.value.label" default="Value" />
 	</label>
 	<div class="col-lg-9">
 		<g:field class="form-control" name="value" type="text"
-			value="${fieldValue(bean: parameterInstance, field: 'value')}"
-			required="" />
+			value="${fieldValue(bean: parameterInstance, field: 'value')}" />
 	</div>
 </div>
 

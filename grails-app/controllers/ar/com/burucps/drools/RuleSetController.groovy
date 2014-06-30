@@ -30,7 +30,7 @@ class RuleSetController {
 		params.max = max
 
 		def query = RuleSet.where{
-			(setName ==~  "%${search}%" || setDescription ==~  "%${search}%")
+			(ruleSetName ==~  "%${search}%" || ruleSetDescription ==~  "%${search}%")
 		}
 
 		println "SEARCH " + search

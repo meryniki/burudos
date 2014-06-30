@@ -134,7 +134,7 @@
 														</td>
 
 														<td>
-															${fieldValue(bean: ruleInstance, field: "ruleGroup")}
+															${g.message(code: fieldValue(bean: ruleInstance, field: "ruleGroup"))}
 														</td>
 
 														<td>

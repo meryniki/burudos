@@ -7,9 +7,9 @@ public enum RuleDialect {
 	public String toString() {
 		switch (this) {
 		case MVEL:
-			return "\"mvel\"";
+			return "mvel";
 		case JAVA:
-			return "\"java\"";
+			return "java";
 		}
 	}
 }

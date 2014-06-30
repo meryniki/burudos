@@ -1,24 +1,26 @@
 <%@ page import="ar.com.burucps.drools.RuleSet"%>
 
 <div
-	class="form-group fieldcontain ${hasErrors(bean: ruleSetInstance, field: 'setName', 'error')} ">
+	class="form-group fieldcontain ${hasErrors(bean: ruleSetInstance, field: 'ruleSetName', 'error')} ">
 	<label class="col-lg-3 control-label" for="setName"> <g:message
-			code="ruleSet.setName.label" default="Set Name" />
+			code="ruleSet.ruleSetName.label" default="Rule Set Name" />
 	</label>
 	<div class="col-lg-9">
-		<g:textField name="setName" value="${ruleSetInstance?.setName}"
+		<g:textField name="ruleSetName"
+			value="${ruleSetInstance?.ruleSetName}"
 			class="form-control uniform-input text" autofocus="autofocus" />
 	</div>
 </div>
 
 <div
-	class="form-group fieldcontain ${hasErrors(bean: ruleSetInstance, field: 'setDescription', 'error')} ">
-	<label class="col-lg-3 control-label" for="setDescription"> <g:message
-			code="ruleSet.setDescription.label" default="Set Description" />
+	class="form-group fieldcontain ${hasErrors(bean: ruleSetInstance, field: 'ruleSetDescription', 'error')} ">
+	<label class="col-lg-3 control-label" for="ruleSetDescription">
+		<g:message code="ruleSet.ruleSetDescription.label"
+			default="Rule Set Description" />
 	</label>
 	<div class="col-lg-9">
-		<g:textField name="setDescription"
-			value="${ruleSetInstance?.setDescription}"
+		<g:textField name="ruleSetDescription"
+			value="${ruleSetInstance?.ruleSetDescription}"
 			class="form-control uniform-input text" />
 	</div>
 </div>
