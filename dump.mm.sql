@@ -1,28 +1,3 @@
---
--- Table structure for table `rule`
---
-
-DROP TABLE IF EXISTS `rule`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `rule` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `version` bigint(20) NOT NULL,
-  `active` bit(1) NOT NULL,
-  `created_by` varchar(255) DEFAULT NULL,
-  `creation_date` datetime DEFAULT NULL,
-  `dialect` varchar(255) NOT NULL,
-  `last_update_by` varchar(255) DEFAULT NULL,
-  `last_update_date` datetime DEFAULT NULL,
-  `rule_condition` longtext NOT NULL,
-  `rule_consequence` longtext NOT NULL,
-  `rule_group` varchar(255) NOT NULL,
-  `rule_name` varchar(255) NOT NULL,
-  `salience` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `rule_name` (`rule_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `rule`
@@ -34,26 +9,6 @@ INSERT INTO `rule` VALUES (1,1,'',NULL,'2014-06-24 00:35:18','MVEL',NULL,'2014-
 /*!40000 ALTER TABLE `rule` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `rule_set`
---
-
-DROP TABLE IF EXISTS `rule_set`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `rule_set` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `version` bigint(20) NOT NULL,
-  `created_by` varchar(255) DEFAULT NULL,
-  `creation_date` datetime DEFAULT NULL,
-  `last_update_by` varchar(255) DEFAULT NULL,
-  `last_update_date` datetime DEFAULT NULL,
-  `rule_set_description` varchar(255) DEFAULT NULL,
-  `rule_set_name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `rule_set_name` (`rule_set_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `rule_set`
@@ -65,23 +20,6 @@ INSERT INTO `rule_set` VALUES (1,3,NULL,'2014-06-24 00:56:13',NULL,'2014-06-29 1
 /*!40000 ALTER TABLE `rule_set` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `rule_set_rules`
---
-
-DROP TABLE IF EXISTS `rule_set_rules`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `rule_set_rules` (
-  `rule_set_id` bigint(20) NOT NULL,
-  `rule_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`rule_set_id`,`rule_id`),
-  KEY `FK72941D575AA810F0` (`rule_set_id`),
-  KEY `FK72941D574215AE2B` (`rule_id`),
-  CONSTRAINT `FK72941D574215AE2B` FOREIGN KEY (`rule_id`) REFERENCES `rule` (`id`),
-  CONSTRAINT `FK72941D575AA810F0` FOREIGN KEY (`rule_set_id`) REFERENCES `rule_set` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `rule_set_rules`
