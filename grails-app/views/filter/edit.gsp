@@ -80,7 +80,7 @@
 							</div>
 							<div class="panel-body">
 								<g:form url="[resource:filterInstance, action:'update']"
-									method="PUT" class="form-horizontal" >
+									method="PUT" class="form-horizontal">
 									<g:hiddenField name="version"
 										value="${filterInstance?.version}" />
 									<fieldset class="form">
@@ -102,5 +102,91 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+		var ifilter = document.getElementById("type");
+
+		var itipowhere1 = document.getElementsByClassName("tipo_where");
+		var itipowhere2 = document.getElementsByClassName("tipo_sum");
+		var itipowhere3 = document.getElementsByClassName("tipo_advanced");
+		var itipowhere4 = document.getElementsByClassName("tipo_query");
+
+		for (var i = 0; i < itipowhere1.length; i++) {
+			itipowhere1[i].style.display = "none";
+		}
+		for (var i = 0; i < itipowhere2.length; i++) {
+			itipowhere2[i].style.display = "none";
+		}
+		for (var i = 0; i < itipowhere3.length; i++) {
+			itipowhere3[i].style.display = "none";
+		}
+		for (var i = 0; i < itipowhere4.length; i++) {
+			itipowhere4[i].style.display = "none";
+		}
+
+		if (ifilter.value == "WHERE") {
+			for (var i = 0; i < itipowhere1.length; i++) {
+				itipowhere1[i].style.display = "block";
+			}
+		}
+
+		else if (ifilter.value == "SUM") {
+			for (var i = 0; i < itipowhere2.length; i++) {
+				itipowhere2[i].style.display = "block";
+			}
+		} else if (ifilter.value == "ADVANCE") {
+			for (var i = 0; i < itipowhere3.length; i++) {
+				itipowhere3[i].style.display = "block";
+			}
+		} else if (ifilter.value == "QUERY") {
+			for (var i = 0; i < itipowhere4.length; i++) {
+				itipowhere4[i].style.display = "block";
+			}
+		}
+
+		/* Add event listeners to the two range filtering inputs */
+		ifilter.addEventListener("change", function() {
+
+			var elements = document.getElementsByClassName("classname");
+
+			var itipowhere1 = document.getElementsByClassName("tipo_where");
+			var itipowhere2 = document.getElementsByClassName("tipo_sum");
+			var itipowhere3 = document.getElementsByClassName("tipo_advanced");
+			var itipowhere4 = document.getElementsByClassName("tipo_query");
+
+			for (var i = 0; i < itipowhere1.length; i++) {
+				itipowhere1[i].style.display = "none";
+			}
+			for (var i = 0; i < itipowhere2.length; i++) {
+				itipowhere2[i].style.display = "none";
+			}
+			for (var i = 0; i < itipowhere3.length; i++) {
+				itipowhere3[i].style.display = "none";
+			}
+			for (var i = 0; i < itipowhere4.length; i++) {
+				itipowhere4[i].style.display = "none";
+			}
+
+			if (ifilter.value == "WHERE") {
+				for (var i = 0; i < itipowhere1.length; i++) {
+					itipowhere1[i].style.display = "block";
+				}
+			}
+
+			else if (ifilter.value == "SUM") {
+				for (var i = 0; i < itipowhere2.length; i++) {
+					itipowhere2[i].style.display = "block";
+				}
+			} else if (ifilter.value == "ADVANCE") {
+				for (var i = 0; i < itipowhere3.length; i++) {
+					itipowhere3[i].style.display = "block";
+				}
+			} else if (ifilter.value == "QUERY") {
+				for (var i = 0; i < itipowhere4.length; i++) {
+					itipowhere4[i].style.display = "block";
+				}
+			}
+
+		});
+	</script>
 </body>
 </html>

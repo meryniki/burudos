@@ -39,7 +39,7 @@
 						<span class="icon icomoon-icon-plus"></span>
 						<g:message code="default.new.label" args="[entityName]" />
 					</g:link></li>
-				<li><g:link class="create" action="">
+				<li><g:link class="create" action="index">
 						<span class="icon icomoon-icon-menu"></span>
 						<g:message code="default.list.label" args="[entityName]" />
 					</g:link></li>

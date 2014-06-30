@@ -211,6 +211,12 @@
 											<g:formatDate date="${filterInstance?.validMonth}" /></span></li>
 									</g:if>
 
+									<g:if test="${filterInstance?.totals}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="filter.totals.label" default="Totales a Sumar" /></span> <span
+											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
+											<g:fieldValue bean="${filterInstance}"  field="totals"/></span></li>
+									</g:if>
 								</ul>
 								<ul class="bigBtnIcon" style="display: -webkit-box;">
 									<li><g:link class="edit" action="edit"

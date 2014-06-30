@@ -6,13 +6,20 @@ import ar.com.burudos.business.BussinesUnit
 import ar.com.burudos.party.Client;
 import ar.com.burudos.party.Party;
 
+/* Luego se ordenan por type desc, y primero se calcular los WHERE, luego los sum, query y advanced */
+enum Filter_Type {
+	WHERE, SUM, QUERY, ADVANCED
+}
 
 class Filter {
 	
+	Filter_Type type = Filter_Type.WHERE
 	String filterCode
 	String description
 	BussinesUnit bu
 	Date validMonth
+	static hasMany = [totals:Filter]
+	
 	String op
 	String sds
 	String ani
@@ -39,6 +46,7 @@ class Filter {
 	Operation op_hasta
 	
 	static constraints = {
+		type(nullable: false)
 		filterCode (nullable: false, unique:true)
 		validMonth (max : new Date(), nullable: false)
 		description (nullable: true)
@@ -62,7 +70,8 @@ class Filter {
 		plan_promo(nullable:true)
 		op_desde(nullable:true)
 		op_hasta(nullable:true)
-	    suma(nullable:true)		
+	    suma(nullable:true)	
+		totals(nullable:true)	
 	}
 	
 	String toString() {

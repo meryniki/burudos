@@ -13,14 +13,20 @@
 	<script type="text/javascript"
 		src="../../static/plugins/misc/pnotify/jquery.pnotify.min.js"></script>
 	<script language="javascript">
-$( document ).ready( function() {
-	$("a[rel='pop-up']").click(function () {
-      	var caracteristicas = "height=400,width=400,scrollTo,resizable=1,scrollbars=0,location=0";
-      	nueva=window.open(this.href, 'Editar/Borrar', caracteristicas);
-      	return false;
- });
-});
-</script>
+		$(document)
+				.ready(
+						function() {
+							$("a[rel='pop-up']")
+									.click(
+											function() {
+												var caracteristicas = "height=400,width=400,scrollTo,resizable=1,scrollbars=0,location=0";
+												nueva = window.open(this.href,
+														'Editar/Borrar',
+														caracteristicas);
+												return false;
+											});
+						});
+	</script>
 
 	<div id="content" class="clearfix">
 		<div class="contentwrapper">
@@ -141,7 +147,8 @@ $( document ).ready( function() {
 														<g:each
 															in="${employeeStatementInstance.getBuObjPointsLines()}">
 															<tr>
-																<td>${it.description}
+																<td>
+																	${it.description}
 																</td>
 																<td><g:formatNumber number="${it.unitAmount}"
 																		type="number" minIntegerDigits="1"
@@ -153,7 +160,7 @@ $( document ).ready( function() {
 																<td><g:formatNumber number="${it.amount}"
 																		type="number" minIntegerDigits="1"
 																		maxFractionDigits="2" /></td>
-																	
+
 															</tr>
 														</g:each>
 													</tbody>
@@ -184,26 +191,21 @@ $( document ).ready( function() {
 													<tbody>
 														<g:each in="${employeeStatementInstance.getBuObjQLines()}">
 															<tr>
-																<td>${it.description}
-																</td>
 																<td>
-																	<g:formatNumber number="${it.unitAmount}"
+																	${it.description}
+																</td>
+																<td><g:formatNumber number="${it.unitAmount}"
 																		type="number" minIntegerDigits="1"
-																		maxFractionDigits="0" />
-																</td>
-																<td>
-																	<g:formatNumber number="${it.operationsAmount}"
+																		maxFractionDigits="0" /></td>
+																<td><g:formatNumber number="${it.operationsAmount}"
 																		type="number" minIntegerDigits="1"
-																		maxFractionDigits="0" />
-																</td>
-																<td>
-																	<g:formatNumber number="${it.amount}"
+																		maxFractionDigits="0" /></td>
+																<td><g:formatNumber number="${it.amount}"
 																		type="number" minIntegerDigits="1"
-																		maxFractionDigits="0" />
-																</td>
-																<td>%
-																		
-																</td>
+																		maxFractionDigits="0" /></td>
+																<td><g:formatNumber number="${it.amount/it.operationsAmount*100}"
+																		type="number" minIntegerDigits="2"
+																		maxFractionDigits="0" /></td>
 															</tr>
 														</g:each>
 													</tbody>
@@ -228,19 +230,7 @@ $( document ).ready( function() {
 														<div class="panel-heading">
 															<h4>
 																<span>Operaciones Comerciales de Postventa</span>
-																<form class="panel-form right" action="">
-																	<a class="btn dropdown-toggle" data-toggle="dropdown"
-																		href="#"> <span class="icon16 icomoon-icon-cog-2"></span>
-																		<span class="caret"></span>
-																	</a>
-																	<ul class="dropdown-menu">
-																		<li><a href="#"><span
-																				class="icomoon-icon-plus"></span> Agregar</a></li>
-																	</ul>
-																</form>
-
 															</h4>
-															<a href="#" class="minimize" style="display: none;">Minimize</a>
 														</div>
 														<div class="panel-body noPad" style="display: block;">
 															<div class="responsive" tabindex="5006"
@@ -279,14 +269,6 @@ $( document ).ready( function() {
 																			<td><g:fieldValue
 																					bean="${employeeStatementInstance}"
 																					field="pointsSubtotal" /></td>
-																			<td>
-																				<div class="controls center">
-																					<a href="#" class="tip" oldtitle="Edit task"
-																						title="" data-hasqtip="true"
-																						aria-describedby="qtip-17"><span
-																						class="icon12 icomoon-icon-sigma"></span></a>
-																				</div>
-																			</td>
 																		</tr>
 																	</tbody>
 																</table>
@@ -301,7 +283,6 @@ $( document ).ready( function() {
 													<div class="panel panel-default">
 														<div class="panel-heading">
 															<h4>Incentivos</h4>
-															<a href="#" class="minimize" style="display: none;">Minimize</a>
 														</div>
 														<div class="panel-body noPad" style="display: block;">
 															<div class="responsive" tabindex="5007"
@@ -338,14 +319,7 @@ $( document ).ready( function() {
 																			<td><g:fieldValue
 																					bean="${employeeStatementInstance}"
 																					field="posIncentSubtotal" /></td>
-																			<td>
-																				<div class="controls center">
-																					<a href="#" class="tip" oldtitle="Edit task"
-																						title="" data-hasqtip="true"
-																						aria-describedby="qtip-17"><span
-																						class="icon12 icomoon-icon-sigma"></span></a>
-																				</div>
-																			</td>
+
 																		</tr>
 																</table>
 															</div>
@@ -364,10 +338,6 @@ $( document ).ready( function() {
 													<div class="panel panel-default">
 														<div class="panel-heading">
 															<h4>Altas</h4>
-														</div>
-														<div class="panel-body noPad" style="display: block;">
-															<div class="responsive" tabindex="5006"
-																style="overflow: hidden; outline: none;"></div>
 														</div>
 														<div class="panel-body noPad" style="display: block;">
 															<div class="responsive" tabindex="5007"
@@ -399,20 +369,13 @@ $( document ).ready( function() {
 																				</td>
 																			</tr>
 																		</g:each>
-																		
+
 																		<tr>
 																			<td colspan="3">Total</td>
 																			<td><g:fieldValue
 																					bean="${employeeStatementInstance}"
 																					field="stalesSubtotal" /></td>
-																			<td>
-																				<div class="controls center">
-																					<a href="#" class="tip" oldtitle="Edit task"
-																						title="" data-hasqtip="true"
-																						aria-describedby="qtip-17"><span
-																						class="icon12 icomoon-icon-sigma"></span></a>
-																				</div>
-																			</td>
+
 																		</tr>
 																</table>
 															</div>
@@ -421,11 +384,6 @@ $( document ).ready( function() {
 													<div class="panel panel-default">
 														<div class="panel-heading">
 															<h4>Incentivos Individuales</h4>
-															<a href="#" class="minimize" style="display: none;">Minimize</a>
-														</div>
-														<div class="panel-body noPad" style="display: block;">
-															<div class="responsive" tabindex="5006"
-																style="overflow: hidden; outline: none;"></div>
 														</div>
 														<div class="panel-body noPad" style="display: block;">
 															<div class="responsive" tabindex="5007"
@@ -462,14 +420,6 @@ $( document ).ready( function() {
 																			<td><g:fieldValue
 																					bean="${employeeStatementInstance}"
 																					field="indIncentSubtotal" /></td>
-																			<td>
-																				<div class="controls center">
-																					<a href="#" class="tip" oldtitle="Edit task"
-																						title="" data-hasqtip="true"
-																						aria-describedby="qtip-17"><span
-																						class="icon12 icomoon-icon-sigma"></span></a>
-																				</div>
-																			</td>
 																		</tr>
 																</table>
 															</div>
@@ -483,11 +433,6 @@ $( document ).ready( function() {
 											<div class="panel panel-default">
 												<div class="panel-heading">
 													<h4>Descuentos</h4>
-													<a href="#" class="minimize" style="display: none;">Minimize</a>
-												</div>
-												<div class="panel-body noPad" style="display: block;">
-													<div class="responsive" tabindex="5006"
-														style="overflow: hidden; outline: none;"></div>
 												</div>
 												<div class="panel-body noPad" style="display: block;">
 													<div class="responsive" tabindex="5007"
@@ -520,19 +465,12 @@ $( document ).ready( function() {
 																	</tr>
 																</g:each>
 																<tr>
-																			<td colspan="3">Total</td>
-																			<td><g:fieldValue
-																					bean="${employeeStatementInstance}"
-																					field="deductionsSubtotal" /></td>
-																			<td>
-																				<div class="controls center">
-																					<a href="#" class="tip" oldtitle="Edit task"
-																						title="" data-hasqtip="true"
-																						aria-describedby="qtip-17"><span
-																						class="icon12 icomoon-icon-sigma"></span></a>
-																				</div>
-																			</td>
-																		</tr>
+																	<td colspan="3">Total</td>
+																	<td><g:fieldValue
+																			bean="${employeeStatementInstance}"
+																			field="deductionsSubtotal" /></td>
+
+																</tr>
 														</table>
 													</div>
 												</div>

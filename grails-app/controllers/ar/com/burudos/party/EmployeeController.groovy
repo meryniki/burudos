@@ -233,16 +233,11 @@ class EmployeeController {
 	 */
 	def totalOfTransactions(Employee employeeInstance){
 		def lista = [];
-		Operation.list().each{ this_op->
-			def query = Transaction.where {
-				op == this_op
-				party == employeeInstance
-			}
-			def op_total = query.count();
+		Summary.findAllByEmployee(employeeInstance).each{ sum->
 			def totals = [:];
-			totals.put("name", this_op.toString());
-			totals.put("y", op_total);
-			if (op_total!=0)
+			totals.put("name", sum.filter.toString());
+			totals.put("y", sum.quantity);
+			if (sum.quantity!=0)
 				lista.add(totals);
 		}
 		render (lista as JSON)
