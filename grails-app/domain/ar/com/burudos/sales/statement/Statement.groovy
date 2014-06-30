@@ -95,14 +95,21 @@ class Statement {
 		switch (paramGroup) {
 			case StatementLineGroup.SALES:
 				stalesSubtotal += amount;
+				positiveSubtotal += amount;
 				total += amount;
 				break;
 			case StatementLineGroup.INDIVIDUAL_INCENTIVE:
 				indIncentSubtotal += amount;
+				positiveSubtotal += amount;
 				total += amount;
 				break;
 			case StatementLineGroup.POS_INCENTIVE:
 				posIncentSubtotal += amount;
+				positiveSubtotal += amount;
+				total += amount;
+				break;
+			case StatementLineGroup.OTHERS:
+				positiveSubtotal += amount;
 				total += amount;
 				break;
 			case StatementLineGroup.DEDUCTIONS:

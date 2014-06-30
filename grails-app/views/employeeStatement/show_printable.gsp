@@ -106,22 +106,20 @@
 								</thead>
 								<tbody>
 									<g:each in="${employeeStatementInstance.getEmpSalesLines()}">
-										<g:if test="${it.amount!=0}">
-											<tr>
-												<td>
-													${it.description}
-												</td>
-												<td>
-													${it.unitAmount}
-												</td>
-												<td>
-													${it.operationsAmount}
-												</td>
-												<td>
-													${it.amount}
-												</td>
-											</tr>
-										</g:if>
+										<tr>
+											<td>
+												${it.description}
+											</td>
+											<td>
+												${it.unitAmount}
+											</td>
+											<td>
+												${it.operationsAmount}
+											</td>
+											<td>
+												${it.amount}
+											</td>
+										</tr>
 									</g:each>
 									<tr>
 										<td colspan="3">Total</td>
@@ -218,22 +216,20 @@
 								<tbody>
 									<g:each
 										in="${employeeStatementInstance.getBuIncentivesLines()}">
-										<g:if test="${it.amount!=0}">
-											<tr>
-												<td>
-													${it.description}
-												</td>
-												<td>
-													${it.unitAmount}
-												</td>
-												<td>
-													${it.operationsAmount}
-												</td>
-												<td>
-													${it.amount}
-												</td>
-											</tr>
-										</g:if>
+										<tr>
+											<td>
+												${it.description}
+											</td>
+											<td>
+												${it.unitAmount}
+											</td>
+											<td>
+												${it.operationsAmount}
+											</td>
+											<td>
+												${it.amount}
+											</td>
+										</tr>
 									</g:each>
 
 									<tr>
@@ -257,22 +253,20 @@
 								<tbody>
 									<g:each
 										in="${employeeStatementInstance.getEmpIncentivesLines()}">
-										<g:if test="${it.amount!=0}">
-											<tr>
-												<td>
-													${it.description}
-												</td>
-												<td>
-													${it.unitAmount}
-												</td>
-												<td>
-													${it.operationsAmount}
-												</td>
-												<td>
-													${it.amount}
-												</td>
-											</tr>
-										</g:if>
+										<tr>
+											<td>
+												${it.description}
+											</td>
+											<td>
+												${it.unitAmount}
+											</td>
+											<td>
+												${it.operationsAmount}
+											</td>
+											<td>
+												${it.amount}
+											</td>
+										</tr>
 									</g:each>
 									<tr>
 										<td colspan="3">Total</td>
