@@ -78,6 +78,7 @@ class FilterController {
 	}
 
 	def create() {
+		println params
 		respond new Filter(params)
 	}
 

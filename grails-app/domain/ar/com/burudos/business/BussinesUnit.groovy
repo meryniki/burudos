@@ -15,7 +15,7 @@ class BussinesUnit {
 	BussinesUnit father;
 	Employee coordinator;
 
-	
+
 	static mapping = {
 		nombre index:'NombreBu_Idx'
 	}
@@ -64,7 +64,31 @@ class BussinesUnit {
 		}
 		return sons
 	}
-	
+
+	/*
+	 * Busca si es hijo o nieto de t
+	 */
+	Boolean isFamily(BussinesUnit t){
+		if (this.id == t.id)
+			return true
+		BussinesUnit tf = this.father
+		if (tf)
+		{
+			if (tf.id == t.id)
+			return true
+			BussinesUnit nf = tf.father
+			if (nf)
+			{
+				if (nf.id == t.id)
+				return true
+				if (nf.father.id && nf.father.id == t.id)
+				return true // Es el bisnieto
+			}
+		}
+
+		return false
+	}
+
 	public Integer getEmployeeCount() {
 		return Employee.countByBu(this)
 	}

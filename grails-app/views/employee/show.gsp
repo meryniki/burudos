@@ -375,7 +375,7 @@ window.onload = makechart();
 									<li><g:link class="print" action="print"
 											resource="${employeeInstance}">
 											<span class="icon icomoon-icon-print"></span>
-											<g:message code="default.button.print.label" default="Print" />
+											<g:message code="default.button.print.label" default="Imprimir" />
 										</g:link></li>
 								</ul>
 
@@ -387,7 +387,7 @@ window.onload = makechart();
 
 							</div>
 
-							<div class="panel panel-default">
+							<div class="panel panel-default" style="display: none;">
 
 								<div class="panel-heading">
 									<h4>

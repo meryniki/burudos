@@ -31,7 +31,7 @@ class SummaryController {
 		if (!offset)
 			offset = 0;
 		if (!max)
-			max = 20;
+			max = 30;
 		params.max = max;
 
 		/*Date to get index list*/
@@ -255,6 +255,130 @@ class SummaryController {
 	def domonthly = {
 	}
 
+	String arma_where( Filter filter, BussinesUnit butmp) {
+		def where_filter = ""
+		if (filter.op) {
+
+			if (filter.op=="(null)")
+				where_filter += " and t.op is null"
+			else if (filter.op == "(any)")
+				where_filter += " and t.op is not null"
+			else if ( filter.op.contains(" o ") ){
+				//&& filter.op.contains("(") && filter.op.contains(")")  ){
+				filter.op = filter.op.replace("(","")
+				filter.op = filter.op.replace(")","")
+				where_filter += " and ("
+				filter.op.split(" o ").each { ops->
+					where_filter += " or t.op.code = '" + ops + "'"
+				}
+				where_filter += ")"
+				where_filter = where_filter.replace("( or ", "( ")
+			}
+			else
+				where_filter += " and t.op.code = '" + filter.op  + "'"
+		}
+		if (filter.ani)
+			if (filter.ani=="(null)")
+				where_filter += " and t.ani is null"
+			else if (filter.ani == "(any)")
+				where_filter += " and t.ani is not null"
+			else
+				where_filter += " and t.ani = '" + filter.ani  + "'"
+		if (filter.sds)
+			if (filter.sds=="(null)")
+				where_filter += " and t.sds is null"
+			else if (filter.sds == "(any)")
+				where_filter += " and t.sds is not null"
+			else
+				where_filter += " and t.sds = '" + filter.sds + "'"
+		if (filter.imei)
+			if (filter.imei=="(null)")
+				where_filter += " and t.imei is null"
+			else if (filter.imei == "(any)")
+				where_filter += " and t.imei is not null"
+			else
+				where_filter += " and t.imei = '" + filter.imei  + "'"
+		if (filter.sim)
+			if (filter.sim=="(null)")
+				where_filter += " and t.sim is null"
+			else if (filter.sim == "(any)")
+				where_filter += " and t.sim is not null"
+			else
+				where_filter += " and t.sim = '" + filter.sim  + "'"
+		if (filter.folio)
+			if (filter.folio=="(null)")
+				where_filter += " and t.folio is null"
+			else if (filter.folio == "(any)")
+				where_filter += " and t.folio is not null"
+			else
+				where_filter += " and t.folio = '" + filter.folio  + "'"
+		if (filter.partida)
+			if (filter.partida=="(null)")
+				where_filter += " and t.partida is null"
+			else if (filter.partida == "(any)")
+				where_filter += " and t.partida is not null"
+			else
+				where_filter += " and t.partida = '" + filter.partida  + "'"
+		if (filter.equipo)
+			if (filter.equipo=="(null)")
+				where_filter += " and t.equipo is null"
+			else if (filter.equipo == "(any)")
+				where_filter += " and t.equipo is not null"
+			else
+				where_filter += " and t.equipo = '" + filter.equipo  + "'"
+		if (filter.solicitud)
+			if (filter.solicitud=="(null)")
+				where_filter += " and t.solicitud is null"
+			else if (filter.solicitud == "(any)")
+				where_filter += " and t.solicitud is not null"
+			else
+				where_filter += " and t.solicitud = '" + filter.solicitud  + "'"
+		if (filter.cancel)
+			if (filter.cancel=="(null)")
+				where_filter += " and t.cancel is null"
+			else if (filter.cancel == "(any)")
+				where_filter += " and t.cancel is not null"
+			else
+				where_filter += " and t.cancel = '" + filter.cancel  + "'"
+		if (filter.estado)
+			if (filter.estado=="(null)")
+				where_filter += " and t.estado is null"
+			else if (filter.estado == "(any)")
+				where_filter += " and t.estado is not null"
+			else
+				where_filter += " and t.estado = '" + filter.estado  + "'"
+		if (filter.factura)
+			if (filter.factura=="(null)")
+				where_filter += " and t.factura is null"
+			else if (filter.factura == "(any)")
+				where_filter += " and t.factura is not null"
+			else
+				where_filter += " and t.factura = '" + filter.factura  + "'"
+		if (filter.importe)
+			if (filter.importe=="(null)")
+				where_filter += " and t.importe is null"
+			else if (filter.importe == "(any)")
+				where_filter += " and t.importe is not null"
+			else
+				where_filter += " and t.importe = '" + filter.importe + "'"
+		if (filter.cat_plan)
+			if (filter.cat_plan=="(null)")
+				where_filter += " and t.cat_plan is null"
+			else if (filter.cat_plan == "(any)")
+				where_filter += " and t.cat_plan is not null"
+			else
+				where_filter += " and t.cat_plan = '" + filter.cat_plan  + "'"
+		if (filter.plan_promo)
+			if (filter.plan_promo=="(null)")
+				where_filter += " and t.plan_promo is null"
+			else if (filter.plan_promo == "(any)")
+				where_filter += " and t.plan_promo is not null"
+			else
+				where_filter += " and t.plan_promo = '" + filter.plan_promo + "'"
+
+		return where_filter
+	}
+
 	@Transactional
 	def createMonthly() {
 		def code
@@ -262,202 +386,199 @@ class SummaryController {
 		int counting_employes = 0
 		int count_total_filter = 0
 		int count_father = 0
-		
-		//TODO: por ahora se recorre desde 0
-		BussinesUnit thisbu = BussinesUnit.findById(params.bu)
-		def bu_to_summarize = thisbu.getFamily()
 
-		Filter.findAllByBuInListAndValidMonth(bu_to_summarize,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year)).each() { filter->
+		//BussinesUnit thisbu = BussinesUnit.findById(params.bu)
+		//def bu_to_summarize = thisbu.getFamily()
+		BussinesUnit thisbu = BussinesUnit.findById(params.bu)
+		def bu_to_summarize = BussinesUnit.findAll(sort: 'father', order:'desc'){}
+
+		/*
+		 * Busco todos los filtros del Mes, ordenados por Tipo, para calcular al final los que son SUM
+		 */
+		Filter.findAllByValidMonth(Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year), [sort: "type", order: "desc"]).each() { filter->
 
 			count_total_filter = 0
 
+			/*
+			 * Empiezo a recorrer cada uno de los Puntos de Venta
+			 */
 			bu_to_summarize.each(){ butmp->
+
+				// Reseteo contadores
 				counting = 0
+				def cantidad_emp = 0
 				def where_filter = ""
 
-				println butmp
+				println "- - - - Sumarizando " + butmp
 
-				if (filter.op)
+				/*
+				 * Filtros con Where
+				 */
+				if (filter.type == Filter_Type.WHERE && butmp.isFamily(filter.bu))
 				{
 
-					if (filter.op=="(null)")
-						where_filter += " and t.op is null"
-					else if (filter.op == "(any)")
-						where_filter += " and t.op is not null"
-					else if ( filter.op.contains(" o ") ){//&& filter.op.contains("(") && filter.op.contains(")")  ){
-						filter.op = filter.op.replace("(","")
-						filter.op = filter.op.replace(")","")
-						where_filter += " and ("
-						filter.op.split(" o ").each { ops->
-							where_filter += " or t.op.code = '" + ops + "'"
+					where_filter = arma_where(filter, butmp)
+					def countby = "count(t)"
+					if (filter.suma && filter.suma.length()>0)
+						countby = "sum(t." + filter.suma + ")"
+
+					
+					Employee.findAllWhere(bu:butmp).each(){ mparty ->
+						def query = "select "+ countby +" from Transaction t where t.party.id = " + mparty.id  +
+								where_filter +
+								" and month(t.date) = " + params.month_month +
+								" and year(t.date) = " + params.month_year
+
+						cantidad_emp += 1
+						Double thiscount=0;
+
+						def res = Transaction.executeQuery(query);
+
+						if (res[0])
+							thiscount = res[0].toDouble()
+
+						counting += thiscount.intValue()
+						count_total_filter += thiscount.intValue()
+						counting_employes += thiscount.intValue()
+
+						code = Summary.findByEmployeeAndSumMonthAndFilter(mparty,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter)
+						if (code){
+							code.quantity = counting_employes
+							code.save(failOnError: true, flush: true)
 						}
-						where_filter += ")"
-						where_filter = where_filter.replace("( or ", "( ")
+						else{
+							new Summary(
+									filter: filter,
+									summaryCode:filter.filterCode,
+									employee: mparty,
+									sumMonth: Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),
+									quantity: counting_employes
+									).save(failOnError: true, flush: true)
+						}
+						counting_employes = 0
+					}// Employees
 
-						println where_filter
+					// Entonces es una region o JAG, busco los totales de los hijos y lo sumo
+					if (cantidad_emp == 0)
+					{
+						butmp.getSons().each(){ buson ->
+							code = Summary.findByBuAndSumMonthAndFilter(buson, Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter)
+							if (code)
+								counting += code.quantity
+						}
 					}
-					else
-						where_filter += " and t.op.code = '" + filter.op  + "'"
-				}
-				if (filter.ani)
-					if (filter.ani=="(null)")
-						where_filter += " and t.ani is null"
-					else if (filter.ani == "(any)")
-						where_filter += " and t.ani is not null"
-					else
-						where_filter += " and t.ani = '" + filter.ani  + "'"
-				if (filter.sds)
-					if (filter.sds=="(null)")
-						where_filter += " and t.sds is null"
-					else if (filter.sds == "(any)")
-						where_filter += " and t.sds is not null"
-					else
-						where_filter += " and t.sds = '" + filter.sds + "'"
-				if (filter.imei)
-					if (filter.imei=="(null)")
-						where_filter += " and t.imei is null"
-					else if (filter.imei == "(any)")
-						where_filter += " and t.imei is not null"
-					else
-						where_filter += " and t.imei = '" + filter.imei  + "'"
-				if (filter.sim)
-					if (filter.sim=="(null)")
-						where_filter += " and t.sim is null"
-					else if (filter.sim == "(any)")
-						where_filter += " and t.sim is not null"
-					else
-						where_filter += " and t.sim = '" + filter.sim  + "'"
-				if (filter.folio)
-					if (filter.folio=="(null)")
-						where_filter += " and t.folio is null"
-					else if (filter.folio == "(any)")
-						where_filter += " and t.folio is not null"
-					else
-						where_filter += " and t.folio = '" + filter.folio  + "'"
-				if (filter.partida)
-					if (filter.partida=="(null)")
-						where_filter += " and t.partida is null"
-					else if (filter.partida == "(any)")
-						where_filter += " and t.partida is not null"
-					else
-						where_filter += " and t.partida = '" + filter.partida  + "'"
-				if (filter.equipo)
-					if (filter.equipo=="(null)")
-						where_filter += " and t.equipo is null"
-					else if (filter.equipo == "(any)")
-						where_filter += " and t.equipo is not null"
-					else
-						where_filter += " and t.equipo = '" + filter.equipo  + "'"
-				if (filter.solicitud)
-					if (filter.solicitud=="(null)")
-						where_filter += " and t.solicitud is null"
-					else if (filter.solicitud == "(any)")
-						where_filter += " and t.solicitud is not null"
-					else
-						where_filter += " and t.solicitud = '" + filter.solicitud  + "'"
-				if (filter.cancel)
-					if (filter.cancel=="(null)")
-						where_filter += " and t.cancel is null"
-					else if (filter.cancel == "(any)")
-						where_filter += " and t.cancel is not null"
-					else
-						where_filter += " and t.cancel = '" + filter.cancel  + "'"
-				if (filter.estado)
-					if (filter.estado=="(null)")
-						where_filter += " and t.estado is null"
-					else if (filter.estado == "(any)")
-						where_filter += " and t.estado is not null"
-					else
-						where_filter += " and t.estado = '" + filter.estado  + "'"
-				if (filter.factura)
-					if (filter.factura=="(null)")
-						where_filter += " and t.factura is null"
-					else if (filter.factura == "(any)")
-						where_filter += " and t.factura is not null"
-					else
-						where_filter += " and t.factura = '" + filter.factura  + "'"
-				if (filter.importe)
-					if (filter.importe=="(null)")
-						where_filter += " and t.importe is null"
-					else if (filter.importe == "(any)")
-						where_filter += " and t.importe is not null"
-					else
-						where_filter += " and t.importe = '" + filter.importe + "'"
-				if (filter.cat_plan)
-					if (filter.cat_plan=="(null)")
-						where_filter += " and t.cat_plan is null"
-					else if (filter.cat_plan == "(any)")
-						where_filter += " and t.cat_plan is not null"
-					else
-						where_filter += " and t.cat_plan = '" + filter.cat_plan  + "'"
-				if (filter.plan_promo)
-					if (filter.plan_promo=="(null)")
-						where_filter += " and t.plan_promo is null"
-					else if (filter.plan_promo == "(any)")
-						where_filter += " and t.plan_promo is not null"
-					else
-						where_filter += " and t.plan_promo = '" + filter.plan_promo + "'"
-						
-				def countby = "count(t)"
-				if (filter.suma && filter.suma.length()>0)
-					countby = "sum(t." + filter.suma + ")"
-			
-				def cantidad_emp = 0
-				Employee.findAllWhere(bu:butmp).each(){ mparty ->
-					def query = "select "+ countby +" from Transaction t where t.party.id = " + mparty.id  +
-							where_filter +
-							" and month(t.date) = " + params.month_month +
-							" and year(t.date) = " + params.month_year
 
-					cantidad_emp += 1
-					Double thiscount=0;
-					
-					def res = Transaction.executeQuery(query);
-					
-					if (res[0])
-					  thiscount = res[0].toDouble()
-
-					counting += thiscount.intValue()
-					count_total_filter += thiscount.intValue()
-					counting_employes += thiscount.intValue()
-
-					code = Summary.findByEmployeeAndSumMonthAndFilter(mparty,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter)
+					code = Summary.findByBuAndSumMonthAndFilter(butmp,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter)
 					if (code){
-						code.quantity = counting_employes
+						code.quantity = counting
 						code.save(failOnError: true, flush: true)
 					}
 					else{
-						new Summary(
+						code = new Summary(
 								filter: filter,
 								summaryCode:filter.filterCode,
-								employee: mparty,
+								bu: butmp,
 								sumMonth: Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),
-								quantity: counting_employes
+								quantity: counting
 								).save(failOnError: true, flush: true)
 					}
-					counting_employes = 0
+
+
+				}//if filter
+
+
+				/*
+				 * Filtros de SUM
+				 */
+				/*Ya deben estar calculados los otros filters*/
+				if (filter.type == Filter_Type.SUM && butmp.isFamily(filter.bu))
+				{
+					int cc = 0
+					int ct = 0
+
+					// Busco todos los empleados del bu
+					Employee.findAllWhere(bu:butmp).each(){ thisemp->
+						cc = 0
+						filter.totals.each  { ft->
+							code = Summary.findByEmployeeAndSumMonthAndFilter(thisemp,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),ft);
+							cc += code.quantity
+						}
+
+						code = Summary.findByEmployeeAndSumMonthAndFilter(thisemp,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter)
+						if (code){
+							code.quantity = cc
+							code.save(failOnError: true, flush: true)
+						}
+						else{
+							code = new Summary(
+									filter: filter,
+									summaryCode:filter.filterCode,
+									employee: thisemp,
+									sumMonth: Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),
+									quantity: cc
+									).save(failOnError: true, flush: true)
+						}
+						ct += cc
+					}
+
+					// Entonces es una region o JAG, busco los totales de los hijos y lo sumo
+					if (cantidad_emp == 0)
+					{
+						butmp.getSons().each(){ buson ->
+							code = Summary.findByBuAndSumMonthAndFilter(buson, Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter)
+							if (code)
+								ct += code.quantity
+						}
+					}
+					// Summary del BU con el total de los empleados
+					code = Summary.findByBuAndSumMonthAndFilter(butmp,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter)
+					if (code){
+						code.quantity = ct
+						code.save(failOnError: true, flush: true)
+					}
+					else{
+						code = new Summary(
+								filter: filter,
+								summaryCode:filter.filterCode,
+								bu: butmp,
+								sumMonth: Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),
+								quantity: ct
+								).save(failOnError: true, flush: true)
+					}
+
+
 				}
-				
-				//if (cantidad_emp==0) //No tenia empleados, seguramente es padre de local
-				
-				code = Summary.findByBuAndSumMonthAndFilter(butmp,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter)
+
+			}//End Bu_tu_summarize
+
+			/*Ya deben estar calculados los otros filters*/
+			if (filter.type == Filter_Type.SUM && thisbu.isFamily(filter.bu))
+			{
+				int cc = 0
+				filter.totals.each  { ft->
+					code = Summary.findByBuAndSumMonthAndFilter(thisbu,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),ft);
+					cc += code.quantity
+				}
+
+				code = Summary.findByBuAndSumMonthAndFilter(thisbu,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter)
 				if (code){
-					code.quantity = counting
+					code.quantity = cc
 					code.save(failOnError: true, flush: true)
 				}
 				else{
 					code = new Summary(
 							filter: filter,
 							summaryCode:filter.filterCode,
-							bu: butmp,
+							bu: thisbu,
 							sumMonth: Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),
-							quantity: counting
+							quantity: cc
 							).save(failOnError: true, flush: true)
 				}
 
-			}//End Bu_tu_summarize
+			}
 
-			if ( count_total_filter!=0 )
+
+			if ( filter.type == Filter_Type.WHERE && count_total_filter!=0 && thisbu.isFamily(filter.bu) )
 			{
 				code = Summary.findByBuAndSumMonthAndFilter(thisbu,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter)
 				if (code)
@@ -474,7 +595,10 @@ class SummaryController {
 							).save(failOnError: true, flush: true)
 				}
 			}
-		}
+
+
+		}// End de todos los Filters encontrados
+
 		redirect action:"totals"
 	}
 
