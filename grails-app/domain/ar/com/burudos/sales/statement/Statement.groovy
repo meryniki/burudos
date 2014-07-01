@@ -89,8 +89,8 @@ class Statement {
 			Double unitAmount, Double operationsAmount, Double amount, Integer lineOrder) {
 		log.debug("Agrego una linea: " + description);
 		StatementLine line = new StatementLine( statement: this,
-				type : type, paramGroup : paramGroup, description:description, unitAmount:unitAmount,
-				operationsAmount:operationsAmount, amount:amount, lineOrder:lineOrder)
+		type : type, paramGroup : paramGroup, description:description, unitAmount:unitAmount,
+		operationsAmount:operationsAmount, amount:amount, lineOrder:lineOrder)
 		this.addToLines(line)
 		switch (paramGroup) {
 			case StatementLineGroup.SALES:
@@ -129,6 +129,7 @@ class Statement {
 				qBUTotal += unitAmount;
 				qEmployeeTotal += operationsAmount;
 				qEmployeeReachedTotal += amount;
+				qEmployeeReachedPerc = 100.0 * qEmployeeReachedTotal / qEmployeeTotal;
 				break;
 		}
 	}
@@ -151,6 +152,14 @@ class Statement {
 
 	List<StatementLine> getEmpDedLines(){
 		StatementLine.findAll(sort: 'lineOrder', order:'asc'){ paramGroup == StatementLineGroup.DEDUCTIONS && statement== this }
+	}
+	
+	List<StatementLine> getEmpOthLines(){
+		StatementLine.findAll(sort: 'lineOrder', order:'asc'){ paramGroup == StatementLineGroup.OTHERS && statement== this }
+	}
+	
+	List<StatementLine> getEmpFixLines(){
+		StatementLine.findAll(sort: 'lineOrder', order:'asc'){ paramGroup == StatementLineGroup.FIXED && statement== this }
 	}
 
 	List<StatementLine> getBuObjPointsLines(){

@@ -68,8 +68,8 @@
 							<table class="plano_negro printable">
 								<thead>
 									<tr>
-										<th>Premio Postventa</th>
-										<th>Puntaje Objetivo</th>
+										<th></th>
+										<th>Valor</th>
 										<th>% Alcanzado</th>
 										<th>Comision</th>
 									</tr>
@@ -276,6 +276,55 @@
 							</table>
 						</div>
 						<br />
+						<div class="plano_negro">
+							<table class="plano_negro printable">
+								<thead>
+									<tr>
+										<th>Otros</th>
+										<th>Valor</th>
+										<th>Cantidad/%</th>
+										<th>Total</th>
+									</tr>
+								</thead>
+								<tbody>
+									<g:each in="${employeeStatementInstance.getEmpOthLines()}">
+										<tr>
+											<td>
+												${it.description}
+											</td>
+											<td><g:formatNumber number="${it.unitAmount}"
+													type="number" minIntegerDigits="1" maxFractionDigits="0" /></td>
+											<td><g:formatNumber number="${it.operationsAmount}"
+													type="number" minIntegerDigits="1" maxFractionDigits="0" /></td>
+											<td><g:formatNumber number="${it.amount}" type="number"
+													minIntegerDigits="1" maxFractionDigits="0" /></td>
+										</tr>
+									</g:each>
+								</tbody>
+							</table>
+						</div>
+						<br />
+
+						<div class="plano_negro">
+							<table class="plano_negro printable">
+								<thead>
+									<tr>
+										<th>Subtotal Upfront</th>
+										<th>
+											${employeeStatementInstance.positiveSubtotal}
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td></td>
+										<td></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<br />
+
 						<div class="plano_negro panel panel-default">
 							<table class="plano_negro printable">
 								<thead>
@@ -310,6 +359,57 @@
 										<td><g:fieldValue bean="${employeeStatementInstance}"
 												field="deductionsSubtotal" /></td>
 									</tr>
+							</table>
+						</div>
+						<br />
+						<div class="plano_negro panel panel-default">
+							<table class="plano_negro printable">
+								<thead>
+									<tr>
+										<th>Ajustes</th>
+										<th>Total</th>
+									</tr>
+								</thead>
+								<tbody>
+									<g:each in="${employeeStatementInstance.getEmpFixLines()}">
+										<tr>
+											<td>
+												${it.description}
+											</td>
+											<td>
+												${it.amount}
+											</td>
+										</tr>
+									</g:each>
+									<tr>
+										<td>Total</td>
+										<td><g:fieldValue bean="${employeeStatementInstance}"
+												field="fixedSubtotal" /></td>
+									</tr>
+							</table>
+						</div>
+						
+						<br />
+						<div class="plano_negro">
+							<table class="plano_negro printable">
+								<thead>
+									<tr>
+										<th>Total</th>
+										<th>
+											${employeeStatementInstance.total}
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr>
+										<td></td>
+										<td></td>
+									</tr>
+								</tbody>
 							</table>
 						</div>
 					</div>

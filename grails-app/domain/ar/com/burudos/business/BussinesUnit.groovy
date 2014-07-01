@@ -90,6 +90,10 @@ class BussinesUnit {
 	}
 
 	public Integer getEmployeeCount() {
-		return Employee.countByBu(this)
+		def query = Employee.where{
+			bu ==  this && name != "NO INGRESADO"
+		}
+
+		return query.count()
 	}
 }
