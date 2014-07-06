@@ -70,6 +70,8 @@ grails.project.dependency.resolution = {
 		compile ':cache:1.1.1'
 		
 		//compile ":twitter-bootstrap:3.0.3"
+		
+		compile ":class-domain-uml:0.1.5"
 
 		// plugins needed at runtime but not for compilation
 		runtime ":hibernate:3.6.10.6" // or ":hibernate4:4.1.11.6"
