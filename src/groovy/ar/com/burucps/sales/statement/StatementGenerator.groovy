@@ -29,20 +29,6 @@ import ar.com.burucps.drools.RuleSet
  * This is a sample file to launch a rule package from a rule source file.
  */
 public class StatementGenerator {
-	
-	String drlHead = """package ar.com.burucps.sales.statement;
-
-import ar.com.burudos.party.Employee;
-import ar.com.burudos.sales.statement.Parameter;
-import ar.com.burudos.sales.statement.EmployeeStatement;
-import ar.com.burudos.sales.Summary;
-import ar.com.burucps.sales.statement.StatementLineGroup; 
-import ar.com.burucps.sales.statement.StatementLineType;
-
-global ar.com.burudos.sales.statement.EmployeeStatement statement
-global java.util.Map additionalValues
-
-"""; 
 
 	private static final log = LogFactory.getLog(this)
 
@@ -51,155 +37,155 @@ global java.util.Map additionalValues
 
 		cleanDataForPeriodIfExists(param_month, param_year);
 
-		ParameterResolver parameterResolver = new ParameterResolver()
-		final KnowledgeBuilder kbuilder = KnowledgeBuilderFactory
-				.newKnowledgeBuilder();
-		log.debug("Se obtuvo el KnowledgeBuilder")
-		
-		String drlString = ""
-		
-		drlString += drlHead
-		Rule.findAll(){active == true}.each() { rule ->
-			drlString += "rule \"" + rule.ruleName + "\"\n"
-			drlString += "dialect \"" + rule.dialect + "\"\n"
-			drlString += "salience " + rule.salience + "\n"
-			drlString += "when \n" + rule.ruleCondition + "\n"
-			drlString += "then \n" + rule.ruleConsequence + "\n"
-			drlString += "end\n\n"
-		}
-		
-		log.info(drlString)
-		
-		InputStream drlDefinition = new ByteArrayInputStream(drlString.getBytes())
-		kbuilder.add( ResourceFactory.newInputStreamResource(drlDefinition), ResourceType.DRL);
-		//kbuilder.add(ResourceFactory.newClassPathResource("SellerRules.drl",StatementGenerator.class), ResourceType.DRL);
-		log.debug("Se agrego la definicion drl")
-
-		// Check the builder for errors
-		if (kbuilder.hasErrors()) {
-			log.info("SellerRules.drl con errores")
-			System.out.println(kbuilder.getErrors().toString());
-			throw new RuntimeException("Unable to compile \"SellerRules.drl\".");
-		}
-		log.info("SellerRules.drl verificado")
-
-		// get the compiled packages (which are serializable)
-		final Collection<KnowledgePackage> pkgs = kbuilder
-				.getKnowledgePackages();
-
-		// add the packages to a knowledgebase (deploy the knowledge packages).
-		final KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
-		log.debug("Se obtuvo el KnowledgeBase")
-		kbase.addKnowledgePackages( pkgs );
-
-		final StatefulKnowledgeSession ksession = kbase
-				.newStatefulKnowledgeSession();
-		log.info("Se creo la sesion de drools")
-
-		// GLOBALS
-		// Load Statement parameters
-		parameterResolver.loadParameters()
-		//ksession.setGlobal( "parameterResolver", parameterResolver);
-		log.debug("Load Statement parameters")
-
-		// Load Map for calculations
-		Map<String,Object> additionalValuesMap = new HashMap<String,Object>();
-		ksession.setGlobal( "additionalValues", additionalValuesMap);
-		log.debug("Load Map for calculations")
-
-		// FACTS
-		// Load Summary
-
-		Summary.where{
+		def periodSummaries = Summary.where{
 			(       month(sumMonth) == param_month &&
 					year(sumMonth) == param_year        )
-		}.list().each() { it ->
-			ksession.insert(it);
-		}
-		log.debug("Load Summary")
-		log.debug("Fact Count" + ksession.getFactCount())
+		}.list();
 
 		// Load parameters for BU and set as facts
 		def query = Parameter.where { bussinesUnit != null}.projections { distinct 'paramCode' }
 		def allParamCodes = query.list()
 
-		// Load EmployeeList and their statements
-		def allEmployees = Employee.findAll(sort: 'bu', order: 'asc') { bu != null && isworker && bu.id == 12 }
+		ParameterResolver parameterResolver = new ParameterResolver()
 
-		BussinesUnit lastUnit = null;
-		def parameterFacts = [];
+		// Primero tengo que iterar por todos los RuleSets que estén asignados al menos a un empleado.
+		RuleSet.findAll().each() { ruleSet ->
 
-		// setup the audit logging
-		// Remove comment to use FileLogger
-		KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newFileLogger( ksession, "./BurucpsRules" );
-
-		// Remove comment to use ThreadedFileLogger so audit view reflects events whilst debugging
-		//KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newThreadedFileLogger( ksession, "./helloworld", 1000 );
-
-		for (Employee employee : allEmployees ) {
-			additionalValuesMap.clear();
-			//log.debug("Last Unit: " + lastUnit);
-			if ((!lastUnit) || (lastUnit != employee.bu)) {
-				if (lastUnit != null) {
-					//log.debug("Elimino los parametros para la BU previa: " + lastUnit)
-					parameterFacts.each {
-						ksession.retract(it);
-					}
-					//log.debug("Fact Count" + ksession.getFactCount())
-					parameterFacts.clear()
-				}
-				//log.debug("Agrego los parametros para la nueva BU: " + employee.bu)
-				for (String codeName : allParamCodes) {
-					def parameter = parameterResolver.resolve(codeName, employee.bu);
-					if (parameter != null) {
-						parameterFacts << ksession.insert(parameter);
-					}
-				}
-				//log.debug("Fact Count" + ksession.getFactCount())
-				lastUnit = employee.bu
+			def employees = Employee.findAll(sort: 'bu', order: 'asc') {
+				bu != null && isworker && statementRules == ruleSet
 			}
 
-			log.debug("Creo la liquidacion para el empleado: " + employee)
+			if (employees.size > 0) {
+				final KnowledgeBuilder kbuilder = KnowledgeBuilderFactory
+						.newKnowledgeBuilder();
+				log.debug("Se obtuvo el KnowledgeBuilder")
 
-			EmployeeStatement statement = new EmployeeStatement(employee: employee, businessUnit: employee.bu,statementPeriod: parsePeriod(param_month,param_year))
+				String drlString = ""
 
-			statement.pointsSubtotal = 0.0D
-			statement.pointsObjPerc = 0.0D
-			statement.stalesSubtotal = 0.0D
-			statement.indIncentSubtotal = 0.0D
-			statement.posIncentSubtotal = 0.0D
-			statement.positiveSubtotal = 0.0D
-			statement.total = 0.0D
-			statement.deductionsSubtotal = 0.0D
-			statement.dueBalance = 0.0D
-			statement.fixedSubtotal = 0.0D
-			statement.qBUTotal = 0.0D
-			statement.qEmployeeTotal = 0.0D
-			statement.qEmployeeReachedTotal = 0.0D
-			statement.qEmployeeReachedPerc = 0.0D
+				drlString += ruleSet.ruleSetPackage + "\n";
+				drlString += ruleSet.ruleSetImports + "\n";
+				drlString += ruleSet.ruleSetGlobals + "\n";
 
-			statement.save(failOnError: true, flush: true)
+				ruleSet.rules.each() { rule ->
+					if (rule.active) {
+						drlString += "rule \"" + rule.ruleName + "\"\n"
+						drlString += "dialect \"" + rule.dialect + "\"\n"
+						drlString += "salience " + rule.salience + "\n"
+						drlString += "when \n" + rule.ruleCondition + "\n"
+						drlString += "then \n" + rule.ruleConsequence + "\n"
+						drlString += "end\n\n"
+					}
+				}
+				log.debug("Queda armada la definición de reglas")
+				log.debug(drlString)
 
-			def employeeFact = ksession.insert(employee);
-			ksession.setGlobal("statement", statement);
+				InputStream drlDefinition = new ByteArrayInputStream(drlString.getBytes())
+				kbuilder.add( ResourceFactory.newInputStreamResource(drlDefinition), ResourceType.DRL);
+				log.debug("Se agrego la definicion drl")
 
-			//log.info("Por ejecutar las reglas")
-			ksession.fireAllRules();
-			log.info("Fin de la ejecucion")
+				// Check the builder for errors
+				if (kbuilder.hasErrors()) {
+					log.info("Definición de reglas con errores")
+					System.out.println(kbuilder.getErrors().toString());
+					throw new RuntimeException("Unable to compile " + ruleSet.ruleSetName + ".");
+				}
+				log.info("SellerRules.drl verificado")
 
-			statement = ksession.getGlobal("statement");
-			statement.save(failOnError: true, flush: true)
+				// get the compiled packages (which are serializable)
+				final Collection<KnowledgePackage> pkgs = kbuilder
+						.getKnowledgePackages();
 
-			ksession.retract(employeeFact)
-			ksession.setGlobal("statement",null)
+				// add the packages to a knowledgebase (deploy the knowledge packages).
+				final KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
+				log.debug("Se obtuvo el KnowledgeBase")
+				kbase.addKnowledgePackages( pkgs );
+
+				final StatefulKnowledgeSession ksession = kbase
+						.newStatefulKnowledgeSession();
+				log.info("Se creo la sesion de drools")
+
+				// GLOBALS
+				// Load Statement parameters
+				parameterResolver.loadParameters()
+				//ksession.setGlobal( "parameterResolver", parameterResolver);
+				log.debug("Load Statement parameters")
+
+				// Load Map for calculations
+				Map<String,Object> additionalValuesMap = new HashMap<String,Object>();
+				ksession.setGlobal( "additionalValues", additionalValuesMap);
+				log.debug("Load Map for calculations")
+
+				// FACTS
+				// Load Summary
+				periodSummaries.each() { it ->
+					ksession.insert(it);
+				}
+				log.debug("Load Summary")
+				log.debug("Fact Count" + ksession.getFactCount())
+
+				BussinesUnit lastUnit = null;
+				def parameterFacts = [];
+
+				// setup the audit logging
+				// Remove comment to use FileLogger
+				//KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newFileLogger( ksession, "./BurucpsRules" );
+
+				// Remove comment to use ThreadedFileLogger so audit view reflects events whilst debugging
+				//KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newThreadedFileLogger( ksession, "./helloworld", 1000 );
+
+				for (Employee employee : employees ) {
+					additionalValuesMap.clear();
+					//log.debug("Last Unit: " + lastUnit);
+					if ((!lastUnit) || (lastUnit != employee.bu)) {
+						if (lastUnit != null) {
+							//log.debug("Elimino los parametros para la BU previa: " + lastUnit)
+							parameterFacts.each {
+								ksession.retract(it);
+							}
+							//log.debug("Fact Count" + ksession.getFactCount())
+							parameterFacts.clear()
+						}
+						//log.debug("Agrego los parametros para la nueva BU: " + employee.bu)
+						for (String codeName : allParamCodes) {
+							def parameter = parameterResolver.resolve(codeName, employee.bu);
+							if (parameter != null) {
+								parameterFacts << ksession.insert(parameter);
+							}
+						}
+						//log.debug("Fact Count" + ksession.getFactCount())
+						lastUnit = employee.bu
+					}
+
+					log.debug("Creo la liquidacion para el empleado: " + employee)
+
+					EmployeeStatement statement = new EmployeeStatement(employee: employee, businessUnit: employee.bu,statementPeriod: parsePeriod(param_month,param_year),
+						pointsSubtotal: 0.0D, pointsObjPerc: 0.0D, stalesSubtotal: 0.0D, indIncentSubtotal: 0.0D, posIncentSubtotal: 0.0D, positiveSubtotal: 0.0D,
+						total: 0.0D, deductionsSubtotal: 0.0D, dueBalance: 0.0D, fixedSubtotal: 0.0D, qBUTotal: 0.0D, qEmployeeTotal: 0.0D, qEmployeeReachedTotal: 0.0D,
+						qEmployeeReachedPerc: 0.0D );
+					statement.save(failOnError: true, flush: true)
+
+					def employeeFact = ksession.insert(employee);
+					ksession.setGlobal("statement", statement);
+
+					//log.info("Por ejecutar las reglas")
+					ksession.fireAllRules();
+					log.info("Fin de la ejecucion")
+
+					statement = ksession.getGlobal("statement");
+					statement.save(failOnError: true, flush: true)
+
+					ksession.retract(employeeFact)
+					ksession.setGlobal("statement",null)
+				}
+
+				// Remove comment if using logging
+				//logger.close();
+
+				log.debug("End process")
+
+				ksession.dispose();
+			}
 		}
-
-		// Remove comment if using logging
-		logger.close();
-
-		log.debug("End process")
-
-		ksession.dispose();
 	}
 
 	Date parsePeriod(Integer month, Integer year) {

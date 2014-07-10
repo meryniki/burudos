@@ -26,6 +26,43 @@
 </div>
 
 <div
+	class="form-group fieldcontain ${hasErrors(bean: ruleSetInstance, field: 'ruleSetPackage', 'error')} ">
+	<label class="col-lg-3 control-label" for="ruleSetPackage">
+		<g:message code="ruleSet.ruleSetPackage.label"
+			default="Rule Set Package" />
+	</label>
+	<div class="col-lg-9">
+		<g:textField name="ruleSetPackage"
+			value="${ruleSetInstance?.ruleSetPackage}"
+			class="form-control uniform-input text" />
+	</div>
+</div>
+
+<div
+	class="form-group fieldcontain ${hasErrors(bean: ruleSetInstance, field: 'ruleSetImports', 'error')} ">
+	<label class="col-lg-3 control-label" for="ruleSetImports"> <g:message
+			code="ruleSet.ruleSetImports.label" default="Rule Set Imports" />
+	</label>
+	<div class="col-lg-9">
+		<g:textArea name="ruleSetImports"
+			class="form-control uniform-input text"
+			value="${ruleSetInstance?.ruleSetImports}" />
+	</div>
+</div>
+
+<div
+	class="form-group fieldcontain ${hasErrors(bean: ruleSetInstance, field: 'ruleSetGlobals', 'error')} ">
+	<label class="col-lg-3 control-label" for="ruleSetGlobals"> <g:message
+			code="ruleSet.ruleCondition.label" default="Rule Set Globals" />
+	</label>
+	<div class="col-lg-9">
+		<g:textArea name="ruleSetGlobals"
+			class="form-control uniform-input text"
+			value="${ruleSetInstance?.ruleSetGlobals}" />
+	</div>
+</div>
+
+<div
 	class="form-group fieldcontain ${hasErrors(bean: ruleSetInstance, field: 'rules', 'error')} ">
 	<label class="col-lg-3 control-label" for="rules"> <g:message
 			code="ruleSet.rules.label" default="Rules" />
