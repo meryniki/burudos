@@ -125,3 +125,16 @@
 	</div>
 </div>
 
+<div
+	class=" form-group fieldcontain ${hasErrors(bean: employeeInstance, field: 'statementRules', 'error')} ">
+	<label class="col-lg-3 control-label" for="statementRules"> <g:message
+			code="employee.statementRules.label" default="Statement Rules" />
+	</label>
+	<div class="col-lg-9">
+		<g:select id="statementRules" name="statementRules.id"
+			from="${ar.com.burucps.drools.RuleSet.list()}" optionKey="id"
+			value="${employeeInstance?.statementRules?.id}" class="many-to-one"
+			noSelection="['null': '']" />
+		<span class="help-block blue span8">Tipo de liquidación para le empleado</span>
+	</div>
+</div>
