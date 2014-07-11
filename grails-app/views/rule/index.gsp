@@ -138,7 +138,12 @@
 														</td>
 
 														<td>
-															${fieldValue(bean: ruleInstance, field: "active")}
+															<g:if test="${fieldValue(bean: ruleInstance, field: "active") == 'true'}">
+																<span class="icon icomoon-icon-checkmark-circle"></span>
+															</g:if>
+															<g:else>
+																<span class="icon icomoon-icon-cancel-circle-2"></span>
+															</g:else>
 														</td>
 
 													</tr>
@@ -148,9 +153,9 @@
 										<div class="row">
 											<div class="col-lg-8">
 												<div class="dataTables_paginate paging_bootstrap pagination">
-													<div class="pagination">
-														<g:paginate total="${ruleInstanceCount ?: 0}" />
-													</div>
+													<ul class="pagination">
+														<li><g:paginate total="${ruleInstanceCount ?: 0}" /></li>
+													</ul>
 												</div>
 											</div>
 										</div>
