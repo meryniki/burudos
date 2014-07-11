@@ -14,6 +14,7 @@ import org.drools.logger.KnowledgeRuntimeLoggerFactory
 import org.drools.runtime.StatefulKnowledgeSession
 
 //import java.io.StringInputStream
+
 import java.util.Map
 import java.util.HashMap
 
@@ -39,8 +40,39 @@ public class StatementGenerator {
 
 		def periodSummaries = Summary.where{
 			(       month(sumMonth) == param_month &&
-					year(sumMonth) == param_year        )
+			year(sumMonth) == param_year        )
 		}.list();
+
+		// Agrego saldos a favor de JAG del mes anterior
+		Integer previousMonth, previousYear;
+		if (param_month in 2..12) {
+			previousMonth =  param_month - 1;
+			previousYear = param_year;
+		} else {
+			previousMonth =  12;
+			previousYear = param_year - 1;
+		}
+		def negativeBalanceStatements = EmployeeStatement.findAll() {
+			month(statementPeriod) == previousMonth &&
+			year(statementPeriod) == previousYear &&
+			dueBalance > 0.0
+		}.each { it ->
+			Summary s = Summary.where{
+				month(sumMonth) == param_month &&
+				year(sumMonth) == param_year   &&
+				summaryCode == 'SALDO_JAG'     &&
+				employee.id == it.employee.id
+			}.get();
+			if (s) {
+				s.quantity = it.dueBalance;
+			} else {
+				s = new Summary(sumMonth: parsePeriod(param_month,param_year), summaryCode: 'SALDO_JAG',
+				employee: it.employee, quantity: it.dueBalance);
+			}
+			s.save(failOnError: true, flush: true)
+			periodSummaries.add(s)
+		}
+
 
 		// Load parameters for BU and set as facts
 		def query = Parameter.where { bussinesUnit != null}.projections { distinct 'paramCode' }
@@ -57,7 +89,7 @@ public class StatementGenerator {
 
 			if (employees.size > 0) {
 				final KnowledgeBuilder kbuilder = KnowledgeBuilderFactory
-						.newKnowledgeBuilder();
+				.newKnowledgeBuilder();
 				log.debug("Se obtuvo el KnowledgeBuilder")
 
 				String drlString = ""
@@ -93,7 +125,7 @@ public class StatementGenerator {
 
 				// get the compiled packages (which are serializable)
 				final Collection<KnowledgePackage> pkgs = kbuilder
-						.getKnowledgePackages();
+				.getKnowledgePackages();
 
 				// add the packages to a knowledgebase (deploy the knowledge packages).
 				final KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
@@ -101,7 +133,7 @@ public class StatementGenerator {
 				kbase.addKnowledgePackages( pkgs );
 
 				final StatefulKnowledgeSession ksession = kbase
-						.newStatefulKnowledgeSession();
+				.newStatefulKnowledgeSession();
 				log.info("Se creo la sesion de drools")
 
 				// GLOBALS
@@ -159,9 +191,9 @@ public class StatementGenerator {
 					log.debug("Creo la liquidacion para el empleado: " + employee)
 
 					EmployeeStatement statement = new EmployeeStatement(employee: employee, businessUnit: employee.bu,statementPeriod: parsePeriod(param_month,param_year),
-						pointsSubtotal: 0.0D, pointsObjPerc: 0.0D, stalesSubtotal: 0.0D, indIncentSubtotal: 0.0D, posIncentSubtotal: 0.0D, positiveSubtotal: 0.0D,
-						total: 0.0D, deductionsSubtotal: 0.0D, dueBalance: 0.0D, fixedSubtotal: 0.0D, qBUTotal: 0.0D, qEmployeeTotal: 0.0D, qEmployeeReachedTotal: 0.0D,
-						qEmployeeReachedPerc: 0.0D );
+					pointsSubtotal: 0.0D, pointsObjPerc: 0.0D, stalesSubtotal: 0.0D, indIncentSubtotal: 0.0D, posIncentSubtotal: 0.0D, positiveSubtotal: 0.0D,
+					total: 0.0D, deductionsSubtotal: 0.0D, dueBalance: 0.0D, fixedSubtotal: 0.0D, qBUTotal: 0.0D, qEmployeeTotal: 0.0D, qEmployeeReachedTotal: 0.0D,
+					qEmployeeReachedPerc: 0.0D );
 					statement.save(failOnError: true, flush: true)
 
 					def employeeFact = ksession.insert(employee);
