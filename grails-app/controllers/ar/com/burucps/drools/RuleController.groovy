@@ -1,9 +1,10 @@
 package ar.com.burucps.drools
 
-
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+
+import ar.com.burucps.drools.RuleDialect
+import ar.com.burucps.sales.statement.StatementLineGroup
 
 @Transactional(readOnly = true)
 class RuleController {
@@ -29,9 +30,7 @@ class RuleController {
 
 		params.max = max
 
-		def query = Rule.where{
-			ruleName ==~  "%${search}%"
-		}
+		def query = Rule.where{ ruleName ==~  "%${search}%" }
 
 		println "SEARCH " + search
 
@@ -49,6 +48,14 @@ class RuleController {
 
 	def create() {
 		respond new Rule(params)
+	}
+
+	def copy(Rule ruleInstance) {
+		forward(action: "create", params: [ruleName:ruleInstance.ruleName, 
+			dialect: ruleInstance.dialect.value, salience: ruleInstance.salience, 
+			ruleCondition: ruleInstance.ruleCondition, ruleConsequence: ruleInstance.ruleConsequence, 
+			ruleGroup: ruleInstance.ruleGroup.value, active: false]
+		)
 	}
 
 	@Transactional
