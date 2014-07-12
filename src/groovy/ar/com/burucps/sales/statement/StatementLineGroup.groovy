@@ -1,32 +1,26 @@
 package ar.com.burucps.sales.statement;
 
 public enum StatementLineGroup {
-	SALES, INDIVIDUAL_INCENTIVE, POS_INCENTIVE, DEDUCTIONS, POINTS, FIXED, OTHERS, OBJ_POINTS, OBJ_Q;
+	SALES("SALES","statement.line.sales"),
+	INDIVIDUAL_INCENTIVE("INDIVIDUAL_INCENTIVE","statement.line.individualIncentives"),
+	POS_INCENTIVE("POS_INCENTIVE","statement.line.posIncentive"),
+	DEDUCTIONS("DEDUCTIONS","statement.line.deductions"),
+	POINTS("POINTS","statement.line.points"),
+	FIXED("FIXED","statement.line.fixed"),
+	OTHERS("OTHERS","statement.line.others"),
+	OBJ_POINTS("OBJ_POINTS","statement.line.pointObjectives"),
+	OBJ_Q("OBJ_Q","statement.line.objectives");
+
+	private final String value
+	private final String description
+
+	private StatementLineGroup(String value, String description) {
+		this.value = value
+		this.description = description
+	}
 
 	@Override
 	public String toString() {
-		switch (this) {
-		case SALES:
-			return "statement.line.sales";
-		case INDIVIDUAL_INCENTIVE:
-			return "statement.line.individualIncentives";
-		case POS_INCENTIVE:
-			return "statement.line.posIncentive";
-		case DEDUCTIONS:
-			return "statement.line.deductions";
-		case POINTS:
-			return "statement.line.points";
-		case FIXED:
-			return "statement.line.fixed";
-		case OTHERS:
-			return "statement.line.others";
-		case OBJ_POINTS:
-			return "statement.line.pointObjectives";
-		case OBJ_Q:
-			return "statement.line.objectives";
-		default:
-			throw new IllegalArgumentException();
-		}
+		description
 	}
-	
 }

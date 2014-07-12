@@ -21,7 +21,6 @@ class Rule {
 	
 	static hasMany = [ruleSets : RuleSet]
 	static belongsTo = RuleSet
-	
 
     static constraints = {
 		ruleName (nullable : false, unique: true)
@@ -53,6 +52,22 @@ class Rule {
 	def beforeUpdate() {
 		//lastUpdatedBy = securityService.currentAuthenticatedUsername();
 		lastUpdateDate = new Date();
+	}
+	
+	@Override
+	public int hashCode() {
+		return this.id.intValue();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (!o)
+			return false;
+		if (!o instanceof Rule)
+			return false;
+		if (!this.id)
+			return false;
+		return this.id.equals(((Rule) o).id);
 	}
 	
 	String toString() {

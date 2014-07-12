@@ -104,6 +104,8 @@
 
 													<th><g:message code="rule.active.label"
 															default="Active" /></th>
+
+													<th>Copy</th>
 												</tr>
 											</thead>
 											<!-- Pie con titulos-->
@@ -117,7 +119,7 @@
 															code="rule.ruleGroup.label" default="Rule Group" /></th>
 													<th rowspan="1" colspan="1"><g:message
 															code="rule.active.label" default="Active" /></th>
-
+													<th>Copy</th>
 												</tr>
 											</tfoot>
 											<tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -137,9 +139,17 @@
 															${g.message(code: fieldValue(bean: ruleInstance, field: "ruleGroup"))}
 														</td>
 
-														<td>
-															${fieldValue(bean: ruleInstance, field: "active")}
-														</td>
+														<td><g:if
+																test="${fieldValue(bean: ruleInstance, field: "active") == 'true'}">
+																<span class="icon icomoon-icon-checkmark-circle"></span>
+															</g:if> <g:else>
+																<span class="icon icomoon-icon-cancel-circle-2"></span>
+															</g:else></td>
+
+														<td><g:link class="copy" action="copy"
+																resource="${ruleInstance}">
+																<span class="icon icomoon-icon-copy-4"></span>
+															</g:link></td>
 
 													</tr>
 												</g:each>
@@ -148,9 +158,9 @@
 										<div class="row">
 											<div class="col-lg-8">
 												<div class="dataTables_paginate paging_bootstrap pagination">
-													<div class="pagination">
-														<g:paginate total="${ruleInstanceCount ?: 0}" />
-													</div>
+													<ul class="pagination">
+														<li><g:paginate total="${ruleInstanceCount ?: 0}" /></li>
+													</ul>
 												</div>
 											</div>
 										</div>

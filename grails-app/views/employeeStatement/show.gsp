@@ -59,7 +59,7 @@
 					<div id="show-statement" class="content scaffold-show" role="main">
 						<ul class="bigBtnIcon">
 							<li><g:link class="show_printable" action="show_printable"
-									controller="employeeStatement"
+									controller="employeeStatement" target="_blank"
 									resource="${employeeStatementInstance}">
 									<span class="icon icomoon-icon-print"></span>
 									<g:message code="default.print.label" args="[entityName]" />

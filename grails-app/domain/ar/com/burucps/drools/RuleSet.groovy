@@ -8,6 +8,10 @@ class RuleSet {
 	String ruleSetDescription
 	static hasMany = [rules: Rule]
 	
+	String ruleSetPackage
+	String ruleSetImports
+	String ruleSetGlobals
+	
 	// Auiditoria
 	Date creationDate
 	String createdBy
@@ -17,12 +21,20 @@ class RuleSet {
     static constraints = {
 		ruleSetName (nullable : false, unique: true)
 		ruleSetDescription (nullable : true)
+		ruleSetPackage(nullable : true)
+		ruleSetImports(nullable : true)
+		ruleSetGlobals(nullable : true)
 		// Auditoria
 		creationDate (nullable: true)
 		createdBy (nullable: true)
 		lastUpdateDate (nullable: true)
 		lastUpdateBy (nullable: true)
     }
+	
+	static mapping = {
+		ruleSetImports type: 'text'
+		ruleSetGlobals type: 'text'
+	 }
 	
 	def beforeInsert() {
 		//createdBy = securityService.currentAuthenticatedUsername();
@@ -38,5 +50,25 @@ class RuleSet {
 	
 	Integer ruleCount() {
 		rules.size()
+	}
+	
+	@Override
+	public int hashCode() {
+		return this.id.intValue();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (!o)
+			return false;
+		if (!o instanceof RuleSet)
+			return false;
+		if (!this.id)
+			return false;
+		return this.id.equals(((RuleSet) o).id);
+	}
+	
+	String toString() {
+		"$ruleSetName";
 	}
 }
