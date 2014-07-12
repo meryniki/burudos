@@ -40,6 +40,7 @@ class BuruConstants {
 	static final String row_promo="Promo"
 	static final String row_equipo="Equipo"
 	static final String row_solicitud="Solicitud"
+	static final String row_servicio="Servicio"
 	static final String row_almacen="Almacen"
 	static final String row_cliente="Cliente"
 	static final String row_cliente_doc="Doc Cliente"

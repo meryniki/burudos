@@ -1,4 +1,8 @@
 package ar.com.burudos.sales
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
+import java.util.Date;
 
 import static org.springframework.http.HttpStatus.*
 
@@ -199,7 +203,7 @@ class TransactionController {
 				row_mapa[BuruConstants.row_neto]        = 0;
 				//print params.type_file.equals(BuruConstants.file_altas)
 				if ( params.type_file.equals(BuruConstants.file_altas) ) {
-					row_mapa[BuruConstants.row_buname]      = row[1];
+					row_mapa[BuruConstants.row_buname]  = row[1];
 					row_mapa[BuruConstants.row_emp]     = row[2];
 					row_mapa[BuruConstants.row_date]    = row[3];
 					row_mapa[BuruConstants.row_op_code] = row[10];
@@ -245,10 +249,10 @@ class TransactionController {
 					row_mapa[BuruConstants.row_op_code]   = row[0];
 					row_mapa[BuruConstants.row_ani]       = row[5];
 					row_mapa[BuruConstants.row_solicitud] = row[6];
-					row_mapa[BuruConstants.row_plan]      = row[7];
-					row_mapa[BuruConstants.row_plan_h]    = row[8];
-					row_mapa[BuruConstants.row_plan_d]    = row[9];
-					row_mapa[BuruConstants.row_op_desc]  = row[7];
+					row_mapa[BuruConstants.row_servicio]  = row[7];
+					//row_mapa[BuruConstants.row_plan_h]    = row[8];
+					//row_mapa[BuruConstants.row_plan_d]    = row[9];
+					//row_mapa[BuruConstants.row_op_desc]   = row[7];
 				}else if ( params.type_file.equals(BuruConstants.file_facturacion)){
 					row_mapa[BuruConstants.row_date]      = row[0];
 					row_mapa[BuruConstants.row_emp]       = row[1];
@@ -268,6 +272,17 @@ class TransactionController {
 					row_mapa[BuruConstants.row_iibb]      = row[15];
 					row_mapa[BuruConstants.row_total]     = row[16];
 					row_mapa[BuruConstants.row_imei]      = row[17];
+				}else if ( params.type_file.equals(BuruConstants.file_bajas)){
+					row_mapa[BuruConstants.row_op_code] = row[0];
+					row_mapa[BuruConstants.row_date]    = new SimpleDateFormat("dd/MM/yyyy").format(new Date().plus(-31));
+					//row_mapa[BuruConstants.row_op_date]    = row[1];
+					row_mapa[BuruConstants.row_ani]     = row[4];
+					row_mapa[BuruConstants.row_buname]  = row[5];
+					row_mapa[BuruConstants.row_emp]     = row[5];
+					row_mapa[BuruConstants.row_plan]    = row[14];
+					row_mapa[BuruConstants.row_importe] = row[17];
+					row_mapa[BuruConstants.row_cat_plan]= row[18];
+					row_mapa[BuruConstants.row_op_desc] = row[13];
 				}
 
 				/*Creates the Op if not exists*/
@@ -275,7 +290,8 @@ class TransactionController {
 					Operation.withNewSession{session->
 						try {
 							code = new Operation(type:row_mapa[BuruConstants.row_type] ,
-							code:row_mapa[BuruConstants.row_op_code],
+							code: row_mapa[BuruConstants.row_op_code],
+							active: true,
 							description:row_mapa[BuruConstants.row_op_desc]).save(failOnError: true, flush: true)
 						} catch (Exception e) {
 							linea = linea + 1
@@ -306,13 +322,17 @@ class TransactionController {
 				 /*Finally Search for the employee to match*/
 				Employee tmpemployee
 				BussinesUnit butmp
+
 				if ( !row_mapa[BuruConstants.row_buname])
 					tmpemployee= Employee.findByName(row_mapa[BuruConstants.row_emp])
 				else{
 					butmp = BussinesUnit.findByNombre(row_mapa[BuruConstants.row_buname])
-				    tmpemployee= Employee.findByNameAndBu(row_mapa[BuruConstants.row_emp], butmp )
-				}	
-			
+					if (butmp)
+						tmpemployee= Employee.findByNameAndBu(row_mapa[BuruConstants.row_emp], butmp )
+					else
+						tmpemployee= Employee.findByName(row_mapa[BuruConstants.row_emp])
+				}
+
 				if (! tmpemployee ){
 					linea = linea + 1
 					if (linea<200) transactionInstance.errors.reject(row[0],row_mapa[BuruConstants.row_emp]+BuruConstants.employee_exist_error)
@@ -340,9 +360,11 @@ class TransactionController {
 							plan_desc: row_mapa[BuruConstants.row_op_desc],
 							debaut:    row_mapa[BuruConstants.row_debaut],
 							cat_plan:  row_mapa[BuruConstants.row_cat_plan],
+							plan:      row_mapa[BuruConstants.row_plan],
 							tipo_factura:    row_mapa[BuruConstants.row_tipo_fact],
 							blister:   row_mapa[BuruConstants.row_blister],
 							cantidad:  row_mapa[BuruConstants.row_cantidad],
+							servicio:  row_mapa[BuruConstants.row_servicio],
 							iva:       row_mapa[BuruConstants.row_iva].toDouble(),
 							iibb:      row_mapa[BuruConstants.row_iibb].toDouble(),
 							total:     row_mapa[BuruConstants.row_total].toDouble(),

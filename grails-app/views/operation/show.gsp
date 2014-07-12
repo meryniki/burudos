@@ -88,6 +88,13 @@
 										<g:fieldValue bean="${operationInstance}" field="description" /></li>
 									</g:if>
 
+									
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="operation.active.label" default="Activo" /></span>
+
+											<span class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
+										<g:fieldValue bean="${operationInstance}" field="active" /></li>
+									
 								</ul>
 
 								<ul class="bigBtnIcon" style="display: -webkit-box;">

@@ -5,9 +5,11 @@ class Operation {
 	String type
 	String code
 	String description
+	Boolean active
 
 	static constraints = {
 		code (nullable: false)
+		active (nullable: false)
 		type (nullable: false)
 		description (nullable: true)
 	}

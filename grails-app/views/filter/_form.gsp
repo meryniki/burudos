@@ -143,7 +143,6 @@
 			class="tipo_where form-group fieldcontain ${hasErrors(bean: filterInstance, field: 'solicitud', 'error')} ">
 			<label class="col-lg-3 control-label" for="solicitud"> <g:message
 					code="filter.solicitud.label" default="Solicitud" />
-
 			</label>
 			<div class="col-lg-9">
 				<g:textField name="solicitud" value="${filterInstance?.solicitud}" />
@@ -220,20 +219,8 @@
 		</div>
 
 		<div
-			class="form-group fieldcontain ${hasErrors(bean: filterInstance, field: 'validMonth', 'error')}">
-			<label class="col-lg-3 control-label" for="validMonth"> <g:message
-					code="filter.month.label" default="Mes" /> <span
-				class="required-indicator">*</span>
-			</label>
-			<div class="col-lg-9">
-				<g:datePicker name="validMonth" precision="month"
-					value="${filterInstance?.validMonth}" />
-			</div>
-		</div>
-
-		<div
 			class="tipo_where form-group fieldcontain ${hasErrors(bean: filterInstance, field: 'cat_plan', 'error')} ">
-			<label class="col-lg-3 control-label" for="importe"> <g:message
+			<label class="col-lg-3 control-label" for="cat_plan"> <g:message
 					code="filter.cat_plan.label" default="Categoria del Plan" />
 
 			</label>
@@ -242,7 +229,27 @@
 			</div>
 		</div>
 
+	    <div
+			class="tipo_where form-group fieldcontain ${hasErrors(bean: filterInstance, field: 'plan', 'error')} ">
+			<label class="col-lg-3 control-label" for="plan"> <g:message
+					code="filter.plan.label" default="Plan" />
 
+			</label>
+			<div class="col-lg-9">
+				<g:textField name="plan" value="${filterInstance?.plan}" />
+			</div>
+		</div>
+		
+		<div
+			class="tipo_where form-group fieldcontain ${hasErrors(bean: filterInstance, field: 'servicio', 'error')} ">
+			<label class="col-lg-3 control-label" for="servicio"> <g:message
+					code="filter.servicio.label" default="servicio" />
+
+			</label>
+			<div class="col-lg-9">
+				<g:textField name="servicio" value="${filterInstance?.servicio}" />
+			</div>
+		</div>
 		<div
 			class="tipo_where form-group fieldcontain ${hasErrors(bean: filterInstance, field: 'plan_promo', 'error')} ">
 			<label class="col-lg-3 control-label" for="plan_desc"> <g:message
@@ -264,6 +271,19 @@
 			<div class="col-lg-9">
 				<g:textField name="suma" value="${filterInstance?.suma}" />
 			</div>
+		</div>
+		
+		<div class="tipo_advanced" style="display: none;">
+			<div
+			class="form-group fieldcontain ${hasErrors(bean: filterInstance, field: 'advance_where', 'error')} ">
+			<label class="col-lg-3 control-label" for="advance_where"> <g:message
+					code="filter.advance.label" default="Where Avanzado" />
+
+			</label>
+			<div class="col-lg-9">
+				<g:textField name="advance_where" value="${filterInstance?.advance_where}" />
+			</div>
+		</div>
 		</div>
 
 		<div class="tipo_sum" style="display: none;">

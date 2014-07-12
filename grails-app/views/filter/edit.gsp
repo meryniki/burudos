@@ -133,9 +133,12 @@
 			for (var i = 0; i < itipowhere2.length; i++) {
 				itipowhere2[i].style.display = "block";
 			}
-		} else if (ifilter.value == "ADVANCE") {
+		} else if (ifilter.value == "ADVANCED") {
 			for (var i = 0; i < itipowhere3.length; i++) {
 				itipowhere3[i].style.display = "block";
+			}
+			for (var i = 0; i < itipowhere1.length; i++) {
+				itipowhere1[i].style.display = "block";
 			}
 		} else if (ifilter.value == "QUERY") {
 			for (var i = 0; i < itipowhere4.length; i++) {
@@ -176,9 +179,12 @@
 				for (var i = 0; i < itipowhere2.length; i++) {
 					itipowhere2[i].style.display = "block";
 				}
-			} else if (ifilter.value == "ADVANCE") {
+			} else if (ifilter.value == "ADVANCED") {
 				for (var i = 0; i < itipowhere3.length; i++) {
 					itipowhere3[i].style.display = "block";
+				}
+				for (var i = 0; i < itipowhere1.length; i++) {
+					itipowhere1[i].style.display = "block";
 				}
 			} else if (ifilter.value == "QUERY") {
 				for (var i = 0; i < itipowhere4.length; i++) {

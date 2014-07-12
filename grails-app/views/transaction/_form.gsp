@@ -201,6 +201,19 @@
 </div>
 
 <div
+	class=" form-group fieldcontain ${hasErrors(bean: transactionInstance, field: 'plan', 'error')} ">
+	<label class="col-lg-3 control-label" for="plan"> <g:message
+			code="transaction.plan.label" default="Plan" />
+
+	</label>
+	<div class="col-lg-9">
+		<g:textField name="plan"
+			value="${transactionInstance?.plan}" />
+	</div>
+</div>
+
+
+<div
 	class=" form-group fieldcontain ${hasErrors(bean: transactionInstance, field: 'debaut', 'error')} ">
 	<label class="col-lg-3 control-label" for="debaut"> <g:message
 			code="transaction.debaut.label" default="Debaut" />

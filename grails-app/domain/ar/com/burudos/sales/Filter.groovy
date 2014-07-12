@@ -17,7 +17,7 @@ class Filter {
 	String filterCode
 	String description
 	BussinesUnit bu
-	Date validMonth
+	//Date validMonth
 	static hasMany = [totals:Filter]
 	
 	String op
@@ -29,13 +29,16 @@ class Filter {
 	String partida
 	String equipo
 	String solicitud
+	String servicio
 	String cancel
 	String estado
 	String factura
 	String importe
 	String plan_desc
+	String plan
 	String debaut
 	String cat_plan
+	String advance_where
 	
 	/*Si suma por un campo, se escribe aca*/
 	String suma
@@ -48,7 +51,7 @@ class Filter {
 	static constraints = {
 		type(nullable: false)
 		filterCode (nullable: false, unique:true)
-		validMonth (max : new Date(), nullable: false)
+	//	validMonth (max : new Date(), nullable: false)
 		description (nullable: true)
 		bu( nullable:false)
 		op(nullable:true)
@@ -60,6 +63,7 @@ class Filter {
 		partida(nullable:true)
 		equipo(nullable:true)
 		solicitud(nullable:true)
+		servicio(nullable:true)
 		cancel(nullable:true)
 		estado(nullable:true)
 		factura(nullable:true)
@@ -67,12 +71,20 @@ class Filter {
 		plan_desc(nullable:true)
 		debaut(nullable:true)		
 		cat_plan(nullable:true)
+		plan(nullable:true)
 		plan_promo(nullable:true)
 		op_desde(nullable:true)
 		op_hasta(nullable:true)
 	    suma(nullable:true)	
+		advance_where(nullable:true)
 		totals(nullable:true)	
 	}
+	
+	static mapping = {
+		servicio type: 'text'
+		op type: 'text'
+		advance_where: 'text'
+	 }
 	
 	String toString() {
 		return filterCode

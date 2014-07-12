@@ -24,11 +24,13 @@ class Transaction {
 	String partida
 	String equipo
 	String solicitud
+	String servicio
 	String cancel
 	String estado
 	String tipo_fact
 	String factura
 	String importe
+	String plan
 	String plan_desc
 	String debaut
 	String cantidad
@@ -55,6 +57,7 @@ class Transaction {
 		equipo(nullable:true)
 		blister(nullable:true)
 		solicitud(nullable:true)
+		servicio(nullable:true)
 		almacen(nullable:true)
 		cliente(nullable:true)
 		cancel(nullable:true)
@@ -62,6 +65,7 @@ class Transaction {
 		tipo_fact(nullable:true)
 		factura(nullable:true)
 		importe(nullable:true)
+		plan(nullable:true)
 		plan_desc(nullable:true)
 		debaut(nullable:true)
 		cat_plan(nullable:true)

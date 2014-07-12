@@ -24,3 +24,12 @@
 	</div>
 </div>
 
+<div
+	class=" form-group fieldcontain ${hasErrors(bean: operationInstance, field: 'active', 'error')} ">
+	<label class="col-lg-3 control-label" for="active"> <g:message
+			code="employee.active.label" default="Activo" />
+	</label>
+	<div class="col-lg-9">
+		<g:checkBox name="Activo" value="${employeeInstance?.active}" />
+	</div>
+</div>

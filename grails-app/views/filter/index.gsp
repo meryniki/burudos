@@ -88,16 +88,7 @@
 												</div>
 											</div>
 											<div class="col-lg-7">
-												<g:form>
-													<div class="form-group">
-														<g:datePicker id="month" name="month" precision="month"
-															default="${defaultmonth}" value="${month}"/>
-													</div>
-													<div class="form-group">
-														<g:actionSubmit class="save btn btn-info" action="index"
-															value="${message(code: 'default.button.search.label', default: 'Buscar')}" />
-													</div>
-												</g:form>
+												
 											</div>
 										</div>
 										<table cellpadding="0" cellspacing="0" border="0"

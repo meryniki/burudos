@@ -203,12 +203,19 @@
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
 											<g:fieldValue bean="${filterInstance}" field="debaut" /></span></li>
 									</g:if>
-
-									<g:if test="${filterInstance?.validMonth}">
+									
+									<g:if test="${filterInstance?.solicitud}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
-													code="filter.validMonth.label" default="Month" /></span> <span
+													code="filter.solicitud.label" default="solicitud" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
-											<g:formatDate date="${filterInstance?.validMonth}" /></span></li>
+											<g:fieldValue bean="${filterInstance}" field="solicitud" /></span></li>
+									</g:if>
+									
+									<g:if test="${filterInstance?.servicio}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="filter.solicitud.label" default="servicio" /></span> <span
+											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
+											<g:fieldValue bean="${filterInstance}" field="servicio" /></span></li>
 									</g:if>
 
 									<g:if test="${filterInstance?.totals}">
@@ -216,6 +223,18 @@
 													code="filter.totals.label" default="Totales a Sumar" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
 											<g:fieldValue bean="${filterInstance}"  field="totals"/></span></li>
+									</g:if>
+									<g:if test="${filterInstance?.plan}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="filter.plan.label" default="Plan" /></span> <span
+											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
+											<g:fieldValue bean="${filterInstance}"  field="plan"/></span></li>
+									</g:if>
+									<g:if test="${filterInstance?.advance_where}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="filter.advance_where.label" default="Avanzado" /></span> <span
+											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
+											<g:fieldValue bean="${filterInstance}"  field="advance_where"/></span></li>
 									</g:if>
 								</ul>
 								<ul class="bigBtnIcon" style="display: -webkit-box;">

@@ -268,7 +268,7 @@ class SummaryController {
 				filter.op = filter.op.replace("(","")
 				filter.op = filter.op.replace(")","")
 				where_filter += " and ("
-				filter.op.split(" o ").each { ops->
+				filter.op.split(" o ").each() { ops->
 					where_filter += " or t.op.code = '" + ops + "'"
 				}
 				where_filter += ")"
@@ -276,6 +276,46 @@ class SummaryController {
 			}
 			else
 				where_filter += " and t.op.code = '" + filter.op  + "'"
+		}
+		if (filter.plan) {
+
+			if (filter.plan=="(null)")
+				where_filter += " and t.plan is null"
+			else if (filter.plan == "(any)")
+				where_filter += " and t.plan is not null"
+			else if ( filter.plan.contains(" o ") ){
+				//&& filter.op.contains("(") && filter.op.contains(")")  ){
+				filter.plan = filter.plan.replace("(","")
+				filter.plan = filter.plan.replace(")","")
+				where_filter += " and ("
+				filter.plan.split(" o ").each() { ops->
+					where_filter += " or t.plan = '" + ops + "'"
+				}
+				where_filter += ")"
+				where_filter = where_filter.replace("( or ", "( ")
+			}
+			else
+				where_filter += " and t.plan = '" + filter.plan  + "'"
+		}
+		if (filter.servicio) {
+
+			if (filter.servicio=="(null)")
+				where_filter += " and t.servicio is null"
+			else if (filter.servicio == "(any)")
+				where_filter += " and t.servicio is not null"
+			else if ( filter.servicio.contains(" o ") ){
+				//&& filter.op.contains("(") && filter.op.contains(")")  ){
+				filter.servicio = filter.servicio.replace("(","")
+				filter.servicio = filter.servicio.replace(")","")
+				where_filter += " and ("
+				filter.servicio.split(" o ").each() { ops->
+					where_filter += " or t.servicio = '" + ops + "'"
+				}
+				where_filter += ")"
+				where_filter = where_filter.replace("( or ", "( ")
+			}
+			else
+				where_filter += " and t.servicio = '" + filter.servicio  + "'"
 		}
 		if (filter.ani)
 			if (filter.ani=="(null)")
@@ -298,6 +338,13 @@ class SummaryController {
 				where_filter += " and t.imei is not null"
 			else
 				where_filter += " and t.imei = '" + filter.imei  + "'"
+		if (filter.plan)
+			if (filter.plan=="(null)")
+				where_filter += " and t.plan is null"
+			else if (filter.plan == "(any)")
+				where_filter += " and t.plan is not null"
+			else
+				where_filter += " and t.plan = '" + filter.plan  + "'"
 		if (filter.sim)
 			if (filter.sim=="(null)")
 				where_filter += " and t.sim is null"
@@ -325,7 +372,7 @@ class SummaryController {
 			else if (filter.equipo == "(any)")
 				where_filter += " and t.equipo is not null"
 			else
-				where_filter += " and t.equipo = '" + filter.equipo  + "'"
+				where_filter += " and t.equipo like '%" + filter.equipo  + "%'"
 		if (filter.solicitud)
 			if (filter.solicitud=="(null)")
 				where_filter += " and t.solicitud is null"
@@ -395,7 +442,8 @@ class SummaryController {
 		/*
 		 * Busco todos los filtros del Mes, ordenados por Tipo, para calcular al final los que son SUM
 		 */
-		Filter.findAllByValidMonth(Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year), [sort: "type", order: "desc"]).each() { filter->
+		Filter.findAll([sort: "type", order: "desc"]){}.each() { filter->
+			//Filter.findAllByValidMonth(Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year), [sort: "type", order: "desc"]).each() { filter->
 
 			count_total_filter = 0
 
@@ -409,12 +457,11 @@ class SummaryController {
 				def cantidad_emp = 0
 				def where_filter = ""
 
-				println "- - - - Sumarizando " + butmp
-
 				/*
 				 * Filtros con Where
 				 */
-				if (filter.type == Filter_Type.WHERE && butmp.isFamily(filter.bu))
+				if ( (filter.type == Filter_Type.WHERE || filter.type == Filter_Type.ADVANCED )
+				&& butmp.isFamily(filter.bu))
 				{
 
 					where_filter = arma_where(filter, butmp)
@@ -422,12 +469,20 @@ class SummaryController {
 					if (filter.suma && filter.suma.length()>0)
 						countby = "sum(t." + filter.suma + ")"
 
-					
+
 					Employee.findAllWhere(bu:butmp).each(){ mparty ->
 						def query = "select "+ countby +" from Transaction t where t.party.id = " + mparty.id  +
 								where_filter +
 								" and month(t.date) = " + params.month_month +
 								" and year(t.date) = " + params.month_year
+
+						/*
+						 * Filtros ADVANCED
+						 */
+						if (filter.type == Filter_Type.ADVANCED)
+						{
+							query += " and " + filter.advance_where
+						}
 
 						cantidad_emp += 1
 						Double thiscount=0;
@@ -485,7 +540,6 @@ class SummaryController {
 
 
 				}//if filter
-
 
 				/*
 				 * Filtros de SUM
