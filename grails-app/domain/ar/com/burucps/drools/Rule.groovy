@@ -61,13 +61,19 @@ class Rule {
 
 	@Override
 	public boolean equals(Object o) {
-		if (!o)
+		if (o == null) {
 			return false;
-		if (!o instanceof Rule)
+		}
+		if (!(o instanceof Rule)) {
 			return false;
-		if (!this.id)
+		}
+		it (this.is(o)) {
+			return true;
+		}
+		if ((this.id == null) || (o.id == null)) { 
 			return false;
-		return this.id.equals(((Rule) o).id);
+		}
+		return this.id == o.id;
 	}
 	
 	String toString() {

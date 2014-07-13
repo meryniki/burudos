@@ -59,13 +59,19 @@ class RuleSet {
 
 	@Override
 	public boolean equals(Object o) {
-		if (!o)
+		if (o == null) {
 			return false;
-		if (!o instanceof RuleSet)
+		}
+		if (!(o instanceof RuleSet)) {
 			return false;
-		if (!this.id)
+		}
+		it (this.is(o)) {
+			return true;
+		}
+		if ((this.id == null) || (o.id == null)) { 
 			return false;
-		return this.id.equals(((RuleSet) o).id);
+		}
+		return this.id == o.id;
 	}
 	
 	String toString() {
