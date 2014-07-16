@@ -56,8 +56,8 @@
 									<div class="plano_negro statement-result">
 										<div class="plano_negro alert alert-info">
 											Saldo a cobrar<br /> $
-											<g:fieldValue bean="${employeeStatementInstance}"
-												field="total" />
+											<g:formatNumber number="${employeeStatementInstance.total}"
+												type="number" minIntegerDigits="1" maxFractionDigits="2" />
 										</div>
 									</div>
 								</td>
@@ -123,8 +123,9 @@
 									</g:each>
 									<tr>
 										<td colspan="3">Total</td>
-										<td><g:fieldValue bean="${employeeStatementInstance}"
-												field="stalesSubtotal" /></td>
+										<td><g:formatNumber
+												number="${employeeStatementInstance.stalesSubtotal}"
+												type="number" minIntegerDigits="1" maxFractionDigits="2" /></td>
 									</tr>
 							</table>
 						</div>
@@ -180,15 +181,12 @@
 												<td>
 													${it.description}
 												</td>
-												<td>
-													${it.unitAmount}
-												</td>
-												<td>
-													${it.operationsAmount}
-												</td>
-												<td>
-													${it.amount}
-												</td>
+												<td><g:formatNumber number="${it.unitAmount}"
+														type="number" minIntegerDigits="1" maxFractionDigits="2" /></td>
+												<td><g:formatNumber number="${it.operationsAmount}"
+														type="number" minIntegerDigits="1" maxFractionDigits="0" /></td>
+												<td><g:formatNumber number="${it.amount}" type="number"
+														minIntegerDigits="1" maxFractionDigits="2" /></td>
 											</tr>
 										</g:if>
 									</g:each>
@@ -196,8 +194,9 @@
 
 									<tr>
 										<td colspan="3">Total</td>
-										<td><g:fieldValue bean="${employeeStatementInstance}"
-												field="pointsSubtotal" /></td>
+										<td><g:formatNumber
+												number="${employeeStatementInstance.pointsSubtotal}"
+												type="number" minIntegerDigits="1" maxFractionDigits="2" /></td>
 									</tr>
 								</tbody>
 							</table>
@@ -220,22 +219,21 @@
 											<td>
 												${it.description}
 											</td>
-											<td>
-												${it.unitAmount}
-											</td>
-											<td>
-												${it.operationsAmount}
-											</td>
-											<td>
-												${it.amount}
+											<td><g:formatNumber number="${it.unitAmount}"
+													type="number" minIntegerDigits="1" maxFractionDigits="2" /></td>
+											<td><g:formatNumber number="${it.operationsAmount}"
+													type="number" minIntegerDigits="1" maxFractionDigits="0" /></td>
+											<td><g:formatNumber number="${it.amount}" type="number"
+													minIntegerDigits="1" maxFractionDigits="2" /></td>
 											</td>
 										</tr>
 									</g:each>
 
 									<tr>
 										<td colspan="3">Total</td>
-										<td><g:fieldValue bean="${employeeStatementInstance}"
-												field="posIncentSubtotal" /></td>
+										<td><g:formatNumber
+												number="${employeeStatementInstance.posIncentSubtotal}"
+												type="number" minIntegerDigits="1" maxFractionDigits="2" /></td>
 									</tr>
 							</table>
 						</div>
@@ -257,21 +255,19 @@
 											<td>
 												${it.description}
 											</td>
-											<td>
-												${it.unitAmount}
-											</td>
-											<td>
-												${it.operationsAmount}
-											</td>
-											<td>
-												${it.amount}
-											</td>
+											<td><g:formatNumber number="${it.unitAmount}"
+													type="number" minIntegerDigits="1" maxFractionDigits="2" /></td>
+											<td><g:formatNumber number="${it.operationsAmount}"
+													type="number" minIntegerDigits="1" maxFractionDigits="0" /></td>
+											<td><g:formatNumber number="${it.amount}" type="number"
+													minIntegerDigits="1" maxFractionDigits="2" /></td>
 										</tr>
 									</g:each>
 									<tr>
 										<td colspan="3">Total</td>
-										<td><g:fieldValue bean="${employeeStatementInstance}"
-												field="indIncentSubtotal" /></td>
+										<td><g:formatNumber
+												number="${employeeStatementInstance.indIncentSubtotal}"
+												type="number" minIntegerDigits="1" maxFractionDigits="2" /></td>
 									</tr>
 							</table>
 						</div>
@@ -310,8 +306,9 @@
 								<thead>
 									<tr>
 										<th>Subtotal Upfront</th>
-										<th>
-											${employeeStatementInstance.positiveSubtotal}
+										<th><g:formatNumber
+												number="${employeeStatementInstance.positiveSubtotal}"
+												type="number" minIntegerDigits="1" maxFractionDigits="2" />
 										</th>
 									</tr>
 								</thead>
@@ -342,22 +339,20 @@
 												<td>
 													${it.description}
 												</td>
-												<td>
-													${it.unitAmount}
-												</td>
-												<td>
-													${it.operationsAmount}
-												</td>
-												<td>
-													${it.amount}
-												</td>
+												<td><g:formatNumber number="${it.unitAmount}"
+														type="number" minIntegerDigits="1" maxFractionDigits="2" /></td>
+												<td><g:formatNumber number="${it.operationsAmount}"
+														type="number" minIntegerDigits="1" maxFractionDigits="0" /></td>
+												<td><g:formatNumber number="${it.amount}" type="number"
+														minIntegerDigits="1" maxFractionDigits="2" /></td>
 											</tr>
 										</g:if>
 									</g:each>
 									<tr>
 										<td colspan="3">Total</td>
-										<td><g:fieldValue bean="${employeeStatementInstance}"
-												field="deductionsSubtotal" /></td>
+										<td><g:formatNumber
+												number="${employeeStatementInstance.deductionsSubtotal}"
+												type="number" minIntegerDigits="1" maxFractionDigits="2" /></td>
 									</tr>
 							</table>
 						</div>
@@ -376,28 +371,28 @@
 											<td>
 												${it.description}
 											</td>
-											<td>
-												${it.amount}
-											</td>
+											<td><g:formatNumber number="${it.amount}" type="number"
+													minIntegerDigits="1" maxFractionDigits="2" /></td>
 										</tr>
 									</g:each>
 									<tr>
 										<td>Total</td>
-										<td><g:fieldValue bean="${employeeStatementInstance}"
-												field="fixedSubtotal" /></td>
+										<td><g:formatNumber
+												number="${employeeStatementInstance.fixedSubtotal}"
+												type="number" minIntegerDigits="1" maxFractionDigits="2" /></td>
 									</tr>
 							</table>
 						</div>
-						
+
 						<br />
 						<div class="plano_negro">
 							<table class="plano_negro printable">
 								<thead>
 									<tr>
 										<th>Total</th>
-										<th>
-											${employeeStatementInstance.total}
-										</th>
+										<th><g:formatNumber
+												number="${employeeStatementInstance.total}" type="number"
+												minIntegerDigits="1" maxFractionDigits="2" /></th>
 									</tr>
 								</thead>
 								<tbody>
