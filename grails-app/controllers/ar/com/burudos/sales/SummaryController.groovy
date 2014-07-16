@@ -516,7 +516,7 @@ class SummaryController {
 					// Entonces es una region o JAG, busco los totales de los hijos y lo sumo
 					if (cantidad_emp == 0)
 					{
-						butmp.getSons().each(){ buson ->
+						butmp.getDirectSons().each(){ buson ->
 							code = Summary.findByBuAndSumMonthAndFilter(buson, Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter)
 							if (code)
 								counting += code.quantity
@@ -578,7 +578,7 @@ class SummaryController {
 					// Entonces es una region o JAG, busco los totales de los hijos y lo sumo
 					if (cantidad_emp == 0)
 					{
-						butmp.getSons().each(){ buson ->
+						butmp.getDirectSons().each(){ buson ->
 							code = Summary.findByBuAndSumMonthAndFilter(buson, Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter)
 							if (code)
 								ct += code.quantity
