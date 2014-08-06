@@ -53,7 +53,7 @@ class Statement {
 		posIncentSubtotal(nullable:true, min : 0D)
 		positiveSubtotal(nullable:true, min : 0D)
 		deductionsSubtotal(nullable:true)
-		fixedSubtotal(nullable:true, min : 0D)
+		fixedSubtotal(nullable:true)
 		pointsObjPerc(nullable:true, min: 0D)
 		qBUTotal(nullable:true, min: 0D)
 		qEmployeeTotal(nullable:true, min: 0D)
