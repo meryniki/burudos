@@ -64,6 +64,15 @@ class BussinesUnit {
 		}
 		return sons
 	}
+	
+	def getDirectSons(){
+		def sons=[]
+		BussinesUnit.findAllByFather(this).each() { btu->
+			sons.add(btu)
+		}
+		return sons
+	}
+	
 
 	/*
 	 * Busca si es hijo o nieto de t

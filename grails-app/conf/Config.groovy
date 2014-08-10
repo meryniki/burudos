@@ -157,6 +157,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/subcontractor/*':			  	  ['permitAll'],
 	'/summary/*':				  	  ['permitAll'],
 	'/transaction/*':			  	  ['permitAll'],
+	'/Excel/*':						  ['permitAll'],
 	// springsecurity.ui
 	'/register/*':					  ['permitAll'],
 	'/user/*':						  ['permitAll'],

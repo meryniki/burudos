@@ -87,46 +87,126 @@
 			<div class="sidenav">
 
 				<div class="sidebar-widget" style="margin: -1px 0 0 0;">
-					<h5 class="title" style="margin-bottom: 0">Navigation</h5>
+					<h5 class="title" style="margin-bottom: 0">Empresa</h5>
 				</div>
 
-				<!-- End .sidenav-widget -->
 
 				<div class="mainnav">
 					<ul>
-						<!-- <li><a href="#" class="hasUl"><span
-							class="icon16 icomoon-icon-list"></span>Forms<span
-							class="notification red">sub2</span><span
-							class="hasDrop icon16 icomoon-icon-arrow-down-2"></span></a>
-				    </li> -->
-						<g:each var="c"
-							in="${grailsApplication.controllerClasses.sort { it.fullName } }">
-							<g:if test="${c.getStaticPropertyValue('linkMe', Boolean)}">
-								<li><g:link controller="${c.logicalPropertyName}">
-										<span
-											class="icon16
-									<!-- No quitar espacio siguiente --> <g:message code="${c.getStaticPropertyValue('iconName', String)}" />
-									"></span>
-										<g:message
-											code="${c.getStaticPropertyValue('btnName', String)}" />
-									</g:link> 
-									<g:if test="${c.getStaticPropertyValue('submenu1', String)}">
-										<ul class="sub" style="display: none;">
-											<g:if test="${c.getStaticPropertyValue('submenu1', String)}">
-												<li><g:link action="index" params="[employeeorbu: '1']" controller="${c.logicalPropertyName}" ><span
-														class="icon16 icomoon-icon-arrow-right-3"></span> <g:message
-															code="${c.getStaticPropertyValue('submenu1', String)}" /></g:link></li>
-											</g:if>
 
-											<g:if test="${c.getStaticPropertyValue('submenu2', String)}">
-												<li><g:link action="index" params="[employeeorbu: '2']" controller="${c.logicalPropertyName}" ><span
-														class="icon16 icomoon-icon-arrow-right-3"></span> <g:message
-															code="${c.getStaticPropertyValue('submenu2', String)}" /></g:link></li>
-											</g:if>
-										</ul>
-										</g:if></li>
-							</g:if>
-						</g:each>
+
+						<li><a href="/burucps/bussinesUnit/index"> <span
+								class="icon16
+									<!-- No quitar espacio siguiente --> icomoon-icon-office
+									"></span>
+								Puntos de venta
+						</a></li>
+
+
+						<li><a href="/burucps/employee/index"> <span
+								class="icon16          <!-- No quitar espacio siguiente --> icomoon-icon-people"></span>
+								Empleados
+						</a></li>
+					</ul>
+				</div>
+				<div class="sidebar-widget" style="margin: -1px 0 0 0;">
+					<h5 class="title" style="margin-bottom: 0">Transacciones</h5>
+				</div>
+
+
+				<div class="mainnav">
+					<ul>
+
+
+						<li><a href="/burucps/operation/index"> <span
+								class="icon16          <!-- No quitar espacio siguiente --> icomoon-icon-stack"></span>
+								Operaciones
+						</a></li>
+
+						<li><a href="/burucps/transaction/index"> <span
+								class="icon16
+									<!-- No quitar espacio siguiente --> icomoon-icon-cabinet
+									"></span>
+								Trxs del Mes
+						</a></li>
+
+
+						<li><a href="/burucps/filter/index"> <span
+								class="icon16          <!-- No quitar espacio siguiente --> icomoon-icon-archive"></span>
+								Filtros
+						</a></li>
+
+
+
+
+						<li><a href="/burucps/summary/index" class="hasUl"> <span
+								class="icon16          <!-- No quitar espacio siguiente --> icomoon-icon-stats-up"></span>
+								Totales <span class="hasDrop icon16 icomoon-icon-arrow-down-2"></span></a>
+
+							<ul class="sub" style="display: none;">
+
+								<li><a href="/burucps/summary/index?employeeorbu=1"><span
+										class="icon16 icomoon-icon-arrow-right-3"></span> Empleados</a></li>
+
+
+
+								<li><a href="/burucps/summary/index?employeeorbu=2"><span
+										class="icon16 icomoon-icon-arrow-right-3"></span> Puntos de
+										Venta</a></li>
+
+							</ul></li>
+
+					</ul>
+				</div>
+				<div class="sidebar-widget" style="margin: -1px 0 0 0;">
+					<h5 class="title" style="margin-bottom: 0">Configuración</h5>
+				</div>
+
+
+				<div class="mainnav">
+					<ul>
+
+						<li><a href="/burucps/parameter/index"> <span
+								class="icon16
+									<!-- No quitar espacio siguiente --> icomoon-icon-settings
+									"></span>
+								Parámetros
+						</a></li>
+
+						<li><a href="/burucps/ruleSet/index"> <span
+								class="icon16
+									<!-- No quitar espacio siguiente --> icomoon-icon-file-xml
+									"></span>
+								Tipos de liquidación
+						</a></li>
+
+
+						<li><a href="/burucps/rule/index"> <span
+								class="icon16
+									<!-- No quitar espacio siguiente --> icomoon-icon-embed
+									"></span>
+								Reglas
+						</a></li>
+
+					</ul>
+				</div>
+				<div class="sidebar-widget" style="margin: -1px 0 0 0;">
+					<h5 class="title" style="margin-bottom: 0">Liquidaciones</h5>
+				</div>
+
+
+				<div class="mainnav">
+					<ul>
+						<li><a href="/burucps/employeeStatement/index"> <span
+								class="icon16
+									<!-- No quitar espacio siguiente --> icomoon-icon-stack
+									"></span>
+								Liquidaciones
+						</a></li>
+
+
+
+					</ul>
 					</ul>
 				</div>
 			</div>

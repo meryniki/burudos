@@ -71,8 +71,8 @@
 
 									<g:if test="${ruleSetInstance?.ruleSetName}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
-													code="ruleSet.ruleSetName.label" default="Rule Set Name" /></span> <span
-											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
+													code="ruleSet.ruleSetName.label" default="Rule Set Name" /></span>
+											<span class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
 											class="col-lg-6"><g:fieldValue
 													bean="${ruleSetInstance}" field="ruleSetName" /></span></li>
 									</g:if>
@@ -105,15 +105,15 @@
 
 									<g:if test="${ruleSetInstance?.rules}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
-													code="ruleSet.rules.label" default="Rules" /></span> <g:each
-												in="${ruleSetInstance.rules}" var="r">
-												<span
-													class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
-												<span class="col-lg-6"><g:link controller="rule"
+													code="ruleSet.rules.label" default="Rules" /></span> <span
+											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
+											<div class="col-lg-6">
+											<g:each in="${ruleSetInstance.rules}" var="r">
+												<g:link controller="rule"
 														action="show" id="${r.id}">
 														${r?.encodeAsHTML()}
-													</g:link></span>
-											</g:each></li>
+													</g:link><br/>
+											</g:each></div></li>
 									</g:if>
 								</ul>
 
