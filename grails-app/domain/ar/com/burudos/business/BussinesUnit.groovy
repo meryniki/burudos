@@ -33,7 +33,7 @@ class BussinesUnit {
 	}
 
 	String toString() {
-		"$nombre";
+		"$nombre ($code)";
 	}
 
 	def getFamily(){
