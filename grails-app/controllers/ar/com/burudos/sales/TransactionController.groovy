@@ -195,7 +195,7 @@ class TransactionController {
 		}		
 		
 		def empmap = [:]
-		Employee.each { ee->
+		Employee.findAll().each() { ee->
 			empmap[ee.name] = ee
 		}
 
@@ -342,16 +342,6 @@ class TransactionController {
 				if (empmap.containsKey(row_mapa[BuruConstants.row_emp]))
 					tmpemployee = empmap[row_mapa[BuruConstants.row_emp]]
 				
-					/*
-				if ( !row_mapa[BuruConstants.row_buname])
-					tmpemployee= Employee.findByName(row_mapa[BuruConstants.row_emp])
-				else{
-					butmp = BussinesUnit.findByNombre(row_mapa[BuruConstants.row_buname])
-					if (butmp)
-						tmpemployee= Employee.findByNameAndBu(row_mapa[BuruConstants.row_emp], butmp )
-					else
-						tmpemployee= Employee.findByName(row_mapa[BuruConstants.row_emp])
-				}*/
 				
 				if (! tmpemployee ){
 					linea = linea + 1
