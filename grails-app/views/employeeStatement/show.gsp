@@ -127,18 +127,17 @@
 										</div>
 									</div>
 								</div>
-
 								<!-- Objetivos -->
 								<div class="col-lg-12">
 									<div class="panel panel-default">
 										<div class="panel-body noPad" style="display: block;">
 											<div class="responsive" tabindex="5007"
 												style="overflow: hidden; outline: none;">
-												<table class="table alert alert-success">
+												<table class="table">
 													<thead>
 														<tr>
-															<th>Premio Postventa</th>
-															<th>Puntaje Objetivo</th>
+															<th></th>
+															<th>Valor</th>
 															<th>% Alcanzado</th>
 															<th>Comision</th>
 														</tr>
@@ -169,6 +168,56 @@
 										</div>
 									</div>
 								</div>
+								<!-- Objetivos -->
+								<div class="col-lg-12">
+									<div class="panel panel-default">
+										<div class="panel-body noPad" style="display: block;">
+											<div class="responsive" tabindex="5007"
+												style="overflow: hidden; outline: none;">
+												<table class="table">
+													<thead>
+														<tr>
+															<th>Operaciones comerciales del Punto de Venta</th>
+															<th>Pts. / operación</th>
+															<th># operaciones</th>
+															<th>Total</th>
+														</tr>
+													</thead>
+													<tbody>
+														<g:each
+															in="${employeeStatementInstance.getBuPointsLines()}">
+															<g:if test="${it.amount!=0}">
+																<tr>
+																	<td>
+																		${it.description}
+																	</td>
+																	<td><g:formatNumber number="${it.unitAmount}"
+																			type="number" minIntegerDigits="1"
+																			maxFractionDigits="2" /></td>
+																	<td><g:formatNumber
+																			number="${it.operationsAmount}" type="number"
+																			minIntegerDigits="1" maxFractionDigits="0" /></td>
+																	<td><g:formatNumber number="${it.amount}"
+																			type="number" minIntegerDigits="1"
+																			maxFractionDigits="2" /></td>
+																</tr>
+															</g:if>
+														</g:each>
+
+
+														<tr>
+															<td colspan="3">Total</td>
+															<td><g:formatNumber
+																	number="${employeeStatementInstance.pointsSubtotal}"
+																	type="number" minIntegerDigits="1"
+																	maxFractionDigits="2" /></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
 								<div class="col-lg-12">
 									<div class="panel panel-default">
 										<div class="panel-body noPad" style="display: block;">
@@ -177,38 +226,38 @@
 												style="overflow: hidden; outline: none;">
 												<table class="table">
 													<thead>
-														<div class="panel-heading">
-															<h4>Objetivos de Operaciones</h4>
-														</div>
 														<tr>
-															<th>Operación</th>
-															<th>Q Punto de Venta</th>
-															<th>Q Empleado</th>
-															<th>Q alcanzado</th>
-															<th>%</th>
+															<th>Altas</th>
+															<th>Valor</th>
+															<th>Cantidad/%</th>
+															<th>Total</th>
 														</tr>
 													</thead>
 													<tbody>
-														<g:each in="${employeeStatementInstance.getBuObjQLines()}">
+														<g:each
+															in="${employeeStatementInstance.getEmpSalesLines()}">
 															<tr>
 																<td>
 																	${it.description}
 																</td>
-																<td><g:formatNumber number="${it.unitAmount}"
-																		type="number" minIntegerDigits="1"
-																		maxFractionDigits="0" /></td>
-																<td><g:formatNumber number="${it.operationsAmount}"
-																		type="number" minIntegerDigits="1"
-																		maxFractionDigits="0" /></td>
-																<td><g:formatNumber number="${it.amount}"
-																		type="number" minIntegerDigits="1"
-																		maxFractionDigits="2" /></td>
-																<td><g:formatNumber
-																		number="${it.amount/it.operationsAmount*100}"
-																		type="number" minIntegerDigits="1"
-																		maxFractionDigits="2" /></td>
+																<td>
+																	${it.unitAmount}
+																</td>
+																<td>
+																	${it.operationsAmount}
+																</td>
+																<td>
+																	${it.amount}
+																</td>
 															</tr>
 														</g:each>
+														<tr>
+															<td colspan="3">Total</td>
+															<td><g:formatNumber
+																	number="${employeeStatementInstance.stalesSubtotal}"
+																	type="number" minIntegerDigits="1"
+																	maxFractionDigits="2" /></td>
+														</tr>
 													</tbody>
 												</table>
 											</div>
@@ -220,181 +269,17 @@
 
 								<div class="row statement-group">
 									<div class="page-header">
-
-										<h4>Detalle de la liquidación del Punto de Venta</h4>
-
-
 										<div class="tab content">
 											<div id="pos-tab" class="tab-pane fade active in">
 												<div class="col-lg-12">
 													<div class="panel panel-default">
-														<div class="panel-heading">
-															<h4>
-																<span>Operaciones Comerciales de Postventa</span>
-															</h4>
-														</div>
 														<div class="panel-body noPad" style="display: block;">
 															<div class="responsive" tabindex="5006"
 																style="overflow: hidden; outline: none;">
 																<table class="table table-bordered" id="checkAll">
 																	<thead>
 																		<tr>
-																			<th>Operación comercial</th>
-																			<th>Pts. / operación</th>
-																			<th># operaciones</th>
-																			<th>Total</th>
-																		</tr>
-																	</thead>
-																	<tbody>
-																		<g:each
-																			in="${employeeStatementInstance.getBuPointsLines()}">
-																			<tr>
-																				<td>
-																					${it.description}
-																				</td>
-																				<td><g:formatNumber number="${it.unitAmount}"
-																						type="number" minIntegerDigits="1"
-																						maxFractionDigits="0" /></td>
-																				<td><g:formatNumber
-																						number="${it.operationsAmount}" type="number"
-																						minIntegerDigits="1" maxFractionDigits="0" /></td>
-																				<td><g:formatNumber number="${it.amount}"
-																						type="number" minIntegerDigits="1"
-																						maxFractionDigits="0" /></td>
-																			</tr>
-																		</g:each>
-
-
-																		<tr>
-																			<td colspan="3">Total</td>
-																			<td><g:formatNumber
-																					number="${employeeStatementInstance.pointsSubtotal}"
-																					type="number" minIntegerDigits="1"
-																					maxFractionDigits="2" /></td>
-																		</tr>
-																	</tbody>
-																</table>
-															</div>
-														</div>
-													</div>
-												</div>
-												<!-- End .panel -->
-												<!-- End totales de ountos -->
-												<!-- Incentivos -->
-												<div class="col-lg-12">
-													<div class="panel panel-default">
-														<div class="panel-heading">
-															<h4>Incentivos</h4>
-														</div>
-														<div class="panel-body noPad" style="display: block;">
-															<div class="responsive" tabindex="5007"
-																style="overflow: hidden; outline: none;">
-																<table class="table">
-																	<thead>
-																		<tr>
-																			<th>Descripción</th>
-																			<th>Valor</th>
-																			<th>Cantidad/%</th>
-																			<th>Total</th>
-																		</tr>
-																	</thead>
-																	<tbody>
-																		<g:each
-																			in="${employeeStatementInstance.getBuIncentivesLines()}">
-																			<tr>
-																				<td>
-																					${it.description}
-																				</td>
-																				<td><g:formatNumber number="${it.unitAmount}"
-																						type="number" minIntegerDigits="1"
-																						maxFractionDigits="2" /></td>
-																				<td><g:formatNumber
-																						number="${it.operationsAmount}" type="number"
-																						minIntegerDigits="1" maxFractionDigits="2" /></td>
-																				<td><g:formatNumber number="${it.amount}"
-																						type="number" minIntegerDigits="1"
-																						maxFractionDigits="2" /></td>
-																			</tr>
-																		</g:each>
-																		<tr>
-																			<td colspan="3">Total</td>
-																			<td><g:formatNumber
-																					number="${employeeStatementInstance.posIncentSubtotal}"
-																					type="number" minIntegerDigits="1"
-																					maxFractionDigits="2" /></td>
-
-																		</tr>
-																</table>
-															</div>
-														</div>
-													</div>
-												</div>
-												<!-- End Incentivos -->
-
-											</div>
-											<!-- Employee -->
-											<div>
-
-												<h4>Detalle de la liquidación del Empleado</h4>
-
-												<div class="col-lg-12">
-													<div class="panel panel-default">
-														<div class="panel-heading">
-															<h4>Altas</h4>
-														</div>
-														<div class="panel-body noPad" style="display: block;">
-															<div class="responsive" tabindex="5007"
-																style="overflow: hidden; outline: none;">
-																<table class="table">
-																	<thead>
-																		<tr>
-																			<th>Descripción</th>
-																			<th>Valor</th>
-																			<th>Cantidad/%</th>
-																			<th>Total</th>
-																		</tr>
-																	</thead>
-																	<tbody>
-																		<g:each
-																			in="${employeeStatementInstance.getEmpSalesLines()}">
-																			<tr>
-																				<td>
-																					${it.description}
-																				</td>
-																				<td><g:formatNumber number="${it.unitAmount}"
-																						type="number" minIntegerDigits="1"
-																						maxFractionDigits="2" /></td>
-																				<td><g:formatNumber
-																						number="${it.operationsAmount}" type="number"
-																						minIntegerDigits="1" maxFractionDigits="0" /></td>
-																				<td><g:formatNumber number="${it.amount}"
-																						type="number" minIntegerDigits="1"
-																						maxFractionDigits="2" /></td>
-																			</tr>
-																		</g:each>
-
-																		<tr>
-																			<td colspan="3">Total</td>
-																			<td><g:formatNumber
-																					number="${employeeStatementInstance.stalesSubtotal}"
-																					type="number" minIntegerDigits="1"
-																					maxFractionDigits="2" /></td>
-																		</tr>
-																</table>
-															</div>
-														</div>
-													</div>
-													<div class="panel panel-default">
-														<div class="panel-heading">
-															<h4>Incentivos Individuales</h4>
-														</div>
-														<div class="panel-body noPad" style="display: block;">
-															<div class="responsive" tabindex="5007"
-																style="overflow: hidden; outline: none;">
-																<table class="table">
-																	<thead>
-																		<tr>
-																			<th>Descripción</th>
+																			<th>Incentivos Individuales</th>
 																			<th>Valor</th>
 																			<th>Cantidad/%</th>
 																			<th>Total</th>
@@ -405,7 +290,9 @@
 																			in="${employeeStatementInstance.getEmpIncentivesLines()}">
 																			<tr>
 																				<td>
-																					${it.description}
+																					${
+																						it.description
+																					}
 																				</td>
 																				<td><g:formatNumber number="${it.unitAmount}"
 																						type="number" minIntegerDigits="1"
@@ -425,6 +312,119 @@
 																					type="number" minIntegerDigits="1"
 																					maxFractionDigits="2" /></td>
 																		</tr>
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
+												<!-- End .panel -->
+												<!-- End totales de ountos -->
+												<!-- Incentivos -->
+												<div class="col-lg-12">
+													<div class="panel panel-default">
+														<div class="panel-body noPad" style="display: block;">
+															<div class="responsive" tabindex="5007"
+																style="overflow: hidden; outline: none;">
+																<table class="table">
+																	<thead>
+																		<tr>
+																			<th>Incentivos</th>
+																			<th>Valor</th>
+																			<th>Cantidad/%</th>
+																			<th>Total</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<g:each
+																			in="${employeeStatementInstance.getBuIncentivesLines()}">
+																			<tr>
+																				<td>
+																					${it.description}
+																				</td>
+																				<td><g:formatNumber number="${it.unitAmount}"
+																						type="number" minIntegerDigits="1"
+																						maxFractionDigits="2" /></td>
+																				<td><g:formatNumber
+																						number="${it.operationsAmount}" type="number"
+																						minIntegerDigits="1" maxFractionDigits="0" /></td>
+																				<td><g:formatNumber number="${it.amount}"
+																						type="number" minIntegerDigits="1"
+																						maxFractionDigits="2" /></td>
+																				</td>
+																			</tr>
+																		</g:each>
+
+																		<tr>
+																			<td colspan="3">Total</td>
+																			<td><g:formatNumber
+																					number="${employeeStatementInstance.posIncentSubtotal}"
+																					type="number" minIntegerDigits="1"
+																					maxFractionDigits="2" /></td>
+																		</tr>
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
+												<!-- End Incentivos -->
+
+											</div>
+											<!-- Employee -->
+											<div>
+
+												<div class="col-lg-12">
+													<div class="panel panel-default">
+														<div class="panel-body noPad" style="display: block;">
+															<div class="responsive" tabindex="5007"
+																style="overflow: hidden; outline: none;">
+																<table class="table">
+																	<thead>
+																		<tr>
+																			<th>Otros</th>
+																			<th>Valor</th>
+																			<th>Cantidad/%</th>
+																			<th>Total</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<g:each
+																			in="${employeeStatementInstance.getEmpOthLines()}">
+																			<tr>
+																				<td>
+																					${it.description}
+																				</td>
+																				<td><g:formatNumber number="${it.unitAmount}"
+																						type="number" minIntegerDigits="1"
+																						maxFractionDigits="0" /></td>
+																				<td><g:formatNumber
+																						number="${it.operationsAmount}" type="number"
+																						minIntegerDigits="1" maxFractionDigits="0" /></td>
+																				<td><g:formatNumber number="${it.amount}"
+																						type="number" minIntegerDigits="1"
+																						maxFractionDigits="0" /></td>
+																			</tr>
+																		</g:each>
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+													<div class="panel panel-default">
+														<div class="panel-body noPad" style="display: block;">
+															<div class="responsive" tabindex="5007"
+																style="overflow: hidden; outline: none;">
+																<table class="table">
+																	<thead>
+																		<tr>
+																			<th>Subtotal Upfront</th>
+																			<th><g:formatNumber
+																					number="${employeeStatementInstance.positiveSubtotal}"
+																					type="number" minIntegerDigits="1"
+																					maxFractionDigits="2" /></th>
+																		</tr>
+																	</thead>
 																</table>
 															</div>
 														</div>
@@ -435,16 +435,13 @@
 
 										<div class="col-lg-12">
 											<div class="panel panel-default">
-												<div class="panel-heading">
-													<h4>Descuentos</h4>
-												</div>
 												<div class="panel-body noPad" style="display: block;">
 													<div class="responsive" tabindex="5007"
 														style="overflow: hidden; outline: none;">
 														<table class="table">
 															<thead>
 																<tr>
-																	<th>Descripción</th>
+																	<th>Descuentos</th>
 																	<th>Valor</th>
 																	<th>Cantidad/%</th>
 																	<th>Total</th>
@@ -453,20 +450,22 @@
 															<tbody>
 																<g:each
 																	in="${employeeStatementInstance.getEmpDedLines()}">
-																	<tr>
-																		<td>
-																			${it.description}
-																		</td>
-																		<td><g:formatNumber number="${it.unitAmount}"
-																				type="number" minIntegerDigits="1"
-																				maxFractionDigits="2" /></td>
-																		<td><g:formatNumber
-																				number="${it.operationsAmount}" type="number"
-																				minIntegerDigits="1" maxFractionDigits="0" /></td>
-																		<td><g:formatNumber number="${it.amount}"
-																				type="number" minIntegerDigits="1"
-																				maxFractionDigits="2" /></td>
-																	</tr>
+																	<g:if test="${it.amount!=0}">
+																		<tr>
+																			<td>
+																				${it.description}
+																			</td>
+																			<td><g:formatNumber number="${it.unitAmount}"
+																					type="number" minIntegerDigits="1"
+																					maxFractionDigits="2" /></td>
+																			<td><g:formatNumber
+																					number="${it.operationsAmount}" type="number"
+																					minIntegerDigits="1" maxFractionDigits="0" /></td>
+																			<td><g:formatNumber number="${it.amount}"
+																					type="number" minIntegerDigits="1"
+																					maxFractionDigits="2" /></td>
+																		</tr>
+																	</g:if>
 																</g:each>
 																<tr>
 																	<td colspan="3">Total</td>
@@ -474,13 +473,36 @@
 																			number="${employeeStatementInstance.deductionsSubtotal}"
 																			type="number" minIntegerDigits="1"
 																			maxFractionDigits="2" /></td>
-
 																</tr>
+															</tbody>
 														</table>
 													</div>
 												</div>
 											</div>
 										</div>
+
+										<div class="col-lg-12">
+											<div class="panel panel-default">
+												<div class="panel-body noPad" style="display: block;">
+													<div class="responsive" tabindex="5007"
+														style="overflow: hidden; outline: none;">
+														<table class="table">
+															<thead>
+																<tr>
+																	<th>Total</th>
+																	<th/><th/><th/><th/><th/>
+																	<th><g:formatNumber
+																			number="${employeeStatementInstance.total}"
+																			type="number" minIntegerDigits="1"
+																			maxFractionDigits="2" /></th>
+																</tr>
+															</thead>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+
 									</div>
 								</div>
 							</div>

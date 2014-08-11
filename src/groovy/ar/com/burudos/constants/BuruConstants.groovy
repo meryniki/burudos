@@ -15,6 +15,7 @@ class BuruConstants {
 	static final String file_facturacion = "FACTURACION";
 	static final String file_bajas = "BAJAS";
 	static final String op_create_error = " No se puede crear Operacion ";
+	static final String op_create_error2 = " No hay Operacion en la Transaccion ";
 	static final String employee_exist_error = " No existe el empleado asociado ";
 	static final String bu_exist_error = " No existe el Punto de venta asociado ";
 	static final String trx_create_error = " No se puede crear Transaccion ";

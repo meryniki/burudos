@@ -56,21 +56,21 @@ class SummaryController {
 			datemonth = params.sumMonth_month
 			dateyear = params.sumMonth_year
 		}
-
+		
 		def query
 		if (params.employeeorbu=='2') {
 			query = Summary.where{
-				(bu != null) &&
+				( (bu != null) &&
 						(bu.nombre ==~  "%${search}%") || (
-						summaryCode ==~  "%${search}%") && (
+						summaryCode ==~  "%${search}%") ) && (
 						month(sumMonth) == params.sumMonth_month &&
 						year(sumMonth) == params.sumMonth_year)
 			}
 		}
 		else if (params.employeeorbu=='1') {
 			query = Summary.where{
-				(employee.name ==~  "%${search}%") || (
-						summaryCode ==~  "%${search}%") && (
+				( (employee.name ==~  "%${search}%") || (
+						summaryCode ==~  "%${search}%") ) && (
 						month(sumMonth) == params.sumMonth_month &&
 						year(sumMonth) == params.sumMonth_year)
 			}
@@ -84,7 +84,7 @@ class SummaryController {
 
 		lista = query.list(params)
 		total = query.count()
-
+		
 		/*The map will be passed as param in g:sorteable and g:paginate*/
 		mapsearch.put("search", search);
 		mapsearch.put("employeeorbu", employeeorbu);
@@ -333,7 +333,7 @@ class SummaryController {
 				where_filter += " and t.sds = '" + filter.sds + "'"
 		if (filter.imei)
 			if (filter.imei=="(null)")
-				where_filter += " and t.imei is null"
+				where_filter += " and (t.imei is null or t.imei == '111111111111111')"
 			else if (filter.imei == "(any)")
 				where_filter += " and t.imei is not null"
 			else

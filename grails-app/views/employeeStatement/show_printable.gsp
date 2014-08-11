@@ -94,75 +94,6 @@
 							</table>
 						</div>
 						<br />
-						<div class="plano_negro panel panel-default">
-							<table class="plano_negro printable">
-								<thead>
-									<tr>
-										<th>Altas</th>
-										<th>Valor</th>
-										<th>Cantidad/%</th>
-										<th>Total</th>
-									</tr>
-								</thead>
-								<tbody>
-									<g:each in="${employeeStatementInstance.getEmpSalesLines()}">
-										<tr>
-											<td>
-												${it.description}
-											</td>
-											<td>
-												${it.unitAmount}
-											</td>
-											<td>
-												${it.operationsAmount}
-											</td>
-											<td>
-												${it.amount}
-											</td>
-										</tr>
-									</g:each>
-									<tr>
-										<td colspan="3">Total</td>
-										<td><g:formatNumber
-												number="${employeeStatementInstance.stalesSubtotal}"
-												type="number" minIntegerDigits="1" maxFractionDigits="2" /></td>
-									</tr>
-							</table>
-						</div>
-						<br />
-						<div class="plano_negro">
-							<table class="plano_negro printable">
-								<thead>
-									<tr>
-										<th>Objetivos de Operaciones</th>
-										<th>Q Punto de Venta</th>
-										<th>Q Empleado</th>
-										<th>Q alcanzado</th>
-										<th>%</th>
-									</tr>
-								</thead>
-								<tbody>
-									<g:each in="${employeeStatementInstance.getBuObjQLines()}">
-										<tr>
-											<td>
-												${it.description}
-											</td>
-											<td><g:formatNumber number="${it.unitAmount}"
-													type="number" minIntegerDigits="1" maxFractionDigits="0" /></td>
-											<td><g:formatNumber number="${it.operationsAmount}"
-													type="number" minIntegerDigits="1" maxFractionDigits="0" /></td>
-											<td><g:formatNumber number="${it.amount}" type="number"
-													minIntegerDigits="1" maxFractionDigits="0" /></td>
-											<td><g:formatNumber
-													number="${it.amount/it.operationsAmount*100}" type="number"
-													minIntegerDigits="2" maxFractionDigits="0" /></td>
-										</tr>
-									</g:each>
-								</tbody>
-							</table>
-						</div>
-
-						<br />
 
 						<div class="plano_negro">
 							<table class="plano_negro printable" id="checkAll">
@@ -206,35 +137,36 @@
 							<table class="plano_negro printable">
 								<thead>
 									<tr>
-										<th>Incentivos</th>
+										<th>Altas</th>
 										<th>Valor</th>
 										<th>Cantidad/%</th>
 										<th>Total</th>
 									</tr>
 								</thead>
 								<tbody>
-									<g:each
-										in="${employeeStatementInstance.getBuIncentivesLines()}">
+									<g:each in="${employeeStatementInstance.getEmpSalesLines()}">
 										<tr>
 											<td>
 												${it.description}
 											</td>
-											<td><g:formatNumber number="${it.unitAmount}"
-													type="number" minIntegerDigits="1" maxFractionDigits="2" /></td>
-											<td><g:formatNumber number="${it.operationsAmount}"
-													type="number" minIntegerDigits="1" maxFractionDigits="0" /></td>
-											<td><g:formatNumber number="${it.amount}" type="number"
-													minIntegerDigits="1" maxFractionDigits="2" /></td>
+											<td>
+												${it.unitAmount}
+											</td>
+											<td>
+												${it.operationsAmount}
+											</td>
+											<td>
+												${it.amount}
 											</td>
 										</tr>
 									</g:each>
-
 									<tr>
 										<td colspan="3">Total</td>
 										<td><g:formatNumber
-												number="${employeeStatementInstance.posIncentSubtotal}"
+												number="${employeeStatementInstance.stalesSubtotal}"
 												type="number" minIntegerDigits="1" maxFractionDigits="2" /></td>
 									</tr>
+								</tbody>
 							</table>
 						</div>
 						<br />
@@ -269,8 +201,47 @@
 												number="${employeeStatementInstance.indIncentSubtotal}"
 												type="number" minIntegerDigits="1" maxFractionDigits="2" /></td>
 									</tr>
+								</tbody>
 							</table>
 						</div>
+						<br />
+						<div class="plano_negro panel panel-default">
+							<table class="plano_negro printable">
+								<thead>
+									<tr>
+										<th>Incentivos</th>
+										<th>Valor</th>
+										<th>Cantidad/%</th>
+										<th>Total</th>
+									</tr>
+								</thead>
+								<tbody>
+									<g:each
+										in="${employeeStatementInstance.getBuIncentivesLines()}">
+										<tr>
+											<td>
+												${it.description}
+											</td>
+											<td><g:formatNumber number="${it.unitAmount}"
+													type="number" minIntegerDigits="1" maxFractionDigits="2" /></td>
+											<td><g:formatNumber number="${it.operationsAmount}"
+													type="number" minIntegerDigits="1" maxFractionDigits="0" /></td>
+											<td><g:formatNumber number="${it.amount}" type="number"
+													minIntegerDigits="1" maxFractionDigits="2" /></td>
+											</td>
+										</tr>
+									</g:each>
+
+									<tr>
+										<td colspan="3">Total</td>
+										<td><g:formatNumber
+												number="${employeeStatementInstance.posIncentSubtotal}"
+												type="number" minIntegerDigits="1" maxFractionDigits="2" /></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
 						<br />
 						<div class="plano_negro">
 							<table class="plano_negro printable">
@@ -354,6 +325,7 @@
 												number="${employeeStatementInstance.deductionsSubtotal}"
 												type="number" minIntegerDigits="1" maxFractionDigits="2" /></td>
 									</tr>
+								</tbody>
 							</table>
 						</div>
 						<br />
@@ -381,6 +353,7 @@
 												number="${employeeStatementInstance.fixedSubtotal}"
 												type="number" minIntegerDigits="1" maxFractionDigits="2" /></td>
 									</tr>
+								</tbody>
 							</table>
 						</div>
 

@@ -192,6 +192,11 @@ class TransactionController {
 			transactionInstance.errors.reject(BuruConstants.NO_VALID_FILE);
 			respond transactionInstance.errors, view:'upload_result', model:[report:mapreport]
 			return
+		}		
+		
+		def empmap = [:]
+		Employee.each { ee->
+			empmap[ee.name] = ee
 		}
 
 		jfile.splitEachLine('\t') { row ->
@@ -201,6 +206,7 @@ class TransactionController {
 				row_mapa[BuruConstants.row_iibb]        = 0;
 				row_mapa[BuruConstants.row_total]       = 0;
 				row_mapa[BuruConstants.row_neto]        = 0;
+				def thereiserror = false
 				//print params.type_file.equals(BuruConstants.file_altas)
 				if ( params.type_file.equals(BuruConstants.file_altas) ) {
 					row_mapa[BuruConstants.row_buname]  = row[1];
@@ -286,7 +292,17 @@ class TransactionController {
 				}
 
 				/*Creates the Op if not exists*/
-				if (Operation.findByCode(row_mapa[BuruConstants.row_op_code])==null) {
+				if (row_mapa[BuruConstants.row_op_code]==null
+				|| row_mapa[BuruConstants.row_op_code].length()<1 )
+				{
+					linea = linea + 1
+					if (linea<200)
+						transactionInstance.errors.reject(row[0],row_mapa[BuruConstants.row_emp]+BuruConstants.op_create_error2)
+					String sline = String.valueOf(linea);
+					reportOfErrors.put(sline, row)
+					thereiserror = true
+				}
+				else if ( Operation.findByCode(row_mapa[BuruConstants.row_op_code])==null) {
 					Operation.withNewSession{session->
 						try {
 							code = new Operation(type:row_mapa[BuruConstants.row_type] ,
@@ -322,7 +338,11 @@ class TransactionController {
 				 /*Finally Search for the employee to match*/
 				Employee tmpemployee
 				BussinesUnit butmp
-
+				
+				if (empmap.containsKey(row_mapa[BuruConstants.row_emp]))
+					tmpemployee = empmap[row_mapa[BuruConstants.row_emp]]
+				
+					/*
 				if ( !row_mapa[BuruConstants.row_buname])
 					tmpemployee= Employee.findByName(row_mapa[BuruConstants.row_emp])
 				else{
@@ -331,15 +351,15 @@ class TransactionController {
 						tmpemployee= Employee.findByNameAndBu(row_mapa[BuruConstants.row_emp], butmp )
 					else
 						tmpemployee= Employee.findByName(row_mapa[BuruConstants.row_emp])
-				}
-
+				}*/
+				
 				if (! tmpemployee ){
 					linea = linea + 1
 					if (linea<200) transactionInstance.errors.reject(row[0],row_mapa[BuruConstants.row_emp]+BuruConstants.employee_exist_error)
 					String sline = String.valueOf(linea);
 					reportOfErrors.put(sline, row)
 				}
-				else{
+				else if (!thereiserror){
 					code = new Transaction(
 							party:     tmpemployee.id,
 							op:        Operation.findByCode(row_mapa[BuruConstants.row_op_code]).id,

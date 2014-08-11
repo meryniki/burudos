@@ -230,6 +230,18 @@
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
 											<g:fieldValue bean="${filterInstance}"  field="plan"/></span></li>
 									</g:if>
+									<g:if test="${filterInstance?.plan}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="filter.plan.label" default="Plan" /></span> <span
+											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
+											<g:fieldValue bean="${filterInstance}"  field="plan"/></span></li>
+									</g:if>
+									<g:if test="${filterInstance?.cat_plan}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="filter.cat_plan.label" default="Categoria Plan" /></span> <span
+											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
+											<g:fieldValue bean="${filterInstance}"  field="cat_plan"/></span></li>
+									</g:if>
 									<g:if test="${filterInstance?.advance_where}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="filter.advance_where.label" default="Avanzado" /></span> <span
