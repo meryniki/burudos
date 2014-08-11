@@ -32,18 +32,23 @@ class EmployeeController {
 
 		params.max = max;
 
-		def query = Employee.where{
-			name ==~  "%${search}%" ||
-					legajo ==~  "%${search}%" ||
-					uid ==~  "%${search}%" ||
-					bu.nombre ==~  "%${search}%"
+		if (search) {
+			def query = Employee.where{
+				name ==~  "%${search}%" ||
+						legajo ==~  "%${search}%" ||
+						uid ==~  "%${search}%" ||
+						bu.nombre ==~  "%${search}%"
+			}
+	
+			lista = query.list(params)
+			total = query.count()
+			
+			/*The map will be passed as param in g:sorteable and g:paginate*/
+			mapsearch.put("search", search);
+		} else {
+			lista = Employee.where{}.list(params)
+			total = Employee.count()
 		}
-
-		lista = query.list(params)
-		total = query.count()
-
-		/*The map will be passed as param in g:sorteable and g:paginate*/
-		mapsearch.put("search", search);
 
 		respond lista, model:[employeeInstanceCount: total,
 			mapsearch: mapsearch]

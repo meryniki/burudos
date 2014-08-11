@@ -28,21 +28,26 @@ class BussinesUnitController {
 		
 		params.max = max;
 
-		def query = BussinesUnit.where{
-			nombre ==~  "%${search}%" ||
-			code ==~  "%${search}%" ||
-			father.nombre ==~  "%${search}%" ||
-			father.code ==~  "%${search}%" ||
-			departamento ==~  "%${search}%" ||
-			provincia ==~  "%${search}%" ||
-			calle ==~  "%${search}%"
+		if (search) {
+			def query = BussinesUnit.where{
+				nombre ==~  "%${search}%" ||
+				code ==~  "%${search}%" ||
+				father.nombre ==~  "%${search}%" ||
+				father.code ==~  "%${search}%" ||
+				departamento ==~  "%${search}%" ||
+				provincia ==~  "%${search}%" ||
+				calle ==~  "%${search}%"
+			}
+			
+			lista = query.list(params)
+			total = query.count()
+			
+			/*The map will be passed as param in g:sorteable and g:paginate*/
+			mapsearch.put("search", search);
+		} else {
+			lista = BussinesUnit.where{}.list(params)
+			total = BussinesUnit.count()
 		}
-		
-		lista = query.list(params)
-		total = query.count()
-		
-		/*The map will be passed as param in g:sorteable and g:paginate*/
-		mapsearch.put("search", search);
 
 		respond lista, model:[bussinesUnitInstanceCount: total,
 			mapsearch: mapsearch]
