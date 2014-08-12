@@ -44,7 +44,7 @@ class TransactionController {
 		def datemonth
 		def dateyear
 		if (!params.month_month) {
-			String hql = "select month(max(date)) as maxMonth, year(max(date)) as maxYear  from Transaction"
+			String hql = "select month(max(datet)) as maxMonth, year(max(datet)) as maxYear  from Transaction"
 			def result = Transaction.executeQuery(hql)
 			if (!result.isEmpty() && result[0][0]!=null){
 				datemonth = String.valueOf(result[0][0])
@@ -67,11 +67,12 @@ class TransactionController {
 		def query = Transaction.where{
 			( op.code ==~  "%${search}%" ||
 					party.name ==~  "%${search}%" ) &&(
-					month(date) == params.month_month &&
-					year(date) == params.month_year)
+					month(datet) == params.month_month &&
+					year(datet) == params.month_year)
 		}
 
 		lista = query.list(params)
+
 		total = query.count()
 
 		mapsearch.put("search", params.search);
@@ -177,6 +178,7 @@ class TransactionController {
 		def reportOfErrors = [:]
 		def mapreport = [:]
 		int linea = 0
+		int rownumber = 0
 		def code
 		def Map row_mapa = [:]
 
@@ -192,14 +194,16 @@ class TransactionController {
 			transactionInstance.errors.reject(BuruConstants.NO_VALID_FILE);
 			respond transactionInstance.errors, view:'upload_result', model:[report:mapreport]
 			return
-		}		
-		
+		}
+
 		def empmap = [:]
 		Employee.findAll().each() { ee->
 			empmap[ee.name] = ee
 		}
 
 		jfile.splitEachLine('\t') { row ->
+			rownumber++
+			println "Row N: " + rownumber
 			try {
 				row_mapa[BuruConstants.row_type]        = "params.type_file";
 				row_mapa[BuruConstants.row_iva]         = 0;
@@ -338,11 +342,10 @@ class TransactionController {
 				 /*Finally Search for the employee to match*/
 				Employee tmpemployee
 				BussinesUnit butmp
-				
+
 				if (empmap.containsKey(row_mapa[BuruConstants.row_emp]))
 					tmpemployee = empmap[row_mapa[BuruConstants.row_emp]]
-				
-				
+
 				if (! tmpemployee ){
 					linea = linea + 1
 					if (linea<200) transactionInstance.errors.reject(row[0],row_mapa[BuruConstants.row_emp]+BuruConstants.employee_exist_error)
@@ -350,38 +353,53 @@ class TransactionController {
 					reportOfErrors.put(sline, row)
 				}
 				else if (!thereiserror){
-					code = new Transaction(
-							party:     tmpemployee.id,
-							op:        Operation.findByCode(row_mapa[BuruConstants.row_op_code]).id,
-							date:      Date.parse("dd/MM/yyyy", row_mapa[BuruConstants.row_date]),
-							sds:       row_mapa[BuruConstants.row_sds],
-							ani:       row_mapa[BuruConstants.row_ani],
-							imei:      row_mapa[BuruConstants.row_imei],
-							sim:       row_mapa[BuruConstants.row_sim],
-							folio:     row_mapa[BuruConstants.row_folio],
-							partida:   row_mapa[BuruConstants.row_partida],
-							equipo:    row_mapa[BuruConstants.row_equipo],
-							//almacen:   BussinesUnit.findByCode(row_mapa[BuruConstants.row_almacen])?.id,
-							//cliente:   Client.findByNdoc(row_mapa[BuruConstants.row_cliente_doc]).id,
-							cancel:    row_mapa[BuruConstants.row_cancel],
-							estado:    row_mapa[BuruConstants.row_estado],
-							factura:   row_mapa[BuruConstants.row_factura],
-							importe:   row_mapa[BuruConstants.row_importe],
-							plan_desc: row_mapa[BuruConstants.row_op_desc],
-							debaut:    row_mapa[BuruConstants.row_debaut],
-							cat_plan:  row_mapa[BuruConstants.row_cat_plan],
-							plan:      row_mapa[BuruConstants.row_plan],
-							tipo_factura:    row_mapa[BuruConstants.row_tipo_fact],
-							blister:   row_mapa[BuruConstants.row_blister],
-							cantidad:  row_mapa[BuruConstants.row_cantidad],
-							servicio:  row_mapa[BuruConstants.row_servicio],
-							iva:       row_mapa[BuruConstants.row_iva].toDouble(),
-							iibb:      row_mapa[BuruConstants.row_iibb].toDouble(),
-							total:     row_mapa[BuruConstants.row_total].toDouble(),
-							neto:      row_mapa[BuruConstants.row_neto].toDouble(),
-							descuento: row_mapa[BuruConstants.row_descuento],
-							plan_promo:row_mapa[BuruConstants.row_promo]
-							).save(failOnError: true, flush: true)
+					Transaction.withNewSession { session->
+						try {
+							code = new Transaction(
+									party:     tmpemployee.id,
+									op:        Operation.findByCode(row_mapa[BuruConstants.row_op_code]).id,
+									datet:      Date.parse("dd/MM/yyyy", row_mapa[BuruConstants.row_date]),
+									sds:       row_mapa[BuruConstants.row_sds],
+									ani:       row_mapa[BuruConstants.row_ani],
+									imei:      row_mapa[BuruConstants.row_imei],
+									sim:       row_mapa[BuruConstants.row_sim],
+									folio:     row_mapa[BuruConstants.row_folio],
+									partida:   row_mapa[BuruConstants.row_partida],
+									equipo:    row_mapa[BuruConstants.row_equipo],
+									//almacen:   BussinesUnit.findByCode(row_mapa[BuruConstants.row_almacen])?.id,
+									//cliente:   Client.findByNdoc(row_mapa[BuruConstants.row_cliente_doc]).id,
+									cancel:    row_mapa[BuruConstants.row_cancel],
+									estado:    row_mapa[BuruConstants.row_estado],
+									factura:   row_mapa[BuruConstants.row_factura],
+									importe:   row_mapa[BuruConstants.row_importe],
+									plan_desc: row_mapa[BuruConstants.row_op_desc],
+									debaut:    row_mapa[BuruConstants.row_debaut],
+									cat_plan:  row_mapa[BuruConstants.row_cat_plan],
+									plan:      row_mapa[BuruConstants.row_plan],
+									tipo_factura:    row_mapa[BuruConstants.row_tipo_fact],
+									blister:   row_mapa[BuruConstants.row_blister],
+									cantidad:  row_mapa[BuruConstants.row_cantidad],
+									servicio:  row_mapa[BuruConstants.row_servicio],
+									iva:       row_mapa[BuruConstants.row_iva].toDouble(),
+									iibb:      row_mapa[BuruConstants.row_iibb].toDouble(),
+									total:     row_mapa[BuruConstants.row_total].toDouble(),
+									neto:      row_mapa[BuruConstants.row_neto].toDouble(),
+									descuento: row_mapa[BuruConstants.row_descuento],
+									plan_promo:row_mapa[BuruConstants.row_promo]
+									).save(failOnError: true, flush: true)
+						}catch (Exception e)
+						{
+							linea = linea + 1
+
+							if (linea<200)
+								transactionInstance.errors.reject(row[0], row_mapa[BuruConstants.row_emp]+BuruConstants.trx_create_error);
+
+							String sline = String.valueOf(linea);
+							reportOfErrors.put(sline, BuruConstants.trx_create_error+row)
+
+							e.printStackTrace();
+						}
+					}
 				}
 			}catch (Exception e) {
 				linea = linea + 1

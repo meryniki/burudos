@@ -29,7 +29,7 @@
 </div>
 
 <div
-	class=" form-group fieldcontain ${hasErrors(bean: transactionInstance, field: 'date', 'error')} required">
+	class=" form-group fieldcontain ${hasErrors(bean: transactionInstance, field: 'datet', 'error')} required">
 	<label class="col-lg-3 control-label" for="date"> <g:message
 			code="transaction.date.label" default="Date" /> <span
 		class="required-indicator">*</span>

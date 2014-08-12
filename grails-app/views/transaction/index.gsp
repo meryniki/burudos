@@ -144,7 +144,7 @@
 															</g:link></td>
 
 														<td class=" ">
-															${fieldValue(bean: transactionInstance, field: "date")}
+															${fieldValue(bean: transactionInstance, field: "datet")}
 														</td>
 
 														<td class=" ">

@@ -37,7 +37,7 @@ class EmployeeController {
 				name ==~  "%${search}%" ||
 						legajo ==~  "%${search}%" ||
 						uid ==~  "%${search}%" ||
-						bu.nombre ==~  "%${search}%"
+						IFNULL(bu.nombre,'') ==~  "%${search}%"
 			}
 	
 			lista = query.list(params)

@@ -473,8 +473,8 @@ class SummaryController {
 					Employee.findAllWhere(bu:butmp).each(){ mparty ->
 						def query = "select "+ countby +" from Transaction t where t.party.id = " + mparty.id  +
 								where_filter +
-								" and month(t.date) = " + params.month_month +
-								" and year(t.date) = " + params.month_year
+								" and month(t.datet) = " + params.month_month +
+								" and year(t.datet) = " + params.month_year
 
 						/*
 						 * Filtros ADVANCED

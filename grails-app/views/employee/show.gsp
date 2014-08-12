@@ -308,6 +308,13 @@ window.onload = makechart();
 											class="col-lg-6"><g:fieldValue
 													bean="${employeeInstance}" field="basic" /></span></li>
 									</g:if>
+									<g:if test="${employeeInstance?.statementRules}">
+										<li style="display: block;"><span class="blue col-lg-3"><g:message
+													code="employee.statementRules.label" default="Reglas de Liquidación" /></span> <span
+											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
+											class="col-lg-6"><g:fieldValue
+													bean="${employeeInstance}" field="statementRules" /></span></li>
+									</g:if>
 								</ul>
 
 								<ul class="bigBtnIcon" style="display: -webkit-box;">

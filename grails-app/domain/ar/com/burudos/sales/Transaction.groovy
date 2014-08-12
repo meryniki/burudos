@@ -8,7 +8,7 @@ class Transaction {
 
 	Party        party
 	Operation    op
-	Date         date
+	Date         datet
 	BussinesUnit buventa
 	BussinesUnit almacen
 	Client       cliente
@@ -46,7 +46,7 @@ class Transaction {
 	static constraints = {
 		party(nullable:false)
 		op(nullable:false)
-		date (max : new Date(), nullable: false)
+		datet (max : new Date(), nullable: false)
 		sds(nullable:true)
 		ani(nullable:true)
 		buventa(nullable:true)

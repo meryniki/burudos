@@ -106,7 +106,7 @@
 													code="transaction.date.label" default="Date" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
 											class="col-lg-6"> <g:formatDate
-													date="${transactionInstance?.date}" /></span></li>
+													date="${transactionInstance?.datet}" /></span></li>
 									</g:if>
 
 									<g:if test="${transactionInstance?.sds}">
