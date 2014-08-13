@@ -90,8 +90,9 @@
 													code="parameter.paramCategory.label"
 													default="Parameter Category" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
-											class="col-lg-6"><g:fieldValue
-													bean="${parameterInstance}" field="paramCategory" /></span></li>
+											class="col-lg-6">
+												${message(code: fieldValue(bean: parameterInstance, field: "paramCategory"))}
+										</span></li>
 									</g:if>
 
 									<g:if test="${parameterInstance?.paramGroup}">
