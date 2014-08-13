@@ -115,7 +115,7 @@
 												<tr role="row">
 													<g:sortableColumn params="${mapsearch}" property="op"
 														title="${message(code: 'transaction.op.label', default: 'Operacion')}" />
-													<g:sortableColumn params="${mapsearch}" property="date"
+													<g:sortableColumn params="${mapsearch}" property="datet"
 														title="${message(code: 'transaction.date.label', default: 'Fecha')}" />
 													<g:sortableColumn params="${mapsearch}" property="party"
 														title="${message(code: 'transaction.party.label', default: 'Vendedor')}" />

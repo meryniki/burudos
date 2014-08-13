@@ -284,15 +284,20 @@ class TransactionController {
 					row_mapa[BuruConstants.row_imei]      = row[17];
 				}else if ( params.type_file.equals(BuruConstants.file_bajas)){
 					row_mapa[BuruConstants.row_op_code] = row[0];
-					row_mapa[BuruConstants.row_date]    = new SimpleDateFormat("dd/MM/yyyy").format(new Date().plus(-31));
-					//row_mapa[BuruConstants.row_op_date]    = row[1];
+					
+					/*Fecha en formato MM/dd*/
+					def dd = new Date().plus(-31)
+					if(row[14].length()>6)
+						dd = new SimpleDateFormat("MM/dd/yyyy").parse(row[14])
+					row_mapa[BuruConstants.row_date]    =  new SimpleDateFormat("dd/MM/yyyy").format(dd);
+					
 					row_mapa[BuruConstants.row_ani]     = row[4];
 					row_mapa[BuruConstants.row_buname]  = row[5];
 					row_mapa[BuruConstants.row_emp]     = row[5];
-					row_mapa[BuruConstants.row_plan]    = row[14];
-					row_mapa[BuruConstants.row_importe] = row[17];
+					row_mapa[BuruConstants.row_plan]    = row[11];
+					row_mapa[BuruConstants.row_importe] = row[15];
 					row_mapa[BuruConstants.row_cat_plan]= row[18];
-					row_mapa[BuruConstants.row_op_desc] = row[13];
+					row_mapa[BuruConstants.row_op_desc] = row[12];
 				}
 
 				/*Creates the Op if not exists*/

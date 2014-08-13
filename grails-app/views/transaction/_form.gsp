@@ -30,13 +30,13 @@
 
 <div
 	class=" form-group fieldcontain ${hasErrors(bean: transactionInstance, field: 'datet', 'error')} required">
-	<label class="col-lg-3 control-label" for="date"> <g:message
+	<label class="col-lg-3 control-label" for="datet"> <g:message
 			code="transaction.date.label" default="Date" /> <span
 		class="required-indicator">*</span>
 	</label>
 	<div class="col-lg-9">
-		<g:datePicker name="date" precision="day"
-			value="${transactionInstance?.date}" />
+		<g:datePicker name="datet" precision="day"
+			value="${transactionInstance?.datet}" />
 	</div>
 </div>
 
