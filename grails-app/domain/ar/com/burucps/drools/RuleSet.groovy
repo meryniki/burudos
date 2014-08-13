@@ -34,6 +34,7 @@ class RuleSet {
 	static mapping = {
 		ruleSetImports type: 'text'
 		ruleSetGlobals type: 'text'
+		rules lazy:false
 	 }
 	
 	def beforeInsert() {
