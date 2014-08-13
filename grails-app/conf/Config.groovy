@@ -179,7 +179,8 @@ log4j = {
 
 	debug 'ar.com.burucps.sales.statement.StatementGenerator',
 			'ar.com.burucps.sales.statement.ParameterResolver',
-			'ar.com.burudos.sales.statement.Statement'
+			'ar.com.burudos.sales.statement.Statement',
+			'ar.com.burudos.sales.TransactionController'
 
 	error  'org.codehaus.groovy.grails.web.servlet',        // controllers
 			'org.codehaus.groovy.grails.web.pages',          // GSP

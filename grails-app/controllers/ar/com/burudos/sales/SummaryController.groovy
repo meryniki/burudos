@@ -1,4 +1,5 @@
 package ar.com.burudos.sales
+import org.apache.commons.logging.LogFactory
 import grails.converters.JSON
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
@@ -10,6 +11,7 @@ import static java.util.Calendar.MONTH
 @Transactional(readOnly = true)
 class SummaryController {
 
+	private static final log = LogFactory.getLog(this)
 	static Boolean linkMe = true
 	static String btnName = "summary.btnLabel"
 	static String iconName = "summary.iconName"
@@ -446,6 +448,7 @@ class SummaryController {
 			//Filter.findAllByValidMonth(Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year), [sort: "type", order: "desc"]).each() { filter->
 
 			count_total_filter = 0
+			log.info("Sumarizando filtro " + filter)
 
 			/*
 			 * Empiezo a recorrer cada uno de los Puntos de Venta
@@ -469,6 +472,7 @@ class SummaryController {
 					if (filter.suma && filter.suma.length()>0)
 						countby = "sum(t." + filter.suma + ")"
 
+					log.debug("Where armado " + where_filter)
 
 					Employee.findAllWhere(bu:butmp).each(){ mparty ->
 						def query = "select "+ countby +" from Transaction t where t.party.id = " + mparty.id  +
@@ -476,6 +480,7 @@ class SummaryController {
 								" and month(t.datet) = " + params.month_month +
 								" and year(t.datet) = " + params.month_year
 
+						log.debug("Query completo " + query)
 						/*
 						 * Filtros ADVANCED
 						 */

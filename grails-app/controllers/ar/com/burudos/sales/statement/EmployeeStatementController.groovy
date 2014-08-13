@@ -59,8 +59,6 @@ class EmployeeStatementController {
 			dateyear = params.month_year
 		}
 		
-		println "params " + params
-		
 		def query = EmployeeStatement.where{
 			(
 					(businessUnit.nombre==~  "%${search}%" ||

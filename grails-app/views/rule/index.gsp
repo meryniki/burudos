@@ -159,7 +159,9 @@
 											<div class="col-lg-8">
 												<div class="dataTables_paginate paging_bootstrap pagination">
 													<ul class="pagination">
-														<li><g:paginate total="${ruleInstanceCount ?: 0}" /></li>
+														<li><g:paginate
+																total="${ruleInstanceCount ?: 0}"
+																params="${mapsearch}"/></li>
 													</ul>
 												</div>
 											</div>
@@ -173,5 +175,25 @@
 			</div>
 		</div>
 	</div>
+		<script type="text/javascript"
+		src="../static/plugins/tables/dataTables/jquery.dataTables.js"></script>
+
+	<script type="text/javascript">
+		var isearch = document.getElementById("search");
+
+		/* Add event listeners to the two range filtering inputs */
+		isearch.addEventListener("change", function() {
+			var vmax = document.getElementById("max");
+			var voff = document.getElementById("offset");
+			var vser = document.getElementById("search");
+			var url = "./index?search=" + vser.value;
+			if (vmax)
+				url += "&max=" + vmax.value;
+			if (voff)
+				url += "&offset=" + voff.value;
+
+			window.location.replace(url);
+		});
+	</script>
 </body>
 </html>

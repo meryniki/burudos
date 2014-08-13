@@ -21,25 +21,25 @@ class RuleController {
 		def total = 0;
 		def lista = [];
 		def mapsearch = [:];
+
+		/*Initialization*/
 		if (!search)
 			search = "";
 		if (!offset)
 			offset = 0;
 		if (!max)
-			max = Math.min(max ?: 20, 100)
-
+			max = 20;
 		params.max = max
 
 		def query = Rule.where{ ruleName ==~  "%${search}%" }
 
-		println "SEARCH " + search
-
 		lista = query.list(params)
+		
 		total = query.count()
 
-		mapsearch.put("search", params.search);
-
-		respond Rule.list(params), model:[ruleInstanceCount: Rule.count(), mapsearch: mapsearch]
+		mapsearch.put("search", search);
+		
+		respond lista, model:[ruleInstanceCount: total, mapsearch: mapsearch]
 	}
 
 	def show(Rule ruleInstance) {

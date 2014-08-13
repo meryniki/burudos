@@ -80,9 +80,9 @@
 										</div>
 										<div class="form-group">
 											<div class="col-lg-offset-3 col-lg-9">
-												<g:actionSubmit class="save btn btn-info"
-													action="doProcess"
-													value="${message(code: 'default.button.process.label', default: 'Process')}" />
+												<g:actionSubmit class="save btn btn-info" action="doProcess"
+													value="${message(code: 'default.button.process.label', default: 'Process')}"
+													onclick="showThinking()" />
 											</div>
 										</div>
 									</fieldset>
@@ -93,6 +93,10 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	<div id="thinking" style="display: none">
+		<img src="../static/images/ajax-loader.gif" alt=""
+			style="width: 100px;">
 	</div>
 </body>
 </html>
