@@ -114,8 +114,7 @@
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="rule.ruleGroup.label" default="Rule Group" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
-											class="col-lg-6">
-												${g.message(code: fieldValue(bean: ruleInstance, field: "ruleGroup"))}
+											class="col-lg-6"> ${g.message(code: fieldValue(bean: ruleInstance, field: "ruleGroup"))}
 										</span></li>
 									</g:if>
 
@@ -145,15 +144,14 @@
 
 									<g:if test="${ruleInstance?.ruleSets}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
-													code="rule.ruleSets.label" default="Rule Sets" /></span> <g:each
-												in="${ruleInstance.ruleSets}" var="r">
-												<span
-													class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
-												<span class="col-lg-6"><g:link controller="ruleSet"
-														action="show" id="${r.id}">
+													code="rule.ruleSets.label" default="Rule Sets" /></span> <span
+											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
+											<span class="col-lg-6"><g:each
+													in="${ruleInstance.ruleSets}" var="r">
+													<g:link controller="ruleSet" action="show" id="${r.id}">
 														${r?.encodeAsHTML()}
-													</g:link></span>
-											</g:each></li>
+													</g:link><br/>
+												</g:each> </span></li>
 									</g:if>
 								</ul>
 

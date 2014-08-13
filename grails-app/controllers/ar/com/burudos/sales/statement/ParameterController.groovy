@@ -254,6 +254,8 @@ class ParameterController {
 				return StatementLineGroup.POS_INCENTIVE;
 			case "DEDUCCIONES":
 				return StatementLineGroup.DEDUCTIONS;
+			case "AJUSTES":
+				return StatementLineGroup.FIXED;
 			default:
 				return StatementLineGroup.OTHERS;
 		}
