@@ -101,7 +101,7 @@
 												</g:link></span></li>
 									</g:if>
 
-									<g:if test="${transactionInstance?.date}">
+									<g:if test="${transactionInstance?.datet}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="transaction.date.label" default="Date" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span

@@ -38,10 +38,9 @@ class EmployeeStatementController {
 		def datemonth
 		def dateyear
 		if (!params.month_month) {
-			String hql = "select month(max(statementPeriod)) as maxMonth, year(max(statementPeriod)) as maxYear  from Statement"
+			String hql = "select month(max(statement_period)) as maxMonth, year(max(statement_period)) as maxYear  from Statement"
 			def result = Statement.executeQuery(hql)
-			//println "result " + result
-			if (!String.valueOf(result[0][0]) == "null"){
+			if  (!result.isEmpty() && result[0][0]!=null){
 				datemonth = String.valueOf(result[0][0])
 				dateyear = String.valueOf(result[0][1])
 				params.month_month = String.valueOf(result[0][0])
