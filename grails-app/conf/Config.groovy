@@ -176,11 +176,20 @@ log4j = {
 	//appenders {
 	//    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
 	//}
+	
+	appenders {
+		file name:'file', file:'./burucps.log'
+	}
+	
+	root {
+		debug 'stdout', 'file'
+	}
 
 	debug 'ar.com.burucps.sales.statement.StatementGenerator',
 			'ar.com.burucps.sales.statement.ParameterResolver',
 			'ar.com.burudos.sales.statement.Statement',
-			'ar.com.burudos.sales.TransactionController'
+			'ar.com.burudos.sales.TransactionController',
+			'ar.com.burudos.sales.SummaryController'
 
 	error  'org.codehaus.groovy.grails.web.servlet',        // controllers
 			'org.codehaus.groovy.grails.web.pages',          // GSP

@@ -211,10 +211,10 @@ class SummaryController {
 
 		jfile.splitEachLine('\t') { row ->
 
-			BussinesUnit pdv = BussinesUnit.findByNombre(row[1])
-			Employee emp = Employee.findByName(row[2])
+			BussinesUnit pdv = BussinesUnit.findByNombre(row[2])
+			Employee emp = Employee.findByName(row[1])
 
-			if (!pdv && !emp) {
+			if (!emp) {
 				linea = linea + 1;
 				summaryInstace.errors.reject(row[0], row[1]+BuruConstants.bu_exist_error+row[2]+BuruConstants.employee_exist_error);
 				String sline = String.valueOf(linea);
@@ -225,9 +225,9 @@ class SummaryController {
 					code = new Summary(
 							summaryCode: row[0],
 							employee: emp,
-							bu: pdv,
-							sumMonth: Date.parse("MM/yyyy",  row[4]),
-							quantity: Integer.parseInt(row[3])
+							bu: emp.bu,
+							sumMonth: Date.parse("MM/yyyy",  row[3]),
+							quantity: Integer.parseInt(row[4])
 							).save(failOnError: true, flush: true)
 				} catch (Exception e) {
 
@@ -285,6 +285,10 @@ class SummaryController {
 				where_filter += " and t.plan is null"
 			else if (filter.plan == "(any)")
 				where_filter += " and t.plan is not null"
+			else if ( filter.plan.contains("!like ") )
+				where_filter += " and ( t.plan is null or t.plan not like '%" + filter.plan.replace("!like ", "") + "%')"
+			else if ( filter.plan.contains("like ") )
+				where_filter += " and t.plan like '%" + filter.plan.replace("like ", "") + "%'"
 			else if ( filter.plan.contains(" o ") ){
 				//&& filter.op.contains("(") && filter.op.contains(")")  ){
 				filter.plan = filter.plan.replace("(","")
@@ -295,6 +299,7 @@ class SummaryController {
 				}
 				where_filter += ")"
 				where_filter = where_filter.replace("( or ", "( ")
+				print where_filter
 			}
 			else
 				where_filter += " and t.plan = '" + filter.plan  + "'"
@@ -340,13 +345,13 @@ class SummaryController {
 				where_filter += " and t.imei is not null"
 			else
 				where_filter += " and t.imei = '" + filter.imei  + "'"
-		if (filter.plan)
-			if (filter.plan=="(null)")
-				where_filter += " and t.plan is null"
-			else if (filter.plan == "(any)")
-				where_filter += " and t.plan is not null"
-			else
-				where_filter += " and t.plan = '" + filter.plan  + "'"
+		//if (filter.plan)
+		//	if (filter.plan=="(null)")
+		//		where_filter += " and t.plan is null"
+		//	else if (filter.plan == "(any)")
+		//		where_filter += " and t.plan is not null"
+		//	else
+		//		where_filter += " and t.plan = '" + filter.plan  + "'"
 		if (filter.sim)
 			if (filter.sim=="(null)")
 				where_filter += " and t.sim is null"
@@ -470,7 +475,7 @@ class SummaryController {
 					where_filter = arma_where(filter, butmp)
 					def countby = "count(t)"
 					if (filter.suma && filter.suma.length()>0)
-						countby = "sum(t." + filter.suma + ")"
+						countby = "" + filter.suma + ""
 
 					log.debug("Where armado " + where_filter)
 
@@ -480,7 +485,6 @@ class SummaryController {
 								" and month(t.datet) = " + params.month_month +
 								" and year(t.datet) = " + params.month_year
 
-						log.debug("Query completo " + query)
 						/*
 						 * Filtros ADVANCED
 						 */
@@ -488,6 +492,8 @@ class SummaryController {
 						{
 							query += " and " + filter.advance_where
 						}
+						
+						log.debug("Query completo " + query)
 
 						cantidad_emp += 1
 						Double thiscount=0;
@@ -560,7 +566,8 @@ class SummaryController {
 						cc = 0
 						filter.totals.each  { ft->
 							code = Summary.findByEmployeeAndSumMonthAndFilter(thisemp,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),ft);
-							cc += code.quantity
+							if (code)
+								cc += code.quantity
 						}
 
 						code = Summary.findByEmployeeAndSumMonthAndFilter(thisemp,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter)
@@ -616,7 +623,8 @@ class SummaryController {
 				int cc = 0
 				filter.totals.each  { ft->
 					code = Summary.findByBuAndSumMonthAndFilter(thisbu,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),ft);
-					cc += code.quantity
+					if (code)
+						cc += code.quantity
 				}
 
 				code = Summary.findByBuAndSumMonthAndFilter(thisbu,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter)

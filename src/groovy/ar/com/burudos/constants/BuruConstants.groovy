@@ -9,6 +9,13 @@ class BuruConstants {
 	static final MAX_FILE = 10*1024*1024 //10MB
 	static final NO_VALID_FILE = "Invalid file"
 	
+	static final String uploadtype_manual = "Carga MANUAL"
+	static final String uploadtype_alta = "Archivo ALTAS"
+	static final String uploadtype_baja = "Archivo BAJAS"
+	static final String uploadtype_facturacion = "Archivo FACTURACION"
+	static final String uploadtype_post = "Archivo POSTVENTAS"
+	static final String uploadtype_cater = "Archivo CATER"
+	
 	static final String file_altas = "ALTA";
 	static final String file_cater = "CATER";
 	static final String file_post = "POSTVENTA";
