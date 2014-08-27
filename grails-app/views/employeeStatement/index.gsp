@@ -99,7 +99,8 @@
 												</g:form>
 											</div>
 										</div>
-										<table  id="thetable" cellpadding="0" cellspacing="0" border="0"
+										<table id="thetable" cellpadding="0" cellspacing="0"
+											border="0"
 											class="tableTools display table table-bordered dataTable"
 											width="100%" id="DataTables_Table_1"
 											aria-describedby="DataTables_Table_1_info">
@@ -139,11 +140,12 @@
 													var="employeeStatementInstance">
 													<tr class="${(i % 2) == 0 ? 'even' : 'odd'}">
 
-														<td><g:link action="show" 
+														<td><g:link
+																action="show"
 																id="${employeeStatementInstance.id}">
 																${fieldValue(bean: employeeStatementInstance, field: "employee.name")}
 															</g:link></td>
-															
+
 														<td class=" "><g:formatDate format="yyyy/MM"
 																date="${employeeStatementInstance.statementPeriod}" /></td>
 
@@ -178,7 +180,7 @@
 			</div>
 		</div>
 	</div>
-			<script type="text/javascript"
+	<script type="text/javascript"
 		src="../static/plugins/tables/dataTables/jquery.dataTables.js"></script>
 
 	<script type="text/javascript">

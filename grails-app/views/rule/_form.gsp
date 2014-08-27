@@ -19,7 +19,7 @@
 	</label>
 	<div class="col-lg-9">
 		<g:select name="dialect" class="form-control uniform-input text"
-			from="${ar.com.burucps.drools.RuleDialect?.values()}"
+			from="${ar.com.burucps.drools.RuleDialect.values()}"
 			keys="${ar.com.burucps.drools.RuleDialect.values()*.name()}"
 			required="" value="${ruleInstance?.dialect?.name()}" />
 	</div>

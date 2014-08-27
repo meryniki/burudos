@@ -1,5 +1,6 @@
 package ar.com.burucps.drools
 
+import ar.com.burucps.sales.statement.StatementTemplate
 import java.util.Date;
 
 class RuleSet {
@@ -12,6 +13,8 @@ class RuleSet {
 	String ruleSetImports
 	String ruleSetGlobals
 	
+	StatementTemplate statementTemplate
+	
 	// Auiditoria
 	Date creationDate
 	String createdBy
@@ -21,6 +24,7 @@ class RuleSet {
     static constraints = {
 		ruleSetName (nullable : false, unique: true)
 		ruleSetDescription (nullable : true)
+		statementTemplate (nullable : true)
 		ruleSetPackage(nullable : true)
 		ruleSetImports(nullable : true)
 		ruleSetGlobals(nullable : true)

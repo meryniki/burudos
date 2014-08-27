@@ -97,7 +97,7 @@ class EmployeeStatementController {
 			}
 		}
 	   */
-		respond employeeStatementInstance
+		respond employeeStatementInstance, view:employeeStatementInstance.statementTemplate.view
 	}
 
 	def process() {
