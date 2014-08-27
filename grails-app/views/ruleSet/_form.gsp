@@ -26,10 +26,23 @@
 </div>
 
 <div
+	class="form-group fieldcontain ${hasErrors(bean: ruleSetInstance, field: 'statementTemplate', 'error')} required">
+	<label class="col-lg-3 control-label" for="dialect"> <g:message
+			code="ruleSet.statementTemplate.label" default="Statement Template" />
+	</label>
+	<div class="col-lg-9">
+		<g:select name="dialect" class="form-control uniform-input text"
+			optionValue="${ {name->g.message(code: name) } }"
+			from="${ar.com.burucps.sales.statement.StatementTemplate.values()}"
+			keys="${ar.com.burucps.sales.statement.StatementTemplate.values()*.name()}"
+			value="${ruleSetInstance?.statementTemplate?.name()}" />
+	</div>
+</div>
+
+<div
 	class="form-group fieldcontain ${hasErrors(bean: ruleSetInstance, field: 'ruleSetPackage', 'error')} ">
-	<label class="col-lg-3 control-label" for="ruleSetPackage">
-		<g:message code="ruleSet.ruleSetPackage.label"
-			default="Rule Set Package" />
+	<label class="col-lg-3 control-label" for="ruleSetPackage"> <g:message
+			code="ruleSet.ruleSetPackage.label" default="Rule Set Package" />
 	</label>
 	<div class="col-lg-9">
 		<g:textField name="ruleSetPackage"
@@ -68,10 +81,10 @@
 			code="ruleSet.rules.label" default="Rules" />
 	</label>
 	<div class="col-lg-9">
-		<g:select name="rules" from="${ar.com.burucps.drools.Rule.list()}"
+		<g:select id="rule-set-selector" name="rules" from="${ar.com.burucps.drools.Rule.list()}"
 			multiple="multiple" optionKey="id" size="5"
 			value="${ruleSetInstance?.rules*.id}" class="many-to-many"
-			class="form-control uniform-input text" />
+			class="form-control uniform-input text rule-list-selector" />
 	</div>
 </div>
 

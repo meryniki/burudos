@@ -5,6 +5,7 @@ import java.util.List;
 import org.grails.datastore.gorm.finders.MethodExpression.InRange;
 import ar.com.burucps.sales.statement.StatementLineGroup;
 import ar.com.burucps.sales.statement.StatementLineType;
+import ar.com.burucps.sales.statement.StatementTemplate
 import ar.com.burudos.business.BussinesUnit;
 import ar.com.burudos.party.Employee;
 import org.apache.commons.logging.LogFactory;
@@ -15,6 +16,7 @@ class Statement {
 
 	Date statementPeriod
 	BussinesUnit businessUnit
+	StatementTemplate statementTemplate
 	static hasMany = [lines : StatementLine]
 	// Points
 	Double pointsSubtotal
@@ -45,6 +47,7 @@ class Statement {
 	String lastUpdateBy
 
 	static constraints = {
+		statementTemplate(nullable:false)
 		statementPeriod (nullable : false)
 		businessUnit(nullable: true)
 		pointsSubtotal(nullable:true)
@@ -153,11 +156,11 @@ class Statement {
 	List<StatementLine> getEmpDedLines(){
 		StatementLine.findAll(sort: 'lineOrder', order:'asc'){ paramGroup == StatementLineGroup.DEDUCTIONS && statement== this }
 	}
-	
+
 	List<StatementLine> getEmpOthLines(){
 		StatementLine.findAll(sort: 'lineOrder', order:'asc'){ paramGroup == StatementLineGroup.OTHERS && statement== this }
 	}
-	
+
 	List<StatementLine> getEmpFixLines(){
 		StatementLine.findAll(sort: 'lineOrder', order:'asc'){ paramGroup == StatementLineGroup.FIXED && statement== this }
 	}
