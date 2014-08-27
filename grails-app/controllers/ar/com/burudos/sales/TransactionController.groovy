@@ -1,5 +1,6 @@
 package ar.com.burudos.sales
 import java.text.DateFormat;
+import org.apache.commons.logging.LogFactory
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.util.Date;
@@ -17,6 +18,8 @@ import ar.com.burudos.constants.BuruConstants
 
 @Transactional(readOnly = true)
 class TransactionController {
+	
+	private static final log = LogFactory.getLog(this)
 
 	static Boolean linkMe = true
 	static String btnName = "transaction.btnLabel"
@@ -177,10 +180,18 @@ class TransactionController {
 		/*Analize each line of the file*/
 		def reportOfErrors = [:]
 		def mapreport = [:]
+		
+		/*line of Error*/
 		int linea = 0
+		/*line of row in file*/
 		int rownumber = 0
+		
 		def code
 		def Map row_mapa = [:]
+		
+		/*Upload file properties*/
+		def update = new Date()
+		def uptype
 
 		transactionInstance.clearErrors();
 
@@ -213,46 +224,51 @@ class TransactionController {
 				def thereiserror = false
 				//print params.type_file.equals(BuruConstants.file_altas)
 				if ( params.type_file.equals(BuruConstants.file_altas) ) {
+					uptype = BuruConstants.uploadtype_alta
 					row_mapa[BuruConstants.row_buname]  = row[1];
 					row_mapa[BuruConstants.row_emp]     = row[2];
 					row_mapa[BuruConstants.row_date]    = row[3];
-					row_mapa[BuruConstants.row_op_code] = row[10];
-					row_mapa[BuruConstants.row_plan]    = row[10];
+					row_mapa[BuruConstants.row_op_code] = row[11];
+					row_mapa[BuruConstants.row_plan]    = row[11];
 					row_mapa[BuruConstants.row_sds]     = row[4];
 					row_mapa[BuruConstants.row_ani]     = row[5];
-					row_mapa[BuruConstants.row_cliente] = row[6];
-					row_mapa[BuruConstants.row_imei]    = row[7];
-					row_mapa[BuruConstants.row_sim]     = row[8];
-					row_mapa[BuruConstants.row_cat_plan]= row[9];
-					row_mapa[BuruConstants.row_promo]   = row[11];
-					row_mapa[BuruConstants.row_equipo]  = row[12];
-					row_mapa[BuruConstants.row_almacen] = row[13];
-					row_mapa[BuruConstants.row_cliente] = row[14];
-					row_mapa[BuruConstants.row_cliente_doc]  = row[15];
-					row_mapa[BuruConstants.row_cancel]  = row[16];
-					row_mapa[BuruConstants.row_legajo]  = row[17];
-					row_mapa[BuruConstants.row_factura] = row[18];
-					row_mapa[BuruConstants.row_importe] = row[19];
-					row_mapa[BuruConstants.row_op_desc]= row[20];
-					row_mapa[BuruConstants.row_debaut]  = row[21];
+					//row_mapa[BuruConstants.row_portabilidad] = row[6];
+					row_mapa[BuruConstants.row_cliente] = row[7];
+					row_mapa[BuruConstants.row_imei]    = row[8];
+					row_mapa[BuruConstants.row_sim]     = row[9];
+					row_mapa[BuruConstants.row_cat_plan]= row[10];
+					row_mapa[BuruConstants.row_promo]   = row[12];
+					//row_mapa[BuruConstants.row_oferta]   = row[13];
+					row_mapa[BuruConstants.row_equipo]  = row[14];
+					row_mapa[BuruConstants.row_almacen] = row[15];
+					row_mapa[BuruConstants.row_cliente] = row[16];
+					row_mapa[BuruConstants.row_cliente_doc]  = row[17];
+					row_mapa[BuruConstants.row_cancel]  = row[19];
+					row_mapa[BuruConstants.row_legajo]  = row[21];
+					row_mapa[BuruConstants.row_factura] = row[22];
+					row_mapa[BuruConstants.row_importe] = row[23];
+					row_mapa[BuruConstants.row_op_desc]= row[24];
+					row_mapa[BuruConstants.row_debaut]  = row[25];
 				}else if ( params.type_file.equals(BuruConstants.file_cater)){
-					row_mapa[BuruConstants.row_buname]  = row[2];
-					row_mapa[BuruConstants.row_emp]     = row[3];
-					row_mapa[BuruConstants.row_date]    = row[4];
+					uptype = BuruConstants.uploadtype_cater
+					row_mapa[BuruConstants.row_buname]  = row[3];
+					row_mapa[BuruConstants.row_emp]     = row[4];
+					row_mapa[BuruConstants.row_date]    = row[5];
 					row_mapa[BuruConstants.row_op_code] = row[1];
-					row_mapa[BuruConstants.row_sds]     = row[4];
-					row_mapa[BuruConstants.row_ani]     = row[5];
-					row_mapa[BuruConstants.row_sim]     = row[6];
-					row_mapa[BuruConstants.row_imei]    = row[7];
-					row_mapa[BuruConstants.row_folio]   = row[8];
-					row_mapa[BuruConstants.row_plan]    = row[9];
-					row_mapa[BuruConstants.row_factura] = row[10];
-					row_mapa[BuruConstants.row_equipo]  = row[11];
-					row_mapa[BuruConstants.row_partida] = row[12];
-					row_mapa[BuruConstants.row_cancel]  = row[13];
-					row_mapa[BuruConstants.row_cliente] = row[14];
-					row_mapa[BuruConstants.row_cliente_doc]  = row[15];
+					row_mapa[BuruConstants.row_sds]     = row[5];
+					row_mapa[BuruConstants.row_ani]     = row[6];
+					row_mapa[BuruConstants.row_sim]     = row[7];
+					row_mapa[BuruConstants.row_imei]    = row[8];
+					row_mapa[BuruConstants.row_folio]   = row[9];
+					row_mapa[BuruConstants.row_plan]    = row[10];
+					row_mapa[BuruConstants.row_factura] = row[11];
+					row_mapa[BuruConstants.row_equipo]  = row[12];
+					row_mapa[BuruConstants.row_partida] = row[13];
+					row_mapa[BuruConstants.row_cancel]  = row[14];
+					row_mapa[BuruConstants.row_cliente] = row[15];
+					row_mapa[BuruConstants.row_cliente_doc]  = row[16];
 				}else if ( params.type_file.equals(BuruConstants.file_post)){
+					uptype = BuruConstants.uploadtype_post
 					row_mapa[BuruConstants.row_buname]    = row[1];
 					row_mapa[BuruConstants.row_emp]       = row[2];
 					row_mapa[BuruConstants.row_date]      = row[3];
@@ -264,6 +280,7 @@ class TransactionController {
 					//row_mapa[BuruConstants.row_plan_d]    = row[9];
 					//row_mapa[BuruConstants.row_op_desc]   = row[7];
 				}else if ( params.type_file.equals(BuruConstants.file_facturacion)){
+					uptype = BuruConstants.uploadtype_facturacion
 					row_mapa[BuruConstants.row_date]      = row[0];
 					row_mapa[BuruConstants.row_emp]       = row[1];
 					row_mapa[BuruConstants.row_tipo_fact] = row[2];
@@ -283,21 +300,20 @@ class TransactionController {
 					row_mapa[BuruConstants.row_total]     = row[16];
 					row_mapa[BuruConstants.row_imei]      = row[17];
 				}else if ( params.type_file.equals(BuruConstants.file_bajas)){
+					uptype = BuruConstants.uploadtype_baja
 					row_mapa[BuruConstants.row_op_code] = row[0];
-					
 					/*Fecha en formato MM/dd*/
 					def dd = new Date().plus(-31)
-					if(row[14].length()>6)
-						dd = new SimpleDateFormat("MM/dd/yyyy").parse(row[14])
+					if(row[16].length()>6)
+						dd = new SimpleDateFormat("MM/dd/yyyy").parse(row[16])
 					row_mapa[BuruConstants.row_date]    =  new SimpleDateFormat("dd/MM/yyyy").format(dd);
-					
 					row_mapa[BuruConstants.row_ani]     = row[4];
-					row_mapa[BuruConstants.row_buname]  = row[5];
-					row_mapa[BuruConstants.row_emp]     = row[5];
-					row_mapa[BuruConstants.row_plan]    = row[11];
-					row_mapa[BuruConstants.row_importe] = row[15];
+					row_mapa[BuruConstants.row_buname]  = row[8];
+					row_mapa[BuruConstants.row_emp]     = row[8];
+					row_mapa[BuruConstants.row_plan]    = row[9];
+					row_mapa[BuruConstants.row_importe] = row[17];
 					row_mapa[BuruConstants.row_cat_plan]= row[18];
-					row_mapa[BuruConstants.row_op_desc] = row[12];
+					row_mapa[BuruConstants.row_op_desc] = row[19];
 				}
 
 				/*Creates the Op if not exists*/
@@ -361,6 +377,8 @@ class TransactionController {
 					Transaction.withNewSession { session->
 						try {
 							code = new Transaction(
+									dateofupload: update,
+									typeofupload: uptype,
 									party:     tmpemployee.id,
 									op:        Operation.findByCode(row_mapa[BuruConstants.row_op_code]).id,
 									datet:      Date.parse("dd/MM/yyyy", row_mapa[BuruConstants.row_date]),

@@ -3,18 +3,21 @@ package ar.com.burudos.sales
 import ar.com.burudos.party.Client
 import ar.com.burudos.business.BussinesUnit
 import ar.com.burudos.party.Party
+import ar.com.burudos.constants.BuruConstants
 
 class Transaction {
 
+	/*Relative to the file that includes the Transaction*/
+	Date	dateofupload
+	String	typeofupload
+	
+	/*Relative to the transaction*/
 	Party        party
 	Operation    op
 	Date         datet
 	BussinesUnit buventa
 	BussinesUnit almacen
 	Client       cliente
-	Operation    op_desde
-	Operation    op_hasta
-
 	String sds
 	String ani
 	String imei
@@ -35,15 +38,17 @@ class Transaction {
 	String debaut
 	String cantidad
 	String descuento
+	String cat_plan
+	String plan_promo
 	Double iva
 	Double iibb
 	Double neto
 	Double total
-	String cat_plan
-	String plan_promo
 	
 	
 	static constraints = {
+		dateofupload (nullable: false)
+		typeofupload (nullable: false)
 		party(nullable:false)
 		op(nullable:false)
 		datet (max : new Date(), nullable: false)
@@ -76,8 +81,14 @@ class Transaction {
 		neto(nullable:true)
 		total(nullable:true)
 		iibb(nullable:true)
-		op_desde(nullable:true)
-		op_hasta(nullable:true)
+	}
+	
+	
+	def beforeInsert() {
+		if (!typeofupload)
+			typeofupload = BuruConstants.uploadtype_manual;
+		if (!dateofupload)
+			dateofupload = new Date();
 	}
 }
  
