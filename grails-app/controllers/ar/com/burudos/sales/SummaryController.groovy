@@ -449,7 +449,7 @@ class SummaryController {
 		/*
 		 * Busco todos los filtros del Mes, ordenados por Tipo, para calcular al final los que son SUM
 		 */
-		Filter.findAll([sort: "type", order: "desc"]){}.each() { filter->
+		Filter.findAll([sort: "type", order: "desc"]){ type=='WHERE' || type=='ADVANCED' }.each() { filter->
 			//Filter.findAllByValidMonth(Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year), [sort: "type", order: "desc"]).each() { filter->
 
 			count_total_filter = 0
@@ -552,6 +552,72 @@ class SummaryController {
 
 				}//if filter
 
+				
+			}//End Bu_tu_summarize
+
+			if ( filter.type == Filter_Type.WHERE && count_total_filter!=0 && thisbu.isFamily(filter.bu) )
+			{
+				code = Summary.findByBuAndSumMonthAndFilter(thisbu,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter)
+				if (code)
+				{
+					code.quantity = count_total_filter
+					code.save(failOnError: true, flush: true)
+				}else{
+					code = new Summary(
+							filter: filter,
+							summaryCode:filter.filterCode,
+							bu: thisbu,
+							sumMonth: Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),
+							quantity: count_total_filter
+							).save(failOnError: true, flush: true)
+				}
+			}
+
+
+		}// End de todos los Filters encontrados
+		
+		
+		Filter.findAll([sort: "type", order: "desc"]){ type=='SUM' }.each() { filter->
+			
+			count_total_filter = 0
+			log.info("Sumarizando filtro " + filter)
+
+			/*
+			 * Empiezo a recorrer cada uno de los Puntos de Venta
+			 */
+			bu_to_summarize.each(){ butmp->
+
+				// Reseteo contadores
+				counting = 0
+				def cantidad_emp = 0
+				def where_filter = ""
+				
+				/*Ya deben estar calculados los otros filters*/
+				if (filter.type == Filter_Type.SUM && thisbu.isFamily(filter.bu))
+				{
+					int cc = 0
+					filter.totals.each  { ft->
+						code = Summary.findByBuAndSumMonthAndFilter(thisbu,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),ft);
+						if (code)
+							cc += code.quantity
+					}
+		
+					code = Summary.findByBuAndSumMonthAndFilter(thisbu,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter)
+					if (code){
+						code.quantity = cc
+						code.save(failOnError: true, flush: true)
+					}
+					else{
+						code = new Summary(
+								filter: filter,
+								summaryCode:filter.filterCode,
+								bu: thisbu,
+								sumMonth: Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),
+								quantity: cc
+								).save(failOnError: true, flush: true)
+					}
+				}
+				
 				/*
 				 * Filtros de SUM
 				 */
@@ -560,7 +626,7 @@ class SummaryController {
 				{
 					int cc = 0
 					int ct = 0
-
+	
 					// Busco todos los empleados del bu
 					Employee.findAllWhere(bu:butmp).each(){ thisemp->
 						cc = 0
@@ -569,7 +635,7 @@ class SummaryController {
 							if (code)
 								cc += code.quantity
 						}
-
+	
 						code = Summary.findByEmployeeAndSumMonthAndFilter(thisemp,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter)
 						if (code){
 							code.quantity = cc
@@ -586,7 +652,7 @@ class SummaryController {
 						}
 						ct += cc
 					}
-
+	
 					// Entonces es una region o JAG, busco los totales de los hijos y lo sumo
 					if (cantidad_emp == 0)
 					{
@@ -611,60 +677,11 @@ class SummaryController {
 								quantity: ct
 								).save(failOnError: true, flush: true)
 					}
-
-
-				}
-
-			}//End Bu_tu_summarize
-
-			/*Ya deben estar calculados los otros filters*/
-			if (filter.type == Filter_Type.SUM && thisbu.isFamily(filter.bu))
-			{
-				int cc = 0
-				filter.totals.each  { ft->
-					code = Summary.findByBuAndSumMonthAndFilter(thisbu,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),ft);
-					if (code)
-						cc += code.quantity
-				}
-
-				code = Summary.findByBuAndSumMonthAndFilter(thisbu,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter)
-				if (code){
-					code.quantity = cc
-					code.save(failOnError: true, flush: true)
-				}
-				else{
-					code = new Summary(
-							filter: filter,
-							summaryCode:filter.filterCode,
-							bu: thisbu,
-							sumMonth: Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),
-							quantity: cc
-							).save(failOnError: true, flush: true)
-				}
-
-			}
-
-
-			if ( filter.type == Filter_Type.WHERE && count_total_filter!=0 && thisbu.isFamily(filter.bu) )
-			{
-				code = Summary.findByBuAndSumMonthAndFilter(thisbu,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter)
-				if (code)
-				{
-					code.quantity = count_total_filter
-					code.save(failOnError: true, flush: true)
-				}else{
-					code = new Summary(
-							filter: filter,
-							summaryCode:filter.filterCode,
-							bu: thisbu,
-							sumMonth: Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),
-							quantity: count_total_filter
-							).save(failOnError: true, flush: true)
+	
+	
 				}
 			}
-
-
-		}// End de todos los Filters encontrados
+		}
 
 		redirect action:"totals"
 	}

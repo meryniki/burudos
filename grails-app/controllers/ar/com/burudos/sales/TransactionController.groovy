@@ -302,10 +302,12 @@ class TransactionController {
 				}else if ( params.type_file.equals(BuruConstants.file_bajas)){
 					uptype = BuruConstants.uploadtype_baja
 					row_mapa[BuruConstants.row_op_code] = row[0];
+					
 					/*Fecha en formato MM/dd*/
 					def dd = new Date().plus(-31)
-					if(row[16].length()>6)
-						dd = new SimpleDateFormat("MM/dd/yyyy").parse(row[16])
+					//if(row[16].length()>6)
+					//	dd = new SimpleDateFormat("MM/dd/yyyy").parse(row[16])
+						
 					row_mapa[BuruConstants.row_date]    =  new SimpleDateFormat("dd/MM/yyyy").format(dd);
 					row_mapa[BuruConstants.row_ani]     = row[4];
 					row_mapa[BuruConstants.row_buname]  = row[8];
@@ -363,9 +365,18 @@ class TransactionController {
 				 /*Finally Search for the employee to match*/
 				Employee tmpemployee
 				BussinesUnit butmp
-
+				
 				if (empmap.containsKey(row_mapa[BuruConstants.row_emp]))
 					tmpemployee = empmap[row_mapa[BuruConstants.row_emp]]
+					
+				if ( !tmpemployee && params.type_file.equals(BuruConstants.file_bajas)){
+					butmp = BussinesUnit.findByNombre(row_mapa[BuruConstants.row_buname])
+					if (butmp){
+						 Employee.findAllWhere(bu:butmp).each(){ e->
+							 tmpemployee = e
+						}
+					}
+				}
 
 				if (! tmpemployee ){
 					linea = linea + 1
