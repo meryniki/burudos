@@ -214,7 +214,7 @@ class SummaryController {
 			BussinesUnit pdv = BussinesUnit.findByNombre(row[2])
 			Employee emp = Employee.findByName(row[1])
 
-			if (!emp) {
+			if ((!emp)&& (!pdv)) {
 				linea = linea + 1;
 				summaryInstace.errors.reject(row[0], row[1]+BuruConstants.bu_exist_error+row[2]+BuruConstants.employee_exist_error);
 				String sline = String.valueOf(linea);
@@ -227,7 +227,7 @@ class SummaryController {
 							employee: emp,
 							bu: emp.bu,
 							sumMonth: Date.parse("MM/yyyy",  row[3]),
-							quantity: Integer.parseInt(row[4])
+							quantity: row[4]
 							).save(failOnError: true, flush: true)
 				} catch (Exception e) {
 

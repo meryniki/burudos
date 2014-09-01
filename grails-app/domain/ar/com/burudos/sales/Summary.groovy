@@ -8,7 +8,7 @@ class Summary {
 	String summaryCode;
 	BussinesUnit bu;
 	Party employee;
-	Integer quantity;
+	Double quantity;
 	Filter filter;
 	Date sumMonth;
 
