@@ -79,14 +79,14 @@
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="filter.filterCode.label" default="Nombre" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
-											<g:fieldValue bean="${filterInstance}" field="filterCode" /></span></li>
+											<g:fieldValue bean="${filterInstance}" field="filterCode" /></li>
 									</g:if>
 
 									<g:if test="${filterInstance?.description}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="filter.description.label" default="Description" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
-											<g:fieldValue bean="${filterInstance}" field="description" /></span></li>
+											<g:fieldValue bean="${filterInstance}" field="description" /></li>
 									</g:if>
 
 									<g:if test="${filterInstance?.bu}">
@@ -110,35 +110,35 @@
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="filter.sds.label" default="Sds" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
-											<g:fieldValue bean="${filterInstance}" field="sds" /></span></li>
+											<g:fieldValue bean="${filterInstance}" field="sds" /></li>
 									</g:if>
 
 									<g:if test="${filterInstance?.ani}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="filter.ani.label" default="Ani" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
-											<g:fieldValue bean="${filterInstance}" field="ani" /></span></li>
+											<g:fieldValue bean="${filterInstance}" field="ani" /></li>
 									</g:if>
 
 									<g:if test="${filterInstance?.imei}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="filter.imei.label" default="Imei" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
-											<g:fieldValue bean="${filterInstance}" field="imei" /></span></li>
+											<g:fieldValue bean="${filterInstance}" field="imei" /></li>
 									</g:if>
 
 									<g:if test="${filterInstance?.sim}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="filter.sim.label" default="Sim" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
-											<g:fieldValue bean="${filterInstance}" field="sim" /></span></li>
+											<g:fieldValue bean="${filterInstance}" field="sim" /></li>
 									</g:if>
 
 									<g:if test="${filterInstance?.folio}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="filter.folio.label" default="Folio" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
-											<g:fieldValue bean="${filterInstance}" field="folio" /></span></li>
+											<g:fieldValue bean="${filterInstance}" field="folio" /></li>
 									</g:if>
 
 									<g:if test="${filterInstance?.partida}">
@@ -193,54 +193,54 @@
 									<g:if test="${filterInstance?.plan_desc}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="filter.plan_desc.label" default="Plandesc" /></span> <span
-											class="property-value" aria-labelledby="plan_desc-label"><g:fieldValue
-													bean="${filterInstance}" field="plan_desc" /></span></li>
+											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
+											<g:fieldValue bean="${filterInstance}" field="plan_desc" /></li>
 									</g:if>
 
 									<g:if test="${filterInstance?.debaut}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="filter.debaut.label" default="Debaut" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
-											<g:fieldValue bean="${filterInstance}" field="debaut" /></span></li>
+											<g:fieldValue bean="${filterInstance}" field="debaut" /></li>
 									</g:if>
 									
 									<g:if test="${filterInstance?.solicitud}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="filter.solicitud.label" default="solicitud" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
-											<g:fieldValue bean="${filterInstance}" field="solicitud" /></span></li>
+											<g:fieldValue bean="${filterInstance}" field="solicitud" /></li>
 									</g:if>
 									
 									<g:if test="${filterInstance?.servicio}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="filter.solicitud.label" default="servicio" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
-											<g:fieldValue bean="${filterInstance}" field="servicio" /></span></li>
+											<g:fieldValue bean="${filterInstance}" field="servicio" /></li>
 									</g:if>
 
 									<g:if test="${filterInstance?.totals}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="filter.totals.label" default="Totales a Sumar" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
-											<g:fieldValue bean="${filterInstance}"  field="totals"/></span></li>
+											<g:fieldValue bean="${filterInstance}"  field="totals"/></li>
 									</g:if>
 									<g:if test="${filterInstance?.plan}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="filter.plan.label" default="Plan" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
-											<g:fieldValue bean="${filterInstance}"  field="plan"/></span></li>
+											<g:fieldValue bean="${filterInstance}"  field="plan"/></li>
 									</g:if>
 									<g:if test="${filterInstance?.cat_plan}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="filter.cat_plan.label" default="Categoria Plan" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
-											<g:fieldValue bean="${filterInstance}"  field="cat_plan"/></span></li>
+											<g:fieldValue bean="${filterInstance}"  field="cat_plan"/></li>
 									</g:if>
 									<g:if test="${filterInstance?.advance_where}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="filter.advance_where.label" default="Avanzado" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span>
-											<g:fieldValue bean="${filterInstance}"  field="advance_where"/></span></li>
+											<g:fieldValue bean="${filterInstance}"  field="advance_where"/></li>
 									</g:if>
 								</ul>
 								<ul class="bigBtnIcon" style="display: -webkit-box;">
