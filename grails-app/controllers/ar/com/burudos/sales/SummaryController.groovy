@@ -58,7 +58,7 @@ class SummaryController {
 			datemonth = params.sumMonth_month
 			dateyear = params.sumMonth_year
 		}
-		
+
 		def query
 		if (params.employeeorbu=='2') {
 			query = Summary.where{
@@ -86,7 +86,7 @@ class SummaryController {
 
 		lista = query.list(params)
 		total = query.count()
-		
+
 		/*The map will be passed as param in g:sorteable and g:paginate*/
 		mapsearch.put("search", search);
 		mapsearch.put("employeeorbu", employeeorbu);
@@ -222,13 +222,24 @@ class SummaryController {
 			}
 			else{
 				try {
-					code = new Summary(
-							summaryCode: row[0],
-							employee: emp,
-							bu: emp.bu,
-							sumMonth: Date.parse("MM/yyyy",  row[3]),
-							quantity: row[4]
-							).save(failOnError: true, flush: true)
+					if (emp){
+						code = Summary.findByEmployeeAndSumMonthAndSummaryCode(emp, Date.parse("MM/yyyy",  row[3]), row[0])
+						print code
+					}
+					else
+						code = Summary.findByBuAndSumMonthAndSummaryCode(pdv, Date.parse("MM/yyyy",  row[3]), row[0])
+					if (code) {
+						code.quantity = row[4].toDouble()
+						code.save(failOnError: true, flush: true)
+					}else{
+						code = new Summary(
+								summaryCode: row[0],
+								employee: emp,
+								bu: emp?emp.bu:pdv,
+								sumMonth: Date.parse("MM/yyyy",  row[3]),
+								quantity: row[4]
+								).save(failOnError: true, flush: true)
+					}
 				} catch (Exception e) {
 
 					linea = linea + 1;
@@ -492,7 +503,7 @@ class SummaryController {
 						{
 							query += " and " + filter.advance_where
 						}
-						
+
 						log.debug("Query completo " + query)
 
 						cantidad_emp += 1
@@ -552,7 +563,7 @@ class SummaryController {
 
 				}//if filter
 
-				
+
 			}//End Bu_tu_summarize
 
 			if ( filter.type == Filter_Type.WHERE && count_total_filter!=0 && thisbu.isFamily(filter.bu) )
@@ -575,10 +586,10 @@ class SummaryController {
 
 
 		}// End de todos los Filters encontrados
-		
-		
+
+
 		Filter.findAll([sort: "type", order: "desc"]){ type=='SUM' }.each() { filter->
-			
+
 			count_total_filter = 0
 			log.info("Sumarizando filtro " + filter)
 
@@ -591,7 +602,7 @@ class SummaryController {
 				counting = 0
 				def cantidad_emp = 0
 				def where_filter = ""
-				
+
 				/*Ya deben estar calculados los otros filters*/
 				if (filter.type == Filter_Type.SUM && thisbu.isFamily(filter.bu))
 				{
@@ -601,7 +612,7 @@ class SummaryController {
 						if (code)
 							cc += code.quantity
 					}
-		
+
 					code = Summary.findByBuAndSumMonthAndFilter(thisbu,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter)
 					if (code){
 						code.quantity = cc
@@ -617,7 +628,7 @@ class SummaryController {
 								).save(failOnError: true, flush: true)
 					}
 				}
-				
+
 				/*
 				 * Filtros de SUM
 				 */
@@ -626,7 +637,7 @@ class SummaryController {
 				{
 					int cc = 0
 					int ct = 0
-	
+
 					// Busco todos los empleados del bu
 					Employee.findAllWhere(bu:butmp).each(){ thisemp->
 						cc = 0
@@ -635,7 +646,7 @@ class SummaryController {
 							if (code)
 								cc += code.quantity
 						}
-	
+
 						code = Summary.findByEmployeeAndSumMonthAndFilter(thisemp,Date.parse("MM/yyyy",  params.month_month +"/" + params.month_year),filter)
 						if (code){
 							code.quantity = cc
@@ -652,7 +663,7 @@ class SummaryController {
 						}
 						ct += cc
 					}
-	
+
 					// Entonces es una region o JAG, busco los totales de los hijos y lo sumo
 					if (cantidad_emp == 0)
 					{
@@ -677,8 +688,8 @@ class SummaryController {
 								quantity: ct
 								).save(failOnError: true, flush: true)
 					}
-	
-	
+
+
 				}
 			}
 		}

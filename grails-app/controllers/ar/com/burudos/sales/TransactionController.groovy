@@ -18,7 +18,7 @@ import ar.com.burudos.constants.BuruConstants
 
 @Transactional(readOnly = true)
 class TransactionController {
-	
+
 	private static final log = LogFactory.getLog(this)
 
 	static Boolean linkMe = true
@@ -83,6 +83,62 @@ class TransactionController {
 		respond lista, model:[transactionInstanceCount: total,
 			mapsearch: mapsearch, defaultmonth:Date.parse("yyyyMM", dateyear+datemonth)]
 	}
+
+	def uploads(Integer max, Integer offset, String search) {
+
+		def counting = 0;
+		def total = 0;
+		def lista = [];
+		def mapsearch = [:];
+
+		/*Initialization*/
+		if (!search)
+			search = "";
+		if (!offset)
+			offset = 0;
+		if (!max)
+			max = 100;
+		params.max = max;
+		
+		println offset
+		println search
+
+		/*Date to get index list*/
+		def datemonth
+		def dateyear
+		if (!params.month_month) {
+			String hql = "select month(max(dateofupload)) as maxMonth, year(max(dateofupload)) as maxYear  from Transaction"
+			def result = Transaction.executeQuery(hql)
+			if (!result.isEmpty() && result[0][0]!=null){
+				datemonth = String.valueOf(result[0][0])
+				dateyear = String.valueOf(result[0][1])
+				params.month_month = String.valueOf(result[0][0])
+				params.month_year = dateyear
+			}
+			else {
+				def today= new Date()
+				datemonth = String.valueOf(today[Calendar.MONTH])
+				dateyear = String.valueOf(today[Calendar.YEAR])
+				params.month_month = datemonth
+				params.month_year = dateyear
+			}
+		}else{
+			datemonth = params.month_month
+			dateyear = params.month_year
+		}
+
+		lista = Transaction.executeQuery("select distinct typeofupload as type, dateofupload as date from Transaction")
+		
+		print lista
+
+		total = lista.size()
+
+		mapsearch.put("search", params.search);
+
+		respond lista, model:[uploadsList:lista, uploadsCount: total,
+			mapsearch: mapsearch, defaultmonth:Date.parse("yyyyMM", dateyear+datemonth)]
+	}
+
 
 	def show(Transaction transactionInstance) {
 		respond transactionInstance
@@ -180,15 +236,15 @@ class TransactionController {
 		/*Analize each line of the file*/
 		def reportOfErrors = [:]
 		def mapreport = [:]
-		
+
 		/*line of Error*/
 		int linea = 0
 		/*line of row in file*/
 		int rownumber = 0
-		
+
 		def code
 		def Map row_mapa = [:]
-		
+
 		/*Upload file properties*/
 		def update = new Date()
 		def uptype
@@ -302,12 +358,12 @@ class TransactionController {
 				}else if ( params.type_file.equals(BuruConstants.file_bajas)){
 					uptype = BuruConstants.uploadtype_baja
 					row_mapa[BuruConstants.row_op_code] = row[0];
-					
+
 					/*Fecha en formato MM/dd*/
 					def dd = new Date().plus(-31)
 					//if(row[16].length()>6)
 					//	dd = new SimpleDateFormat("MM/dd/yyyy").parse(row[16])
-						
+
 					row_mapa[BuruConstants.row_date]    =  new SimpleDateFormat("dd/MM/yyyy").format(dd);
 					row_mapa[BuruConstants.row_ani]     = row[4];
 					row_mapa[BuruConstants.row_buname]  = row[8];
@@ -316,6 +372,13 @@ class TransactionController {
 					row_mapa[BuruConstants.row_importe] = row[17];
 					row_mapa[BuruConstants.row_cat_plan]= row[18];
 					row_mapa[BuruConstants.row_op_desc] = row[19];
+				}else if ( params.type_file.equals(BuruConstants.file_porta)){
+					uptype = BuruConstants.uploadtype_porta
+					row_mapa[BuruConstants.row_op_code] = row[5];
+					row_mapa[BuruConstants.row_date]    = row[11];
+					row_mapa[BuruConstants.row_ani]     = row[4];
+					row_mapa[BuruConstants.row_estado]  = row[9];
+					row_mapa[BuruConstants.row_promo]   = row[12];
 				}
 
 				/*Creates the Op if not exists*/
@@ -346,35 +409,22 @@ class TransactionController {
 					}
 				}
 
-				/*Creates the Client if not exists*
-				 if (row_mapa[BuruConstants.row_cliente_doc]!=null
-				 && Client.findByNdoc(row_mapa[BuruConstants.row_cliente_doc])==null) {
-				 Client.withNewSession{session->
-				 try {
-				 code = new Client(cname:row_mapa[BuruConstants.row_cliente],ndoc:row_mapa[BuruConstants.row_cliente_doc]).save(failOnError:true,flush:true)
-				 } catch (Exception e) {
-				 linea = linea + 1
-				 if (linea<200) transactionInstance.errors.reject(row[0],row_mapa[BuruConstants.row_cliente]+BuruConstants.cl_create_error)
-				 String sline = String.valueOf(linea);
-				 reportOfErrors.put(sline, BuruConstants.cl_create_error+row)
-				 e.printStackTrace()
-				 return
-				 }
-				 }
-				 }
-				 /*Finally Search for the employee to match*/
+				/*Finally Search for the employee to match*/
 				Employee tmpemployee
 				BussinesUnit butmp
-				
+
+				if ( params.type_file.equals(BuruConstants.file_porta)){
+					Transaction tmptrx = Transaction.findByAniAndTypeofupload(row_mapa[BuruConstants.row_ani], BuruConstants.uploadtype_alta)
+					tmpemployee = tmptrx.party
+				}
+
 				if (empmap.containsKey(row_mapa[BuruConstants.row_emp]))
 					tmpemployee = empmap[row_mapa[BuruConstants.row_emp]]
-					
+
 				if ( !tmpemployee && params.type_file.equals(BuruConstants.file_bajas)){
 					butmp = BussinesUnit.findByNombre(row_mapa[BuruConstants.row_buname])
 					if (butmp){
-						 Employee.findAllWhere(bu:butmp).each(){ e->
-							 tmpemployee = e
-						}
+						Employee.findAllWhere(bu:butmp).each(){ e-> tmpemployee = e }
 					}
 				}
 

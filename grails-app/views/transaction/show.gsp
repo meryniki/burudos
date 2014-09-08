@@ -237,7 +237,7 @@
 									<g:if test="${transactionInstance?.plan_promo}">
 										<li style="display: block;"><span class="blue col-lg-3"><g:message
 													code="transaction.plan_promo.label"
-													default="Categoria del Plan" /></span> <span
+													default="Plan Promo o Estado 2" /></span> <span
 											class="icon12 icomoon-icon-arrow-right-5 blue col-lg-1"></span><span
 											class="col-lg-6"> <g:fieldValue
 													bean="${transactionInstance}" field="plan_promo" /></span></li>
