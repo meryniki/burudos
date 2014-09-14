@@ -225,7 +225,7 @@ class SummaryController {
 					code = new Summary(
 							summaryCode: row[0],
 							employee: emp,
-							bu: emp.bu,
+							bu: emp? emp.bu:pdv,
 							sumMonth: Date.parse("MM/yyyy",  row[3]),
 							quantity: row[4]
 							).save(failOnError: true, flush: true)
