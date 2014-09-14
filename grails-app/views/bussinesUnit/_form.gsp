@@ -95,7 +95,7 @@
 	</label>
 	<div class="col-lg-9">
 		<g:select id="coordinator" name="coordinator.id"
-			from="${ar.com.burudos.party.Employee.list()}" optionKey="id"
+			from="${ar.com.burudos.party.Employee.findAllByIscoordinator(true)}" optionKey="id"
 			value="${bussinesUnitInstance?.coordinator?.id}" class="many-to-one"
 			noSelection="['null': '']" />
 	</div>
