@@ -189,7 +189,8 @@ class ParameterController {
 		jfile.splitEachLine('\t') { row ->
 			try {
 				def bu = BussinesUnit.findByNombre(row[7])
-				code = Parameter.findByParamCodeAndBussinesUnit(row[0],bu) ?: new Parameter(
+				def pa = Party.findByName(row[8])
+				code = Parameter.findByParamCodeAndBussinesUnitAndParty(row[0],bu,pa) ?: new Parameter(
 						paramCode: row[0],
 						paramCategory: getCategory(row[1]),
 						paramGroup: row[2],
@@ -198,6 +199,7 @@ class ParameterController {
 						minValue: row[5],
 						value: row[4],
 						bussinesUnit:bu,
+						party:pa,
 						active: true
 						).save(failOnError: true, flush: true)
 			} catch (Exception e) {
@@ -211,7 +213,8 @@ class ParameterController {
 					row[4],
 					row[5],
 					row[6],
-					row[7]] as Object[],'Upload failed: [{0},{1},{2},{3},{4},{5},{6},{7}]');
+					row[7],
+					row[8]] as Object[],'Upload failed: [{0},{1},{2},{3},{4},{5},{6},{7},{8}]');
 				String sline = String.valueOf(linea);
 				reportOfErrors.put(sline, row)
 

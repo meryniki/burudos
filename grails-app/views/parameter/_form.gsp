@@ -85,16 +85,28 @@
 </div>
 
 <div
-	class="form-group fieldcontain ${hasErrors(bean: parameterInstance, field: 'bussinesUnit', 'error')} required">
+	class="form-group fieldcontain ${hasErrors(bean: parameterInstance, field: 'bussinesUnit', 'error')}">
 	<label class="col-lg-3 control-label" for="bussinesUnit"> <g:message
-			code="parameter.bussinesUnit.label" default="Bussines Unit" /> <span
-		class="required-indicator">*</span>
+			code="parameter.bussinesUnit.label" default="Bussines Unit" />
 	</label>
 	<div class="col-lg-9">
 		<g:select id="bussinesUnit" name="bussinesUnit.id"
 			from="${ar.com.burudos.business.BussinesUnit.list()}" optionKey="id"
-			required="" value="${parameterInstance?.bussinesUnit?.id}"
-			class="form-control many-to-one" />
+			value="${parameterInstance?.bussinesUnit?.id}"
+			class="form-control many-to-one" noSelection="['null': '']" />
+	</div>
+</div>
+
+<div
+	class="form-group fieldcontain ${hasErrors(bean: parameterInstance, field: 'party', 'error')}">
+	<label class="col-lg-3 control-label" for="party"> <g:message
+			code="parameter.party.label" default="Party" />
+	</label>
+	<div class="col-lg-9">
+		<g:select id="party" name="party.id"
+			from="${ar.com.burudos.party.Party.findAllByNameNotEqual('NO INGRESADO')}" optionKey="id"
+			value="${parameterInstance?.party?.id}"
+			class="form-control many-to-one" noSelection="['null': '']" />
 	</div>
 </div>
 

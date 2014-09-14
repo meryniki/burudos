@@ -103,23 +103,27 @@
 
 													<g:sortableColumn params="${mapsearch}"
 														property="paramCode"
-														title="${message(code: 'parameter.paramCode.label', default: 'Param Code')}" />
+														title="${message(code: 'parameter.paramCode.label', default: 'Parameter Code')}" />
 
-													<g:sortableColumn params="${mapsearch}" property="minValue"
-														title="${message(code: 'parameter.businessUnit.label', default: 'Punto de Venta')}" />
+													<g:sortableColumn params="${mapsearch}"
+														property="bussinesUnit"
+														title="${message(code: 'parameter.businessUnit.label', default: 'Business Unit')}" />
+
+													<g:sortableColumn params="${mapsearch}" property="party"
+														title="${message(code: 'parameter.party.label', default: 'Party')}" />
 
 													<g:sortableColumn params="${mapsearch}"
 														property="paramCategory"
-														title="${message(code: 'parameter.paramCategory.label', default: 'Param Category')}" />
+														title="${message(code: 'parameter.paramCategory.label', default: 'Parameter Category')}" />
 
 													<g:sortableColumn params="${mapsearch}"
 														property="paramGroup"
-														title="${message(code: 'parameter.paramGroup.label', default: 'Param Group')}" />
+														title="${message(code: 'parameter.paramGroup.label', default: 'Parameter Group')}" />
 
 													<g:sortableColumn params="${mapsearch}"
 														property="paramDescription"
-														title="${message(code: 'parameter.paramDescription.label', default: 'Param Description')}" />
-													
+														title="${message(code: 'parameter.paramDescription.label', default: 'Parameter Description')}" />
+
 													<g:sortableColumn params="${mapsearch}" property="value"
 														title="${message(code: 'parameter.value.label', default: 'Value')}" />
 
@@ -136,7 +140,10 @@
 													<th rowspan="1" colspan="1"><g:message
 															code="parameter.paramCode.label" default="Param Code" /></th>
 													<th rowspan="1" colspan="1"><g:message
-															code="parameter.businessUnit.label" default="Punto de Venta" /></th>
+															code="parameter.businessUnit.label"
+															default="Punto de Venta" /></th>
+													<th rowspan="1" colspan="1"><g:message
+															code="parameter.party.label" default="Party" /></th>
 													<th rowspan="1" colspan="1"><g:message
 															code="parameter.paramCategory.label" default="Param Cat" /></th>
 													<th rowspan="1" colspan="1"><g:message
@@ -167,6 +174,11 @@
 																id="${parameterInstance.bussinesUnit.id}">
 																${fieldValue(bean: parameterInstance, field: "bussinesUnit")}
 															</g:link></td>
+															
+														<td><g:link action="show" controller="employee"
+																id="${parameterInstance.party?.id}">
+																${fieldValue(bean: parameterInstance, field: "party")}
+															</g:link></td>
 
 														<td>
 															${message(code: fieldValue(bean: parameterInstance, field: "paramCategory"))}
@@ -179,7 +191,7 @@
 														<td>
 															${fieldValue(bean: parameterInstance, field: "paramDescription")}
 														</td>
-														
+
 														<td>
 															${fieldValue(bean: parameterInstance, field: "value")}
 														</td>
