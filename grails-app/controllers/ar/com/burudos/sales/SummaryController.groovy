@@ -222,13 +222,24 @@ class SummaryController {
 			}
 			else{
 				try {
-					code = new Summary(
-							summaryCode: row[0],
-							employee: emp,
-							bu: emp? emp.bu:pdv,
-							sumMonth: Date.parse("MM/yyyy",  row[3]),
-							quantity: row[4]
-							).save(failOnError: true, flush: true)
+					if (emp){
+						code = Summary.findByEmployeeAndSumMonthAndSummaryCode(emp, Date.parse("MM/yyyy",  row[3]), row[0])
+						print code
+					}
+					else
+						code = Summary.findByBuAndSumMonthAndSummaryCode(pdv, Date.parse("MM/yyyy",  row[3]), row[0])
+					if (code) {
+						code.quantity = row[4].toDouble()
+						code.save(failOnError: true, flush: true)
+					}else{
+						code = new Summary(
+								summaryCode: row[0],
+								employee: emp,
+								bu: emp?emp.bu:pdv,
+								sumMonth: Date.parse("MM/yyyy",  row[3]),
+								quantity: row[4]
+								).save(failOnError: true, flush: true)
+					}
 				} catch (Exception e) {
 
 					linea = linea + 1;

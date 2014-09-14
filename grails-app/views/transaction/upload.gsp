@@ -87,6 +87,8 @@
 											code="transaction.bajas.label" /></label>
 									<label><g:radio name="type_file" value="FACTURACION" /> <g:message
 											code="transaction.facturacion.label" /></label>
+									<label><g:radio name="type_file" value="PORTA" /> <g:message
+											code="transaction.porta.label" /></label>
 								</div>
 								<label class="col-lg-3 control-label" for="fileinput"><g:message
 										code="default.upload.file" /></label>
@@ -108,6 +110,8 @@
 						</g:uploadForm>
 					</div>
 				</div>
+				<g:link action="uploads"><g:message code="uploads.label" default="Ver Archivos Subidos"/></g:link>
+				
 			</div>
 		</div>
 	</div>

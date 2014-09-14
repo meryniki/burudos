@@ -15,9 +15,11 @@ class BuruConstants {
 	static final String uploadtype_facturacion = "Archivo FACTURACION"
 	static final String uploadtype_post = "Archivo POSTVENTAS"
 	static final String uploadtype_cater = "Archivo CATER"
+	static final String uploadtype_porta = "Archivo PORTABILIDADES"
 	
 	static final String file_altas = "ALTA";
 	static final String file_cater = "CATER";
+	static final String file_porta = "PORTA";
 	static final String file_post = "POSTVENTA";
 	static final String file_facturacion = "FACTURACION";
 	static final String file_bajas = "BAJAS";
