@@ -100,9 +100,6 @@ class TransactionController {
 			max = 100;
 		params.max = max;
 		
-		println offset
-		println search
-
 		/*Date to get index list*/
 		def datemonth
 		def dateyear
@@ -127,9 +124,7 @@ class TransactionController {
 			dateyear = params.month_year
 		}
 
-		lista = Transaction.executeQuery("select distinct typeofupload as type, dateofupload as date from Transaction")
-		
-		print lista
+		lista = Transaction.executeQuery("select distinct typeofupload as type, dateofupload as date, count(*) as cant from Transaction group by typeofupload, dateofupload")
 
 		total = lista.size()
 

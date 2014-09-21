@@ -94,6 +94,8 @@
 														title="${message(code: 'upload.type.label', default: 'Tipo')}" />
 													<g:sortableColumn params="${mapsearch}" property="date"
 														title="${message(code: 'upload.date.label', default: 'Fecha')}" />
+													<g:sortableColumn params="${mapsearch}" property="cant"
+														title="${message(code: 'upload.cant.label', default: 'Cantidad')}" />
 													<g:sortableColumn params="${mapsearch}" property="delete"
 														title="${message(code: 'upload.delete.label', default: 'Borrar')}" />
 												</tr>
@@ -110,7 +112,14 @@
 														<td class=" ">
 															${upload[1]}
 														</td>
-														<td></td>
+														<td class=" ">
+															${upload[2]}
+														</td>
+														<td><g:link class="delete_upload" action="delete_upload"
+																resource="${transactionInstance}">
+																<span class="icon icomoon-icon-remove-4"></span>
+														</g:link></td>
+														
 													</tr>
 												</g:each>
 											</tbody>
