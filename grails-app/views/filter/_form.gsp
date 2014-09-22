@@ -281,7 +281,7 @@
 
 			</label>
 			<div class="col-lg-9">
-				<g:textField name="advance_where" value="${filterInstance?.advance_where}" />
+				<g:textArea rows="6" name="advance_where" value="${filterInstance?.advance_where}" />
 			</div>
 		</div>
 		</div>
