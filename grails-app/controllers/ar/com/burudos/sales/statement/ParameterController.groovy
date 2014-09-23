@@ -32,10 +32,10 @@ class ParameterController {
 		params.max = max
 
 		def query = Parameter.where{
-		    paramGroup ==~  "%${search}%" ||
-			paramDescription ==~  "%${search}%" ||
-			paramCode ==~  "%${search}%" ||
-			bussinesUnit.nombre ==~  "%${search}%"
+			paramGroup ==~  "%${search}%" ||
+					paramDescription ==~  "%${search}%" ||
+					paramCode ==~  "%${search}%" ||
+					bussinesUnit.nombre ==~  "%${search}%"
 		}
 
 		lista = query.list(params)
@@ -188,20 +188,40 @@ class ParameterController {
 
 		jfile.splitEachLine('\t') { row ->
 			try {
-				def bu = BussinesUnit.findByNombre(row[7])
-				def pa = Party.findByName(row[8])
-				code = Parameter.findByParamCodeAndBussinesUnitAndParty(row[0],bu,pa) ?: new Parameter(
-						paramCode: row[0],
-						paramCategory: getCategory(row[1]),
-						paramGroup: row[2],
-						paramDescription: row[3],
-						maxValue: row[6],
-						minValue: row[5],
-						value: row[4],
-						bussinesUnit:bu,
-						party:pa,
-						active: true
-						).save(failOnError: true, flush: true)
+				def bu, pa
+				if (row[7])
+					bu = BussinesUnit.findByNombre(row[7])
+				if (row[8])
+					pa = Party.findByName(row[8])
+				if (bu && !pa) {
+					code = Parameter.findByParamCodeAndBussinesUnit(row[0],bu) ?: new Parameter(
+							paramCode: row[0],
+							paramCategory: getCategory(row[1]),
+							paramGroup: row[2],
+							paramDescription: row[3],
+							maxValue: row[6],
+							minValue: row[5],
+							value: row[4],
+							bussinesUnit:bu,
+							party:pa,
+							active: true
+							).save(failOnError: true, flush: true)
+				} else if (!bu && pa) {
+					code = Parameter.findByParamCodeAndParty(row[0],pa) ?: new Parameter(
+							paramCode: row[0],
+							paramCategory: getCategory(row[1]),
+							paramGroup: row[2],
+							paramDescription: row[3],
+							maxValue: row[6],
+							minValue: row[5],
+							value: row[4],
+							bussinesUnit:bu,
+							party:pa,
+							active: true
+							).save(failOnError: true, flush: true)
+				} else {
+					throw new Exception();
+				}
 			} catch (Exception e) {
 
 				linea = linea + 1;
