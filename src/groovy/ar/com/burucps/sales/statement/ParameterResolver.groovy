@@ -7,13 +7,13 @@ import ar.com.burudos.party.Employee
 import ar.com.burudos.sales.statement.Parameter
 
 class ParameterResolver {
-	
+
 	private static final log = LogFactory.getLog(this)
 
-	HashMap<String,Parameter> parameters = new HashMap<String,Parameter>(); 
+	HashMap<String,Parameter> parameters = new HashMap<String,Parameter>();
 
 	Parameter resolve(String parameterCode, BussinesUnit bu) {
-		def hash = parameterCode + bu.id
+		def hash = parameterCode + (bu? bu.id : "00") + "00"  
 		def parameter = parameters.get(hash)
 		if ((!parameter) && (!bu.father)) {
 			return null
@@ -27,7 +27,8 @@ class ParameterResolver {
 
 	void loadParameters() {
 		Parameter.findAll().each() { it ->
-			def hash = it.paramCode + it.bussinesUnit.id
+			def hash = it.paramCode + (it.bussinesUnit? it.bussinesUnit.id : "00") +
+					(it.party? it.party.id : "00")
 			//log.debug("Agrego un parametro al resolver: " + hash)
 			parameters.put(hash, it)
 		}

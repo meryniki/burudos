@@ -137,43 +137,6 @@
 							<table class="plano_negro printable">
 								<thead>
 									<tr>
-										<th>Altas</th>
-										<th>Valor</th>
-										<th>Cantidad/%</th>
-										<th>Total</th>
-									</tr>
-								</thead>
-								<tbody>
-									<g:each in="${employeeStatementInstance.getEmpSalesLines()}">
-										<tr>
-											<td>
-												${it.description}
-											</td>
-											<td>
-												${it.unitAmount}
-											</td>
-											<td>
-												${it.operationsAmount}
-											</td>
-											<td>
-												${it.amount}
-											</td>
-										</tr>
-									</g:each>
-									<tr>
-										<td colspan="3">Total</td>
-										<td><g:formatNumber
-												number="${employeeStatementInstance.stalesSubtotal}"
-												type="number" minIntegerDigits="1" maxFractionDigits="2" /></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<br />
-						<div class="plano_negro panel panel-default">
-							<table class="plano_negro printable">
-								<thead>
-									<tr>
 										<th>Incentivos Individuales</th>
 										<th>Valor</th>
 										<th>Cantidad/%</th>
@@ -204,44 +167,6 @@
 								</tbody>
 							</table>
 						</div>
-						<br />
-						<div class="plano_negro panel panel-default">
-							<table class="plano_negro printable">
-								<thead>
-									<tr>
-										<th>Incentivos</th>
-										<th>Valor</th>
-										<th>Cantidad/%</th>
-										<th>Total</th>
-									</tr>
-								</thead>
-								<tbody>
-									<g:each
-										in="${employeeStatementInstance.getBuIncentivesLines()}">
-										<tr>
-											<td>
-												${it.description}
-											</td>
-											<td><g:formatNumber number="${it.unitAmount}"
-													type="number" minIntegerDigits="1" maxFractionDigits="2" /></td>
-											<td><g:formatNumber number="${it.operationsAmount}"
-													type="number" minIntegerDigits="1" maxFractionDigits="0" /></td>
-											<td><g:formatNumber number="${it.amount}" type="number"
-													minIntegerDigits="1" maxFractionDigits="2" /></td>
-											</td>
-										</tr>
-									</g:each>
-
-									<tr>
-										<td colspan="3">Total</td>
-										<td><g:formatNumber
-												number="${employeeStatementInstance.posIncentSubtotal}"
-												type="number" minIntegerDigits="1" maxFractionDigits="2" /></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-
 						<br />
 						<div class="plano_negro">
 							<table class="plano_negro printable">
@@ -380,10 +305,10 @@
 								</tbody>
 							</table>
 						</div>
+						<br /> <br /> Firma:<br /> <br /> Aclaración:<br /> <br />
+						DNI:<br /> <br /> Lugar y Fecha:<br />
 					</div>
 				</div>
-				<br /> <br /> Firma:<br /> <br /> Aclaración:<br /> <br />
-				DNI:<br /> <br /> Lugar y Fecha:<br />
 			</div>
 		</div>
 	</div>

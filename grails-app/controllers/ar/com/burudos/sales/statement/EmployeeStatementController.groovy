@@ -103,7 +103,19 @@ class EmployeeStatementController {
 	def process() {
 	}
 
-	def show_printable(EmployeeStatement employeeStatementInstance) {
+	def showStandard_printable(EmployeeStatement employeeStatementInstance) {
+		respond employeeStatementInstance
+	}
+	
+	def showPromoter_printable(EmployeeStatement employeeStatementInstance) {
+		respond employeeStatementInstance
+	}
+	
+	def showCoordinator_printable(EmployeeStatement employeeStatementInstance) {
+		respond employeeStatementInstance
+	}
+	
+	def showSilvero_printable(EmployeeStatement employeeStatementInstance) {
 		respond employeeStatementInstance
 	}
 	

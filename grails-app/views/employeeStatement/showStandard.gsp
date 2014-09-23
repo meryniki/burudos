@@ -58,7 +58,7 @@
 				<div class="col-lg-12">
 					<div id="show-statement" class="content scaffold-show" role="main">
 						<ul class="bigBtnIcon">
-							<li><g:link class="show_printable" action="show_printable"
+							<li><g:link class="show_printable" action="showStandard_printable"
 									controller="employeeStatement" target="_blank"
 									resource="${employeeStatementInstance}">
 									<span class="icon icomoon-icon-print"></span>

@@ -58,7 +58,7 @@
 				<div class="col-lg-12">
 					<div id="show-statement" class="content scaffold-show" role="main">
 						<ul class="bigBtnIcon">
-							<li><g:link class="show_printable" action="show_printable"
+							<li><g:link class="show_printable" action="showSilvero_printable"
 									controller="employeeStatement" target="_blank"
 									resource="${employeeStatementInstance}">
 									<span class="icon icomoon-icon-print"></span>
@@ -218,54 +218,6 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-lg-12">
-									<div class="panel panel-default">
-										<div class="panel-body noPad" style="display: block;">
-
-											<div class="responsive" tabindex="5007"
-												style="overflow: hidden; outline: none;">
-												<table class="table">
-													<thead>
-														<tr>
-															<th>Altas</th>
-															<th>Valor</th>
-															<th>Cantidad/%</th>
-															<th>Total</th>
-														</tr>
-													</thead>
-													<tbody>
-														<g:each
-															in="${employeeStatementInstance.getEmpSalesLines()}">
-															<tr>
-																<td>
-																	${it.description}
-																</td>
-																<td>
-																	${it.unitAmount}
-																</td>
-																<td>
-																	${it.operationsAmount}
-																</td>
-																<td>
-																	${it.amount}
-																</td>
-															</tr>
-														</g:each>
-														<tr>
-															<td colspan="3">Total</td>
-															<td><g:formatNumber
-																	number="${employeeStatementInstance.stalesSubtotal}"
-																	type="number" minIntegerDigits="1"
-																	maxFractionDigits="2" /></td>
-														</tr>
-													</tbody>
-												</table>
-											</div>
-										</div>
-									</div>
-								</div>
-
-
 
 								<div class="row statement-group">
 									<div class="page-header">
@@ -319,57 +271,6 @@
 													</div>
 												</div>
 												<!-- End .panel -->
-												<!-- End totales de ountos -->
-												<!-- Incentivos -->
-												<div class="col-lg-12">
-													<div class="panel panel-default">
-														<div class="panel-body noPad" style="display: block;">
-															<div class="responsive" tabindex="5007"
-																style="overflow: hidden; outline: none;">
-																<table class="table">
-																	<thead>
-																		<tr>
-																			<th>Incentivos</th>
-																			<th>Valor</th>
-																			<th>Cantidad/%</th>
-																			<th>Total</th>
-																		</tr>
-																	</thead>
-																	<tbody>
-																		<g:each
-																			in="${employeeStatementInstance.getBuIncentivesLines()}">
-																			<tr>
-																				<td>
-																					${it.description}
-																				</td>
-																				<td><g:formatNumber number="${it.unitAmount}"
-																						type="number" minIntegerDigits="1"
-																						maxFractionDigits="2" /></td>
-																				<td><g:formatNumber
-																						number="${it.operationsAmount}" type="number"
-																						minIntegerDigits="1" maxFractionDigits="0" /></td>
-																				<td><g:formatNumber number="${it.amount}"
-																						type="number" minIntegerDigits="1"
-																						maxFractionDigits="2" /></td>
-																				</td>
-																			</tr>
-																		</g:each>
-
-																		<tr>
-																			<td colspan="3">Total</td>
-																			<td><g:formatNumber
-																					number="${employeeStatementInstance.posIncentSubtotal}"
-																					type="number" minIntegerDigits="1"
-																					maxFractionDigits="2" /></td>
-																		</tr>
-																	</tbody>
-																</table>
-															</div>
-														</div>
-													</div>
-												</div>
-												<!-- End Incentivos -->
-
 											</div>
 											<!-- Employee -->
 											<div>
