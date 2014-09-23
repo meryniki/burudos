@@ -382,7 +382,7 @@ class TransactionController {
 				{
 					linea = linea + 1
 					if (linea<200)
-						transactionInstance.errors.reject(row[0],row_mapa[BuruConstants.row_emp]+BuruConstants.op_create_error2)
+						transactionInstance.errors.reject(row[0],rownumber+BuruConstants.op_create_error2)
 					String sline = String.valueOf(linea);
 					reportOfErrors.put(sline, row)
 					thereiserror = true
@@ -396,7 +396,7 @@ class TransactionController {
 							description:row_mapa[BuruConstants.row_op_desc]).save(failOnError: true, flush: true)
 						} catch (Exception e) {
 							linea = linea + 1
-							if (linea<200) transactionInstance.errors.reject(row[0],row_mapa[BuruConstants.row_op_code]+BuruConstants.op_create_error)
+							if (linea<200) transactionInstance.errors.reject(row[0],rownumber+BuruConstants.op_create_error)
 							String sline = String.valueOf(linea);
 							reportOfErrors.put(sline, BuruConstants.op_create_error+row)
 							e.printStackTrace();
@@ -410,7 +410,8 @@ class TransactionController {
 
 				if ( params.type_file.equals(BuruConstants.file_porta)){
 					Transaction tmptrx = Transaction.findByAniAndTypeofupload(row_mapa[BuruConstants.row_ani], BuruConstants.uploadtype_alta)
-					tmpemployee = tmptrx.party
+					if (tmptrx)
+						tmpemployee = tmptrx.party
 				}
 
 				if (empmap.containsKey(row_mapa[BuruConstants.row_emp]))
@@ -425,7 +426,7 @@ class TransactionController {
 
 				if (! tmpemployee ){
 					linea = linea + 1
-					if (linea<200) transactionInstance.errors.reject(row[0],row_mapa[BuruConstants.row_emp]+BuruConstants.employee_exist_error)
+					if (linea<200) transactionInstance.errors.reject(row[0],rownumber+BuruConstants.employee_exist_error)
 					String sline = String.valueOf(linea);
 					reportOfErrors.put(sline, row)
 				}
@@ -471,7 +472,7 @@ class TransactionController {
 							linea = linea + 1
 
 							if (linea<200)
-								transactionInstance.errors.reject(row[0], row_mapa[BuruConstants.row_emp]+BuruConstants.trx_create_error);
+								transactionInstance.errors.reject(row[0], rownumber+BuruConstants.trx_create_error);
 
 							String sline = String.valueOf(linea);
 							reportOfErrors.put(sline, BuruConstants.trx_create_error+row)
@@ -484,7 +485,7 @@ class TransactionController {
 				linea = linea + 1
 
 				if (linea<200)
-					transactionInstance.errors.reject(row[0], row_mapa[BuruConstants.row_emp]+BuruConstants.trx_create_error);
+					transactionInstance.errors.reject(row[0], rownumber+BuruConstants.trx_create_error);
 
 				String sline = String.valueOf(linea);
 				reportOfErrors.put(sline, BuruConstants.trx_create_error+row)
