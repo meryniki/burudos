@@ -382,7 +382,8 @@
 						</div>
 					</div>
 				</div>
-
+				<br /> <br /> Firma:<br /> <br /> Aclaración:<br /> <br />
+				DNI:<br /> <br /> Lugar y Fecha:<br />
 			</div>
 		</div>
 	</div>
