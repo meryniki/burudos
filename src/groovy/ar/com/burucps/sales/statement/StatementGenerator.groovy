@@ -44,7 +44,7 @@ public class StatementGenerator {
 		}.list();
 
 		// Load parameters for BU and set as facts
-		def query = Parameter.where { bussinesUnit != null}.projections { distinct 'paramCode' }
+		def query = Parameter.where {}.projections { distinct 'paramCode' }
 		def allParamCodes = query.list()
 
 		ParameterResolver parameterResolver = new ParameterResolver()
@@ -148,7 +148,7 @@ public class StatementGenerator {
 						}
 						//log.debug("Agrego los parametros para la nueva BU: " + employee.bu)
 						for (String codeName : allParamCodes) {
-							def parameter = parameterResolver.resolve(codeName, employee.bu);
+							def parameter = parameterResolver.resolve(codeName, employee, employee.bu);
 							if (parameter != null) {
 								parameterFacts << ksession.insert(parameter);
 							}
