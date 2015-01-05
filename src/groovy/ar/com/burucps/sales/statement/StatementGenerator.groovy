@@ -43,37 +43,6 @@ public class StatementGenerator {
 					year(sumMonth) == param_year        )
 		}.list();
 
-		// Agrego saldos a favor de JAG del mes anterior
-		Integer previousMonth, previousYear;
-		if (param_month in 2..12) {
-			previousMonth =  param_month - 1;
-			previousYear = param_year;
-		} else {
-			previousMonth =  12;
-			previousYear = param_year - 1;
-		}
-		def negativeBalanceStatements = EmployeeStatement.findAll() {
-			month(statementPeriod) == previousMonth &&
-					year(statementPeriod) == previousYear &&
-					dueBalance > 0.0
-		}.each { it ->
-			Summary s = Summary.where{
-				month(sumMonth) == param_month &&
-						year(sumMonth) == param_year   &&
-						summaryCode == 'SALDO_JAG'     &&
-						employee.id == it.employee.id
-			}.get();
-			if (s) {
-				s.quantity = it.dueBalance;
-			} else {
-				s = new Summary(sumMonth: parsePeriod(param_month,param_year), summaryCode: 'SALDO_JAG',
-				employee: it.employee, quantity: it.dueBalance);
-			}
-			s.save(failOnError: true, flush: true)
-			periodSummaries.add(s)
-		}
-
-
 		// Load parameters for BU and set as facts
 		def query = Parameter.where { bussinesUnit != null}.projections { distinct 'paramCode' }
 		def allParamCodes = query.list()
