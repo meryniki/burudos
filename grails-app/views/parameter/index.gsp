@@ -213,7 +213,8 @@
 												<div class="dataTables_paginate paging_bootstrap pagination">
 													<ul class="pagination">
 														<li><g:paginate
-																total="${parameterInstanceCount ?: 0}" /></li>
+																total="${parameterInstanceCount ?: 0}"
+																params="${mapsearch}" /></li>
 													</ul>
 												</div>
 											</div>
